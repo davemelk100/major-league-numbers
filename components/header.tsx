@@ -46,10 +46,10 @@ export function Header() {
             alt="Major League Numbers Logo"
             width={120}
             height={100}
-            className="h-auto w-16 lg:w-[120px] object-contain border-0"
+            className="h-auto w-[120px] object-contain border-0 mt-2"
           />
         </Link>
-        <span className="text-2xl lg:text-4xl font-league whitespace-nowrap" style={{ color: "#d42821" }}>
+        <span className="hidden md:block text-[48px] font-league whitespace-nowrap" style={{ color: "#d42821" }}>
           Major League Numbers
         </span>
         <div className="flex-1 flex justify-center"></div>
@@ -75,7 +75,7 @@ export function Header() {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "px-3 py-2 text-sm font-medium rounded-md transition-colors whitespace-nowrap",
+                  "px-3 py-2 text-xs font-medium rounded-md transition-colors whitespace-nowrap",
                   pathname === item.href
                     ? "bg-secondary/50 text-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-secondary/50",
@@ -91,11 +91,11 @@ export function Header() {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden h-11 w-11"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
+            {mobileMenuOpen ? <X className="size-8" /> : <Menu className="size-8" />}
           </Button>
         </div>
       </div>
@@ -139,7 +139,7 @@ export function Header() {
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
-                    "block px-3 py-3 text-base font-medium rounded-md transition-colors",
+                    "block px-3 py-3 text-xs font-medium rounded-md transition-colors",
                     pathname === item.href
                       ? "bg-secondary text-foreground"
                       : "text-muted-foreground hover:text-foreground hover:bg-secondary/50",

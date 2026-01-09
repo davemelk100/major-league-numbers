@@ -96,13 +96,15 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
   return (
     <main className="container py-8">
       <div className="mb-6 flex flex-wrap md:flex-nowrap items-center gap-4">
-        <h1 className="mb-0 shrink-0 whitespace-nowrap">All-Star Game Rosters</h1>
-        <SeasonSelector
-          season={initialSeason}
-          onSeasonChange={handleSeasonChange}
-          isLoading={isPending}
-          startYear={1933}
-        />
+        <div className="flex items-center gap-4">
+          <h1 className="mb-0 shrink-0 whitespace-nowrap">All-Star Game Rosters</h1>
+          <SeasonSelector
+            season={initialSeason}
+            onSeasonChange={handleSeasonChange}
+            isLoading={isPending}
+            startYear={1933}
+          />
+        </div>
         <div className="w-full order-last md:w-full md:max-w-xs md:ml-auto md:order-none relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
