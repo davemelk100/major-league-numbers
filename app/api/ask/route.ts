@@ -36,16 +36,10 @@ export async function POST(req: Request) {
     model: "openai/gpt-4o-mini",
     system: SYSTEM_PROMPT,
     messages: prompt,
-    maxOutputTokens: 2000,
     abortSignal: req.signal,
   })
 
   return result.toUIMessageStreamResponse({
-    onFinish: async ({ isAborted }) => {
-      if (isAborted) {
-        console.log("Request aborted")
-      }
-    },
     consumeSseStream: consumeStream,
   })
 }

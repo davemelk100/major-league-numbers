@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
 const navigation = [
-  { name: "🤖 ChatMLB", href: "/ask" },
   { name: "Home", href: "/" },
   { name: "Players", href: "/players" },
   { name: "Teams", href: "/teams" },
@@ -54,6 +53,19 @@ export function Header() {
         <div className="flex-1 flex justify-center"></div>
 
         <div className="flex items-center gap-2 lg:gap-4 shrink-0 ml-auto">
+          <Link
+            href="/ask"
+            className={cn(
+              "flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-md transition-colors whitespace-nowrap",
+              pathname === "/ask"
+                ? "bg-secondary/50 text-foreground"
+                : "text-muted-foreground hover:text-foreground hover:bg-secondary/50",
+            )}
+          >
+            <Image src="/chat-mlb.svg" alt="" width={20} height={20} className="h-5 w-5" />
+            <span className="hidden sm:inline">ChatMLB</span>
+          </Link>
+
           <nav className="hidden md:flex items-center gap-1">
             {navigation.map((item) => (
               <Link
