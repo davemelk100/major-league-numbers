@@ -2,9 +2,8 @@
 
 import type React from "react"
 
-import { useState, useRef, useEffect } from "react"
+import { useRef, useEffect } from "react"
 import { useChat } from "@ai-sdk/react"
-import { DefaultChatTransport } from "ai"
 import { Send, Bot, User, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -21,29 +20,38 @@ const exampleQuestions = [
 ]
 
 export function AskPageContent() {
-  const [input, setInput] = useState("")
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({ api: "/api/ask" }),
+  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
+    api: "/api/ask",
+    onError: (err) => {
+      console.log("[v0] Chat error:", err)
+    },
   })
 
-  const isLoading = status === "streaming" || status === "submitted"
+  useEffect(() => {
+    console.log("[v0] Messages updated:", messages.length, "isLoading:", isLoading)
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [messages, isLoading])
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!input.trim() || isLoading) return
-    sendMessage({ text: input })
-    setInput("")
-  }
+    if (error) {
+      console.log("[v0] Error state:", error)
+    }
+  }, [error])
 
   const handleExampleClick = (question: string) => {
     if (isLoading) return
-    sendMessage({ text: question })
+    console.log("[v0] Example clicked:", question)
+    // Create a synthetic form event to submit the question
+    const syntheticEvent = {
+      preventDefault: () => {},
+    } as React.FormEvent
+    handleInputChange({ target: { value: question } } as React.ChangeEvent<HTMLInputElement>)
+    // Use setTimeout to allow state to update
+    setTimeout(() => {
+      handleSubmit(syntheticEvent)
+    }, 0)
   }
 
   return (
@@ -56,7 +64,11 @@ export function AskPageContent() {
       <Card className="flex flex-col h-[calc(100vh-220px)] min-h-[500px]">
         {/* Messages area */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {messages.length === 0 ? (
+          {error && (
+            <div className="bg-destructive/10 text-destructive p-3 rounded-lg text-sm">Error: {error.message}</div>
+          )}
+
+          {messages.length === 0 && !error ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <Bot className="h-12 w-12 text-muted-foreground/50 mb-4" />
               <h2 className="text-lg font-semibold mb-2">What would you like to know?</h2>
@@ -93,23 +105,13 @@ export function AskPageContent() {
                       message.role === "user" ? "bg-primary text-primary-foreground" : "bg-muted",
                     )}
                   >
-                    {message.parts.map((part, index) => {
-                      if (part.type === "text") {
-                        return message.role === "assistant" ? (
-                          <div
-                            key={index}
-                            className="text-sm prose prose-sm dark:prose-invert max-w-none prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0 prose-headings:my-2"
-                          >
-                            <ReactMarkdown>{part.text}</ReactMarkdown>
-                          </div>
-                        ) : (
-                          <div key={index} className="text-sm">
-                            {part.text}
-                          </div>
-                        )
-                      }
-                      return null
-                    })}
+                    {message.role === "assistant" ? (
+                      <div className="text-sm prose prose-sm dark:prose-invert max-w-none prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0 prose-headings:my-2">
+                        <ReactMarkdown>{message.content}</ReactMarkdown>
+                      </div>
+                    ) : (
+                      <div className="text-sm">{message.content}</div>
+                    )}
                   </div>
                   {message.role === "user" && (
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary flex items-center justify-center">
@@ -137,9 +139,11 @@ export function AskPageContent() {
         <div className="border-t p-4">
           <form onSubmit={handleSubmit} className="flex gap-2">
             <input
+              id="chat-input"
+              name="chat-input"
               type="text"
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={handleInputChange}
               placeholder="Ask about baseball stats, players, or history..."
               className="flex-1 px-4 py-2 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
               disabled={isLoading}

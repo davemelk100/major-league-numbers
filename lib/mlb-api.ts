@@ -161,28 +161,24 @@ async function fetchWithRetry(url: string, retries = 3, delay = 1000): Promise<R
     try {
       const res = await fetch(url)
 
-      // Check for rate limiting
-      if (res.status === 429) {
+      if (res.status === 429 || res.status === 503) {
         if (i < retries - 1) {
           await new Promise((resolve) => setTimeout(resolve, delay * (i + 1)))
           continue
         }
-        console.error("Rate limited by MLB API after retries")
         return null
       }
 
       if (!res.ok) {
-        console.error(`API error: ${res.status} ${res.statusText}`)
         return null
       }
 
       return res
-    } catch (error) {
+    } catch {
       if (i < retries - 1) {
         await new Promise((resolve) => setTimeout(resolve, delay * (i + 1)))
         continue
       }
-      console.error("Network error:", error)
       return null
     }
   }
@@ -194,12 +190,10 @@ async function safeJsonParse(res: Response | null): Promise<any | null> {
   try {
     const text = await res.text()
     if (text.startsWith("Too Many")) {
-      console.error("Rate limited by MLB API")
       return null
     }
     return JSON.parse(text)
-  } catch (error) {
-    console.error("Error parsing JSON:", error)
+  } catch {
     return null
   }
 }
@@ -215,8 +209,7 @@ export async function searchPlayers(query: string): Promise<Player[]> {
     const result = data?.people || []
     setCache(cacheKey, result)
     return result
-  } catch (error) {
-    console.error("Error searching players:", error)
+  } catch {
     return []
   }
 }
@@ -234,8 +227,7 @@ export async function getPlayer(playerId: number): Promise<Player | null> {
     const result = data?.people?.[0] || null
     setCache(cacheKey, result)
     return result
-  } catch (error) {
-    console.error("Error fetching player:", error)
+  } catch {
     return null
   }
 }
@@ -251,8 +243,7 @@ export async function getAllPlayers(season = getDefaultSeason()): Promise<Player
     const result = data?.people || []
     setCache(cacheKey, result, CACHE_TTL_LONG)
     return result
-  } catch (error) {
-    console.error("Error fetching all players:", error)
+  } catch {
     return []
   }
 }
@@ -264,8 +255,7 @@ export async function getPlayerStats(playerId: number, season = getDefaultSeason
     )
     const data = await safeJsonParse(res)
     return data?.stats?.[0]?.splits || []
-  } catch (error) {
-    console.error("Error fetching player stats:", error)
+  } catch {
     return []
   }
 }
@@ -281,8 +271,7 @@ export async function getTeams(season?: number): Promise<Team[]> {
     const result = data?.teams || []
     setCache(cacheKey, result)
     return result
-  } catch (error) {
-    console.error("Error fetching teams:", error)
+  } catch {
     return []
   }
 }
@@ -300,8 +289,7 @@ export async function getStandings(season = getDefaultSeason()): Promise<Divisio
     const result = data?.records || []
     setCache(cacheKey, result)
     return result
-  } catch (error) {
-    console.error("Error fetching standings:", error)
+  } catch {
     return []
   }
 }
@@ -324,8 +312,7 @@ export async function getLeaders(
     const result = data?.leagueLeaders?.[0]?.leaders || []
     setCache(cacheKey, result)
     return result
-  } catch (error) {
-    console.error("Error fetching leaders:", error)
+  } catch {
     return []
   }
 }
@@ -349,8 +336,7 @@ export async function getLeadersByLeague(
     const result = data?.leagueLeaders?.[0]?.leaders || []
     setCache(cacheKey, result)
     return result
-  } catch (error) {
-    console.error("Error fetching leaders by league:", error)
+  } catch {
     return []
   }
 }
@@ -366,8 +352,7 @@ export async function getTeam(teamId: number): Promise<Team | null> {
     const result = data?.teams?.[0] || null
     setCache(cacheKey, result)
     return result
-  } catch (error) {
-    console.error("Error fetching team:", error)
+  } catch {
     return null
   }
 }
@@ -380,16 +365,16 @@ export async function getTeamRoster(teamId: number, season = getDefaultSeason())
   try {
     const res = await fetchWithRetry(`${BASE_URL}/teams/${teamId}/roster?season=${season}`)
     const data = await safeJsonParse(res)
-    const result = data?.roster?.map((r: any) => ({
-      ...r.person,
-      primaryNumber: r.jerseyNumber,
-      primaryPosition: r.position,
-      status: r.status,
-    })) || []
+    const result =
+      data?.roster?.map((r: any) => ({
+        ...r.person,
+        primaryNumber: r.jerseyNumber,
+        primaryPosition: r.position,
+        status: r.status,
+      })) || []
     setCache(cacheKey, result)
     return result
-  } catch (error) {
-    console.error("Error fetching roster:", error)
+  } catch {
     return []
   }
 }
@@ -401,8 +386,7 @@ export async function getTeamStats(teamId: number, season = getDefaultSeason()):
     )
     const data = await safeJsonParse(res)
     return data?.stats || []
-  } catch (error) {
-    console.error("Error fetching team stats:", error)
+  } catch {
     return []
   }
 }
@@ -418,8 +402,7 @@ export async function getTeamCoaches(teamId: number, season = getDefaultSeason()
     const result = data?.roster || []
     setCache(cacheKey, result)
     return result
-  } catch (error) {
-    console.error("Error fetching coaches:", error)
+  } catch {
     return []
   }
 }
@@ -538,53 +521,46 @@ export async function getAwardWinners(awardId: string, season?: number): Promise
       team: award.team ? { id: award.team.id, name: award.team.name } : undefined,
       notes: award.notes,
     }))
-  } catch (error) {
-    console.error(`Error fetching ${awardId} winners:`, error)
+  } catch {
     return []
   }
 }
 
 export async function getMVPWinners(season?: number): Promise<{ al: AwardWinner[]; nl: AwardWinner[] }> {
   try {
-    // MLBMVP = AL MVP, NLMVP = NL MVP
     const [alMvp, nlMvp] = await Promise.all([getAwardWinners("MLBMVP", season), getAwardWinners("NLMVP", season)])
 
     return {
       al: alMvp.sort((a, b) => b.season - a.season),
       nl: nlMvp.sort((a, b) => b.season - a.season),
     }
-  } catch (error) {
-    console.error("Error fetching MVP winners:", error)
+  } catch {
     return { al: [], nl: [] }
   }
 }
 
 export async function getCyYoungWinners(season?: number): Promise<{ al: AwardWinner[]; nl: AwardWinner[] }> {
   try {
-    // MLBCY = AL Cy Young, NLCY = NL Cy Young
     const [alCy, nlCy] = await Promise.all([getAwardWinners("MLBCY", season), getAwardWinners("NLCY", season)])
 
     return {
       al: alCy.sort((a, b) => b.season - a.season),
       nl: nlCy.sort((a, b) => b.season - a.season),
     }
-  } catch (error) {
-    console.error("Error fetching Cy Young winners:", error)
+  } catch {
     return { al: [], nl: [] }
   }
 }
 
 export async function getAllStarRosters(season?: number): Promise<{ al: AwardWinner[]; nl: AwardWinner[] }> {
   try {
-    // ALAS = AL All-Star, NLAS = NL All-Star
     const [alStars, nlStars] = await Promise.all([getAwardWinners("ALAS", season), getAwardWinners("NLAS", season)])
 
     return {
       al: alStars.sort((a, b) => (a.team?.name || "").localeCompare(b.team?.name || "")),
       nl: nlStars.sort((a, b) => (a.team?.name || "").localeCompare(b.team?.name || "")),
     }
-  } catch (error) {
-    console.error("Error fetching All-Star rosters:", error)
+  } catch {
     return { al: [], nl: [] }
   }
 }
@@ -604,7 +580,6 @@ export async function getPlayerAllStarAppearances(playerId: number): Promise<All
   if (cached) return cached
 
   try {
-    // Fetch both AL and NL All-Star recipients
     const [alRes, nlRes] = await Promise.all([
       fetchWithRetry(`${BASE_URL}/awards/ALAS/recipients?sportId=1`),
       fetchWithRetry(`${BASE_URL}/awards/NLAS/recipients?sportId=1`),
@@ -614,7 +589,6 @@ export async function getPlayerAllStarAppearances(playerId: number): Promise<All
 
     const appearances: AllStarAppearance[] = []
 
-    // Filter AL All-Star appearances for this player
     for (const award of alData?.awards || []) {
       if (award.player?.id === playerId) {
         appearances.push({
@@ -625,7 +599,6 @@ export async function getPlayerAllStarAppearances(playerId: number): Promise<All
       }
     }
 
-    // Filter NL All-Star appearances for this player
     for (const award of nlData?.awards || []) {
       if (award.player?.id === playerId) {
         appearances.push({
@@ -636,12 +609,10 @@ export async function getPlayerAllStarAppearances(playerId: number): Promise<All
       }
     }
 
-    // Sort by season descending
     const sorted = appearances.sort((a, b) => b.season - a.season)
     setCache(cacheKey, sorted, CACHE_TTL_LONG)
     return sorted
-  } catch (error) {
-    console.error("Error fetching All-Star appearances:", error)
+  } catch {
     return []
   }
 }
@@ -674,12 +645,10 @@ export async function getHallOfFamers(): Promise<HallOfFamer[]> {
       team: award.team ? { id: award.team.id, name: award.team.name } : undefined,
     }))
 
-    // Sort by induction year descending
     const sorted = hofMembers.sort((a, b) => b.inductionYear - a.inductionYear)
     setCache(cacheKey, sorted, CACHE_TTL_LONG)
     return sorted
-  } catch (error) {
-    console.error("Error fetching Hall of Famers:", error)
+  } catch {
     return []
   }
 }

@@ -1,37 +1,37 @@
-import type React from "react";
-import { Suspense } from "react";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, League_Gothic } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
-import { PageLoader } from "@/components/page-loader";
-import { WebsiteJsonLd } from "@/components/json-ld";
+import type React from "react"
+import { Suspense } from "react"
+import type { Metadata } from "next"
+import { Geist, Geist_Mono, League_Gothic } from "next/font/google"
+import { Header } from "@/components/header"
+import { Footer } from "@/components/footer"
+import { PageLoader } from "@/components/page-loader"
+import { WebsiteJsonLd } from "@/components/json-ld"
 import { Toaster } from "@/components/ui/sonner"
-import "@/styles/globals.css";
+import { Analytics } from "@vercel/analytics/react"
+import "@/styles/globals.css"
 
-const _geist = Geist({ subsets: ["latin"] });
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const _geist = Geist({ subsets: ["latin"] })
+const _geistMono = Geist_Mono({ subsets: ["latin"] })
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
-  variable: "--font-league-gothic"
-});
+  variable: "--font-league-gothic",
+})
 
 export const metadata: Metadata = {
   title: {
     default: "Major League Numbers",
     template: "%s | Major League Numbers",
   },
-  description:
-    "Explore MLB player stats, team rosters, and league standings in real-time.",
+  description: "Explore MLB player stats, team rosters, and league standings in real-time.",
   generator: "v0.app",
   metadataBase: new URL("https://majorleaguenumbers.com"),
   alternates: {
     canonical: "/",
   },
   icons: {
-    icon: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚾</text></svg>',
-    apple: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚾</text></svg>',
+    icon: "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 fontSize=%2290%22>⚾</text></svg>",
+    apple:
+      "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 fontSize=%2290%22>⚾</text></svg>",
   },
   keywords: [
     "MLB",
@@ -57,8 +57,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Major League Numbers",
-    description:
-      "Explore MLB player stats, team rosters, and league standings in real-time.",
+    description: "Explore MLB player stats, team rosters, and league standings in real-time.",
     url: "https://majorleaguenumbers.com",
     siteName: "Major League Numbers",
     images: [
@@ -75,16 +74,15 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Major League Numbers",
-    description:
-      "Explore MLB player stats, team rosters, and league standings in real-time.",
+    description: "Explore MLB player stats, team rosters, and league standings in real-time.",
     images: ["/mln.png"],
   },
-};
+}
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -112,5 +110,5 @@ export default function RootLayout({
         <Analytics />
       </body>
     </html>
-  );
+  )
 }
