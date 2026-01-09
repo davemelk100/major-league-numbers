@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import { Suspense } from "react"
 import { notFound } from "next/navigation"
-import { getTeam, getTeamRoster, getStandings, getTeamHistory, getDefaultSeason } from "@/lib/mlb-api"
+import { getTeam, getTeamRoster, getStandings, getDefaultSeason } from "@/lib/mlb-api"
 import { TeamPageContent } from "@/components/team-page-content"
 import { TeamJsonLd, BreadcrumbJsonLd } from "@/components/json-ld"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -81,16 +81,14 @@ async function TeamContent({ id }: { id: string }) {
   const teamId = Number.parseInt(id, 10)
   const defaultSeason = getDefaultSeason()
 
-  const [team, roster, standings, history] = await Promise.all([
+  const [team, roster, standings] = await Promise.all([
     getTeam(teamId),
     getTeamRoster(teamId, defaultSeason),
     getStandings(defaultSeason),
-    getTeamHistory(teamId, 1960, defaultSeason),
   ])
 
   if (!team) notFound()
 
-  // Find team's record in standings
   let teamRecord = null
   for (const division of standings) {
     const found = division.teamRecords?.find((r: any) => r.team.id === teamId)
@@ -116,7 +114,6 @@ async function TeamContent({ id }: { id: string }) {
           team,
           roster,
           teamRecord,
-          history,
         }}
       />
     </>

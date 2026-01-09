@@ -54,13 +54,22 @@ const TeamLogos = dynamic(
   },
 )
 
+const TeamUniforms = dynamic(
+  () =>
+    import("@/components/team-uniforms").then((mod) => ({
+      default: mod.TeamUniforms,
+    })),
+  {
+    loading: () => <Skeleton className="h-48 w-full" />,
+  },
+)
+
 interface TeamPageContentProps {
   teamId: number
   initialData: {
     team: any
     roster: any[]
     teamRecord: any
-    history: any[]
   }
 }
 
@@ -70,9 +79,30 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
   const [team, setTeam] = useState(initialData?.team || null)
   const [roster, setRoster] = useState(initialData?.roster || [])
   const [teamRecord, setTeamRecord] = useState(initialData?.teamRecord || null)
-  const [history] = useState(initialData?.history || [])
+  const [history, setHistory] = useState<any[]>([])
+  const [historyLoaded, setHistoryLoaded] = useState(false)
+  const [historyLoading, setHistoryLoading] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [activeTab, setActiveTab] = useState("roster")
+
+  useEffect(() => {
+    if (activeTab === "history" && !historyLoaded && !historyLoading) {
+      setHistoryLoading(true)
+      fetch(`/api/team/${teamId}/history`)
+        .then((res) => res.json())
+        .then((data) => {
+          setHistory(data.history || [])
+          setHistoryLoaded(true)
+        })
+        .catch((err) => {
+          console.error("Error fetching history:", err)
+        })
+        .finally(() => {
+          setHistoryLoading(false)
+        })
+    }
+  }, [activeTab, teamId, historyLoaded, historyLoading])
 
   useEffect(() => {
     if (season === defaultSeason) {
@@ -160,6 +190,7 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
             alt={`${team.name} logo`}
             fill
             className="object-contain"
+            priority
           />
         </div>
         <div className="flex-1">
@@ -233,27 +264,13 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
         )}
       </div>
 
-      <Tabs defaultValue="history" className="space-y-6">
+      <Tabs defaultValue="roster" className="space-y-6" onValueChange={setActiveTab}>
         <TabsList>
-          <TabsTrigger value="history">Historical Data (1960-Present)</TabsTrigger>
           <TabsTrigger value="roster">{season} Roster</TabsTrigger>
+          <TabsTrigger value="history">Historical Data (1960-Present)</TabsTrigger>
           <TabsTrigger value="logos">Logos</TabsTrigger>
+          <TabsTrigger value="uniforms">Uniforms</TabsTrigger>
         </TabsList>
-
-        <TabsContent value="history" className="space-y-6">
-          {history.length > 0 ? (
-            <>
-              <HistoricalChart data={history} teamName={team.name} />
-              <HistoricalTable data={history} />
-            </>
-          ) : (
-            <Card>
-              <CardContent className="py-12 text-center text-muted-foreground">
-                No historical data available for this team.
-              </CardContent>
-            </Card>
-          )}
-        </TabsContent>
 
         <TabsContent value="roster" className="space-y-8">
           <h2 className="text-2xl font-bold">{season} Roster</h2>
@@ -276,8 +293,32 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
           )}
         </TabsContent>
 
+        <TabsContent value="history" className="space-y-6">
+          {historyLoading ? (
+            <div className="space-y-6">
+              <Skeleton className="h-80 w-full" />
+              <Skeleton className="h-96 w-full" />
+            </div>
+          ) : history.length > 0 ? (
+            <>
+              <HistoricalChart data={history} teamName={team.name} />
+              <HistoricalTable data={history} />
+            </>
+          ) : (
+            <Card>
+              <CardContent className="py-12 text-center text-muted-foreground">
+                {historyLoaded ? "No historical data available for this team." : "Loading historical data..."}
+              </CardContent>
+            </Card>
+          )}
+        </TabsContent>
+
         <TabsContent value="logos">
           <TeamLogos teamId={team.id} teamName={team.name} />
+        </TabsContent>
+
+        <TabsContent value="uniforms">
+          <TeamUniforms teamId={team.id} teamName={team.name} season={season} />
         </TabsContent>
       </Tabs>
     </main>

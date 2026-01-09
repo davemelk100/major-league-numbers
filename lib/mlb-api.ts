@@ -266,7 +266,8 @@ export async function getTeams(season?: number): Promise<Team[]> {
   if (cached) return cached
 
   try {
-    const res = await fetchWithRetry(`${BASE_URL}/teams?sportId=1`)
+    const seasonParam = season ? `&season=${season}` : ""
+    const res = await fetchWithRetry(`${BASE_URL}/teams?sportId=1${seasonParam}`)
     const data = await safeJsonParse(res)
     const result = data?.teams || []
     setCache(cacheKey, result)
@@ -680,4 +681,116 @@ export function getDefaultSeason(): number {
     return 2025
   }
   return year
+}
+
+export async function getTeamSchedule(teamId: number, season = getDefaultSeason(), limit = 10): Promise<any[]> {
+  const cacheKey = `schedule:${teamId}:${season}:${limit}`
+  const cached = getCached<any[]>(cacheKey)
+  if (cached) return cached
+
+  try {
+    const endDate = new Date().toISOString().split("T")[0]
+    const startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]
+
+    const res = await fetchWithRetry(
+      `${BASE_URL}/schedule?sportId=1&teamId=${teamId}&season=${season}&startDate=${startDate}&endDate=${endDate}&gameType=R`,
+    )
+    const data = await safeJsonParse(res)
+
+    const games: any[] = []
+    for (const date of data?.dates || []) {
+      for (const game of date.games || []) {
+        if (game.status?.abstractGameState === "Final") {
+          games.push({
+            gamePk: game.gamePk,
+            gameDate: game.gameDate,
+            homeTeam: game.teams?.home?.team,
+            awayTeam: game.teams?.away?.team,
+          })
+        }
+      }
+    }
+
+    const result = games.slice(0, limit)
+    setCache(cacheKey, result)
+    return result
+  } catch {
+    return []
+  }
+}
+
+export interface GameUniform {
+  gamePk: number
+  gameDate?: string
+  homeTeam?: {
+    id: number
+    name: string
+    uniform?: {
+      jersey: string
+      pants: string
+      helmet: string
+      cap: string
+    }
+  }
+  awayTeam?: {
+    id: number
+    name: string
+    uniform?: {
+      jersey: string
+      pants: string
+      helmet: string
+      cap: string
+    }
+  }
+}
+
+export async function getGameUniforms(gamePks: number[]): Promise<GameUniform[]> {
+  if (gamePks.length === 0) return []
+
+  const cacheKey = `uniforms:${gamePks.join(",")}`
+  const cached = getCached<GameUniform[]>(cacheKey)
+  if (cached) return cached
+
+  try {
+    const res = await fetchWithRetry(`${BASE_URL}/uniforms/game?gamePks=${gamePks.join(",")}`)
+    const data = await safeJsonParse(res)
+
+    const uniforms: GameUniform[] = (data?.games || []).map((game: any) => ({
+      gamePk: game.gamePk,
+      gameDate: game.gameDate,
+      homeTeam: game.teams?.home
+        ? {
+            id: game.teams.home.team?.id,
+            name: game.teams.home.team?.name,
+            uniform: game.teams.home.uniform
+              ? {
+                  jersey: game.teams.home.uniform.jersey,
+                  pants: game.teams.home.uniform.pants,
+                  helmet: game.teams.home.uniform.helmet,
+                  cap: game.teams.home.uniform.cap,
+                }
+              : undefined,
+          }
+        : undefined,
+      awayTeam: game.teams?.away
+        ? {
+            id: game.teams.away.team?.id,
+            name: game.teams.away.team?.name,
+            uniform: game.teams.away.uniform
+              ? {
+                  jersey: game.teams.away.uniform.jersey,
+                  pants: game.teams.away.uniform.pants,
+                  helmet: game.teams.away.uniform.helmet,
+                  cap: game.teams.away.uniform.cap,
+                }
+              : undefined,
+          }
+        : undefined,
+    }))
+
+    setCache(cacheKey, uniforms)
+    return uniforms
+  } catch {
+    return []
+  }
 }

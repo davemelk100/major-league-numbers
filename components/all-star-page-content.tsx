@@ -6,6 +6,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Skeleton } from "@/components/ui/skeleton"
 import { getPlayerHeadshotUrl, type AwardWinner } from "@/lib/mlb-api"
 import { SeasonSelector } from "@/components/season-selector"
 
@@ -65,6 +66,24 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
     </div>
   )
 
+  const RosterGridSkeleton = () => (
+    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      {Array.from({ length: 12 }).map((_, i) => (
+        <Card key={i}>
+          <CardContent className="p-2 pl-4">
+            <div className="flex items-center gap-3">
+              <Skeleton className="h-24 w-24 rounded-lg shrink-0" />
+              <div className="flex-1 min-w-0">
+                <Skeleton className="h-5 w-32 mb-2" />
+                <Skeleton className="h-4 w-24" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  )
+
   return (
     <main className="container py-8">
       <div className="mb-6 flex items-center gap-4">
@@ -77,38 +96,49 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
         />
       </div>
 
-      <Tabs defaultValue="al" className="space-y-6">
-        <TabsList>
-          <TabsTrigger value="al">AL</TabsTrigger>
-          <TabsTrigger value="nl">NL</TabsTrigger>
-        </TabsList>
-        <TabsContent value="al">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex justify-between items-center">
-                <span>American League Roster</span>
-                <span className="text-sm font-normal text-muted-foreground">{rosters.al.length} Players</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <RosterGrid players={rosters.al} />
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="nl">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex justify-between items-center">
-                <span>National League Roster</span>
-                <span className="text-sm font-normal text-muted-foreground">{rosters.nl.length} Players</span>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <RosterGrid players={rosters.nl} />
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+      {isPending ? (
+        <Card>
+          <CardHeader>
+            <Skeleton className="h-6 w-48" />
+          </CardHeader>
+          <CardContent>
+            <RosterGridSkeleton />
+          </CardContent>
+        </Card>
+      ) : (
+        <Tabs defaultValue="al" className="space-y-6">
+          <TabsList>
+            <TabsTrigger value="al">AL</TabsTrigger>
+            <TabsTrigger value="nl">NL</TabsTrigger>
+          </TabsList>
+          <TabsContent value="al">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex justify-between items-center">
+                  <span>American League Roster</span>
+                  <span className="text-sm font-normal text-muted-foreground">{rosters.al.length} Players</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <RosterGrid players={rosters.al} />
+              </CardContent>
+            </Card>
+          </TabsContent>
+          <TabsContent value="nl">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex justify-between items-center">
+                  <span>National League Roster</span>
+                  <span className="text-sm font-normal text-muted-foreground">{rosters.nl.length} Players</span>
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <RosterGrid players={rosters.nl} />
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
+      )}
     </main>
   )
 }

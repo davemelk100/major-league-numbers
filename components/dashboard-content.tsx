@@ -10,6 +10,7 @@ import type { AwardWinner } from "@/lib/awards-data"
 import { Skeleton } from "@/components/ui/skeleton"
 import { AlertCircle } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Loader2 } from "lucide-react"
 
 // Lazy load heavy components
 const LeadersBarChart = dynamicImport(
@@ -161,6 +162,13 @@ export function DashboardContent({
         <h1 className="mb-0 shrink-0 whitespace-nowrap">Home</h1>
         <SeasonSelector season={season} onSeasonChange={setSeason} isLoading={isLoading} />
       </div>
+
+      {isLoading && !data && (
+        <div className="flex flex-col items-center justify-center py-16 gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          <p className="text-muted-foreground text-sm">Loading dashboard data...</p>
+        </div>
+      )}
 
       {/* Error message */}
       {error && (
