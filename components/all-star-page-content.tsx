@@ -79,8 +79,8 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
 
       <Tabs defaultValue="al" className="space-y-6">
         <TabsList>
-          <TabsTrigger value="al">American League</TabsTrigger>
-          <TabsTrigger value="nl">National League</TabsTrigger>
+          <TabsTrigger value="al">AL</TabsTrigger>
+          <TabsTrigger value="nl">NL</TabsTrigger>
         </TabsList>
         <TabsContent value="al">
           <Card>
