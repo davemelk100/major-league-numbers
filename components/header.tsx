@@ -7,7 +7,7 @@ import Image from "next/image"
 import { usePathname, useRouter } from "next/navigation"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
-import { Menu, X, Search } from "lucide-react"
+import { Menu, X } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -83,9 +83,9 @@ export function Header() {
               </Link>
             ))}
           </nav>
-          <Button variant="ghost" size="icon" onClick={() => setSearchOpen(!searchOpen)} aria-label="Toggle search">
+          {/* <Button variant="ghost" size="icon" onClick={() => setSearchOpen(!searchOpen)} aria-label="Toggle search">
             <Search className="h-5 w-5" />
-          </Button>
+          </Button> */}
           <Button
             variant="ghost"
             size="icon"
