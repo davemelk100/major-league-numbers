@@ -82,93 +82,13 @@ interface DashboardData {
   }
 }
 
-const MLB_API_BASE = "https://statsapi.mlb.com/api/v1"
-
-async function fetchLeaders(statGroup: string, leaderCategory: string, season: number, limit = 10) {
-  try {
-    const url = `${MLB_API_BASE}/stats/leaders?leaderCategories=${leaderCategory}&season=${season}&sportId=1&limit=${limit}&statGroup=${statGroup}`
-    const response = await fetch(url)
-    if (!response.ok) return []
-    const data = await response.json()
-    return data.leagueLeaders?.[0]?.leaders || []
-  } catch {
-    return []
-  }
-}
-
-async function fetchLeadersByLeague(
-  statGroup: string,
-  leaderCategory: string,
-  season: number,
-  leagueId: number,
-  limit = 10,
-) {
-  try {
-    const url = `${MLB_API_BASE}/stats/leaders?leaderCategories=${leaderCategory}&season=${season}&sportId=1&limit=${limit}&statGroup=${statGroup}&leagueId=${leagueId}`
-    const response = await fetch(url)
-    if (!response.ok) return []
-    const data = await response.json()
-    return data.leagueLeaders?.[0]?.leaders || []
-  } catch {
-    return []
-  }
-}
-
 async function fetchClientData(season: number): Promise<DashboardData & { error?: string }> {
   try {
-    const AL_LEAGUE_ID = 103
-    const NL_LEAGUE_ID = 104
-
-    const [
-      hrLeaders,
-      avgLeaders,
-      eraLeaders,
-      kLeaders,
-      hrLeadersAL,
-      hrLeadersNL,
-      avgLeadersAL,
-      avgLeadersNL,
-      eraLeadersAL,
-      eraLeadersNL,
-      kLeadersAL,
-      kLeadersNL,
-    ] = await Promise.all([
-      fetchLeaders("hitting", "homeRuns", season, 10),
-      fetchLeaders("hitting", "battingAverage", season, 10),
-      fetchLeaders("pitching", "earnedRunAverage", season, 10),
-      fetchLeaders("pitching", "strikeouts", season, 10),
-      fetchLeadersByLeague("hitting", "homeRuns", season, AL_LEAGUE_ID, 10),
-      fetchLeadersByLeague("hitting", "homeRuns", season, NL_LEAGUE_ID, 10),
-      fetchLeadersByLeague("hitting", "battingAverage", season, AL_LEAGUE_ID, 10),
-      fetchLeadersByLeague("hitting", "battingAverage", season, NL_LEAGUE_ID, 10),
-      fetchLeadersByLeague("pitching", "earnedRunAverage", season, AL_LEAGUE_ID, 10),
-      fetchLeadersByLeague("pitching", "earnedRunAverage", season, NL_LEAGUE_ID, 10),
-      fetchLeadersByLeague("pitching", "strikeouts", season, AL_LEAGUE_ID, 10),
-      fetchLeadersByLeague("pitching", "strikeouts", season, NL_LEAGUE_ID, 10),
-    ])
-
-    return {
-      hrLeaders,
-      avgLeaders,
-      eraLeaders,
-      kLeaders,
-      standings: [],
-      leagueLeaders: {
-        hr: { al: hrLeadersAL[0], nl: hrLeadersNL[0] },
-        avg: { al: avgLeadersAL[0], nl: avgLeadersNL[0] },
-        era: { al: eraLeadersAL[0], nl: eraLeadersNL[0] },
-      },
-      chartLeaders: {
-        hr: { al: hrLeadersAL, nl: hrLeadersNL },
-        k: { al: kLeadersAL, nl: kLeadersNL },
-      },
-      tableLeaders: {
-        hr: { al: hrLeadersAL, nl: hrLeadersNL },
-        avg: { al: avgLeadersAL, nl: avgLeadersNL },
-        era: { al: eraLeadersAL, nl: eraLeadersNL },
-        k: { al: kLeadersAL, nl: kLeadersNL },
-      },
+    const response = await fetch(`/api/dashboard?season=${season}`)
+    if (!response.ok) {
+      throw new Error("Failed to fetch data")
     }
+    return await response.json()
   } catch (error) {
     return {
       hrLeaders: [],
@@ -176,7 +96,7 @@ async function fetchClientData(season: number): Promise<DashboardData & { error?
       eraLeaders: [],
       kLeaders: [],
       standings: [],
-      error: "Failed to load MLB data. Please refresh the page.",
+      error: "Failed to load MLB data. The MLB Stats API may be temporarily unavailable.",
     }
   }
 }
