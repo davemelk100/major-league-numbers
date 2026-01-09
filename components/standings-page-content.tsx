@@ -61,7 +61,7 @@ export function StandingsPageContent({ initialStandings, initialSeason }: Standi
     <main className="container py-8">
       <div className="mb-8">
         <div className="flex items-center gap-4 mb-1">
-          <h1 className="mb-0">MLB Standings</h1>
+          <h1 className="mb-0 shrink-0 whitespace-nowrap">MLB Standings</h1>
           <SeasonSelector season={season} onSeasonChange={setSeason} />
         </div>
       </div>

@@ -164,7 +164,7 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
         </div>
         <div className="flex-1">
           <div className="mb-4 flex items-center gap-4">
-            <h1 className="mb-0">{team.name}</h1>
+            <h1 className="mb-0 shrink-0 whitespace-nowrap">{team.name}</h1>
             <SeasonSelector season={season} onSeasonChange={setSeason} />
             {loading && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
           </div>

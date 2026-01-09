@@ -135,7 +135,7 @@ export function DashboardContent({
     <main className="container py-8">
       {/* Hero Section */}
       <div className="mb-0 flex items-center gap-4">
-        <h1 className="mb-0">Home</h1>
+        <h1 className="mb-0 shrink-0 whitespace-nowrap">Home</h1>
         <SeasonSelector season={season} onSeasonChange={setSeason} isLoading={isLoading} />
       </div>
 

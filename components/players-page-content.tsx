@@ -90,7 +90,7 @@ export function PlayersPageContent({ initialPlayers, initialSeason }: PlayersPag
   return (
     <main className="container py-8">
       <div className="mb-6 flex items-center gap-4">
-        <h1 className="mb-0">Players</h1>
+        <h1 className="mb-0 shrink-0 whitespace-nowrap">Players</h1>
         <SeasonSelector season={season} onSeasonChange={setSeason} />
       </div>
 
