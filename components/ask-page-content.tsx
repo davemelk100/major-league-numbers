@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { useChat } from "@ai-sdk/react"
 import { Send, Bot, User, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -21,8 +21,9 @@ const exampleQuestions = [
 
 export function AskPageContent() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const [localInput, setLocalInput] = useState("")
 
-  const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
+  const { messages, handleSubmit, isLoading, error, append } = useChat({
     api: "/api/ask",
   })
 
@@ -32,13 +33,14 @@ export function AskPageContent() {
 
   const handleExampleClick = (question: string) => {
     if (isLoading) return
-    const syntheticEvent = {
-      preventDefault: () => {},
-    } as React.FormEvent
-    handleInputChange({ target: { value: question } } as React.ChangeEvent<HTMLInputElement>)
-    setTimeout(() => {
-      handleSubmit(syntheticEvent)
-    }, 0)
+    append({ role: "user", content: question })
+  }
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!localInput.trim() || isLoading) return
+    append({ role: "user", content: localInput })
+    setLocalInput("")
   }
 
   return (
@@ -124,18 +126,18 @@ export function AskPageContent() {
 
         {/* Input area */}
         <div className="border-t p-4">
-          <form onSubmit={handleSubmit} className="flex gap-2">
+          <form onSubmit={onSubmit} className="flex gap-2">
             <input
               id="chat-input"
               name="chat-input"
               type="text"
-              value={input}
-              onChange={handleInputChange}
+              value={localInput}
+              onChange={(e) => setLocalInput(e.target.value)}
               placeholder="Ask about baseball stats, players, or history..."
               className="flex-1 px-4 py-2 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
               disabled={isLoading}
             />
-            <Button type="submit" disabled={isLoading || !input.trim()}>
+            <Button type="submit" disabled={isLoading || !localInput.trim()}>
               {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
             </Button>
           </form>
