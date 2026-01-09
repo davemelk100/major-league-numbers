@@ -1,14 +1,16 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Menu, X } from "lucide-react";
+import type React from "react"
 
-import { Button } from "@/components/ui/button";
-import { HeaderSearch } from "@/components/header-search";
+import Link from "next/link"
+import Image from "next/image"
+import { usePathname, useRouter } from "next/navigation"
+import { useState } from "react"
+import { cn } from "@/lib/utils"
+import { Menu, X, Search } from "lucide-react"
+
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -17,11 +19,23 @@ const navigation = [
   { name: "Standings", href: "/standings" },
   { name: "All Stars", href: "/all-star" },
   { name: "HOF", href: "/hof" },
-];
+]
 
 export function Header() {
-  const pathname = usePathname();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const pathname = usePathname()
+  const router = useRouter()
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/players?search=${encodeURIComponent(searchQuery.trim())}`)
+      setSearchOpen(false)
+      setSearchQuery("")
+    }
+  }
 
   return (
     <header className="z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -36,12 +50,10 @@ export function Header() {
           />
         </Link>
 
-        <div className="flex-1 flex justify-center">
-          <HeaderSearch />
-        </div>
+        <div className="flex-1 flex justify-center"></div>
 
-        <div className="flex items-center gap-2 lg:gap-4 shrink-0">
-          <nav className="hidden xl:flex items-center gap-1">
+        <div className="flex items-center gap-2 lg:gap-4 shrink-0 ml-auto">
+          <nav className="hidden md:flex items-center gap-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -50,31 +62,59 @@ export function Header() {
                   "px-3 py-2 text-sm font-medium rounded-md transition-colors whitespace-nowrap",
                   pathname === item.href
                     ? "bg-secondary/50 text-foreground"
-                    : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                    : "text-muted-foreground hover:text-foreground hover:bg-secondary/50",
                 )}
               >
                 {item.name}
               </Link>
             ))}
           </nav>
+          <Button variant="ghost" size="icon" onClick={() => setSearchOpen(!searchOpen)} aria-label="Toggle search">
+            <Search className="h-5 w-5" />
+          </Button>
           <Button
             variant="ghost"
             size="icon"
-            className="xl:hidden"
+            className="md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
+            {mobileMenuOpen ? <X className="h-7 w-7" /> : <Menu className="h-7 w-7" />}
           </Button>
         </div>
       </div>
 
+      {searchOpen && (
+        <div className="border-t border-border bg-background animate-in slide-in-from-top duration-200">
+          <div className="container py-3">
+            <form onSubmit={handleSearch} className="flex items-center gap-2">
+              <Input
+                type="search"
+                placeholder="Search players..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="flex-1"
+                autoFocus
+              />
+              <Button type="submit" size="sm">
+                Search
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                onClick={() => setSearchOpen(false)}
+                aria-label="Close search"
+              >
+                <X className="h-5 w-5" />
+              </Button>
+            </form>
+          </div>
+        </div>
+      )}
+
       {mobileMenuOpen && (
-        <nav className="xl:hidden border-t border-border bg-background animate-in slide-in-from-top duration-200">
+        <nav className="md:hidden border-t border-border bg-background animate-in slide-in-from-top duration-200">
           <div className="container py-4 space-y-4">
             <div className="space-y-1">
               {navigation.map((item) => (
@@ -86,7 +126,7 @@ export function Header() {
                     "block px-3 py-3 text-base font-medium rounded-md transition-colors",
                     pathname === item.href
                       ? "bg-secondary text-foreground"
-                      : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+                      : "text-muted-foreground hover:text-foreground hover:bg-secondary/50",
                   )}
                 >
                   {item.name}
@@ -97,5 +137,5 @@ export function Header() {
         </nav>
       )}
     </header>
-  );
+  )
 }
