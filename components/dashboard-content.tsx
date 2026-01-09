@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import dynamic from "next/dynamic"
+import dynamicImport from "next/dynamic"
 import { StatCard } from "@/components/stat-card"
 import { LeadersTable } from "@/components/leaders-table"
 import { SeasonSelector } from "@/components/season-selector"
@@ -12,7 +12,7 @@ import { AlertCircle } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 // Lazy load heavy components
-const LeadersBarChart = dynamic(
+const LeadersBarChart = dynamicImport(
   () =>
     import("@/components/leaders-bar-chart").then((mod) => ({
       default: mod.LeadersBarChart,
@@ -23,7 +23,7 @@ const LeadersBarChart = dynamic(
   },
 )
 
-const AwardsCard = dynamic(
+const AwardsCard = dynamicImport(
   () =>
     import("@/components/awards-card").then((mod) => ({
       default: mod.AwardsCard,
@@ -33,7 +33,7 @@ const AwardsCard = dynamic(
   },
 )
 
-const TriviaPanel = dynamic(
+const TriviaPanel = dynamicImport(
   () =>
     import("@/components/trivia-card").then((mod) => ({
       default: mod.TriviaPanel,
@@ -44,7 +44,7 @@ const TriviaPanel = dynamic(
   },
 )
 
-const PlayerSpotlight = dynamic(
+const PlayerSpotlight = dynamicImport(
   () =>
     import("@/components/player-spotlight").then((mod) => ({
       default: mod.PlayerSpotlight,
