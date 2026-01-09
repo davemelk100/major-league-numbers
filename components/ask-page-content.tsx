@@ -24,31 +24,18 @@ export function AskPageContent() {
 
   const { messages, input, handleInputChange, handleSubmit, isLoading, error } = useChat({
     api: "/api/ask",
-    onError: (err) => {
-      console.log("[v0] Chat error:", err)
-    },
   })
 
   useEffect(() => {
-    console.log("[v0] Messages updated:", messages.length, "isLoading:", isLoading)
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages, isLoading])
 
-  useEffect(() => {
-    if (error) {
-      console.log("[v0] Error state:", error)
-    }
-  }, [error])
-
   const handleExampleClick = (question: string) => {
     if (isLoading) return
-    console.log("[v0] Example clicked:", question)
-    // Create a synthetic form event to submit the question
     const syntheticEvent = {
       preventDefault: () => {},
     } as React.FormEvent
     handleInputChange({ target: { value: question } } as React.ChangeEvent<HTMLInputElement>)
-    // Use setTimeout to allow state to update
     setTimeout(() => {
       handleSubmit(syntheticEvent)
     }, 0)
@@ -107,10 +94,10 @@ export function AskPageContent() {
                   >
                     {message.role === "assistant" ? (
                       <div className="text-sm prose prose-sm dark:prose-invert max-w-none prose-p:my-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0 prose-headings:my-2">
-                        <ReactMarkdown>{message.content}</ReactMarkdown>
+                        <ReactMarkdown>{message.content || ""}</ReactMarkdown>
                       </div>
                     ) : (
-                      <div className="text-sm">{message.content}</div>
+                      <div className="text-sm">{message.content || ""}</div>
                     )}
                   </div>
                   {message.role === "user" && (
