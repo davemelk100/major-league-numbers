@@ -48,6 +48,7 @@ export function Header() {
             height={100}
             className="h-auto object-contain border-0"
           />
+          <span>Major League Numbers</span>
         </Link>
 
         <div className="flex-1 flex justify-center"></div>
