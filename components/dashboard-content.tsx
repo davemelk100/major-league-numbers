@@ -188,7 +188,7 @@ export function DashboardContent({
       {/* Quick Stats */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold">League Best</h2>
+          <h2 className="font-league text-2xl font-semibold">League Best</h2>
           <Tabs value={selectedLeague} onValueChange={(value) => setSelectedLeague(value as "AL" | "NL")}>
             <TabsList>
               <TabsTrigger value="AL">AL</TabsTrigger>
@@ -221,7 +221,7 @@ export function DashboardContent({
       {/* Award Winners */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold">Award Winners</h2>
+          <h2 className="font-league text-2xl font-semibold">Award Winners</h2>
           <Tabs value={awardsLeague} onValueChange={(value) => setAwardsLeague(value as "AL" | "NL")}>
             <TabsList>
               <TabsTrigger value="AL">AL</TabsTrigger>
@@ -242,7 +242,7 @@ export function DashboardContent({
       {/* Data Visualizations Section */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold">Data Visualizations</h2>
+          <h2 className="font-league text-2xl font-semibold">Data Visualizations</h2>
           <Tabs value={chartLeague} onValueChange={(value) => setChartLeague(value as "AL" | "NL")}>
             <TabsList>
               <TabsTrigger value="AL">AL</TabsTrigger>
@@ -267,7 +267,7 @@ export function DashboardContent({
       {/* Leaders Grid */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold">League Leaders</h2>
+          <h2 className="font-league text-2xl font-semibold">League Leaders</h2>
           <div className="flex items-center gap-4">
             <Tabs value={tableLeague} onValueChange={(value) => setTableLeague(value as "AL" | "NL")}>
               <TabsList>

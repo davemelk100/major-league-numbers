@@ -59,71 +59,90 @@ export function StandingsPageContent({ initialStandings, initialSeason }: Standi
 
   return (
     <main className="container py-8">
-      <div className="mb-8">
-        <div className="flex items-center gap-4 mb-1">
-          <h1 className="mb-0 shrink-0 whitespace-nowrap">MLB Standings</h1>
-          <SeasonSelector season={season} onSeasonChange={setSeason} />
-        </div>
-      </div>
-
-      {isLoading ? (
-        <div className="flex items-center justify-center py-16">
-          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
-        </div>
-      ) : !standings || standings.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
-          <AlertCircle className="h-12 w-12 mb-4" />
-          <p className="text-lg">Unable to load standings data for {season}</p>
-          <p className="text-sm">Please try a different season</p>
-        </div>
-      ) : !hasData ? (
-        <div className="space-y-6">
-          {standings.map((division: any, idx: number) => (
-            <StandingsTable key={division.division?.id || idx} division={division} />
-          ))}
-        </div>
-      ) : (
-        <Tabs defaultValue="al" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="al">AL</TabsTrigger>
-            <TabsTrigger value="nl">NL</TabsTrigger>
-            <TabsTrigger value="all">All</TabsTrigger>
-          </TabsList>
-
-          <TabsContent value="al" className="space-y-6">
-            {sortedAL.length === 0 ? (
-              <p className="text-muted-foreground py-8 text-center">No American League standings available</p>
-            ) : (
-              sortedAL.map((division, idx) => <StandingsTable key={division.division?.id || idx} division={division} />)
+      <Tabs defaultValue="al">
+        <div className="mb-8">
+          <div className="flex items-center gap-4 mb-1">
+            <h1 className="mb-0 shrink-0 whitespace-nowrap">MLB Standings</h1>
+            <SeasonSelector
+              season={season}
+              onSeasonChange={setSeason}
+              className="w-auto py-0 hover:bg-transparent"
+            />
+            {!isLoading && standings && standings.length > 0 && hasData && (
+              <TabsList className="hidden md:inline-flex">
+                <TabsTrigger value="al">AL</TabsTrigger>
+                <TabsTrigger value="nl">NL</TabsTrigger>
+                <TabsTrigger value="all">All</TabsTrigger>
+              </TabsList>
             )}
-          </TabsContent>
+          </div>
+        </div>
 
-          <TabsContent value="nl" className="space-y-6">
-            {sortedNL.length === 0 ? (
-              <p className="text-muted-foreground py-8 text-center">No National League standings available</p>
-            ) : (
-              sortedNL.map((division, idx) => <StandingsTable key={division.division?.id || idx} division={division} />)
-            )}
-          </TabsContent>
+        {isLoading ? (
+          <div className="flex items-center justify-center py-16">
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          </div>
+        ) : !standings || standings.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-16 text-muted-foreground">
+            <AlertCircle className="h-12 w-12 mb-4" />
+            <p className="text-lg">Unable to load standings data for {season}</p>
+            <p className="text-sm">Please try a different season</p>
+          </div>
+        ) : !hasData ? (
+          <div className="space-y-6">
+            {standings.map((division: any, idx: number) => (
+              <StandingsTable key={division.division?.id || idx} division={division} />
+            ))}
+          </div>
+        ) : (
+          <>
+            <TabsList className="md:hidden w-full mb-6">
+              <TabsTrigger value="al" className="flex-1">
+                AL
+              </TabsTrigger>
+              <TabsTrigger value="nl" className="flex-1">
+                NL
+              </TabsTrigger>
+              <TabsTrigger value="all" className="flex-1">
+                All
+              </TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="all" className="space-y-6">
-            <div className="grid gap-6 xl:grid-cols-2">
-              <div className="space-y-6">
-                <h2 className="text-xl font-semibold">American League</h2>
-                {sortedAL.map((division, idx) => (
-                  <StandingsTable key={division.division?.id || idx} division={division} />
-                ))}
+            <TabsContent value="al" className="space-y-6">
+              {sortedAL.length === 0 ? (
+                <p className="text-muted-foreground py-8 text-center">No American League standings available</p>
+              ) : (
+                sortedAL.map((division, idx) => <StandingsTable key={division.division?.id || idx} division={division} />)
+              )}
+            </TabsContent>
+
+            <TabsContent value="nl" className="space-y-6">
+              {sortedNL.length === 0 ? (
+                <p className="text-muted-foreground py-8 text-center">No National League standings available</p>
+              ) : (
+                sortedNL.map((division, idx) => <StandingsTable key={division.division?.id || idx} division={division} />)
+              )}
+            </TabsContent>
+
+            <TabsContent value="all" className="space-y-6">
+              <div className="grid gap-6 xl:grid-cols-2">
+                <div className="space-y-6">
+                  <h2 className="font-league text-2xl font-semibold">American League</h2>
+                  {sortedAL.map((division, idx) => (
+                    <StandingsTable key={division.division?.id || idx} division={division} />
+                  ))}
+                </div>
+                <div className="space-y-6">
+                  <h2 className="font-league text-2xl font-semibold">National League</h2>
+                  {sortedNL.map((division, idx) => (
+                    <StandingsTable key={division.division?.id || idx} division={division} />
+                  ))}
+                </div>
               </div>
-              <div className="space-y-6">
-                <h2 className="text-xl font-semibold">National League</h2>
-                {sortedNL.map((division, idx) => (
-                  <StandingsTable key={division.division?.id || idx} division={division} />
-                ))}
-              </div>
-            </div>
-          </TabsContent>
-        </Tabs>
-      )}
+            </TabsContent>
+          </>
+        )}
+      </Tabs>
     </main>
   )
 }

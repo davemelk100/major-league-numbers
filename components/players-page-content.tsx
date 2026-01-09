@@ -89,19 +89,18 @@ export function PlayersPageContent({ initialPlayers, initialSeason }: PlayersPag
 
   return (
     <main className="container py-8">
-      <div className="mb-6 flex items-center gap-4">
+      <div className="mb-6 flex flex-wrap md:flex-nowrap items-center gap-4">
         <h1 className="mb-0 shrink-0 whitespace-nowrap">Players</h1>
         <SeasonSelector season={season} onSeasonChange={setSeason} />
-      </div>
-
-      <div className="mb-8">
-        <Suspense fallback={<div className="h-10 bg-secondary rounded-md animate-pulse max-w-xl" />}>
-          <PlayerSearch />
-        </Suspense>
+        <div className="w-full order-last md:w-full md:max-w-xs md:ml-auto md:order-none">
+          <Suspense fallback={<div className="h-10 bg-secondary rounded-md animate-pulse" />}>
+            <PlayerSearch />
+          </Suspense>
+        </div>
       </div>
 
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold">
+        <h2 className="font-league text-2xl font-semibold">
           {season} {showAll ? "All Players" : "Featured Players"}
           {(isLoading || isFetchingAll) && (
             <Loader2 className="inline-block ml-2 h-4 w-4 animate-spin text-muted-foreground" />

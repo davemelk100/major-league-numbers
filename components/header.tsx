@@ -46,10 +46,10 @@ export function Header() {
             alt="Major League Numbers Logo"
             width={120}
             height={100}
-            className="h-auto object-contain border-0"
+            className="h-auto w-16 lg:w-[120px] object-contain border-0"
           />
         </Link>
-        <span className="hidden sm:inline text-[36px] font-league" style={{ color: "#d42821" }}>
+        <span className="text-2xl lg:text-4xl font-league whitespace-nowrap" style={{ color: "#d42821" }}>
           Major League Numbers
         </span>
         <div className="flex-1 flex justify-center"></div>

@@ -27,7 +27,7 @@ export function AskPageContent() {
 
   const messages = chatHelpers.messages
   const input = chatHelpers.input ?? ""
-  const handleInputChange = chatHelpers.handleInputChange ?? (() => {})
+  const handleInputChange = chatHelpers.handleInputChange ?? (() => { })
   const handleSubmit = chatHelpers.handleSubmit
   const isLoading = chatHelpers.isLoading
   const error = chatHelpers.error
@@ -69,7 +69,7 @@ export function AskPageContent() {
           {messages.length === 0 && !error ? (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <Bot className="h-12 w-12 text-muted-foreground/50 mb-4" />
-              <h2 className="text-lg font-semibold mb-2">What would you like to know?</h2>
+              <h2 className="font-league text-2xl font-semibold mb-2">What would you like to know?</h2>
               <p className="text-sm text-muted-foreground mb-6 max-w-md">
                 Ask me anything about baseball statistics, player comparisons, team history, or MLB records.
               </p>

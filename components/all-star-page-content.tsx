@@ -1,12 +1,14 @@
 "use client"
 
-import { useTransition } from "react"
+import { useTransition, useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Input } from "@/components/ui/input"
+import { Search } from "lucide-react"
 import { getPlayerHeadshotUrl, type AwardWinner } from "@/lib/mlb-api"
 import { SeasonSelector } from "@/components/season-selector"
 
@@ -21,11 +23,18 @@ interface AllStarPageContentProps {
 export function AllStarPageContent({ initialSeason, rosters }: AllStarPageContentProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
+  const [searchQuery, setSearchQuery] = useState("")
 
   const handleSeasonChange = (season: number) => {
     startTransition(() => {
       router.push(`/all-star?season=${season}`)
     })
+  }
+
+  // Filter rosters based on search query
+  const filteredRosters = {
+    al: rosters.al.filter((player) => player.playerName.toLowerCase().includes(searchQuery.toLowerCase())),
+    nl: rosters.nl.filter((player) => player.playerName.toLowerCase().includes(searchQuery.toLowerCase())),
   }
 
   const RosterGrid = ({ players }: { players: AwardWinner[] }) => (
@@ -60,7 +69,7 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
         ))
       ) : (
         <div className="col-span-full py-12 text-center text-muted-foreground">
-          No All-Star data available for this league/season.
+          {searchQuery ? "No players match your search." : "No All-Star data available for this league/season."}
         </div>
       )}
     </div>
@@ -86,7 +95,7 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
 
   return (
     <main className="container py-8">
-      <div className="mb-6 flex items-center gap-4">
+      <div className="mb-6 flex flex-wrap md:flex-nowrap items-center gap-4">
         <h1 className="mb-0 shrink-0 whitespace-nowrap">All-Star Game Rosters</h1>
         <SeasonSelector
           season={initialSeason}
@@ -94,6 +103,15 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
           isLoading={isPending}
           startYear={1933}
         />
+        <div className="w-full order-last md:w-full md:max-w-xs md:ml-auto md:order-none relative">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Input
+            placeholder="Search All-Stars..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
       </div>
 
       {isPending ? (
@@ -116,11 +134,11 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
               <CardHeader>
                 <CardTitle className="flex justify-between items-center">
                   <span>American League Roster</span>
-                  <span className="text-sm font-normal text-muted-foreground">{rosters.al.length} Players</span>
+                  <span className="text-sm font-normal text-muted-foreground">{filteredRosters.al.length} Players</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <RosterGrid players={rosters.al} />
+                <RosterGrid players={filteredRosters.al} />
               </CardContent>
             </Card>
           </TabsContent>
@@ -129,11 +147,11 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
               <CardHeader>
                 <CardTitle className="flex justify-between items-center">
                   <span>National League Roster</span>
-                  <span className="text-sm font-normal text-muted-foreground">{rosters.nl.length} Players</span>
+                  <span className="text-sm font-normal text-muted-foreground">{filteredRosters.nl.length} Players</span>
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <RosterGrid players={rosters.nl} />
+                <RosterGrid players={filteredRosters.nl} />
               </CardContent>
             </Card>
           </TabsContent>
