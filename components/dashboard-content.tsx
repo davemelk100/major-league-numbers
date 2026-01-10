@@ -185,7 +185,7 @@ export function DashboardContent({
       </div>
 
       {/* Quick Stats */}
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="font-league text-2xl font-semibold">League Best</h2>
           <Tabs value={selectedLeague} onValueChange={(value) => setSelectedLeague(value as "AL" | "NL")}>
@@ -215,7 +215,7 @@ export function DashboardContent({
             description={isLoading ? "Loading..." : undefined}
           />
         </div>
-      </div>
+      </div> */}
 
       {/* Award Winners */}
       <div className="mb-8">
