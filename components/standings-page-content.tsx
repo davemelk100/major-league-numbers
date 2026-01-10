@@ -58,11 +58,11 @@ export function StandingsPageContent({ initialStandings, initialSeason }: Standi
   const hasData = sortedAL.length > 0 || sortedNL.length > 0
 
   return (
-    <main className="container py-8">
+    <main className="container py-2">
       <Tabs defaultValue="al">
         <div className="mb-8">
           <div className="flex items-center gap-4 mb-1">
-            <h1 className="mb-0 shrink-0 whitespace-nowrap">MLB Standings</h1>
+            <h1 className="mb-0 shrink-0 whitespace-nowrap">Standings</h1>
             <SeasonSelector
               season={season}
               onSeasonChange={setSeason}

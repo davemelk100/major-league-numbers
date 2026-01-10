@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: TeamPageProps): Promise<Metad
 
 function TeamDetailSkeleton() {
   return (
-    <main className="container py-8">
+    <main className="container py-2">
       <Skeleton className="h-4 w-32 mb-6" />
       <div className="flex items-center gap-4 mb-8">
         <Skeleton className="h-16 md:h-24 w-24 rounded-lg" />

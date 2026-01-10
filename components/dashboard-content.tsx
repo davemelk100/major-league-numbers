@@ -156,7 +156,7 @@ export function DashboardContent({
   }
 
   return (
-    <main className="container py-8">
+    <main className="container py-2">
       {/* Hero Section */}
       <div className="mb-0 flex items-center gap-4">
         <h1 className="mb-0 shrink-0 whitespace-nowrap">Home</h1>

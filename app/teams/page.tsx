@@ -54,7 +54,7 @@ export default function TeamsPage() {
   return (
     <Suspense
       fallback={
-        <main className="container py-8">
+        <main className="container py-2">
           <Skeleton className="h-10 w-64 mb-8" />
           <TeamsGridSkeleton />
         </main>

@@ -138,7 +138,7 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
 
   if (!team) {
     return (
-      <main className="container py-8">
+      <main className="container py-2">
         <Link
           href="/teams"
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
@@ -165,7 +165,7 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
   const dh = roster.filter((p) => p.primaryPosition?.abbreviation === "DH")
 
   return (
-    <main className="container py-8">
+    <main className="container py-2">
       <Link
         href="/teams"
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-6 transition-colors"
@@ -241,13 +241,12 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
               </CardHeader>
               <CardContent>
                 <p
-                  className={`text-2xl font-bold ${
-                    teamRecord.runDifferential > 0
+                  className={`text-2xl font-bold ${teamRecord.runDifferential > 0
                       ? "text-green-500"
                       : teamRecord.runDifferential < 0
                         ? "text-red-500"
                         : ""
-                  }`}
+                    }`}
                 >
                   {teamRecord.runDifferential > 0 ? "+" : ""}
                   {teamRecord.runDifferential}

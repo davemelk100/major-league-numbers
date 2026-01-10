@@ -43,7 +43,7 @@ export function HofPageContent({ hofMembers }: HofPageContentProps) {
     .sort((a, b) => b - a)
 
   return (
-    <main className="container py-8">
+    <main className="container py-2">
       <div className="mb-8 flex flex-wrap md:flex-nowrap items-center gap-4">
         <div className="flex items-center gap-4">
           <h1 className="shrink-0 whitespace-nowrap">Hall of Fame</h1>

@@ -104,7 +104,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
           },
         ]}
       />
-      <main className="container py-8">
+      <main className="container py-2">
         {/* Back button */}
         <Button variant="ghost" size="sm" asChild className="mb-6">
           <Link href="/players">
