@@ -1,5 +1,6 @@
 import { streamText, type CoreMessage } from "ai"
 import { gateway } from "@ai-sdk/gateway"
+import { openai } from "@ai-sdk/openai"
 
 export const maxDuration = 30
 
@@ -49,8 +50,14 @@ export async function POST(req: Request) {
       })
     )
 
+    // Use OpenAI directly if OPENAI_API_KEY is set (for Netlify/other hosts)
+    // Otherwise use Vercel AI Gateway (for Vercel deployments)
+    const model = process.env.OPENAI_API_KEY
+      ? openai("gpt-4o-mini")
+      : gateway("openai/gpt-4o-mini")
+
     const result = streamText({
-      model: gateway("openai/gpt-4o-mini"),
+      model,
       system: SYSTEM_PROMPT,
       messages: coreMessages,
     })
