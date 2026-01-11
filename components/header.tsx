@@ -29,13 +29,13 @@ export function Header() {
             className="h-auto object-contain border-0"
           />
         </Link>
-        <span className="text-2xl sm:text-3xl lg:text-[48px] font-league whitespace-nowrap" style={{ color: "#d42821" }}>
+        <span className="text-2xl sm:text-3xl min-[1300px]:text-[48px] font-league whitespace-nowrap" style={{ color: "#d42821" }}>
           Major League Numbers
         </span>
         <div className="flex-1 flex justify-center"></div>
 
-        {/* ChatMLB button and nav - desktop only */}
-        <div className="hidden lg:flex items-center gap-2 lg:gap-4 shrink-0">
+        {/* ChatMLB button and nav - 1300px+ only */}
+        <div className="hidden min-[1300px]:flex items-center gap-2 min-[1300px]:gap-4 shrink-0">
           <Link
             href="/ask"
             className={cn(
@@ -68,8 +68,8 @@ export function Header() {
         </div>
       </div>
 
-      {/* ChatMLB button row for tablet and mobile */}
-      <div className="lg:hidden container mt-3">
+      {/* ChatMLB button row for < 1300px */}
+      <div className="min-[1300px]:hidden container mt-3">
         <Link
           href="/ask"
           className={cn(

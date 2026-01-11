@@ -30,9 +30,8 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   icons: {
-    icon: "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 fontSize=%2290%22>⚾</text></svg>",
-    apple:
-      "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 fontSize=%2290%22>⚾</text></svg>",
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
   },
   keywords: [
     "MLB",
@@ -106,7 +105,7 @@ export default function RootLayout({
       <body className={`font-sans antialiased min-h-screen flex flex-col ${leagueGothic.variable}`}>
         <Header />
         <Suspense fallback={<PageLoader />}>
-          <div className="pb-16 lg:pb-0">{children}</div>
+          <div className="pb-16 min-[1300px]:pb-0">{children}</div>
         </Suspense>
         <Footer />
         <FooterNav />

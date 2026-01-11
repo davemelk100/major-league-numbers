@@ -19,7 +19,7 @@ export function FooterNav() {
   const pathname = usePathname()
 
   return (
-    <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border safe-area-bottom">
+    <nav className="min-[1300px]:hidden fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border safe-area-bottom">
       <div className="flex items-center justify-around px-2 py-2">
         {navigation.map((item) => {
           const Icon = item.icon

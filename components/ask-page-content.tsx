@@ -112,7 +112,7 @@ export function AskPageContent() {
                     )}
                   >
                     {message.role === "assistant" ? (
-                      <div className="text-sm prose dark:prose-invert max-w-none prose-p:my-1 prose-p:text-sm prose-ul:my-1 prose-ol:my-1 prose-li:my-0 prose-li:text-sm prose-headings:my-2 prose-headings:text-base">
+                      <div className="prose dark:prose-invert max-w-none text-sm [&_p]:text-sm [&_li]:text-sm [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0 [&_h1]:text-base [&_h2]:text-base [&_h3]:text-sm [&_h1]:my-2 [&_h2]:my-2 [&_h3]:my-1">
                         <ReactMarkdown>{getMessageText(message)}</ReactMarkdown>
                       </div>
                     ) : (
