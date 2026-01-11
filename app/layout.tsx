@@ -8,7 +8,7 @@ import { FooterNav } from "@/components/footer-nav"
 import { PageLoader } from "@/components/page-loader"
 import { WebsiteJsonLd } from "@/components/json-ld"
 import { Toaster } from "@/components/ui/sonner"
-import { Analytics } from "@vercel/analytics/react"
+// import { Analytics } from "@vercel/analytics/react"
 import "@/styles/globals.css"
 
 const _geist = Geist({ subsets: ["latin"] })
@@ -111,7 +111,7 @@ export default function RootLayout({
         <Footer />
         <FooterNav />
         <Toaster />
-        <Analytics />
+        {/* <Analytics /> */}
       </body>
     </html>
   )
