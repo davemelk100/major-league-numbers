@@ -49,13 +49,13 @@ export async function POST(req: Request) {
       })
     )
 
-    const result = await streamText({
+    const result = streamText({
       model: gateway("openai/gpt-4o-mini"),
       system: SYSTEM_PROMPT,
       messages: coreMessages,
     })
 
-    return result.toDataStreamResponse()
+    return result.toUIMessageStreamResponse()
   } catch (error) {
     console.error("[v0] API ask error:", error)
     return new Response(

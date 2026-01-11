@@ -1,7 +1,8 @@
 "use client"
 
-import { useRef, useEffect } from "react"
-import { useChat, type Message } from "@ai-sdk/react"
+import { useRef, useEffect, useState, useMemo } from "react"
+import { useChat } from "@ai-sdk/react"
+import { DefaultChatTransport, type UIMessage } from "ai"
 import { Send, Bot, User, Loader2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -9,8 +10,14 @@ import { cn } from "@/lib/utils"
 import ReactMarkdown from "react-markdown"
 
 // Helper to extract text content from a message
-function getMessageText(message: Message): string {
-  return message.content
+function getMessageText(message: UIMessage): string {
+  if (message.parts && Array.isArray(message.parts)) {
+    return message.parts
+      .filter((part): part is { type: "text"; text: string } => part.type === "text")
+      .map((part) => part.text)
+      .join("")
+  }
+  return ""
 }
 
 const exampleQuestions = [
@@ -21,22 +28,31 @@ const exampleQuestions = [
 export function AskPageContent() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
+  const [input, setInput] = useState("")
 
-  const { messages, input, setInput, handleSubmit, isLoading, error, append } = useChat({
-    api: "/api/ask",
+  const transport = useMemo(() => new DefaultChatTransport({ api: "/api/ask" }), [])
+
+  const { messages, sendMessage, status, error } = useChat({
+    transport,
   })
+
+  const isLoading = status === "streaming" || status === "submitted"
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages, isLoading])
 
-  const handleExampleClick = (question: string) => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!input.trim() || isLoading) return
+    const message = input.trim()
+    setInput("")
+    await sendMessage({ text: message })
+  }
+
+  const handleExampleClick = async (question: string) => {
     if (isLoading) return
-    // Use append to directly send the message
-    append({
-      role: "user",
-      content: question,
-    })
+    await sendMessage({ text: question })
   }
 
   return (
@@ -129,14 +145,14 @@ export function AskPageContent() {
               id="chat-input"
               name="chat-input"
               type="text"
-              value={input ?? ""}
+              value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about baseball stats, players, or history..."
               className="flex-1 px-4 py-2 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
               disabled={isLoading}
               autoComplete="off"
             />
-            <Button type="submit" disabled={isLoading || !input?.trim()}>
+            <Button type="submit" disabled={isLoading || !input.trim()}>
               {isLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
             </Button>
           </form>
