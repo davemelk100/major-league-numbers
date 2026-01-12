@@ -1,10 +1,9 @@
-import { type NextRequest, NextResponse } from "next/server"
-import { getLeaders, getLeadersByLeague, getStandings } from "@/lib/mlb-api"
-import { getMVPWinnersStatic, getCyYoungWinnersStatic } from "@/lib/awards-data"
+import { type NextRequest, NextResponse } from "next/server";
+import { getLeaders, getLeadersByLeague, getStandings } from "@/lib/mlb-api";
 
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams
-  const season = Number.parseInt(searchParams.get("season") || "2024")
+  const searchParams = request.nextUrl.searchParams;
+  const season = Number.parseInt(searchParams.get("season") || "2024");
 
   try {
     const [
@@ -19,14 +18,15 @@ export async function GET(request: NextRequest) {
       avgLeadersNLTop,
       eraLeadersALTop,
       eraLeadersNLTop,
-      hrLeadersALChart,
-      hrLeadersNLChart,
-      kLeadersALChart,
-      kLeadersNLChart,
       avgLeadersALTable,
       avgLeadersNLTable,
       eraLeadersALTable,
       eraLeadersNLTable,
+      
+      kLeadersALTable,
+      kLeadersNLTable,
+      hrLeadersALTable,
+      hrLeadersNLTable,
     ] = await Promise.all([
       getLeaders("hitting", "homeRuns", season, 10),
       getLeaders("hitting", "battingAverage", season, 10),
@@ -39,18 +39,15 @@ export async function GET(request: NextRequest) {
       getLeadersByLeague("hitting", "battingAverage", 104, season, 1),
       getLeadersByLeague("pitching", "earnedRunAverage", 103, season, 1),
       getLeadersByLeague("pitching", "earnedRunAverage", 104, season, 1),
-      getLeadersByLeague("hitting", "homeRuns", 103, season, 10),
-      getLeadersByLeague("hitting", "homeRuns", 104, season, 10),
-      getLeadersByLeague("pitching", "strikeouts", 103, season, 10),
-      getLeadersByLeague("pitching", "strikeouts", 104, season, 10),
       getLeadersByLeague("hitting", "battingAverage", 103, season, 5),
       getLeadersByLeague("hitting", "battingAverage", 104, season, 5),
       getLeadersByLeague("pitching", "earnedRunAverage", 103, season, 5),
       getLeadersByLeague("pitching", "earnedRunAverage", 104, season, 5),
-    ])
-
-    const mvpWinners = getMVPWinnersStatic()
-    const cyYoungWinners = getCyYoungWinnersStatic()
+      getLeadersByLeague("pitching", "strikeouts", 103, season, 5),
+      getLeadersByLeague("pitching", "strikeouts", 104, season, 5),
+      getLeadersByLeague("hitting", "homeRuns", 103, season, 5),
+      getLeadersByLeague("hitting", "homeRuns", 104, season, 5),
+    ]);
 
     return NextResponse.json({
       hrLeaders,
@@ -58,26 +55,23 @@ export async function GET(request: NextRequest) {
       eraLeaders,
       kLeaders,
       standings,
-      mvpWinners,
-      cyYoungWinners,
       leagueLeaders: {
         hr: { al: hrLeadersALTop[0], nl: hrLeadersNLTop[0] },
         avg: { al: avgLeadersALTop[0], nl: avgLeadersNLTop[0] },
         era: { al: eraLeadersALTop[0], nl: eraLeadersNLTop[0] },
       },
-      chartLeaders: {
-        hr: { al: hrLeadersALChart, nl: hrLeadersNLChart },
-        k: { al: kLeadersALChart, nl: kLeadersNLChart },
-      },
       tableLeaders: {
-        hr: { al: hrLeadersALChart, nl: hrLeadersNLChart },
+        hr: { al: hrLeadersALTable, nl: hrLeadersNLTable },
         avg: { al: avgLeadersALTable, nl: avgLeadersNLTable },
         era: { al: eraLeadersALTable, nl: eraLeadersNLTable },
-        k: { al: kLeadersALChart, nl: kLeadersNLChart },
+        k: { al: kLeadersALTable, nl: kLeadersNLTable },
       },
-    })
+    });
   } catch (error) {
-    console.error("Failed to fetch dashboard data:", error)
-    return NextResponse.json({ error: "Failed to fetch data" }, { status: 500 })
+    console.error("Failed to fetch dashboard data:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch data" },
+      { status: 500 }
+    );
   }
 }

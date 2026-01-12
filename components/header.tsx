@@ -60,26 +60,23 @@ export function Header() {
       </div>
 
       {/* ChatMLB button row - all viewports */}
-      <div className="container mt-3">
-        <Link
-          href="/ask"
-          className={cn(
-            "flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-medium rounded-md transition-colors",
-            pathname === "/ask"
-              ? "bg-secondary/50 text-foreground"
-              : "bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-          )}
-        >
-          <Image
-            src="/chat-mlb.svg"
-            alt=""
-            width={100}
-            height={100}
-            className="h-[40px] w-auto"
-          />
-          <span className="text-lg">ChatMLB</span>
-        </Link>
-      </div>
+      {pathname !== "/ask" && (
+        <div className="container mt-3">
+          <Link
+            href="/ask"
+            className="flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-medium rounded-md transition-colors bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+          >
+            <Image
+              src="/chat-mlb.svg"
+              alt=""
+              width={100}
+              height={100}
+              className="h-[40px] w-auto"
+            />
+            <span className="text-lg">ChatMLB</span>
+          </Link>
+        </div>
+      )}
     </header>
   );
 }
