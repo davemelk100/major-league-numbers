@@ -3,16 +3,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
-
-export const navigation = [
-  { name: "Home", href: "/" },
-  { name: "Players", href: "/players" },
-  { name: "Teams", href: "/teams" },
-  { name: "Standings", href: "/standings" },
-  { name: "All Stars", href: "/all-star" },
-  { name: "HOF", href: "/hof" },
-];
 
 export function Header() {
   const pathname = usePathname();
@@ -38,33 +28,12 @@ export function Header() {
         >
           Major League Numbers
         </span>
-        <div className="flex-1 flex justify-center"></div>
-
-        {/* Nav links - 1300px+ only */}
-        <nav className="hidden min-[1300px]:flex items-center gap-1 shrink-0">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className={cn(
-                "px-3 py-2 text-xs font-medium rounded-md transition-colors whitespace-nowrap",
-                pathname === item.href
-                  ? "bg-secondary/50 text-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-      </div>
-
-      {/* ChatMLB button row - all viewports */}
-      {pathname !== "/ask" && (
-        <div className="container mt-3">
+        <div className="flex-1 hidden sm:block" />
+        {/* ChatMLB button - desktop (same row) */}
+        {pathname !== "/ask" && (
           <Link
             href="/ask"
-            className="shadow-lg flex items-center justify-center gap-2 w-full px-4 py-3 text-sm font-medium rounded-md transition-colors bg-muted/50 text-muted-foreground hover:text-foreground hover:bg-secondary/50"
+            className="hidden sm:flex shadow-lg items-center justify-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors bg-gradient-to-r from-blue-600 to-red-600 text-white hover:from-blue-700 hover:to-red-700 w-1/2"
           >
             <Image
               src="/chat-mlb.svg"
@@ -73,7 +42,25 @@ export function Header() {
               height={100}
               className="h-[40px] w-auto"
             />
-            <span className="text-lg">ChatMLB</span>
+            <span className="text-xl">Try ChatMLB!</span>
+          </Link>
+        )}
+      </div>
+      {/* ChatMLB button - mobile (own row) */}
+      {pathname !== "/ask" && (
+        <div className="sm:hidden container mt-3">
+          <Link
+            href="/ask"
+            className="shadow-lg flex items-center justify-center gap-2 w-full px-4 py-2 text-sm font-medium rounded-md transition-colors bg-gradient-to-r from-blue-600 to-red-600 text-white hover:from-blue-700 hover:to-red-700"
+          >
+            <Image
+              src="/chat-mlb.svg"
+              alt=""
+              width={100}
+              height={100}
+              className="h-[40px] w-auto"
+            />
+            <span className="text-xl">Try ChatMLB!</span>
           </Link>
         </div>
       )}

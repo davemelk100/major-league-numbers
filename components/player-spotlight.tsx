@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { User, Award } from "lucide-react";
+import { User, Lightbulb } from "lucide-react";
 import {
   getDailyPlayer,
-  getDailyManager,
+  getDailyFact,
   getDailyTeam,
   type SpotlightPlayer,
-  type SpotlightManager,
+  type RandomFact,
   type SpotlightTeam,
 } from "@/lib/player-spotlight-data";
 import { getPlayerHeadshotUrl, getTeamLogoUrl } from "@/lib/mlb-api";
@@ -16,18 +16,17 @@ import Link from "next/link";
 
 export function PlayerSpotlight() {
   const [player, setPlayer] = useState<SpotlightPlayer | null>(null);
-  const [manager, setManager] = useState<SpotlightManager | null>(null);
+  const [fact, setFact] = useState<RandomFact | null>(null);
   const [team, setTeam] = useState<SpotlightTeam | null>(null);
   const [playerImageError, setPlayerImageError] = useState(false);
-  const [managerImageError, setManagerImageError] = useState(false);
 
   useEffect(() => {
     setPlayer(getDailyPlayer());
-    setManager(getDailyManager());
+    setFact(getDailyFact());
     setTeam(getDailyTeam());
   }, []);
 
-  if (!player || !manager || !team) return null;
+  if (!player || !fact || !team) return null;
 
   return (
     <div className="w-full h-full bg-muted/30 rounded-lg border p-3 sm:p-4">
@@ -82,41 +81,21 @@ export function PlayerSpotlight() {
           </div>
         </div>
 
-        {/* Manager of the Day */}
+        {/* Random Fact */}
         <div className="space-y-2 border-t border-border pt-4 lg:pt-0 lg:border-t-0">
           <span className="text-base font-semibold text-primary uppercase tracking-wider">
-            Manager of the Day
+            Random Fact
           </span>
-          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center">
-            <div className="shrink-0 relative overflow-hidden rounded-xl">
-              {!managerImageError ? (
-                <Image
-                  src={
-                    getPlayerHeadshotUrl(manager.id, "large") ||
-                    "/placeholder.svg"
-                  }
-                  alt={manager.name}
-                  width={64}
-                  height={64}
-                  style={{ width: "auto", height: "64px" }}
-                  className="rounded-xl"
-                  onError={() => setManagerImageError(true)}
-                />
-              ) : (
-                <div className="w-[64px] h-[64px] bg-muted flex items-center justify-center rounded-xl">
-                  <Award className="h-6 w-6 text-muted-foreground" />
-                </div>
-              )}
+          <div className="flex gap-3 items-start">
+            <div className="shrink-0 w-[48px] h-[48px] bg-primary/10 flex items-center justify-center rounded-xl">
+              <Lightbulb className="h-6 w-6 text-primary" />
             </div>
             <div className="space-y-0.5 flex-1 min-w-0">
-              <p className="text-lg font-bold truncate">{manager.name}</p>
-              <div className="flex flex-wrap gap-x-2 text-xs text-muted-foreground">
-                <span>{manager.team}</span>
-                <span>•</span>
-                <span>{manager.years}</span>
-              </div>
-              <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
-                {manager.fact}
+              <span className="inline-block text-xs font-medium px-2 py-0.5 bg-muted rounded-full text-muted-foreground">
+                {fact.category}
+              </span>
+              <p className="text-sm text-foreground leading-relaxed">
+                {fact.fact}
               </p>
             </div>
           </div>
