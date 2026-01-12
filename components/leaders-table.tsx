@@ -3,6 +3,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import Link from "next/link"
+import Image from "next/image"
+import { getPlayerHeadshotUrl } from "@/lib/mlb-api"
 
 interface Leader {
   rank: number
@@ -44,9 +46,18 @@ export function LeadersTable({ title, leaders, statLabel }: LeadersTableProps) {
               <TableRow key={leader.person.id}>
                 <TableCell className="text-center text-muted-foreground">{leader.rank}</TableCell>
                 <TableCell>
-                  <Link href={`/players/${leader.person.id}`} className="hover:text-primary transition-colors">
-                    <div className="font-medium">{leader.person.fullName}</div>
-                    {leader.team && <div className="text-xs text-muted-foreground">{leader.team.name}</div>}
+                  <Link href={`/players/${leader.person.id}`} className="flex items-center gap-2 hover:text-primary transition-colors">
+                    <Image
+                      src={getPlayerHeadshotUrl(leader.person.id, "small") || "/placeholder.svg"}
+                      alt={leader.person.fullName}
+                      width={40}
+                      height={40}
+                      className="rounded-full shrink-0"
+                    />
+                    <div className="min-w-0">
+                      <div className="font-medium">{leader.person.fullName}</div>
+                      {leader.team && <div className="text-xs text-muted-foreground">{leader.team.name}</div>}
+                    </div>
                   </Link>
                 </TableCell>
                 <TableCell className="text-right font-mono font-semibold">{leader.value}</TableCell>

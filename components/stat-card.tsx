@@ -46,6 +46,10 @@ export function StatCard({ title, value, description, leaders, icon: Icon, trend
                 <div key={idx} className="flex items-center gap-3">
                   {leader.playerId ? (
                     <Link href={`/players/${leader.playerId}`} className="flex items-center gap-3 w-full hover:bg-muted/50 rounded-lg transition-colors p-1 -m-1">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-bold text-foreground">{leader.value}</p>
+                        <p className="text-muted-foreground truncate">{leader.name}</p>
+                      </div>
                       <div
                         role="button"
                         tabIndex={0}
@@ -71,10 +75,6 @@ export function StatCard({ title, value, description, leaders, icon: Icon, trend
                           style={{ width: 'auto', height: '75px' }}
                           className="rounded-lg"
                         />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className="font-bold text-foreground">{leader.value}</p>
-                        <p className="text-muted-foreground truncate">{leader.name}</p>
                       </div>
                     </Link>
                   ) : (
