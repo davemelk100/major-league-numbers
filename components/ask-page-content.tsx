@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState, useMemo } from "react";
+import { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { Send, Bot, User, Loader2 } from "lucide-react";
@@ -21,10 +21,29 @@ function getMessageText(message: UIMessage): string {
   return "";
 }
 
+const chatPrompts = [
+  "Let's talk about baseball - fire away!",
+  "What's on your mind about America's pastime?",
+  "Ready to dive into some baseball history?",
+  "Ask me anything about the diamond!",
+  "Got a baseball question? I'm all ears!",
+  "Let's geek out on some stats!",
+  "Who's your favorite player? Let's chat!",
+  "From Babe Ruth to Shohei Ohtani - ask away!",
+  "Time to talk balls and strikes!",
+  "What baseball mystery can I solve for you?",
+  "Ready to crunch some numbers?",
+  "Let's settle some baseball debates!",
+  "Your personal baseball encyclopedia awaits!",
+  "What would you like to know about the game?",
+  "From spring training to the World Series - I'm here!",
+];
+
 export function AskPageContent() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [input, setInput] = useState("");
+  const [randomPrompt, setRandomPrompt] = useState("");
 
   const transport = useMemo(
     () => new DefaultChatTransport({ api: "/api/ask" }),
@@ -36,6 +55,11 @@ export function AskPageContent() {
   });
 
   const isLoading = status === "streaming" || status === "submitted";
+
+  // Set random prompt on mount
+  useEffect(() => {
+    setRandomPrompt(chatPrompts[Math.floor(Math.random() * chatPrompts.length)]);
+  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -50,7 +74,7 @@ export function AskPageContent() {
   };
 
   return (
-    <div className="container mx-auto px-4 max-w-4xl">
+    <div className="mx-auto px-[calc(1rem+25px)] max-w-4xl">
       <div className="mb-4 flex items-center gap-4">
         <img src="/chat-mlb.svg" alt="ChatMLB" className="h-24 w-24" />
         <div>
@@ -95,7 +119,7 @@ export function AskPageContent() {
                   "rounded-lg px-4 py-2 max-w-[80%]",
                   message.role === "user"
                     ? "bg-primary text-primary-foreground"
-                    : "bg-muted"
+                    : "bg-[#eaeaea]"
                 )}
               >
                 {message.role === "assistant" ? (
@@ -119,7 +143,7 @@ export function AskPageContent() {
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                 <Bot className="h-4 w-4 text-primary" />
               </div>
-              <div className="rounded-lg px-4 py-2 bg-muted">
+              <div className="rounded-lg px-4 py-2 bg-[#eaeaea]">
                 <Loader2 className="h-4 w-4 animate-spin" />
               </div>
             </div>
@@ -129,6 +153,11 @@ export function AskPageContent() {
 
         {/* Input area */}
         <div className="pt-4">
+          {messages.length === 0 && randomPrompt && (
+            <p className="text-center text-muted-foreground mb-3 text-lg">
+              {randomPrompt}
+            </p>
+          )}
           <form id="chat-form" onSubmit={handleSubmit} className="flex gap-2">
             <input
               ref={inputRef}
