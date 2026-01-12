@@ -2,12 +2,12 @@
 // Features legendary and notable MLB players with interesting facts
 
 export interface SpotlightPlayer {
-  id: number
-  name: string
-  position: string
-  team: string
-  years: string
-  fact: string
+  id: number;
+  name: string;
+  position: string;
+  team: string;
+  years: string;
+  fact: string;
 }
 
 export const spotlightPlayers: SpotlightPlayer[] = [
@@ -283,30 +283,32 @@ export const spotlightPlayers: SpotlightPlayer[] = [
     years: "2007-2019",
     fact: "Hit 298 career home runs but also struck out 223 times in 2009, setting a single-season record.",
   },
-]
+];
 
 export function getDailyPlayer(): SpotlightPlayer {
-  const today = new Date()
-  const dateString = `${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+  const today = new Date();
+  const dateString = `${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
 
   // Create a hash from the date string
-  let hash = 0
+  let hash = 0;
   for (let i = 0; i < dateString.length; i++) {
-    const char = dateString.charCodeAt(i)
-    hash = (hash << 5) - hash + char
-    hash = hash & hash
+    const char = dateString.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash;
   }
 
-  const index = Math.abs(hash) % spotlightPlayers.length
-  return spotlightPlayers[index]
+  const index = Math.abs(hash) % spotlightPlayers.length;
+  return spotlightPlayers[index];
 }
 
 export interface SpotlightManager {
-  id: number
-  name: string
-  team: string
-  years: string
-  fact: string
+  id: number;
+  name: string;
+  team: string;
+  years: string;
+  fact: string;
 }
 
 export const spotlightManagers: SpotlightManager[] = [
@@ -450,31 +452,33 @@ export const spotlightManagers: SpotlightManager[] = [
     years: "2004-present",
     fact: "Broke the 86-year 'Curse of the Bambino' by leading the Red Sox to the 2004 World Series.",
   },
-]
+];
 
 export function getDailyManager(): SpotlightManager {
-  const today = new Date()
+  const today = new Date();
   // Use a different seed than players by adding 'mgr' to the string
-  const dateString = `mgr-${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+  const dateString = `mgr-${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
 
-  let hash = 0
+  let hash = 0;
   for (let i = 0; i < dateString.length; i++) {
-    const char = dateString.charCodeAt(i)
-    hash = (hash << 5) - hash + char
-    hash = hash & hash
+    const char = dateString.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash;
   }
 
-  const index = Math.abs(hash) % spotlightManagers.length
-  return spotlightManagers[index]
+  const index = Math.abs(hash) % spotlightManagers.length;
+  return spotlightManagers[index];
 }
 
 export interface SpotlightTeam {
-  id: number
-  name: string
-  city: string
-  league: string
-  founded: string
-  fact: string
+  id: number;
+  name: string;
+  city: string;
+  league: string;
+  founded: string;
+  fact: string;
 }
 
 export const spotlightTeams: SpotlightTeam[] = [
@@ -638,73 +642,167 @@ export const spotlightTeams: SpotlightTeam[] = [
     founded: "1977",
     fact: "Hold the record for most wins in a season (116 in 2001) without winning the World Series.",
   },
-]
+];
 
 export function getDailyTeam(): SpotlightTeam {
-  const today = new Date()
+  const today = new Date();
   // Use a different seed than players/managers
-  const dateString = `team-${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+  const dateString = `team-${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
 
-  let hash = 0
+  let hash = 0;
   for (let i = 0; i < dateString.length; i++) {
-    const char = dateString.charCodeAt(i)
-    hash = (hash << 5) - hash + char
-    hash = hash & hash
+    const char = dateString.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash;
   }
 
-  const index = Math.abs(hash) % spotlightTeams.length
-  return spotlightTeams[index]
+  const index = Math.abs(hash) % spotlightTeams.length;
+  return spotlightTeams[index];
 }
 
 export interface RandomFact {
-  category: string
-  fact: string
+  category: string;
+  fact: string;
 }
 
 export const randomFacts: RandomFact[] = [
-  { category: "Records", fact: "The longest game in MLB history lasted 8 hours and 6 minutes - a 25-inning marathon between the White Sox and Brewers in 1984." },
-  { category: "Streaks", fact: "Joe DiMaggio's 56-game hitting streak in 1941 is considered one of the most unbreakable records in sports." },
-  { category: "Oddities", fact: "In 1920, Ray Chapman became the only player to die from an injury sustained during an MLB game, leading to the ban on scuffed baseballs." },
-  { category: "Firsts", fact: "The first night game in MLB history was played on May 24, 1935, when the Reds hosted the Phillies under lights." },
-  { category: "Records", fact: "Johnny Vander Meer threw consecutive no-hitters in 1938 - a feat never matched before or since." },
-  { category: "Oddities", fact: "In 1974, Hank Aaron received 930,000 letters - more than any non-politician in U.S. history - as he chased Babe Ruth's home run record." },
-  { category: "Streaks", fact: "The 1916 Giants won 26 consecutive games, the longest winning streak in MLB history." },
-  { category: "Firsts", fact: "Jackie Robinson's jersey #42 was retired across all of MLB in 1997 - the first league-wide retirement in any sport." },
-  { category: "Records", fact: "Cy Young won 511 games - 94 more than second place. He also lost 316, also a record." },
-  { category: "Oddities", fact: "The Cubs' Billy Goat Curse lasted 71 years (1945-2016) after a tavern owner was asked to leave a World Series game with his pet goat." },
-  { category: "Streaks", fact: "Cal Ripken Jr. played 8,243 consecutive innings from 1982-1987 before voluntarily sitting out." },
-  { category: "Firsts", fact: "The first televised MLB game was on August 26, 1939, a doubleheader between the Reds and Dodgers." },
-  { category: "Records", fact: "Fernando Tatis hit 2 grand slams in the same inning (April 23, 1999) - both off the same pitcher." },
-  { category: "Oddities", fact: "In 1930, the entire NL batted .303, with the Giants hitting .319 as a team yet finishing third." },
-  { category: "Streaks", fact: "The Oakland A's won 20 consecutive games in 2002, inspiring the book and movie 'Moneyball.'" },
-  { category: "Firsts", fact: "The designated hitter was first used in 1973 - Ron Blomberg of the Yankees was the first DH to bat in an MLB game." },
-  { category: "Records", fact: "In 2001, Barry Bonds walked 177 times (73 intentional) - pitchers preferred to face anyone else." },
-  { category: "Oddities", fact: "Dock Ellis claimed he pitched a no-hitter on June 12, 1970, while under the influence of LSD." },
-  { category: "Streaks", fact: "The 1988 Orioles started 0-21, the worst start in MLB history." },
-  { category: "Firsts", fact: "The first World Series was in 1903, with Boston defeating Pittsburgh 5 games to 3." },
-  { category: "Records", fact: "Pete Rose has 4,256 career hits - 67 more than Ty Cobb and 786 more than Hank Aaron." },
-  { category: "Oddities", fact: "The 1962 Mets lost 120 games. Manager Casey Stengel asked, 'Can't anybody here play this game?'" },
-  { category: "Streaks", fact: "The Cleveland Guardians had a 22-game winning streak in 2017, tied for second-longest ever." },
-  { category: "Firsts", fact: "Vin Scully called Dodgers games for 67 seasons (1950-2016), the longest tenure of any announcer with one team." },
-  { category: "Records", fact: "Tom Seaver was named on 98.84% of Hall of Fame ballots, a record until Mariano Rivera got 100%." },
-  { category: "Oddities", fact: "In 1961, Roger Maris received hate mail while chasing Ruth's record because fans wanted Mickey Mantle to break it instead." },
-  { category: "Streaks", fact: "Orel Hershiser threw 59 consecutive scoreless innings in 1988, breaking Don Drysdale's record." },
-  { category: "Firsts", fact: "The first MLB game played outside North America was in Tokyo, Japan in 2000 (Cubs vs. Mets)." },
-  { category: "Records", fact: "Nolan Ryan is the only pitcher to throw no-hitters in three different decades (1970s, 1980s, 1990s)." },
-  { category: "Oddities", fact: "The only unassisted triple play in World Series history was turned by Bill Wambsganss in 1920." },
-]
+  {
+    category: "Records",
+    fact: "The longest game in MLB history lasted 8 hours and 6 minutes - a 25-inning marathon between the White Sox and Brewers in 1984.",
+  },
+  {
+    category: "Streaks",
+    fact: "Joe DiMaggio's 56-game hitting streak in 1941 is considered one of the most unbreakable records in sports.",
+  },
+  {
+    category: "Oddities",
+    fact: "In 1920, Ray Chapman became the only player to die from an injury sustained during an MLB game, leading to the ban on scuffed baseballs.",
+  },
+  {
+    category: "Firsts",
+    fact: "The first night game in MLB history was played on May 24, 1935, when the Reds hosted the Phillies under lights.",
+  },
+  {
+    category: "Records",
+    fact: "Johnny Vander Meer threw consecutive no-hitters in 1938 - a feat never matched before or since.",
+  },
+  {
+    category: "Oddities",
+    fact: "In 1974, Hank Aaron received 930,000 letters - more than any non-politician in U.S. history - as he chased Babe Ruth's home run record.",
+  },
+  {
+    category: "Streaks",
+    fact: "The 1916 Giants won 26 consecutive games, the longest winning streak in MLB history.",
+  },
+  {
+    category: "Firsts",
+    fact: "Jackie Robinson's jersey #42 was retired across all of MLB in 1997 - the first league-wide retirement in any sport.",
+  },
+  {
+    category: "Records",
+    fact: "Cy Young won 511 games - 94 more than second place. He also lost 316, also a record.",
+  },
+  {
+    category: "Oddities",
+    fact: "The Cubs' Billy Goat Curse lasted 71 years (1945-2016) after a tavern owner was asked to leave a World Series game with his pet goat.",
+  },
+  {
+    category: "Streaks",
+    fact: "Cal Ripken Jr. played 8,243 consecutive innings from 1982-1987 before voluntarily sitting out.",
+  },
+  {
+    category: "Firsts",
+    fact: "The first televised MLB game was on August 26, 1939, a doubleheader between the Reds and Dodgers.",
+  },
+  {
+    category: "Records",
+    fact: "Fernando Tatis hit 2 grand slams in the same inning (April 23, 1999) - both off the same pitcher.",
+  },
+  {
+    category: "Oddities",
+    fact: "In 1930, the entire NL batted .303, with the Giants hitting .319 as a team yet finishing third.",
+  },
+  {
+    category: "Streaks",
+    fact: "The Oakland A's won 20 consecutive games in 2002, inspiring the book and movie 'Moneyball.'",
+  },
+  {
+    category: "Firsts",
+    fact: "The designated hitter was first used in 1973 - Ron Blomberg of the Yankees was the first DH to bat in an MLB game.",
+  },
+  {
+    category: "Records",
+    fact: "In 2001, Barry Bonds walked 177 times (73 intentional) - pitchers preferred to face anyone else.",
+  },
+  {
+    category: "Oddities",
+    fact: "Dock Ellis claimed he pitched a no-hitter on June 12, 1970, while under the influence of LSD.",
+  },
+  {
+    category: "Streaks",
+    fact: "The 1988 Orioles started 0-21, the worst start in MLB history.",
+  },
+  {
+    category: "Firsts",
+    fact: "The first World Series was in 1903, with Boston defeating Pittsburgh 5 games to 3.",
+  },
+  {
+    category: "Records",
+    fact: "Pete Rose has 4,256 career hits - 67 more than Ty Cobb and 786 more than Hank Aaron.",
+  },
+  {
+    category: "Oddities",
+    fact: "The 1962 Mets lost 120 games. Manager Casey Stengel asked, 'Can't anybody here play this game?'",
+  },
+  {
+    category: "Streaks",
+    fact: "The Cleveland Guardians had a 22-game winning streak in 2017, tied for second-longest ever.",
+  },
+  {
+    category: "Firsts",
+    fact: "Vin Scully called Dodgers games for 67 seasons (1950-2016), the longest tenure of any announcer with one team.",
+  },
+  {
+    category: "Records",
+    fact: "Tom Seaver was named on 98.84% of Hall of Fame ballots, a record until Mariano Rivera got 100%.",
+  },
+  {
+    category: "Oddities",
+    fact: "In 1961, Roger Maris received hate mail while chasing Ruth's record because fans wanted Mickey Mantle to break it instead.",
+  },
+  {
+    category: "Streaks",
+    fact: "Orel Hershiser threw 59 consecutive scoreless innings in 1988, breaking Don Drysdale's record.",
+  },
+  {
+    category: "Firsts",
+    fact: "The first MLB game played outside North America was in Tokyo, Japan in 2000 (Cubs vs. Mets).",
+  },
+  {
+    category: "Records",
+    fact: "Nolan Ryan is the only pitcher to throw no-hitters in three different decades (1970s, 1980s, 1990s).",
+  },
+  {
+    category: "Oddities",
+    fact: "The only unassisted triple play in World Series history was turned by Bill Wambsganss in 1920.",
+  },
+];
 
 export function getDailyFact(): RandomFact {
-  const today = new Date()
-  const dateString = `fact-${today.getFullYear()}-${today.getMonth() + 1}-${today.getDate()}`
+  const today = new Date();
+  const dateString = `fact-${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
 
-  let hash = 0
+  let hash = 0;
   for (let i = 0; i < dateString.length; i++) {
-    const char = dateString.charCodeAt(i)
-    hash = (hash << 5) - hash + char
-    hash = hash & hash
+    const char = dateString.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash;
   }
 
-  const index = Math.abs(hash) % randomFacts.length
-  return randomFacts[index]
+  const index = Math.abs(hash) % randomFacts.length;
+  return randomFacts[index];
 }
