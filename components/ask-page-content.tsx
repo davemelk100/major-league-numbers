@@ -74,27 +74,23 @@ export function AskPageContent() {
   };
 
   return (
-    <div className="mx-auto px-[calc(1rem+25px)] max-w-4xl">
-      <div className="mb-4 flex items-center gap-4">
-        <img src="/chat-mlb.svg" alt="ChatMLB" className="h-24 w-24" />
-        <div>
-          <h1 className="text-2xl font-bold whitespace-nowrap">ChatMLB</h1>
-          <p className="text-sm text-muted-foreground">
-            Ask questions about baseball statistics and history
-          </p>
+    <div className="flex flex-col h-[calc(100vh-180px)]">
+      {/* Header */}
+      <div className="mx-auto px-[calc(1rem+25px)] max-w-4xl w-full">
+        <div className="mb-4 flex items-center gap-4">
+          <img src="/chat-mlb.svg" alt="ChatMLB" className="h-24 w-24" />
+          <div>
+            <h1 className="text-2xl font-bold whitespace-nowrap">ChatMLB</h1>
+            <p className="text-sm text-muted-foreground">
+              Ask questions about baseball statistics and history
+            </p>
+          </div>
         </div>
       </div>
 
-      <div
-        className={cn(
-          "flex flex-col transition-all duration-300",
-          messages.length === 0
-            ? "h-[100px]"
-            : "h-[calc(100vh-220px)] min-h-[500px]"
-        )}
-      >
-        {/* Messages area */}
-        <div className="flex-1 overflow-y-auto space-y-1">
+      {/* Messages area - scrollable */}
+      <div className="flex-1 overflow-y-auto">
+        <div className="mx-auto px-[calc(1rem+25px)] max-w-4xl space-y-1">
           {error && (
             <div className="bg-destructive/10 text-destructive p-3 rounded-lg text-sm">
               Error: {error.message}
@@ -150,9 +146,11 @@ export function AskPageContent() {
           )}
           <div ref={messagesEndRef} />
         </div>
+      </div>
 
-        {/* Input area */}
-        <div className="pt-4">
+      {/* Input area - fixed at bottom */}
+      <div className="shrink-0 pt-4 pb-4 bg-background">
+        <div className="mx-auto px-[calc(1rem+25px)] max-w-4xl">
           {messages.length === 0 && randomPrompt && (
             <p className="text-center text-muted-foreground mb-3 text-lg">
               {randomPrompt}
