@@ -50,9 +50,9 @@ export function LeadersTable({ title, leaders, statLabel }: LeadersTableProps) {
                     <Image
                       src={getPlayerHeadshotUrl(leader.person.id, "small") || "/placeholder.svg"}
                       alt={leader.person.fullName}
-                      width={40}
-                      height={40}
-                      className="rounded-full shrink-0"
+                      width={64}
+                      height={64}
+                      className="rounded-lg shrink-0"
                     />
                     <div className="min-w-0">
                       <div className="font-medium">{leader.person.fullName}</div>
