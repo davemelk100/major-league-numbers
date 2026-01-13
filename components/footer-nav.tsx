@@ -36,7 +36,7 @@ export function LeftNav() {
               )}
             >
               <Icon className="h-5 w-5" />
-              <span className="text-xs font-medium">{item.name}</span>
+              <span className="text-xs font-medium text-center leading-tight">{item.name}</span>
             </Link>
           );
         })}
