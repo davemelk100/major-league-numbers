@@ -197,6 +197,10 @@ export function DashboardContent({ initialSeason }: { initialSeason: number }) {
             League Leaders
           </h2>
           <div className="flex items-center gap-4">
+            <SeasonSelector
+              season={season}
+              onSeasonChange={setSeason}
+            />
             <Tabs
               value={tableLeague}
               onValueChange={(value) => setTableLeague(value as "AL" | "NL")}
