@@ -8,6 +8,11 @@ export interface SpotlightPlayer {
   team: string;
   years: string;
   fact: string;
+  bats?: string;
+  throws?: string;
+  birthplace?: string;
+  careerStats?: string;
+  highlights?: string[];
 }
 
 export const spotlightPlayers: SpotlightPlayer[] = [
@@ -294,6 +299,17 @@ export function getDailyPlayer(): SpotlightPlayer {
     team: "Red Sox/Tigers/Brewers",
     years: "1971-1986",
     fact: "A 3-time All-Star who led the American League in home runs in 1980 with 41, helping the Brewers become a powerhouse in the early '80s.",
+    bats: "Left",
+    throws: "Left",
+    birthplace: "Colón, Panama",
+    careerStats: ".273 AVG, 235 HR, 901 RBI, 1,615 H",
+    highlights: [
+      "Led AL in home runs (41) in 1980",
+      "3× All-Star (1980, 1982, 1983)",
+      "Key member of 1982 AL Champion Brewers",
+      "Hit 29+ HRs in four consecutive seasons",
+      "Known as 'Gentle Ben' for his quiet demeanor",
+    ],
   };
 }
 

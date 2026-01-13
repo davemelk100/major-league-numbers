@@ -38,35 +38,64 @@ export function PlayerSpotlight() {
                 getPlayerHeadshotUrl(player.id, "large") || "/placeholder.svg"
               }
               alt={player.name}
-              width={180}
-              height={180}
-              style={{ width: "auto", height: "180px" }}
+              width={300}
+              height={300}
+              style={{ width: "auto", height: "300px" }}
               className="rounded-xl transition-transform group-hover:scale-105"
               onError={() => setImageError(true)}
             />
           ) : (
-            <div className="w-[180px] h-[180px] bg-muted flex items-center justify-center rounded-xl">
-              <User className="h-16 w-16 text-muted-foreground" />
+            <div className="w-[300px] h-[300px] bg-muted flex items-center justify-center rounded-xl">
+              <User className="h-24 w-24 text-muted-foreground" />
             </div>
           )}
         </Link>
-        <div className="space-y-2 flex-1 min-w-0">
-          <Link
-            href={`/players/${player.id}`}
-            className="text-2xl font-bold hover:underline decoration-primary decoration-2 underline-offset-4 block"
-          >
-            {player.name}
-          </Link>
-          <div className="flex flex-wrap gap-x-2 text-base text-muted-foreground">
-            <span>{player.team}</span>
-            <span>•</span>
-            <span>{player.position}</span>
-            <span>•</span>
-            <span>{player.years}</span>
+        <div className="space-y-3 flex-1 min-w-0">
+          <div>
+            <Link
+              href={`/players/${player.id}`}
+              className="text-2xl font-bold hover:underline decoration-primary decoration-2 underline-offset-4 block"
+            >
+              {player.name}
+            </Link>
+            <div className="flex flex-wrap gap-x-2 text-base text-muted-foreground mt-1">
+              <span>{player.position}</span>
+              <span>•</span>
+              <span>{player.years}</span>
+              {player.birthplace && (
+                <>
+                  <span>•</span>
+                  <span>{player.birthplace}</span>
+                </>
+              )}
+            </div>
           </div>
-          <p className="text-base text-muted-foreground leading-relaxed">
+
+          {player.careerStats && (
+            <div className="text-sm font-medium text-foreground bg-muted/50 px-3 py-2 rounded-lg">
+              {player.careerStats}
+            </div>
+          )}
+
+          <p className="text-sm text-muted-foreground leading-relaxed">
             {player.fact}
           </p>
+
+          {player.highlights && player.highlights.length > 0 && (
+            <div className="space-y-1">
+              <span className="text-xs font-semibold text-primary uppercase tracking-wider">
+                Career Highlights
+              </span>
+              <ul className="text-sm text-muted-foreground space-y-0.5">
+                {player.highlights.map((highlight, index) => (
+                  <li key={index} className="flex items-start gap-2">
+                    <span className="text-primary">•</span>
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
     </div>
