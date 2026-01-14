@@ -15,7 +15,7 @@ export function PlayerSpotlight() {
   const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
-    setPlayer(getDailyPlayer());
+    getDailyPlayer().then(setPlayer);
   }, []);
 
   if (!player) return null;
@@ -60,7 +60,11 @@ export function PlayerSpotlight() {
             <div className="flex flex-wrap gap-x-2 text-sm sm:text-base text-muted-foreground mt-1">
               <span>{player.position}</span>
               <span>•</span>
-              <span>{player.years}</span>
+              <span>{player.team}</span>
+              <span className="hidden sm:inline">
+                <span className="mr-2">•</span>
+                {player.years}
+              </span>
               {player.birthplace && (
                 <span className="hidden sm:inline">
                   <span className="mr-2">•</span>
@@ -76,9 +80,11 @@ export function PlayerSpotlight() {
             </div>
           )}
 
-          <p className="hidden sm:block text-sm text-muted-foreground leading-relaxed">
-            {player.fact}
-          </p>
+          {player.fact && (
+            <p className="hidden sm:block text-sm text-muted-foreground leading-relaxed">
+              {player.fact}
+            </p>
+          )}
 
           {player.highlights && player.highlights.length > 0 && (
             <div className="hidden sm:block space-y-1">

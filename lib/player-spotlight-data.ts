@@ -290,9 +290,10 @@ export const spotlightPlayers: SpotlightPlayer[] = [
   },
 ];
 
-export function getDailyPlayer(): SpotlightPlayer {
+// Helper to generate a deterministic hash from a date string
+function getDateHash(prefix: string): number {
   const today = new Date();
-  const dateString = `player-${today.getFullYear()}-${
+  const dateString = `${prefix}-${today.getFullYear()}-${
     today.getMonth() + 1
   }-${today.getDate()}`;
 
@@ -302,9 +303,145 @@ export function getDailyPlayer(): SpotlightPlayer {
     hash = (hash << 5) - hash + char;
     hash = hash & hash;
   }
+  return Math.abs(hash);
+}
 
-  const index = Math.abs(hash) % spotlightPlayers.length;
-  return spotlightPlayers[index];
+// Generate a notable fact from player data
+function generateNotableFact(player: any, season: number): string {
+  const position = player.primaryPosition?.abbreviation || "";
+  const isPitcher = position === "P" || position === "SP" || position === "RP";
+  const age = player.currentAge;
+  const birthCountry = player.birthCountry;
+  const draftYear = player.draftYear;
+  const mlbDebutDate = player.mlbDebutDate;
+
+  const facts: string[] = [];
+
+  // Age-based facts
+  if (age && age <= 23) {
+    facts.push(`At just ${age} years old, one of the youngest players in the majors this season.`);
+  } else if (age && age >= 38) {
+    facts.push(`At ${age} years old, still competing at the highest level as one of the league's veterans.`);
+  }
+
+  // International players
+  if (birthCountry && birthCountry !== "USA") {
+    const countryFacts: Record<string, string> = {
+      "Dominican Republic": "Hailing from the Dominican Republic, a country that has produced more MLB players than any other outside the US.",
+      "Venezuela": "From Venezuela, a nation with a rich baseball tradition and passionate fanbase.",
+      "Cuba": "From Cuba, carrying on the island's legendary baseball heritage.",
+      "Japan": "From Japan, where baseball is deeply woven into the culture.",
+      "Puerto Rico": "From Puerto Rico, representing the island's proud baseball legacy.",
+      "Mexico": "From Mexico, continuing the country's growing presence in the majors.",
+      "Panama": "From Panama, the birthplace of legendary players like Mariano Rivera and Rod Carew.",
+      "Canada": "One of the few Canadian-born players in the majors.",
+      "South Korea": "From South Korea, where baseball rivals the popularity of any sport.",
+      "Taiwan": "From Taiwan, representing a growing baseball powerhouse in Asia.",
+      "Australia": "One of the rare Australian-born players making it to the majors.",
+      "Netherlands": "From the Netherlands, part of a growing European presence in MLB.",
+    };
+    if (countryFacts[birthCountry]) {
+      facts.push(countryFacts[birthCountry]);
+    } else {
+      facts.push(`Born in ${birthCountry}, bringing international talent to the majors.`);
+    }
+  }
+
+  // Draft facts
+  if (draftYear) {
+    const yearsInSystem = season - draftYear;
+    if (yearsInSystem <= 2) {
+      facts.push(`A recent draft pick (${draftYear}) who quickly rose through the minor league system.`);
+    }
+  }
+
+  // Debut facts
+  if (mlbDebutDate) {
+    const debutYear = new Date(mlbDebutDate).getFullYear();
+    if (debutYear === season) {
+      facts.push(`Making their MLB debut this season, a name to watch for the future.`);
+    } else if (debutYear === season - 1) {
+      facts.push(`In just their second MLB season, still establishing themselves at the highest level.`);
+    }
+  }
+
+  // Position-specific facts
+  if (isPitcher) {
+    const throwHand = player.pitchHand?.description;
+    if (throwHand === "Left") {
+      facts.push("A left-handed pitcher, part of the always-coveted group of southpaws in the game.");
+    }
+  } else {
+    const batSide = player.batSide?.code;
+    if (batSide === "S") {
+      facts.push("A switch-hitter, with the ability to bat from both sides of the plate.");
+    }
+  }
+
+  // Height facts
+  const height = player.height;
+  if (height) {
+    const [feet, inches] = height.split("' ").map((s: string) => parseInt(s));
+    const totalInches = feet * 12 + (inches || 0);
+    if (totalInches >= 78) { // 6'6" or taller
+      facts.push(`Standing ${height}, one of the tallest players in the league.`);
+    } else if (totalInches <= 68 && !isPitcher) { // 5'8" or shorter
+      facts.push(`At ${height}, proving that size isn't everything in the big leagues.`);
+    }
+  }
+
+  // Return a random fact from available facts, or a generic one
+  if (facts.length > 0) {
+    const factIndex = getDateHash("fact") % facts.length;
+    return facts[factIndex];
+  }
+
+  return `A ${season} MLB roster player for the ${player.currentTeam?.name || "league"}.`;
+}
+
+export async function getDailyPlayer(): Promise<SpotlightPlayer> {
+  try {
+    // Fetch all players from current season
+    const response = await fetch("/api/players?type=all");
+    const data = await response.json();
+    const allPlayers = data.players || [];
+
+    if (allPlayers.length === 0) {
+      // Fallback to curated list if API fails
+      const index = getDateHash("player") % spotlightPlayers.length;
+      return spotlightPlayers[index];
+    }
+
+    // Use date-based hash to select a player deterministically
+    const index = getDateHash("player") % allPlayers.length;
+    const player = allPlayers[index];
+
+    // Check if this player is in our curated list for extra details
+    const curatedPlayer = spotlightPlayers.find((p) => p.id === player.id);
+
+    // Generate a notable fact if no curated fact exists
+    const fact = curatedPlayer?.fact || generateNotableFact(player, data.season);
+
+    return {
+      id: player.id,
+      name: player.fullName || `${player.firstName} ${player.lastName}`,
+      position: player.primaryPosition?.abbreviation || player.primaryPosition?.name || "Unknown",
+      team: player.currentTeam?.name || "MLB",
+      years: curatedPlayer?.years || `${data.season}`,
+      fact,
+      bats: player.batSide?.description,
+      throws: player.pitchHand?.description,
+      birthplace: player.birthCity && player.birthCountry
+        ? `${player.birthCity}, ${player.birthCountry}`
+        : undefined,
+      careerStats: curatedPlayer?.careerStats,
+      highlights: curatedPlayer?.highlights,
+    };
+  } catch {
+    // Fallback to curated list if fetch fails
+    const index = getDateHash("player") % spotlightPlayers.length;
+    return spotlightPlayers[index];
+  }
 }
 
 export interface SpotlightManager {
