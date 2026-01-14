@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     title: "Major League Numbers",
     description:
       "Explore MLB player stats, team rosters, and league standings in real-time.",
-    images: ["/mln.png"],
+    images: ["/og-img.png"],
   },
 };
 

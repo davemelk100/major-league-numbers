@@ -48,7 +48,7 @@ export async function generateMetadata({
       type: "profile",
       images: [
         {
-          url: getPlayerHeadshotUrl(player.id, "large") || "/mln.png",
+          url: getPlayerHeadshotUrl(player.id, "large") || "/og-img.png",
           width: 400,
           height: 400,
           alt: `${player.fullName} headshot`,
@@ -59,7 +59,7 @@ export async function generateMetadata({
       card: "summary",
       title: `${player.fullName} Stats`,
       description,
-      images: [getPlayerHeadshotUrl(player.id, "large") || "/mln.png"],
+      images: [getPlayerHeadshotUrl(player.id, "large") || "/og-img.png"],
     },
   };
 }
