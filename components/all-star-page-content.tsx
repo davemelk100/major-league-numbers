@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
@@ -24,6 +24,7 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [searchQuery, setSearchQuery] = useState("")
+  const [selectedLeague, setSelectedLeague] = useState<"al" | "nl" | "all">("al")
 
   const handleSeasonChange = (season: number) => {
     startTransition(() => {
@@ -36,6 +37,9 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
     al: rosters.al.filter((player) => player.playerName.toLowerCase().includes(searchQuery.toLowerCase())),
     nl: rosters.nl.filter((player) => player.playerName.toLowerCase().includes(searchQuery.toLowerCase())),
   }
+
+  const currentRoster = selectedLeague === "al" ? filteredRosters.al : selectedLeague === "nl" ? filteredRosters.nl : [...filteredRosters.al, ...filteredRosters.nl]
+  const leagueTitle = selectedLeague === "al" ? "American League" : selectedLeague === "nl" ? "National League" : "All-Star"
 
   const RosterGrid = ({ players }: { players: AwardWinner[] }) => (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -104,6 +108,18 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
             isLoading={isPending}
             startYear={1933}
           />
+          <Select value={selectedLeague} onValueChange={(val) => setSelectedLeague(val as "al" | "nl" | "all")}>
+            <SelectTrigger className="w-auto border-0 shadow-none p-0 h-auto bg-transparent hover:bg-transparent focus:ring-0 focus-visible:ring-0">
+              <span className="font-league text-[40px] leading-none font-bold border-b-2 border-foreground">
+                <SelectValue />
+              </span>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="al">AL</SelectItem>
+              <SelectItem value="nl">NL</SelectItem>
+              <SelectItem value="all">All</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
         <div className="w-full order-last md:w-full md:max-w-xs md:ml-auto md:order-none relative">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -126,38 +142,17 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
           </CardContent>
         </Card>
       ) : (
-        <Tabs defaultValue="al" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="al">AL</TabsTrigger>
-            <TabsTrigger value="nl">NL</TabsTrigger>
-          </TabsList>
-          <TabsContent value="al">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex justify-between items-center">
-                  <span>American League Roster</span>
-                  <span className="text-sm font-normal text-muted-foreground">{filteredRosters.al.length} Players</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <RosterGrid players={filteredRosters.al} />
-              </CardContent>
-            </Card>
-          </TabsContent>
-          <TabsContent value="nl">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex justify-between items-center">
-                  <span>National League Roster</span>
-                  <span className="text-sm font-normal text-muted-foreground">{filteredRosters.nl.length} Players</span>
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <RosterGrid players={filteredRosters.nl} />
-              </CardContent>
-            </Card>
-          </TabsContent>
-        </Tabs>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex justify-between items-center">
+              <span>{leagueTitle} Roster</span>
+              <span className="text-sm font-normal text-muted-foreground">{currentRoster.length} Players</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <RosterGrid players={currentRoster} />
+          </CardContent>
+        </Card>
       )}
     </main>
   )

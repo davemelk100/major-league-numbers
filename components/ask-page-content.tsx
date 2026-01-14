@@ -90,7 +90,9 @@ export function AskPageContent() {
   }, []);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messages.length > 0) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages, isLoading]);
 
   // Autosave chat when messages change (after assistant response completes)
@@ -164,8 +166,124 @@ export function AskPageContent() {
     [currentChatId, handleNewChat]
   );
 
+  // Chat History Sidebar (shared between both layouts)
+  const historySidebar = showHistory && (
+    <div className="fixed inset-0 z-50 bg-black/50" onClick={() => setShowHistory(false)}>
+      <div
+        className="absolute right-0 top-0 h-full w-80 bg-background shadow-lg p-4 overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold">Saved Chats</h2>
+          <Button variant="ghost" size="sm" onClick={() => setShowHistory(false)}>
+            <X className="h-4 w-4" />
+          </Button>
+        </div>
+        {savedChats.length === 0 ? (
+          <p className="text-muted-foreground text-sm">No saved chats yet.</p>
+        ) : (
+          <div className="space-y-2">
+            {savedChats.map((chat) => (
+              <div
+                key={chat.id}
+                className={cn(
+                  "p-3 rounded-lg cursor-pointer hover:bg-muted transition-colors group",
+                  currentChatId === chat.id && "bg-muted"
+                )}
+                onClick={() => handleLoadChat(chat)}
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium truncate">{chat.title}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {new Date(chat.updatedAt).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="opacity-0 group-hover:opacity-100 h-8 w-8 p-0"
+                    onClick={(e) => handleDeleteChat(chat.id, e)}
+                  >
+                    <Trash2 className="h-4 w-4 text-destructive" />
+                  </Button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  // Empty state - centered layout
+  if (messages.length === 0) {
+    return (
+      <div className="flex flex-col h-[calc(100vh-180px)]">
+        {historySidebar}
+
+        {/* History/New buttons in top right */}
+        <div className="absolute top-4 right-4 flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowHistory(!showHistory)}
+            className="gap-1"
+          >
+            <History className="h-4 w-4" />
+            <span className="hidden sm:inline">History</span>
+          </Button>
+          <Button variant="outline" size="sm" onClick={handleNewChat} className="gap-1">
+            <Plus className="h-4 w-4" />
+            <span className="hidden sm:inline">New</span>
+          </Button>
+        </div>
+
+        {/* Centered content */}
+        <div className="flex-1 flex flex-col items-center justify-center px-4">
+          <img src="/chat-mlb.svg" alt="ChatMLB" className="h-32 w-32 mb-4" />
+          <h1 className="text-3xl font-bold mb-2">ChatMLB</h1>
+          <p className="text-muted-foreground mb-8 text-center">
+            Ask questions about baseball statistics and history
+          </p>
+
+          {randomPrompt && (
+            <p className="text-center text-muted-foreground mb-4 text-lg">
+              {randomPrompt}
+            </p>
+          )}
+
+          <form id="chat-form" onSubmit={handleSubmit} className="flex gap-2 w-full max-w-2xl">
+            <input
+              ref={inputRef}
+              id="chat-input"
+              name="chat-input"
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask about baseball stats, players, or history..."
+              className="flex-1 px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+              disabled={isLoading}
+              autoComplete="off"
+            />
+            <Button type="submit" disabled={isLoading || !input.trim()} size="lg">
+              {isLoading ? (
+                <Loader2 className="h-4 w-4 animate-spin" />
+              ) : (
+                <Send className="h-4 w-4" />
+              )}
+            </Button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  // Messages layout - input at bottom
   return (
     <div className="flex flex-col h-[calc(100vh-180px)]">
+      {historySidebar}
+
       {/* Scrollable area - includes header and messages */}
       <div className="flex-1 overflow-y-auto">
         {/* Header */}
@@ -180,19 +298,19 @@ export function AskPageContent() {
                 </p>
               </div>
               <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowHistory(!showHistory)}
-                className="gap-1"
-              >
-                <History className="h-4 w-4" />
-                <span className="hidden sm:inline">History</span>
-              </Button>
-              <Button variant="outline" size="sm" onClick={handleNewChat} className="gap-1">
-                <Plus className="h-4 w-4" />
-                <span className="hidden sm:inline">New</span>
-              </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowHistory(!showHistory)}
+                  className="gap-1"
+                >
+                  <History className="h-4 w-4" />
+                  <span className="hidden sm:inline">History</span>
+                </Button>
+                <Button variant="outline" size="sm" onClick={handleNewChat} className="gap-1">
+                  <Plus className="h-4 w-4" />
+                  <span className="hidden sm:inline">New</span>
+                </Button>
               </div>
             </div>
             <p className="sm:hidden text-sm text-muted-foreground mt-2">
@@ -200,56 +318,6 @@ export function AskPageContent() {
             </p>
           </div>
         </div>
-
-      {/* Chat History Sidebar */}
-      {showHistory && (
-        <div className="fixed inset-0 z-50 bg-black/50" onClick={() => setShowHistory(false)}>
-          <div
-            className="absolute right-0 top-0 h-full w-80 bg-background shadow-lg p-4 overflow-y-auto"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold">Saved Chats</h2>
-              <Button variant="ghost" size="sm" onClick={() => setShowHistory(false)}>
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-            {savedChats.length === 0 ? (
-              <p className="text-muted-foreground text-sm">No saved chats yet.</p>
-            ) : (
-              <div className="space-y-2">
-                {savedChats.map((chat) => (
-                  <div
-                    key={chat.id}
-                    className={cn(
-                      "p-3 rounded-lg cursor-pointer hover:bg-muted transition-colors group",
-                      currentChatId === chat.id && "bg-muted"
-                    )}
-                    onClick={() => handleLoadChat(chat)}
-                  >
-                    <div className="flex items-start justify-between gap-2">
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium truncate">{chat.title}</p>
-                        <p className="text-xs text-muted-foreground">
-                          {new Date(chat.updatedAt).toLocaleDateString()}
-                        </p>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="opacity-0 group-hover:opacity-100 h-8 w-8 p-0"
-                        onClick={(e) => handleDeleteChat(chat.id, e)}
-                      >
-                        <Trash2 className="h-4 w-4 text-destructive" />
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
         {/* Messages */}
         <div className="mx-auto px-4 sm:px-[calc(1rem+25px)] max-w-4xl space-y-1">
@@ -313,11 +381,6 @@ export function AskPageContent() {
       {/* Input area - fixed at bottom */}
       <div className="shrink-0 pt-4 pb-4 bg-background">
         <div className="mx-auto px-4 sm:px-[calc(1rem+25px)] max-w-4xl">
-          {messages.length === 0 && randomPrompt && (
-            <p className="text-center text-muted-foreground mb-3 text-lg">
-              {randomPrompt}
-            </p>
-          )}
           <form id="chat-form" onSubmit={handleSubmit} className="flex gap-2">
             <input
               ref={inputRef}

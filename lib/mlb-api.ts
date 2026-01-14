@@ -73,11 +73,27 @@ export interface PlayerStats {
     pitchStrikeOuts?: number
     whip?: string
     saves?: number
+    // Fielding stats
+    position?: string
+    games?: number
+    gamesStarted?: number
+    innings?: string
+    chances?: number
+    putOuts?: number
+    assists?: number
+    errors?: number
+    doublePlays?: number
+    fieldingPercentage?: string
+    rangeFactorPerGame?: string
+    rangeFactorPer9Inn?: string
+    passedBall?: number
+    throwingErrors?: number
   }
   team?: {
     id: number
     name: string
   }
+  position?: string
 }
 
 export interface Team {
@@ -221,7 +237,7 @@ export async function getPlayer(playerId: number): Promise<Player | null> {
 
   try {
     const res = await fetchWithRetry(
-      `${BASE_URL}/people/${playerId}?hydrate=currentTeam,stats(group=[hitting,pitching],type=[yearByYear])`,
+      `${BASE_URL}/people/${playerId}?hydrate=currentTeam,stats(group=[hitting,pitching,fielding],type=[yearByYear])`,
     )
     const data = await safeJsonParse(res)
     const result = data?.people?.[0] || null

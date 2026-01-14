@@ -22,12 +22,13 @@ export function Header() {
             className="W-auto object-contain border-0"
           />
         </Link>
-        <span
+        <Link
+          href="/"
           className="text-4xl sm:text-4xl min-[1300px]:text-[48px] font-league whitespace-nowrap"
           style={{ color: "#d42821" }}
         >
           Major League Numbers
-        </span>
+        </Link>
         <div className="flex-1 hidden sm:block" />
         {/* ChatMLB button - desktop (same row) */}
         {pathname !== "/ask" && (

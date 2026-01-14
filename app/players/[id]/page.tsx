@@ -84,6 +84,10 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
     player.stats
       ?.filter((s: any) => s.group?.displayName === "pitching")
       .flatMap((s: any) => s.splits || []) || [];
+  const fieldingStats =
+    player.stats
+      ?.filter((s: any) => s.group?.displayName === "fielding")
+      .flatMap((s: any) => s.splits || []) || [];
 
   // Get current season stats
   const currentHitting = hittingStats.find((s: any) => s.season === "2024");
@@ -233,8 +237,11 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
           {pitchingStats.length > 0 && (
             <PlayerStatsTable stats={pitchingStats} type="pitching" />
           )}
+          {fieldingStats.length > 0 && (
+            <PlayerStatsTable stats={fieldingStats} type="fielding" />
+          )}
 
-          {hittingStats.length === 0 && pitchingStats.length === 0 && (
+          {hittingStats.length === 0 && pitchingStats.length === 0 && fieldingStats.length === 0 && (
             <Card>
               <CardHeader>
                 <CardTitle>Career Statistics</CardTitle>

@@ -5,7 +5,7 @@ import dynamicImport from "next/dynamic";
 import { StatCard } from "@/components/stat-card";
 import { LeadersTable } from "@/components/leaders-table";
 import { SeasonSelector } from "@/components/season-selector";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -201,15 +201,17 @@ export function DashboardContent({ initialSeason }: { initialSeason: number }) {
               season={season}
               onSeasonChange={setSeason}
             />
-            <Tabs
-              value={tableLeague}
-              onValueChange={(value) => setTableLeague(value as "AL" | "NL")}
-            >
-              <TabsList>
-                <TabsTrigger value="AL">AL</TabsTrigger>
-                <TabsTrigger value="NL">NL</TabsTrigger>
-              </TabsList>
-            </Tabs>
+            <Select value={tableLeague} onValueChange={(val) => setTableLeague(val as "AL" | "NL")}>
+              <SelectTrigger className="w-auto border-0 shadow-none p-0 h-auto bg-transparent hover:bg-transparent focus:ring-0 focus-visible:ring-0">
+                <span className="font-league text-[40px] leading-none font-bold border-b-2 border-foreground">
+                  <SelectValue />
+                </span>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="AL">AL</SelectItem>
+                <SelectItem value="NL">NL</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
