@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     siteName: "Major League Numbers",
     images: [
       {
-        url: "/mln.png",
+        url: "https://majorleaguenumbers.com/og-img.png",
         width: 1200,
         height: 630,
         alt: "Major League Numbers - MLB Statistics Dashboard",
