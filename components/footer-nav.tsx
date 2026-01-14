@@ -79,7 +79,7 @@ export function FooterNav() {
 
   // Only show essential nav items on mobile footer
   const mobileNavigation = navigation.filter(
-    (item) => !["All Stars", "HOF", "ChatMLB"].includes(item.name)
+    (item) => !["All Stars", "HOF", "ChatMLB", "Standings"].includes(item.name)
   );
 
   return (

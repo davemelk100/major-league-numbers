@@ -1,8 +1,6 @@
 "use client"
 
 import { useState, useEffect, useMemo, useCallback } from "react"
-import { Suspense } from "react"
-import { PlayerSearch } from "@/components/player-search"
 import { PlayerCard } from "@/components/player-card"
 import { SeasonSelector } from "@/components/season-selector"
 import { Button } from "@/components/ui/button"
@@ -165,11 +163,6 @@ export function PlayersPageContent({ initialPlayers, initialSeason }: PlayersPag
               <SelectItem value="NL">NL</SelectItem>
             </SelectContent>
           </Select>
-        </div>
-        <div className="w-full order-last md:w-full md:max-w-xs md:ml-auto md:order-none">
-          <Suspense fallback={<div className="h-10 bg-secondary rounded-md animate-pulse" />}>
-            <PlayerSearch />
-          </Suspense>
         </div>
       </div>
 

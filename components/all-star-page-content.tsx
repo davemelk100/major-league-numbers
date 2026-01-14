@@ -7,8 +7,6 @@ import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Input } from "@/components/ui/input"
-import { Search } from "lucide-react"
 import { getPlayerHeadshotUrl, type AwardWinner } from "@/lib/mlb-api"
 import { SeasonSelector } from "@/components/season-selector"
 
@@ -23,7 +21,6 @@ interface AllStarPageContentProps {
 export function AllStarPageContent({ initialSeason, rosters }: AllStarPageContentProps) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
-  const [searchQuery, setSearchQuery] = useState("")
   const [selectedLeague, setSelectedLeague] = useState<"al" | "nl" | "all">("al")
 
   const handleSeasonChange = (season: number) => {
@@ -32,13 +29,7 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
     })
   }
 
-  // Filter rosters based on search query
-  const filteredRosters = {
-    al: rosters.al.filter((player) => player.playerName.toLowerCase().includes(searchQuery.toLowerCase())),
-    nl: rosters.nl.filter((player) => player.playerName.toLowerCase().includes(searchQuery.toLowerCase())),
-  }
-
-  const currentRoster = selectedLeague === "al" ? filteredRosters.al : selectedLeague === "nl" ? filteredRosters.nl : [...filteredRosters.al, ...filteredRosters.nl]
+  const currentRoster = selectedLeague === "al" ? rosters.al : selectedLeague === "nl" ? rosters.nl : [...rosters.al, ...rosters.nl]
   const leagueTitle = selectedLeague === "al" ? "American League" : selectedLeague === "nl" ? "National League" : "All-Star"
 
   const RosterGrid = ({ players }: { players: AwardWinner[] }) => (
@@ -73,7 +64,7 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
         ))
       ) : (
         <div className="col-span-full py-12 text-center text-muted-foreground">
-          {searchQuery ? "No players match your search." : "No All-Star data available for this league/season."}
+          No All-Star data available for this league/season.
         </div>
       )}
     </div>
@@ -120,15 +111,6 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
               <SelectItem value="all">All</SelectItem>
             </SelectContent>
           </Select>
-        </div>
-        <div className="w-full order-last md:w-full md:max-w-xs md:ml-auto md:order-none relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Search All-Stars..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
         </div>
       </div>
 

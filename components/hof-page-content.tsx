@@ -3,10 +3,8 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { Input } from "@/components/ui/input"
 import { Card, CardContent } from "@/components/ui/card"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Search } from "lucide-react"
 import { getPlayerHeadshotUrl, type HallOfFamer } from "@/lib/mlb-api"
 
 interface HofPageContentProps {
@@ -14,17 +12,14 @@ interface HofPageContentProps {
 }
 
 export function HofPageContent({ hofMembers }: HofPageContentProps) {
-  const [searchQuery, setSearchQuery] = useState("")
   const [selectedYear, setSelectedYear] = useState<string>("all")
 
   // Get unique years for the dropdown
   const years = [...new Set(hofMembers.map((m) => m.inductionYear))].sort((a, b) => b - a)
 
-  // Filter members based on search and year
+  // Filter members based on year
   const filteredMembers = hofMembers.filter((member) => {
-    const matchesSearch = member.playerName.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesYear = selectedYear === "all" || member.inductionYear === Number(selectedYear)
-    return matchesSearch && matchesYear
+    return selectedYear === "all" || member.inductionYear === Number(selectedYear)
   })
 
   // Group by year
@@ -68,15 +63,6 @@ export function HofPageContent({ hofMembers }: HofPageContentProps) {
               ))}
             </SelectContent>
           </Select>
-        </div>
-        <div className="w-full order-last md:w-full md:max-w-xs md:ml-auto md:order-none relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            placeholder="Search Hall of Famers..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10"
-          />
         </div>
       </div>
 
