@@ -40,7 +40,7 @@ export function PlayerSpotlight() {
               alt={player.name}
               width={213}
               height={213}
-              className="w-auto rounded-xl transition-transform group-hover:scale-105"
+              className="rounded-xl transition-transform group-hover:scale-105"
               onError={() => setImageError(true)}
               priority
             />
