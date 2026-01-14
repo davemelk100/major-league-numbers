@@ -291,26 +291,20 @@ export const spotlightPlayers: SpotlightPlayer[] = [
 ];
 
 export function getDailyPlayer(): SpotlightPlayer {
-  // Featured player: Ben Oglivie
-  return {
-    id: 119954,
-    name: "Ben Oglivie",
-    position: "OF",
-    team: "Red Sox/Tigers/Brewers",
-    years: "1971-1986",
-    fact: "A 3-time All-Star who led the American League in home runs in 1980 with 41, helping the Brewers become a powerhouse in the early '80s.",
-    bats: "Left",
-    throws: "Left",
-    birthplace: "Colón, Panama",
-    careerStats: ".273 AVG, 235 HR, 901 RBI, 1,615 H",
-    highlights: [
-      "Led AL in home runs (41) in 1980",
-      "3× All-Star (1980, 1982, 1983)",
-      "Key member of 1982 AL Champion Brewers",
-      "Hit 29+ HRs in four consecutive seasons",
-      "Known as 'Gentle Ben' for his quiet demeanor",
-    ],
-  };
+  const today = new Date();
+  const dateString = `player-${today.getFullYear()}-${
+    today.getMonth() + 1
+  }-${today.getDate()}`;
+
+  let hash = 0;
+  for (let i = 0; i < dateString.length; i++) {
+    const char = dateString.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash & hash;
+  }
+
+  const index = Math.abs(hash) % spotlightPlayers.length;
+  return spotlightPlayers[index];
 }
 
 export interface SpotlightManager {
