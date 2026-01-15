@@ -199,10 +199,10 @@
 
   h1 {
     font-family: var(--font-league-gothic), sans-serif !important;
-    font-size: 20px;
+    font-size: 26px;
     letter-spacing: 1px !important;
     font-weight: 400 !important;
-    text-transform: uppercase !important;
+    /* text-transform: uppercase !important; */
     /* padding-bottom: 15px !important; */
   }
 
@@ -212,11 +212,12 @@
     }
   }
 
-  h2, .font-league {
+  h2,
+  .font-league {
     font-family: var(--font-league-gothic), sans-serif !important;
     letter-spacing: 1px !important;
     font-weight: 400 !important;
-    text-transform: uppercase !important;
+    /* text-transform: uppercase !important; */
     font-size: 34px !important;
   }
 }
