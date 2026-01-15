@@ -22,13 +22,13 @@ interface NavItem {
 }
 
 const navigation: NavItem[] = [
+  { name: "ChatMLB", href: "/ask", image: "/chat-mlb-2.svg" },
   { name: "Home", href: "/", icon: Home },
   { name: "Players", href: "/players", icon: Users },
   { name: "Teams", href: "/teams", icon: Trophy },
   { name: "Standings", href: "/standings", icon: BarChart3 },
   { name: "All Stars", href: "/all-star", icon: Star },
   { name: "HOF", href: "/hof", icon: Award },
-  { name: "ChatMLB", href: "/ask", image: "/chat-mlb-2.svg" },
 ];
 
 export function LeftNav() {
@@ -55,9 +55,9 @@ export function LeftNav() {
                 <Image
                   src={item.image}
                   alt={item.name}
-                  width={20}
-                  height={20}
-                  className="h-5 w-5"
+                  width={40}
+                  height={40}
+                  className="h-10 w-10"
                 />
               ) : Icon ? (
                 <Icon className="h-5 w-5" />

@@ -10,18 +10,19 @@ export function Header() {
 
   return (
     <header className="z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-3">
+      {/* Main header row */}
       <div className="container flex items-center gap-4">
         <Link
           href="/"
           className="hidden md:flex flex-shrink-0 border-0 items-center gap-3"
         >
-           <Image
-          src="/chat-mlb-2.svg"
-          alt=""
-          width={100}
-          height={100}
-          className="h-20 w-auto"
-        />
+          <Image
+            src="/chat-mlb-2.svg"
+            alt=""
+            width={100}
+            height={100}
+            className="h-20 w-auto"
+          />
         </Link>
         <h1
           className="uppercase tracking-wide"
@@ -29,21 +30,25 @@ export function Header() {
         >
           Major League Numbers
         </h1>
-          {/* <Image
-            src="/mln-logo-wide.svg"
-            alt="Major League Numbers Logo"
-            width={400}
-            height={80}
-            style={{ width: "180px", height: "auto" }}
-            className="object-contain border-0"
-          /> */}
+        {/* Search - large desktop only, far right */}
+        <div className="hidden lg:block flex-1">
+          <div className="ml-auto w-72">
+            <PlayerSearch />
+          </div>
+        </div>
       </div>
-      {/* ChatMLB button and Search input - below header */}
+
+      {/* Search - tablet and mobile */}
+      <div className="container mt-3 lg:hidden">
+        <PlayerSearch />
+      </div>
+
+      {/* ChatMLB button - full width */}
       {pathname !== "/ask" && (
-        <div className="container mt-3 flex flex-col md:flex-row items-center gap-3 md:gap-4">
+        <div className="container mt-3">
           <Link
             href="/ask"
-            className="flex items-center justify-center gap-2 px-4 h-14 text-sm font-medium rounded-md w-full md:w-1/2 border border-primary/20 hover:border-primary/40 transition-all shadow-sm"
+            className="flex items-center justify-center gap-2 px-4 h-14 text-sm font-medium rounded-md w-full border border-primary/20 hover:border-primary/40 transition-all shadow-sm"
           >
             <Image
               src="/chat-mlb-2.svg"
@@ -54,9 +59,6 @@ export function Header() {
             />
             <span className="text-md">ChatMLB</span>
           </Link>
-          <div className="w-full md:w-1/2">
-            <PlayerSearch />
-          </div>
         </div>
       )}
     </header>
