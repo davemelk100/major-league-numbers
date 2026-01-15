@@ -147,6 +147,22 @@ export interface TeamHistoricalRecord {
   playoffResult?: string
 }
 
+export interface PostseasonAppearance {
+  season: number
+  round: string // "World Series", "LCS", "LDS", "Wild Card"
+  won: boolean
+  opponent?: string
+  result?: string // "4-2", "3-1", etc.
+}
+
+export interface TeamPostseasonHistory {
+  worldSeriesWins: number
+  worldSeriesAppearances: number
+  pennants: number // League Championships
+  playoffAppearances: number
+  appearances: PostseasonAppearance[]
+}
+
 export interface AwardWinner {
   id: number
   playerId: number
@@ -500,6 +516,113 @@ export async function getTeamHistory(
   // Cache full team history for 7 days
   setCache(cacheKey, sorted, CACHE_TTL_HISTORY)
   return sorted
+}
+
+export async function getTeamPostseasonHistory(
+  teamId: number,
+  startYear = 1995,
+  endYear = getDefaultSeason(),
+): Promise<TeamPostseasonHistory> {
+  const cacheKey = `team-postseason-${teamId}-${startYear}-${endYear}`
+  const cached = getCached<TeamPostseasonHistory>(cacheKey)
+  if (cached) return cached
+
+  const appearances: PostseasonAppearance[] = []
+  let worldSeriesWins = 0
+  let worldSeriesAppearances = 0
+  let pennants = 0
+  const playoffYears = new Set<number>()
+
+  // Fetch postseason data year by year (more reliable than date range)
+  const years = Array.from({ length: endYear - startYear + 1 }, (_, i) => startYear + i)
+
+  for (let i = 0; i < years.length; i += 10) {
+    const chunk = years.slice(i, i + 10)
+
+    if (i > 0) {
+      await new Promise((resolve) => setTimeout(resolve, 100))
+    }
+
+    await Promise.all(
+      chunk.map(async (year) => {
+        try {
+          const res = await fetchWithRetry(
+            `${BASE_URL}/schedule?sportId=1&teamId=${teamId}&season=${year}&gameType=F,D,L,W`,
+          )
+          const data = await safeJsonParse(res)
+
+          if (!data?.dates?.length) return
+
+          // Track series results for this year
+          const seriesResults: Record<string, { wins: number; losses: number; opponent: string }> = {}
+
+          for (const date of data.dates) {
+            for (const game of date.games || []) {
+              if (game.status?.abstractGameState !== "Final") continue
+
+              playoffYears.add(year)
+
+              const gameType = game.gameType
+              const isHome = game.teams?.home?.team?.id === teamId
+              const teamData = isHome ? game.teams?.home : game.teams?.away
+              const opponentData = isHome ? game.teams?.away : game.teams?.home
+              const teamWon = teamData?.isWinner
+
+              let round = ""
+              if (gameType === "W") round = "World Series"
+              else if (gameType === "L") round = "LCS"
+              else if (gameType === "D") round = "LDS"
+              else if (gameType === "F") round = "Wild Card"
+
+              if (!round) continue
+
+              if (!seriesResults[round]) {
+                seriesResults[round] = { wins: 0, losses: 0, opponent: opponentData?.team?.name || "Unknown" }
+              }
+
+              if (teamWon) {
+                seriesResults[round].wins++
+              } else {
+                seriesResults[round].losses++
+              }
+            }
+          }
+
+          // Convert series results to appearances
+          for (const [round, result] of Object.entries(seriesResults)) {
+            const won = result.wins > result.losses
+            appearances.push({
+              season: year,
+              round,
+              won,
+              opponent: result.opponent,
+              result: `${result.wins}-${result.losses}`,
+            })
+
+            if (round === "World Series") {
+              worldSeriesAppearances++
+              if (won) worldSeriesWins++
+            } else if (round === "LCS" && won) {
+              pennants++
+            }
+          }
+        } catch (error) {
+          // Skip this year on error
+        }
+      }),
+    )
+  }
+
+  const history: TeamPostseasonHistory = {
+    worldSeriesWins,
+    worldSeriesAppearances,
+    pennants,
+    playoffAppearances: playoffYears.size,
+    appearances: appearances.sort((a, b) => b.season - a.season),
+  }
+
+  setCache(cacheKey, history, CACHE_TTL_HISTORY)
+  return history
 }
 
 export async function getFranchiseHistory(teamId: number): Promise<{ allTeamIds: number[]; name: string }> {

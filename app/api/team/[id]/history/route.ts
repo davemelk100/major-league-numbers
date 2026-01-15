@@ -1,5 +1,5 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getTeamHistory, getDefaultSeason } from "@/lib/mlb-api"
+import { getTeamHistory, getTeamPostseasonHistory, getDefaultSeason } from "@/lib/mlb-api"
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -7,10 +7,13 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
   const defaultSeason = getDefaultSeason()
 
   try {
-    const history = await getTeamHistory(teamId, 1960, defaultSeason)
+    const [history, postseasonHistory] = await Promise.all([
+      getTeamHistory(teamId, 1960, defaultSeason),
+      getTeamPostseasonHistory(teamId, 1995, defaultSeason),
+    ])
 
     return NextResponse.json(
-      { history },
+      { history, postseasonHistory },
       {
         headers: {
           // Cache for 1 day since historical data rarely changes

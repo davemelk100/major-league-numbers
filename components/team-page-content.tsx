@@ -5,7 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import dynamic from "next/dynamic"
 import { ArrowLeft, Loader2, AlertCircle } from "lucide-react"
-import { getTeamLogoUrl, getDefaultSeason } from "@/lib/mlb-api"
+import { getTeamLogoUrl, getDefaultSeason, type TeamPostseasonHistory } from "@/lib/mlb-api"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { SeasonSelector } from "@/components/season-selector"
@@ -54,16 +54,6 @@ const TeamLogos = dynamic(
   },
 )
 
-const TeamUniforms = dynamic(
-  () =>
-    import("@/components/team-uniforms").then((mod) => ({
-      default: mod.TeamUniforms,
-    })),
-  {
-    loading: () => <Skeleton className="h-48 w-full" />,
-  },
-)
-
 interface TeamPageContentProps {
   teamId: number
   initialData: {
@@ -80,12 +70,31 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
   const [roster, setRoster] = useState(initialData?.roster || [])
   const [teamRecord, setTeamRecord] = useState(initialData?.teamRecord || null)
   const [history, setHistory] = useState<any[]>([])
+  const [postseasonHistory, setPostseasonHistory] = useState<TeamPostseasonHistory | null>(null)
   const [historyLoaded, setHistoryLoaded] = useState(false)
   const [historyLoading, setHistoryLoading] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [activeTab, setActiveTab] = useState("roster")
 
+  // Fetch postseason history on mount (for stats cards)
+  useEffect(() => {
+    console.log("Fetching postseason history for team:", teamId)
+    fetch(`/api/team/${teamId}/history`)
+      .then((res) => {
+        console.log("Postseason API response status:", res.status)
+        return res.json()
+      })
+      .then((data) => {
+        console.log("Postseason data received:", data.postseasonHistory)
+        setPostseasonHistory(data.postseasonHistory || null)
+      })
+      .catch((err) => {
+        console.error("Error fetching postseason history:", err)
+      })
+  }, [teamId])
+
+  // Fetch full history when History tab is opened
   useEffect(() => {
     if (activeTab === "history" && !historyLoaded && !historyLoading) {
       setHistoryLoading(true)
@@ -93,6 +102,7 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
         .then((res) => res.json())
         .then((data) => {
           setHistory(data.history || [])
+          setPostseasonHistory(data.postseasonHistory || null)
           setHistoryLoaded(true)
         })
         .catch((err) => {
@@ -206,7 +216,7 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
         {teamRecord ? (
           <>
             <Card>
@@ -263,12 +273,62 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
         )}
       </div>
 
+      {/* Postseason History Stats */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">World Series</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">
+              {postseasonHistory ? postseasonHistory.worldSeriesWins : "-"}
+            </p>
+            {postseasonHistory && postseasonHistory.worldSeriesAppearances > 0 && (
+              <p className="text-xs text-muted-foreground">
+                {postseasonHistory.worldSeriesAppearances} appearance{postseasonHistory.worldSeriesAppearances !== 1 ? "s" : ""}
+              </p>
+            )}
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Pennants</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">
+              {postseasonHistory ? postseasonHistory.pennants : "-"}
+            </p>
+            <p className="text-xs text-muted-foreground">League titles</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Playoff Apps</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">
+              {postseasonHistory ? postseasonHistory.playoffAppearances : "-"}
+            </p>
+            <p className="text-xs text-muted-foreground">Since 1995</p>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Last Title</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-bold">
+              {postseasonHistory?.appearances?.find(a => a.round === "World Series" && a.won)?.season || "-"}
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
       <Tabs defaultValue="roster" className="space-y-6" onValueChange={setActiveTab}>
         <TabsList>
           <TabsTrigger value="roster">{season} Roster</TabsTrigger>
           <TabsTrigger value="history">Historical Data (1960-Present)</TabsTrigger>
           <TabsTrigger value="logos">Logos</TabsTrigger>
-          <TabsTrigger value="uniforms">Uniforms</TabsTrigger>
         </TabsList>
 
         <TabsContent value="roster" className="space-y-8">
@@ -301,6 +361,34 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
           ) : history.length > 0 ? (
             <>
               <HistoricalChart data={history} teamName={team.name} />
+
+              {/* Postseason Appearances */}
+              {postseasonHistory && postseasonHistory.appearances.length > 0 && (
+                <div className="space-y-4">
+                  <h2 className="font-league text-4xl font-bold">Postseason History</h2>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {postseasonHistory.appearances.map((appearance, idx) => (
+                      <Card key={`${appearance.season}-${appearance.round}-${idx}`} className={appearance.won ? "border-green-500/50" : ""}>
+                        <CardContent className="py-4">
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <p className="font-bold text-lg">{appearance.season}</p>
+                              <p className="text-sm text-muted-foreground">{appearance.round}</p>
+                            </div>
+                            <div className="text-right">
+                              <p className={`font-bold ${appearance.won ? "text-green-500" : "text-red-500"}`}>
+                                {appearance.won ? "Won" : "Lost"} {appearance.result}
+                              </p>
+                              <p className="text-xs text-muted-foreground">vs {appearance.opponent}</p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               <HistoricalTable data={history} />
             </>
           ) : (
@@ -314,10 +402,6 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
 
         <TabsContent value="logos">
           <TeamLogos teamId={team.id} teamName={team.name} />
-        </TabsContent>
-
-        <TabsContent value="uniforms">
-          <TeamUniforms teamId={team.id} teamName={team.name} season={season} />
         </TabsContent>
       </Tabs>
     </main>
