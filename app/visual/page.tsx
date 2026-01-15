@@ -6,7 +6,7 @@ export const metadata = {
   description: "Interactive baseball statistics visualizations and charts",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // Revalidate every 60 seconds
 
 export default function VisualizationsPage() {
   const defaultSeason = getDefaultSeason();

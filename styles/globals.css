@@ -247,7 +247,7 @@
 
 /* Header h1 responsive sizing */
 header h1 {
-  font-size: 26px;
+  font-size: 30px;
 }
 
 @media (min-width: 768px) {

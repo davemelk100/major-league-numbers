@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Search } from "lucide-react";
+import { PlayerSearch } from "@/components/player-search";
 
 export function Header() {
   const pathname = usePathname();
@@ -38,8 +38,8 @@ export function Header() {
             className="object-contain border-0"
           /> */}
       </div>
-      {/* ChatMLB button and Search button - below header */}
-      {pathname !== "/ask" && pathname !== "/search" && (
+      {/* ChatMLB button and Search input - below header */}
+      {pathname !== "/ask" && (
         <div className="container mt-3 flex flex-col md:flex-row items-center gap-3 md:gap-4">
           <Link
             href="/ask"
@@ -54,13 +54,9 @@ export function Header() {
             />
             <span className="text-md">ChatMLB</span>
           </Link>
-          <Link
-            href="/search"
-            className="flex items-center justify-center gap-2 px-4 h-14 text-sm font-medium rounded-md w-full md:w-1/2 border border-primary/20 hover:border-primary/40 transition-all shadow-sm"
-          >
-            <Search className="h-5 w-5 text-muted-foreground" />
-            <span className="text-md">Search</span>
-          </Link>
+          <div className="w-full md:w-1/2">
+            <PlayerSearch />
+          </div>
         </div>
       )}
     </header>
