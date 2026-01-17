@@ -286,14 +286,13 @@ export function AskPageContent() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about baseball stats, players, or history..."
-              className="flex-1 px-4 py-3 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="flex-1 h-10 px-4 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
               disabled={isLoading}
               autoComplete="off"
             />
             <Button
               type="submit"
               disabled={isLoading || !input.trim()}
-              size="lg"
             >
               {isLoading ? (
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -419,7 +418,7 @@ export function AskPageContent() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about baseball stats, players, or history..."
-              className="flex-1 px-4 py-2 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="flex-1 h-10 px-4 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
               disabled={isLoading}
               autoComplete="off"
             />

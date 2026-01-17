@@ -37,7 +37,15 @@ export function Header() {
             {/* Large screens: wide button that fills available space */}
             <Link
               href="/ask"
-              className="hidden lg:flex flex-1 items-center justify-center gap-2 px-4 h-12 text-sm font-medium rounded-md border border-primary/20 hover:border-primary/40 transition-all shadow-sm mx-4"
+              className="hidden lg:flex flex-1 items-center justify-center gap-2 px-4 h-10 text-sm font-medium rounded-lg transition-all mx-4 active:translate-y-[1px]"
+              style={{
+                background: "linear-gradient(180deg, #d8e0e8 0%, #b8c4d0 100%)",
+                borderTop: "1px solid #e8eef4",
+                borderLeft: "1px solid #dce4ec",
+                borderRight: "1px solid #a8b4c0",
+                borderBottom: "2px solid #98a4b0",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.4)",
+              }}
             >
               <Image
                 src="/chat-mlb-2.svg"
@@ -52,7 +60,15 @@ export function Header() {
             {/* Small/medium screens: compact button */}
             <Link
               href="/ask"
-              className="lg:hidden flex items-center justify-center gap-2 px-3 h-10 text-sm font-medium rounded-md border border-primary/20 hover:border-primary/40 transition-all shadow-sm ml-auto"
+              className="lg:hidden flex items-center justify-center gap-2 px-3 h-10 text-sm font-medium rounded-lg transition-all ml-auto active:translate-y-[1px]"
+              style={{
+                background: "linear-gradient(180deg, #d8e0e8 0%, #b8c4d0 100%)",
+                borderTop: "1px solid #e8eef4",
+                borderLeft: "1px solid #dce4ec",
+                borderRight: "1px solid #a8b4c0",
+                borderBottom: "2px solid #98a4b0",
+                boxShadow: "0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.4)",
+              }}
             >
               <Image
                 src="/chat-mlb-2.svg"

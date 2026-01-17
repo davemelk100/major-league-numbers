@@ -14,6 +14,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Calendar, MapPin, Ruler, Scale, Star, GraduationCap } from "lucide-react";
+import { BaseballCardGallery } from "@/components/baseball-card";
 
 interface PlayerPageProps {
   params: Promise<{ id: string }>;
@@ -239,30 +240,37 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
           </div>
         )}
 
-        {/* Career Stats Tables */}
-        <div className="space-y-6">
-          {hittingStats.length > 0 && (
-            <PlayerStatsTable stats={hittingStats} type="hitting" />
-          )}
-          {pitchingStats.length > 0 && (
-            <PlayerStatsTable stats={pitchingStats} type="pitching" />
-          )}
-          {fieldingStats.length > 0 && (
-            <PlayerStatsTable stats={fieldingStats} type="fielding" />
-          )}
+        {/* Career Stats Tables and Baseball Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          <div className="lg:col-span-3 space-y-6">
+            {hittingStats.length > 0 && (
+              <PlayerStatsTable stats={hittingStats} type="hitting" />
+            )}
+            {pitchingStats.length > 0 && (
+              <PlayerStatsTable stats={pitchingStats} type="pitching" />
+            )}
+            {fieldingStats.length > 0 && (
+              <PlayerStatsTable stats={fieldingStats} type="fielding" />
+            )}
 
-          {hittingStats.length === 0 && pitchingStats.length === 0 && fieldingStats.length === 0 && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Career Statistics</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground">
-                  No career statistics available for this player.
-                </p>
-              </CardContent>
-            </Card>
-          )}
+            {hittingStats.length === 0 && pitchingStats.length === 0 && fieldingStats.length === 0 && (
+              <Card>
+                <CardHeader>
+                  <CardTitle>Career Statistics</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">
+                    No career statistics available for this player.
+                  </p>
+                </CardContent>
+              </Card>
+            )}
+          </div>
+
+          {/* Baseball Cards Sidebar */}
+          <div className="lg:col-span-1">
+            <BaseballCardGallery playerName={player.fullName} limit={4} />
+          </div>
         </div>
       </main>
     </>
