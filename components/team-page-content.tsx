@@ -54,6 +54,16 @@ const TeamLogos = dynamic(
   },
 )
 
+const HistoricalUniforms = dynamic(
+  () =>
+    import("@/components/historical-uniforms").then((mod) => ({
+      default: mod.HistoricalUniforms,
+    })),
+  {
+    loading: () => <Skeleton className="h-64 w-full" />,
+  },
+)
+
 interface TeamPageContentProps {
   teamId: number
   initialData: {
@@ -315,6 +325,7 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
           <TabsTrigger value="data">Data</TabsTrigger>
           <TabsTrigger value="postseason">Postseason</TabsTrigger>
           <TabsTrigger value="logos">Logos</TabsTrigger>
+          <TabsTrigger value="uniforms">Uniforms</TabsTrigger>
         </TabsList>
 
         {/* Roster Tab */}
@@ -476,6 +487,11 @@ export function TeamPageContent({ teamId, initialData }: TeamPageContentProps) {
         {/* Logos Tab */}
         <TabsContent value="logos">
           <TeamLogos teamId={team.id} teamName={team.name} />
+        </TabsContent>
+
+        {/* Uniforms Tab */}
+        <TabsContent value="uniforms">
+          <HistoricalUniforms teamId={team.id} teamName={team.name} />
         </TabsContent>
       </Tabs>
     </main>

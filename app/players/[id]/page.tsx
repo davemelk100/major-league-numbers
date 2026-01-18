@@ -119,22 +119,22 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
         </Button>
 
         {/* Player Header */}
-        <div className="flex flex-col md:flex-row gap-6 mb-8">
+        <div className="flex flex-row gap-4 md:gap-6 mb-8">
           <div className="shrink-0">
             <Image
               src={
                 getPlayerHeadshotUrl(player.id, "large") || "/placeholder.svg"
               }
               alt={player.fullName}
-              width={120}
-              height={120}
-              className="h-[80px] md:h-[110px] w-auto rounded-lg"
+              width={200}
+              height={200}
+              className="h-[120px] md:h-[180px] w-auto rounded-lg"
               priority
             />
           </div>
           <div className="flex-1">
             <div className="mb-4 flex items-center gap-3">
-              <h2 className="font-league mb-0 leading-tight">{player.fullName}</h2>
+              <h2 className="font-league leading-tight">{player.fullName}</h2>
               {player.active && (
                 <Badge
                   variant="outline"
@@ -144,7 +144,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
                 </Badge>
               )}
             </div>
-            <p className="text-lg text-muted-foreground mb-4">
+            <p className="text-sm text-muted-foreground mb-2">
               {player.currentTeam?.name || "Free Agent"} •{" "}
               {player.primaryPosition?.name}
             </p>
@@ -169,7 +169,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
               </div>
             </div>
             {allStarAppearances.length > 0 && (
-              <div className="mt-4 flex items-center gap-2">
+              <div className="mt-2 flex items-center gap-2 text-sm">
                 <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
                 <span className="font-medium">
                   {allStarAppearances.length}x All-Star
@@ -180,7 +180,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
               </div>
             )}
             {player.draft && (
-              <div className="mt-4 flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="mt-2 flex items-center gap-2 text-sm text-muted-foreground">
                 <GraduationCap className="h-4 w-4" />
                 <span>
                   Drafted {player.draft.year} by {player.draft.team?.name || "Unknown"}

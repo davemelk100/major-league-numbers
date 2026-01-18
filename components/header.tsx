@@ -24,12 +24,14 @@ export function Header() {
             className="h-20 w-auto"
           />
         </Link>
-        <h1
-          className="uppercase tracking-wide flex-shrink-0"
-          style={{ color: "#f4232b" }}
-        >
-          Major League Numbers
-        </h1>
+        <Link href="/">
+          <h1
+            className="uppercase tracking-wide flex-shrink-0"
+            style={{ color: "#f4232b" }}
+          >
+            Major League Numbers
+          </h1>
+        </Link>
 
         {/* ChatMLB button - fills space between title and search on lg+ */}
         {pathname !== "/ask" && (
@@ -75,6 +77,7 @@ export function Header() {
                 alt=""
                 width={100}
                 height={100}
+                className="hidden sm:block"
                 style={{ height: "24px", width: "auto" }}
               />
               <span className="text-sm">ChatMLB</span>
@@ -83,7 +86,7 @@ export function Header() {
         )}
 
         {/* Search - large desktop only, far right */}
-        <div className="hidden lg:block flex-shrink-0">
+        <div className="hidden lg:block flex-shrink-0 ml-auto">
           <div className="w-72">
             <PlayerSearch />
           </div>
