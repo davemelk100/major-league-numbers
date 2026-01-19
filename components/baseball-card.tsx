@@ -108,6 +108,7 @@ export function BaseballCard({ playerName }: BaseballCardProps) {
 
 interface BaseballCardGalleryProps {
   playerName: string;
+  playerId?: number;
   limit?: number;
 }
 
@@ -118,13 +119,19 @@ function getEbaySearchUrl(query: string): string {
   return `https://www.ebay.com/sch/i.html?${params.toString()}`;
 }
 
+function getActionPhotoUrl(playerId: number): string {
+  return `https://img.mlbstatic.com/mlb-photos/image/upload/w_400,q_auto:best/v1/people/${playerId}/action/hitting/current`;
+}
+
 export function BaseballCardGallery({
   playerName,
+  playerId,
   limit = 4,
 }: BaseballCardGalleryProps) {
   const [cards, setCards] = useState<BaseballCardData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [actionPhotoError, setActionPhotoError] = useState(false);
 
   useEffect(() => {
     async function fetchCards() {
@@ -184,15 +191,29 @@ export function BaseballCardGallery({
           <CardTitle className="text-lg">Baseball Cards on eBay</CardTitle>
         </CardHeader>
         <CardContent>
-          <a
-            href={searchUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-base text-primary hover:underline font-medium"
-          >
-            Search on eBay
-            <ExternalLink className="h-4 w-4" />
-          </a>
+          <div className="flex items-center gap-4">
+            {playerId && !actionPhotoError && (
+              <div className="relative w-24 h-32 shrink-0 overflow-hidden rounded-lg bg-muted">
+                <Image
+                  src={getActionPhotoUrl(playerId)}
+                  alt={`${playerName} action photo`}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                  onError={() => setActionPhotoError(true)}
+                />
+              </div>
+            )}
+            <a
+              href={searchUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-base text-primary hover:underline font-medium"
+            >
+              Search on eBay
+              <ExternalLink className="h-4 w-4" />
+            </a>
+          </div>
         </CardContent>
       </Card>
     );

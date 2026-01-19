@@ -260,6 +260,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
         {/* Career Stats Toggle */}
         <PlayerPageContent
           playerName={player.fullName}
+          playerId={player.id}
           hittingStats={hittingStats}
           pitchingStats={pitchingStats}
           fieldingStats={fieldingStats}

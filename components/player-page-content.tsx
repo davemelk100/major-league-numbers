@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 interface PlayerPageContentProps {
   playerName: string;
+  playerId: number;
   hittingStats: any[];
   pitchingStats: any[];
   fieldingStats: any[];
@@ -19,6 +20,7 @@ interface PlayerPageContentProps {
 
 export function PlayerPageContent({
   playerName,
+  playerId,
   hittingStats,
   pitchingStats,
   fieldingStats,
@@ -113,7 +115,7 @@ export function PlayerPageContent({
       )}
 
       {activeView === "cards" && (
-        <BaseballCardGallery playerName={playerName} limit={4} />
+        <BaseballCardGallery playerName={playerName} playerId={playerId} limit={4} />
       )}
 
       {!hasHittingStats && !hasPitchingStats && !hasFieldingStats && activeView !== "cards" && (
