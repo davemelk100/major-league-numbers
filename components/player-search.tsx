@@ -7,7 +7,7 @@ import { Search, Loader2, Trophy } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
-import type { Player, Team } from "@/lib/mlb-api";
+import { getTeamLogoUrl, type Player, type Team } from "@/lib/mlb-api";
 
 interface SearchResults {
   players: Player[];
@@ -68,7 +68,7 @@ export function PlayerSearch() {
           }}
           onFocus={() => setIsOpen(true)}
           onBlur={() => setTimeout(() => setIsOpen(false), 200)}
-          className="pl-10 h-14 bg-white border-border"
+          className="pl-10 bg-white border-border"
         />
         {isLoading && (
           <Loader2 className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin" />
@@ -94,7 +94,7 @@ export function PlayerSearch() {
                     )}
                   >
                     <Image
-                      src={`https://www.mlbstatic.com/team-logos/${team.id}.svg`}
+                      src={getTeamLogoUrl(team.id)}
                       alt={team.name}
                       width={40}
                       height={40}

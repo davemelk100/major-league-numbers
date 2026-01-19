@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Search, Loader2, Users, Trophy, History } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { getTeamLogoUrl } from "@/lib/mlb-api"
 import { searchPlayers, getPlayerHeadshotUrl, getTeams, getAllPlayers, type Player, type Team } from "@/lib/mlb-api"
 import { cn } from "@/lib/utils"
 import Fuse from "fuse.js"
@@ -110,7 +111,7 @@ export function HeaderSearch() {
           onFocus={() => setIsOpen(true)}
           onBlur={() => setTimeout(() => setIsOpen(false), 200)}
           className={cn(
-            "pl-12 pr-10 w-full bg-background/50 backdrop-blur-sm border-primary/20 hover:border-primary/40 focus:border-primary transition-all rounded-md h-14 text-sm",
+            "pl-12 pr-10 w-full bg-background/50 backdrop-blur-sm border-primary/20 hover:border-primary/40 focus:border-primary transition-all rounded-md text-sm",
             isOpen && query.length > 0 && "rounded-b-none border-b-0 shadow-lg"
           )}
         />
@@ -149,7 +150,7 @@ export function HeaderSearch() {
                       />
                     ) : (
                       <Image
-                        src={`https://www.mlbstatic.com/team-logos/${result.data.id}.svg`}
+                        src={getTeamLogoUrl(result.data.id)}
                         alt={result.data.name}
                         width={40}
                         height={40}
