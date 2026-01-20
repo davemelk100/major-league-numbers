@@ -38,10 +38,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/gbv-rune.svg",
+        url: "/gbv-rune.png",
         width: 1200,
         height: 630,
-        alt: "Guided By Voices rune",
+        alt: "Guided By Data",
       },
     ],
   },
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     title: "Guided By Data",
     description:
       "Explore Guided By Voices discography, albums, songs, and band history.",
-    images: ["/gbv-rune.svg"],
+    images: ["/gbv-rune.png"],
   },
 };
 
