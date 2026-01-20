@@ -5,10 +5,10 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import {
   Home,
+  Disc3,
   Users,
-  Trophy,
-  BarChart3,
-  Star,
+  Music,
+  Calendar,
   Award,
   type LucideIcon,
 } from "lucide-react";
@@ -22,16 +22,16 @@ interface NavItem {
 }
 
 const navigation: NavItem[] = [
-  { name: "ChatMLB", href: "/ask", image: "/chat-mlb-2.svg" },
-  { name: "Home", href: "/", icon: Home },
-  { name: "Players", href: "/players", icon: Users },
-  { name: "Teams", href: "/teams", icon: Trophy },
-  { name: "Standings", href: "/standings", icon: BarChart3 },
-  { name: "All Stars", href: "/all-star", icon: Star },
-  { name: "HOF", href: "/hof", icon: Award },
+  { name: "Chat GBV", href: "/gbv/ask", image: "/gbv-rune.svg" },
+  { name: "Home", href: "/gbv", icon: Home },
+  { name: "Albums", href: "/gbv/albums", icon: Disc3 },
+  { name: "Members", href: "/gbv/members", icon: Users },
+  { name: "Songs", href: "/gbv/songs", icon: Music },
+  { name: "Timeline", href: "/gbv/timeline", icon: Calendar },
+  { name: "Awards", href: "/gbv/awards", icon: Award },
 ];
 
-export function LeftNav() {
+export function GbvLeftNav() {
   const pathname = usePathname();
 
   return (
@@ -55,13 +55,13 @@ export function LeftNav() {
                 <Image
                   src={item.image}
                   alt={item.name}
-                  width={40}
-                  height={40}
-                  className="h-10 w-10"
+                  width={20}
+                  height={20}
+                  className="h-5 w-5"
                 />
-              ) : Icon ? (
-                <Icon className="h-5 w-5" />
-              ) : null}
+              ) : (
+                Icon && <Icon className="h-5 w-5" />
+              )}
               <span className="text-xs font-medium text-center leading-tight">
                 {item.name}
               </span>
@@ -73,18 +73,13 @@ export function LeftNav() {
   );
 }
 
-// Keep FooterNav for mobile
-export function FooterNav() {
+export function GbvFooterNav() {
   const pathname = usePathname();
 
   // Only show essential nav items on mobile footer
   const mobileNavigation = navigation
-    .filter((item) => !["All Stars", "HOF", "Home"].includes(item.name))
-    .map((item) =>
-      item.name === "Standings"
-        ? { ...item, icon: BarChart3, image: undefined }
-        : item
-    );
+    .filter((item) => !["Timeline", "Awards"].includes(item.name))
+    .slice(0, 5);
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border safe-area-bottom sm:hidden">
@@ -111,9 +106,9 @@ export function FooterNav() {
                   height={20}
                   className="h-5 w-5"
                 />
-              ) : Icon ? (
-                <Icon className="h-5 w-5" />
-              ) : null}
+              ) : (
+                Icon && <Icon className="h-5 w-5" />
+              )}
               <span className="text-sm font-medium">{item.name}</span>
             </Link>
           );
