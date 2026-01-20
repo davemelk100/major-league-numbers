@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { GbvSearch } from "@/components/gbv/gbv-search";
+import { cn } from "@/lib/utils";
 
 export function GbvHeader() {
   const pathname = usePathname();
@@ -22,7 +23,12 @@ export function GbvHeader() {
           />
         </Link>
         <Link href="/gbv">
-          <h1 className="uppercase tracking-wide flex-shrink-0 text-black">
+          <h1
+            className={cn(
+              "uppercase tracking-wide flex-shrink-0",
+              pathname === "/gbv/ask" ? "text-white" : "text-black"
+            )}
+          >
             Guided By Data
           </h1>
         </Link>
