@@ -4156,32 +4156,39 @@ export const triviaQuestions: TriviaQuestion[] = [
 
 export function getDailyTriviaQuestions(date?: Date): TriviaQuestion[] {
   const now = date || new Date();
-  // Create a seed based on the current date (changes daily at midnight)
-  const dateSeed =
-    now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
-
-  const seededRandom = (seed: number): number => {
-    const x = Math.sin(seed) * 10000;
-    return x - Math.floor(x);
-  };
-
   const totalQuestions = triviaQuestions.length;
-  const selectedIndices: number[] = [];
-  let seed = dateSeed;
+  const questionsPerDay = 5;
 
-  // Select 5 unique random indices
-  while (selectedIndices.length < 5) {
-    seed = (seed * 16807) % 2147483647; // Linear congruential generator
-    const randomValue = seededRandom(seed);
-    const index = Math.floor(randomValue * totalQuestions);
-
-    if (!selectedIndices.includes(index)) {
-      selectedIndices.push(index);
-    }
+  if (totalQuestions < questionsPerDay) {
+    return triviaQuestions.slice();
   }
 
-  // Return 5 unique questions
-  return selectedIndices.map((i) => triviaQuestions[i]);
+  const getEpochDay = (value: Date) => {
+    const utc = Date.UTC(value.getFullYear(), value.getMonth(), value.getDate());
+    return Math.floor(utc / 86400000);
+  };
+
+  const shuffleQuestions = (seed: number) => {
+    const shuffled = [...triviaQuestions];
+    let currentSeed = seed;
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+      currentSeed = (currentSeed * 16807) % 2147483647;
+      const j = currentSeed % (i + 1);
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  const cycleLength = Math.floor(totalQuestions / questionsPerDay);
+  if (cycleLength === 0) {
+    return triviaQuestions.slice(0, questionsPerDay);
+  }
+
+  const dayIndex = getEpochDay(now) % cycleLength;
+  const startIndex = dayIndex * questionsPerDay;
+  const shuffledQuestions = shuffleQuestions(915341);
+
+  return shuffledQuestions.slice(startIndex, startIndex + questionsPerDay);
 }
 
 export function getTodayStorageKey(date?: Date): string {
