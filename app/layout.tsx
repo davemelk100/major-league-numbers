@@ -1,14 +1,9 @@
 import type React from "react";
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, League_Gothic } from "next/font/google";
-import { Header } from "@/components/header";
-import { Footer } from "@/components/footer";
-import { FooterNav, LeftNav } from "@/components/footer-nav";
-import { PageLoader } from "@/components/page-loader";
+import { LayoutWrapper } from "@/components/layout-wrapper";
 import { WebsiteJsonLd } from "@/components/json-ld";
 import { Toaster } from "@/components/ui/sonner";
-import { UpdatesBanner } from "@/components/updates-banner";
 // import { Analytics } from "@vercel/analytics/react"
 import "@/styles/globals.css";
 
@@ -109,16 +104,7 @@ export default function RootLayout({
       <body
         className={`font-sans antialiased min-h-screen flex flex-col ${leagueGothic.variable}`}
       >
-        <LeftNav />
-        <div className="sm:ml-20 flex flex-col flex-1">
-          <Header />
-          <UpdatesBanner />
-          <Suspense fallback={<PageLoader />}>
-            <div className="pb-16 sm:pb-0 flex-1">{children}</div>
-          </Suspense>
-          <Footer />
-        </div>
-        <FooterNav />
+        <LayoutWrapper>{children}</LayoutWrapper>
         <Toaster />
         {/* <Analytics /> */}
       </body>
