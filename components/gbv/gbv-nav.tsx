@@ -53,9 +53,9 @@ export function GbvLeftNav() {
                 <Image
                   src={item.image}
                   alt={item.name}
-                  width={20}
-                  height={20}
-                  className="h-5 w-5"
+                  width={item.name === "Chat GBV" ? 24 : 20}
+                  height={item.name === "Chat GBV" ? 24 : 20}
+                  className={item.name === "Chat GBV" ? "h-6 w-6" : "h-5 w-5"}
                 />
               ) : (
                 Icon && <Icon className="h-5 w-5" />
@@ -100,9 +100,9 @@ export function GbvFooterNav() {
                 <Image
                   src={item.image}
                   alt={item.name}
-                  width={20}
-                  height={20}
-                  className="h-5 w-5"
+                  width={item.name === "Chat GBV" ? 24 : 20}
+                  height={item.name === "Chat GBV" ? 24 : 20}
+                  className={item.name === "Chat GBV" ? "h-6 w-6" : "h-5 w-5"}
                 />
               ) : (
                 Icon && <Icon className="h-5 w-5" />
