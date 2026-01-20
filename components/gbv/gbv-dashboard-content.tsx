@@ -8,6 +8,7 @@ import { Music, Calendar, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { GbvTriviaPanel } from "@/components/gbv/gbv-trivia-card";
+import { pollardSideProjects, type SideProject } from "../../lib/gbv-side-projects";
 
 interface Album {
   id: number;
@@ -376,6 +377,32 @@ export function GbvDashboardContent() {
                   </CardContent>
                 </Card>
               ))}
+        </div>
+      </div>
+
+      {/* Robert Pollard Side Projects */}
+      <div className="mb-8">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-league text-4xl font-semibold">
+            Robert Pollard Side Projects
+          </h2>
+          <Link
+            href="/gbv/side-projects"
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
+            View all →
+          </Link>
+        </div>
+        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          {pollardSideProjects.map((project: SideProject) => (
+            <Card key={project.name} className="h-full">
+              <CardContent className="p-4">
+                <h3 className="font-semibold text-lg">{project.name}</h3>
+                <p className="text-sm text-muted-foreground">{project.years}</p>
+                <p className="text-sm mt-2">{project.description}</p>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </div>
     </main>
