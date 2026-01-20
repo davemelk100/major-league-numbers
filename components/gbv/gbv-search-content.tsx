@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Users, Disc3 } from "lucide-react";
+import { Loader2, Users } from "lucide-react";
 
 interface Album {
   id: number;
@@ -13,6 +13,8 @@ interface Album {
   year: number;
   thumb: string;
   coverUrl?: string | null;
+  format?: string | string[];
+  releaseType?: string;
 }
 
 interface Member {
@@ -85,6 +87,14 @@ export function GbvSearchContent() {
 
   const getAlbumImage = (album: Album): string | null => {
     return album.coverUrl || album.thumb || null;
+  };
+
+  const getReleaseType = (format?: string | string[], releaseType?: string) => {
+    if (!format) return "Album";
+    const normalized = Array.isArray(format) ? format.join(" ") : format;
+    if (normalized.toLowerCase().includes("single")) return "Single";
+    if (releaseType === "release") return "Single";
+    return "Album";
   };
 
   if (!query) {
@@ -181,7 +191,12 @@ export function GbvSearchContent() {
                     )}
                     <div className="text-sm">
                       <p className="font-medium truncate">{album.title}</p>
-                      <p className="text-xs text-muted-foreground">{album.year}</p>
+                      <div className="flex items-center justify-between text-xs text-muted-foreground">
+                        <span>{album.year}</span>
+                        <span className="border border-border rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide">
+                            {getReleaseType(album.format, album.releaseType)}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </Link>

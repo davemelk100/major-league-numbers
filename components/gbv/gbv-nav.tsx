@@ -7,7 +7,6 @@ import {
   Home,
   Disc3,
   Users,
-  Music,
   Calendar,
   Award,
   type LucideIcon,
@@ -26,7 +25,6 @@ const navigation: NavItem[] = [
   { name: "Home", href: "/gbv", icon: Home },
   { name: "Albums", href: "/gbv/albums", icon: Disc3 },
   { name: "Members", href: "/gbv/members", icon: Users },
-  { name: "Songs", href: "/gbv/songs", icon: Music },
   { name: "Timeline", href: "/gbv/timeline", icon: Calendar },
   { name: "Awards", href: "/gbv/awards", icon: Award },
 ];
@@ -78,7 +76,7 @@ export function GbvFooterNav() {
 
   // Only show essential nav items on mobile footer
   const mobileNavigation = navigation
-    .filter((item) => !["Timeline", "Awards"].includes(item.name))
+    .filter((item) => !["Home", "Timeline", "Awards"].includes(item.name))
     .slice(0, 5);
 
   return (

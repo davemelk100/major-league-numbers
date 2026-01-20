@@ -22,9 +22,6 @@ export function GbvFooter() {
             <Link href="/gbv/members" className="hover:text-foreground transition-colors">
               Members
             </Link>
-            <Link href="/gbv/songs" className="hover:text-foreground transition-colors">
-              Songs
-            </Link>
             <Link href="/gbv/ask" className="hover:text-foreground transition-colors">
               Chat GBV
             </Link>

@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -16,6 +17,8 @@ interface Album {
   thumb: string;
   mainRelease?: number;
   coverUrl?: string | null;
+  format?: string | string[];
+  releaseType?: string;
 }
 
 export function GbvAlbumsContent() {
@@ -24,6 +27,7 @@ export function GbvAlbumsContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<"year-asc" | "year-desc" | "title">("year-asc");
+  const [releaseFilter, setReleaseFilter] = useState<"albums" | "singles">("albums");
   const [loadedCovers, setLoadedCovers] = useState<Set<string>>(new Set());
 
   // Fetch cover art in batches
@@ -106,6 +110,18 @@ export function GbvAlbumsContent() {
     }
   }, [albums, loadedCovers.size, fetchCoverArt]);
 
+  const getAlbumImage = (album: Album): string | null => {
+    return album.coverUrl || album.thumb || null;
+  };
+
+  const getReleaseType = (format?: string | string[], releaseType?: string) => {
+    if (!format) return "Album";
+    const normalized = Array.isArray(format) ? format.join(" ") : format;
+    if (normalized.toLowerCase().includes("single")) return "Single";
+    if (releaseType === "release") return "Single";
+    return "Album";
+  };
+
   useEffect(() => {
     let result = [...albums];
 
@@ -128,9 +144,13 @@ export function GbvAlbumsContent() {
     setFilteredAlbums(result);
   }, [albums, search, sortBy]);
 
-  const getAlbumImage = (album: Album): string | null => {
-    return album.coverUrl || album.thumb || null;
-  };
+  const albumsOnly = filteredAlbums.filter(
+    (album) => getReleaseType(album.format, album.releaseType) === "Album"
+  );
+  const singlesOnly = filteredAlbums.filter(
+    (album) => getReleaseType(album.format, album.releaseType) === "Single"
+  );
+  const visibleAlbums = releaseFilter === "albums" ? albumsOnly : singlesOnly;
 
   if (isLoading) {
     return (
@@ -146,14 +166,23 @@ export function GbvAlbumsContent() {
   return (
     <main className="container py-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <h1 className="font-league text-4xl font-semibold">
-          Discography ({filteredAlbums.length})
-        </h1>
-        <div className="flex gap-4">
+        <div>
+          <h1 className="font-league text-4xl font-semibold">Discography</h1>
+          <p className="text-sm text-muted-foreground">
+            {releaseFilter === "albums" ? "Albums" : "Singles"} ({visibleAlbums.length})
+          </p>
+        </div>
+        <div className="flex flex-wrap gap-4">
+          <Tabs value={releaseFilter} onValueChange={(v) => setReleaseFilter(v as typeof releaseFilter)}>
+            <TabsList>
+              <TabsTrigger value="albums">Albums</TabsTrigger>
+              <TabsTrigger value="singles">Singles</TabsTrigger>
+            </TabsList>
+          </Tabs>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Search albums..."
+              placeholder="Search titles..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="pl-9 w-64"
@@ -173,7 +202,7 @@ export function GbvAlbumsContent() {
       </div>
 
       <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-        {filteredAlbums.map((album) => (
+        {visibleAlbums.map((album) => (
           <Link key={album.id} href={`/gbv/albums/${album.id}`}>
             <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
               <CardContent className="p-3">
@@ -198,16 +227,21 @@ export function GbvAlbumsContent() {
                   </div>
                 )}
                 <h3 className="font-semibold text-sm truncate">{album.title}</h3>
-                <p className="text-xs text-muted-foreground">{album.year}</p>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>{album.year}</span>
+                  <span className="border border-border rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide">
+                    {getReleaseType(album.format, album.releaseType)}
+                  </span>
+                </div>
               </CardContent>
             </Card>
           </Link>
         ))}
       </div>
 
-      {filteredAlbums.length === 0 && !isLoading && (
+      {visibleAlbums.length === 0 && !isLoading && (
         <div className="text-center py-12 text-muted-foreground">
-          No albums found matching &quot;{search}&quot;
+          No {releaseFilter === "albums" ? "albums" : "singles"} found matching &quot;{search}&quot;
         </div>
       )}
     </main>

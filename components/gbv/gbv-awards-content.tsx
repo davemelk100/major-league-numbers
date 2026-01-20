@@ -2,33 +2,36 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Award, Star, Music, Trophy } from "lucide-react";
+import { Trophy } from "lucide-react";
 
 const criticalAcclaim = [
   {
     publication: "Pitchfork",
-    accolade: "Bee Thousand rated 9.2/10",
-    year: 1994,
+    accolade: "Bee Thousand ranked #10 in Top 100 Albums of the 1990s",
+    year: 2003,
+    sourceLabel: "Pitchfork list",
+    sourceUrl: "https://pitchfork.com/features/lists-and-guides/5923-top-100-albums-of-the-1990s/",
   },
   {
     publication: "Rolling Stone",
     accolade: "Alien Lanes - 4 stars",
     year: 1995,
-  },
-  {
-    publication: "NME",
-    accolade: "Named one of the most important indie bands of the 90s",
-    year: 1999,
-  },
-  {
-    publication: "Spin",
-    accolade: "Bee Thousand named one of the best albums of the 90s",
-    year: 1999,
+    sourceLabel: "Review excerpt",
+    sourceUrl: "https://robertpollard.net/oldgbvsite/rstone.html",
   },
   {
     publication: "Pitchfork",
-    accolade: "Alien Lanes included in Top 100 Albums of the 1990s",
+    accolade: "Alien Lanes ranked #27 in Top 100 Albums of the 1990s",
     year: 2003,
+    sourceLabel: "Pitchfork list",
+    sourceUrl: "https://pitchfork.com/features/lists-and-guides/5923-top-100-albums-of-the-1990s/",
+  },
+  {
+    publication: "Pitchfork",
+    accolade: "Director's Cut review says original Bee Thousand 'warrants a 10'",
+    year: 2003,
+    sourceLabel: "Pitchfork review",
+    sourceUrl: "https://pitchfork.com/reviews/albums/3600-bee-thousand-the-directors-cut/",
   },
 ];
 
@@ -44,22 +47,18 @@ const recognition = [
   {
     title: "Indie Rock Pioneers",
     description: "Credited with defining the lo-fi aesthetic in indie rock",
-    icon: Star,
   },
   {
     title: "Prolific Output",
     description: "One of the most prolific bands in rock history with 30+ albums",
-    icon: Music,
   },
   {
     title: "Critical Darlings",
     description: "Consistently praised by critics for songwriting excellence",
-    icon: Award,
   },
   {
     title: "Cult Following",
     description: "Dedicated fanbase spanning four decades",
-    icon: Trophy,
   },
 ];
 
@@ -70,20 +69,14 @@ export function GbvAwardsContent() {
 
       {/* Recognition Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-8">
-        {recognition.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Card key={item.title}>
-              <CardContent className="p-4 text-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full mx-auto mb-3 flex items-center justify-center">
-                  <Icon className="h-6 w-6 text-primary" />
-                </div>
-                <h3 className="font-semibold mb-1">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.description}</p>
-              </CardContent>
-            </Card>
-          );
-        })}
+        {recognition.map((item) => (
+          <Card key={item.title}>
+            <CardContent className="p-4 text-center">
+              <h3 className="font-semibold mb-1">{item.title}</h3>
+              <p className="text-sm text-muted-foreground">{item.description}</p>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -99,6 +92,16 @@ export function GbvAwardsContent() {
                   <div>
                     <p className="font-medium">{item.publication}</p>
                     <p className="text-sm text-muted-foreground">{item.accolade}</p>
+                    {item.sourceUrl && (
+                      <a
+                        href={item.sourceUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-xs text-muted-foreground hover:text-foreground underline underline-offset-4"
+                      >
+                        {item.sourceLabel || "Source"}
+                      </a>
+                    )}
                   </div>
                   <Badge variant="outline">{item.year}</Badge>
                 </div>
@@ -127,13 +130,7 @@ export function GbvAwardsContent() {
 
       {/* Note */}
       <Card className="mt-6">
-        <CardContent className="p-4">
-          <p className="text-sm text-muted-foreground text-center">
-            Note: Guided By Voices, while critically acclaimed, have received limited mainstream awards
-            due to their independent status. Their recognition comes primarily from music critics,
-            publications, and their dedicated cult following.
-          </p>
-        </CardContent>
+
       </Card>
     </main>
   );

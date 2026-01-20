@@ -14,7 +14,7 @@ interface DiscogsRelease {
   role: string;
   resource_url: string;
   thumb: string;
-  format?: string;
+  format?: string | string[];
 }
 
 interface DiscogsArtist {
@@ -97,16 +97,23 @@ export async function GET(request: Request) {
       } while (currentPage <= totalPages && currentPage <= 5); // Limit to 5 pages max
 
       const albums = allReleases
-        .filter((release: DiscogsRelease) =>
-          release.type === "master" &&
-          release.role === "Main"
-        )
+        .filter((release: DiscogsRelease) => {
+          if (release.role !== "Main") return false;
+          if (release.type === "master") return true;
+          if (release.type !== "release") return false;
+          const format = Array.isArray(release.format)
+            ? release.format.join(" ").toLowerCase()
+            : (release.format || "").toLowerCase();
+          return format.includes("single");
+        })
         .map((release: DiscogsRelease) => ({
           id: release.id,
           title: release.title,
           year: release.year,
           thumb: release.thumb,
           mainRelease: release.main_release,
+          format: release.format,
+          releaseType: release.type,
         }));
 
       return NextResponse.json({ albums });

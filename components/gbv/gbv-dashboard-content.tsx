@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Users, Music, Calendar, Loader2 } from "lucide-react";
+import { Music, Calendar, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -15,6 +15,8 @@ interface Album {
   thumb: string;
   mainRelease?: number;
   coverUrl?: string | null;
+  format?: string | string[];
+  releaseType?: string;
 }
 
 interface Member {
@@ -28,6 +30,60 @@ interface ArtistData {
   name: string;
   profile: string;
   members?: Member[];
+}
+
+function MemberAvatar({ name }: { name: string }) {
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isActive = true;
+    const fetchImage = async () => {
+      try {
+        const res = await fetch(
+          `/api/gbv/commons-image?name=${encodeURIComponent(name)}`
+        );
+        if (!res.ok) return;
+        const data = await res.json();
+        if (isActive) {
+          setImageUrl(data.imageUrl || null);
+        }
+      } catch {
+        if (isActive) {
+          setImageUrl(null);
+        }
+      }
+    };
+
+    fetchImage();
+    return () => {
+      isActive = false;
+    };
+  }, [name]);
+
+  if (!imageUrl) {
+    return (
+      <div className="w-16 h-16 bg-muted rounded-full mb-3 flex items-center justify-center">
+        <Image
+          src="/gbv-rune.svg"
+          alt="GBV rune"
+          width={32}
+          height={32}
+          className="h-8 w-8"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div className="w-16 h-16 mb-3 relative">
+      <Image
+        src={imageUrl}
+        alt={`${name} photo`}
+        fill
+        className="rounded-full object-cover"
+      />
+    </div>
+  );
 }
 
 const recentFacts = [
@@ -130,6 +186,14 @@ export function GbvDashboardContent() {
     return album.coverUrl || album.thumb || null;
   };
 
+  const getReleaseType = (format?: string | string[], releaseType?: string) => {
+    if (!format) return "Album";
+    const normalized = Array.isArray(format) ? format.join(" ") : format;
+    if (normalized.toLowerCase().includes("single")) return "Single";
+    if (releaseType === "release") return "Single";
+    return "Album";
+  };
+
   if (isLoading) {
     return (
       <main className="container py-2">
@@ -199,9 +263,18 @@ export function GbvDashboardContent() {
                   <div>
                     <h3 className="text-xl font-semibold">{featuredAlbums[0].title}</h3>
                     <p className="text-muted-foreground">{featuredAlbums[0].year}</p>
-                    <Badge variant="secondary" className="mt-2">
-                      {featuredAlbums[0].year < 1998 ? "Classic Era" : featuredAlbums[0].year < 2005 ? "TVT Era" : "Reunion Era"}
-                    </Badge>
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      <Badge variant="secondary">
+                        {featuredAlbums[0].year < 1998
+                          ? "Classic Era"
+                          : featuredAlbums[0].year < 2005
+                            ? "TVT Era"
+                            : "Reunion Era"}
+                      </Badge>
+                      <Badge variant="outline">
+                        {getReleaseType(featuredAlbums[0].format, featuredAlbums[0].releaseType)}
+                      </Badge>
+                    </div>
                   </div>
                 </div>
               </Link>
@@ -255,7 +328,12 @@ export function GbvDashboardContent() {
                         </div>
                       )}
                       <h3 className="font-semibold truncate">{album.title}</h3>
-                      <p className="text-sm text-muted-foreground">{album.year}</p>
+                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                        <span>{album.year}</span>
+                        <Badge variant="outline">
+                          {getReleaseType(album.format, album.releaseType)}
+                        </Badge>
+                      </div>
                     </CardContent>
                   </Card>
                 </Link>
@@ -286,9 +364,7 @@ export function GbvDashboardContent() {
                 <Link key={member.id} href={`/gbv/members/${member.id}`}>
                   <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
                     <CardContent className="p-4">
-                      <div className="w-16 h-16 bg-muted rounded-full mb-3 flex items-center justify-center">
-                        <Users className="h-8 w-8 text-muted-foreground" />
-                      </div>
+                      <MemberAvatar name={member.name} />
                       <h3 className="font-semibold">{member.name}</h3>
                       <Badge variant="outline" className="mt-1">
                         Active

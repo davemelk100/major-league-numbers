@@ -8,8 +8,8 @@ import { PageLoader } from "@/components/page-loader";
 
 export const metadata: Metadata = {
   title: {
-    default: "Guided By Numbers",
-    template: "%s | Guided By Numbers",
+    default: "Guided By Data",
+    template: "%s | Guided By Data",
   },
   description:
     "Explore Guided By Voices discography, albums, songs, and band history.",
@@ -27,19 +27,19 @@ export const metadata: Metadata = {
     "albums",
     "songs",
   ],
-  authors: [{ name: "Guided By Numbers" }],
+  authors: [{ name: "Guided By Data" }],
   openGraph: {
-    title: "Guided By Numbers",
+    title: "Guided By Data",
     description:
       "Explore Guided By Voices discography, albums, songs, and band history.",
     url: "https://guidedbynumbers.com",
-    siteName: "Guided By Numbers",
+    siteName: "Guided By Data",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Guided By Numbers",
+    title: "Guided By Data",
     description:
       "Explore Guided By Voices discography, albums, songs, and band history.",
   },

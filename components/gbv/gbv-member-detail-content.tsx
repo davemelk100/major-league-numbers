@@ -193,8 +193,11 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
             <CardContent>
               {releases.length > 0 ? (
                 <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
-                  {releases.map((release, index) => (
-                    <div key={`${release.id}-${index}`} className="text-center">
+                  {releases.map((release) => (
+                    <div
+                      key={`${release.id}-${release.title}-${release.year ?? "unknown"}`}
+                      className="text-center"
+                    >
                       {release.thumb ? (
                         <Image
                           src={release.thumb}

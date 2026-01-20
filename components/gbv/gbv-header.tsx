@@ -23,7 +23,7 @@ export function GbvHeader() {
         </Link>
         <Link href="/gbv">
           <h1 className="uppercase tracking-wide flex-shrink-0 text-foreground">
-            Guided By Numbers
+            Guided By Data
           </h1>
         </Link>
 
