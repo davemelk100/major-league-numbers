@@ -142,7 +142,13 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
                 />
               ) : (
                 <div className="w-full aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center">
-                  <Users className="h-24 w-24 text-muted-foreground" />
+                  <Image
+                    src="/gbv-rune.svg"
+                    alt="GBV rune"
+                    width={96}
+                    height={96}
+                    className="h-24 w-24"
+                  />
                 </div>
               )}
               <h1 className="font-league text-2xl font-semibold mb-2">{member.name}</h1>

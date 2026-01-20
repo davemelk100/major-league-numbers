@@ -45,7 +45,13 @@ function MemberAvatar({ name }: { name: string }) {
   if (!imageUrl) {
     return (
       <div className="w-16 h-16 bg-muted rounded-full mb-3 mx-auto flex items-center justify-center">
-        <Users className="h-8 w-8 text-muted-foreground" />
+        <Image
+          src="/gbv-rune.svg"
+          alt="GBV rune"
+          width={32}
+          height={32}
+          className="h-8 w-8"
+        />
       </div>
     );
   }
