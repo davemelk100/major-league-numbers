@@ -421,7 +421,7 @@ export function GbvChatContent() {
                   alt=""
                   width={20}
                   height={20}
-                  className="h-5 w-5 animate-spin gbv-nav-icon"
+                  className="h-5 w-5 animate-spin gbv-rune-white"
                 />
               ) : (
                 <Image
@@ -552,7 +552,7 @@ export function GbvChatContent() {
                   alt=""
                   width={20}
                   height={20}
-                  className="h-5 w-5 animate-spin gbv-nav-icon"
+                  className="h-5 w-5 animate-spin gbv-rune-white"
                 />
               </div>
             </div>
@@ -588,7 +588,7 @@ export function GbvChatContent() {
                   alt=""
                   width={20}
                   height={20}
-                  className="h-5 w-5 animate-spin gbv-nav-icon"
+                  className="h-5 w-5 animate-spin gbv-rune-white"
                 />
               ) : (
                 <Image

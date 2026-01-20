@@ -205,8 +205,8 @@ export function GbvAlbumsContent() {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="year-asc">Year (oldest)</SelectItem>
-              <SelectItem value="year-desc">Year (newest)</SelectItem>
+              <SelectItem value="year-asc" className="text-white">Year (oldest)</SelectItem>
+              <SelectItem value="year-desc" className="text-white">Year (newest)</SelectItem>
               <SelectItem value="title">Title A-Z</SelectItem>
             </SelectContent>
           </Select>

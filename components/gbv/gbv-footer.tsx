@@ -16,7 +16,7 @@ export function GbvFooter() {
               loading="eager"
             />
           </div>
-          <nav className="flex items-center gap-6 text-sm text-white">
+          <nav className="flex items-center gap-6 text-sm text-white md:hidden">
             <Link
               href="/gbv/albums"
               className="transition-colors hover:underline hover:decoration-current"
