@@ -190,11 +190,17 @@
   }
 
   .gbv-shell [data-slot="card"] {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06));
-    border: 1px solid rgba(255, 255, 255, 0.38);
-    box-shadow: 0 20px 40px rgba(2, 6, 23, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(28px) saturate(180%);
-    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    background:
+      radial-gradient(140% 120% at 15% 0%, rgba(255, 255, 255, 0.35), transparent 60%),
+      radial-gradient(120% 100% at 85% 10%, rgba(120, 210, 255, 0.25), transparent 55%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.06));
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow:
+      0 22px 50px rgba(2, 6, 23, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 -1px 12px rgba(120, 210, 255, 0.18);
+    backdrop-filter: blur(36px) saturate(220%);
+    -webkit-backdrop-filter: blur(36px) saturate(220%);
     color: #ffffff;
   }
 
@@ -239,13 +245,21 @@
     filter: brightness(0) invert(1);
   }
 
+  .gbv-shell [data-slot="select-trigger"][data-placeholder] {
+    color: #ffffff;
+  }
+
+  .gbv-shell [data-slot="select-trigger"][data-placeholder] [data-slot="select-value"] {
+    color: #ffffff;
+  }
+
   .gbv-shell [data-slot="select-trigger"] svg {
     color: #ffffff;
     opacity: 1;
   }
 
   .gbv-shell [data-slot="select-item"] {
-    color: #ffffff;
+    color: #000000;
   }
 
   .gbv-shell button,

@@ -35,7 +35,7 @@ export function GbvAlbumsContent() {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<"year-asc" | "year-desc" | "title">("year-asc");
-  const [releaseFilter, setReleaseFilter] = useState<"albums" | "singles">("albums");
+  const [releaseFilter, setReleaseFilter] = useState<"all" | "albums" | "singles">("albums");
   const [loadedCovers, setLoadedCovers] = useState<Set<string>>(new Set());
 
   // Fetch cover art in batches
@@ -162,7 +162,12 @@ export function GbvAlbumsContent() {
   const singlesOnly = filteredAlbums.filter(
     (album) => getReleaseType(album.format, album.releaseType) === "Single"
   );
-  const visibleAlbums = releaseFilter === "albums" ? albumsOnly : singlesOnly;
+  const visibleAlbums =
+    releaseFilter === "albums"
+      ? albumsOnly
+      : releaseFilter === "singles"
+        ? singlesOnly
+        : filteredAlbums;
 
   if (isLoading) {
     return (
@@ -181,18 +186,24 @@ export function GbvAlbumsContent() {
         <div>
           <h1 className="font-league text-4xl font-semibold">Discography</h1>
           <p className="text-sm text-muted-foreground">
-            {releaseFilter === "albums" ? "Albums" : "Singles"} ({visibleAlbums.length})
+            {releaseFilter === "albums"
+              ? "Albums"
+              : releaseFilter === "singles"
+                ? "Singles"
+                : "All"}{" "}
+            ({visibleAlbums.length})
           </p>
         </div>
         <div className="flex flex-wrap gap-4">
           <Tabs value={releaseFilter} onValueChange={(v) => setReleaseFilter(v as typeof releaseFilter)}>
             <TabsList className="text-black">
+              <TabsTrigger value="all" className="text-black">All</TabsTrigger>
               <TabsTrigger value="albums" className="text-black">Albums</TabsTrigger>
               <TabsTrigger value="singles" className="text-black">Singles</TabsTrigger>
             </TabsList>
           </Tabs>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/80" />
             <Input
               placeholder="Search titles..."
               value={search}
@@ -201,13 +212,13 @@ export function GbvAlbumsContent() {
             />
           </div>
           <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
-            <SelectTrigger className="w-40">
-              <SelectValue />
+            <SelectTrigger className="w-40 text-white">
+              <SelectValue className="text-white" />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="year-asc" className="text-white">Year (oldest)</SelectItem>
-              <SelectItem value="year-desc" className="text-white">Year (newest)</SelectItem>
-              <SelectItem value="title">Title A-Z</SelectItem>
+            <SelectContent className="text-black">
+              <SelectItem value="year-asc" className="text-black">Year (oldest)</SelectItem>
+              <SelectItem value="year-desc" className="text-black">Year (newest)</SelectItem>
+              <SelectItem value="title" className="text-black">Title A-Z</SelectItem>
             </SelectContent>
           </Select>
         </div>

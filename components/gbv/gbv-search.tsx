@@ -28,9 +28,9 @@ export function GbvSearch() {
       <button
         type="submit"
         aria-label="Search"
-        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1 text-white/80 hover:text-white"
+        className="absolute right-2 top-1/2 -translate-y-1/2 rounded-md p-1 text-white/80 hover:text-white !text-white"
       >
-        <Search className="h-4 w-4" />
+        <Search className="h-4 w-4 !text-white" />
       </button>
     </form>
   );

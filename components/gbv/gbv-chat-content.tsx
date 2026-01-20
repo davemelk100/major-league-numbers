@@ -449,7 +449,7 @@ export function GbvChatContent() {
       <div className="flex-1 overflow-y-auto">
         {/* Header */}
         <div className="mx-auto px-4 sm:px-[calc(1rem+25px)] max-w-4xl w-full">
-          <div className="mb-4">
+          <div className="mb-2">
             <div className="flex items-center gap-4">
               <Image
                 src="/chat-gbv-box.svg"
@@ -537,7 +537,7 @@ export function GbvChatContent() {
 
           {isLoading && messages[messages.length - 1]?.role === "user" && (
             <div className="flex gap-3 justify-start">
-              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+              <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
                 <Image
                   src="/chat-gbv-box.svg"
                   alt="Chat GBV"
@@ -546,7 +546,7 @@ export function GbvChatContent() {
                   className="h-5 w-5 gbv-rune-white"
                 />
               </div>
-              <div className="rounded-lg px-4 py-2 bg-[#eaeaea]">
+              <div className="rounded-lg px-4 py-2">
                 <Image
                   src="/gbv-rune.svg"
                   alt=""

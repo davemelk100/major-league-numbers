@@ -186,7 +186,12 @@ function TriviaCardContent() {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-0" align="end">
+      <PopoverContent
+        className="w-[min(20rem,calc(100vw-2rem))] p-0"
+        align="end"
+        sideOffset={8}
+        collisionPadding={16}
+      >
         <div className="p-4 space-y-4">
           <div className="flex flex-col gap-1">
             <div className="flex items-center justify-between">

@@ -402,7 +402,7 @@ export function GbvDashboardContent() {
           </Link>
         </div>
         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {pollardSideProjects.map((project: SideProject) => (
+          {pollardSideProjects.slice(0, 3).map((project: SideProject) => (
             <Card key={project.name} className="h-full">
               <CardContent className="p-4">
                 <h3 className="font-semibold text-lg">{project.name}</h3>

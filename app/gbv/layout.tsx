@@ -5,6 +5,7 @@ import { GbvHeader } from "@/components/gbv/gbv-header";
 import { GbvFooter } from "@/components/gbv/gbv-footer";
 import { GbvLeftNav, GbvFooterNav } from "@/components/gbv/gbv-nav";
 import { PageLoader } from "@/components/page-loader";
+import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = {
   title: {
@@ -32,7 +33,7 @@ export const metadata: Metadata = {
     title: "Guided By Data",
     description:
       "Explore Guided By Voices discography, albums, songs, and band history.",
-    url: "https://guidedbynumbers.com",
+    url: "https://guidedbynumbers.com/gbv",
     siteName: "Guided By Data",
     locale: "en_US",
     type: "website",
@@ -61,6 +62,24 @@ export default function GbvLayout({
 }>) {
   return (
     <div className="gbv-shell min-h-screen">
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Guided By Data",
+          url: "https://guidedbynumbers.com/gbv",
+          description:
+            "Explore Guided By Voices discography, albums, songs, and band history.",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: {
+              "@type": "EntryPoint",
+              urlTemplate: "https://guidedbynumbers.com/gbv/search?q={search_term_string}",
+            },
+            "query-input": "required name=search_term_string",
+          },
+        }}
+      />
       <GbvLeftNav />
       <div className="sm:ml-20 flex flex-col flex-1">
         <GbvHeader />

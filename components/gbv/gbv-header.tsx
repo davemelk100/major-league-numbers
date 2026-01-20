@@ -10,22 +10,25 @@ export function GbvHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="z-50 w-full bg-transparent py-3">
+    <header className="z-50 w-full bg-transparent py-1">
       {/* Main header row */}
       <div className="container flex items-center gap-4">
         <Link href="/gbv" className="flex-shrink-0 border-0 items-center gap-3">
           <Image
-            src="/chat-gbv-box.svg"
+            src="/gbv-mlb.svg"
             alt="GBV"
-            width={64}
-            height={64}
-            className="h-14 w-14 gbv-rune-white"
+            width={173}
+            height={173}
+            className="h-[140px] w-[140px] sm:h-[173px] sm:w-[173px]"
             priority
             loading="eager"
           />
         </Link>
         <Link href="/gbv">
-          <h1 className={cn("uppercase tracking-wide flex-shrink-0 text-white")}>
+          <h1
+            className={cn("uppercase tracking-wide flex-shrink-0 text-white")}
+            style={{ fontSize: "55px" }}
+          >
             Guided By Data
           </h1>
         </Link>
@@ -33,36 +36,12 @@ export function GbvHeader() {
         {/* ChatGBV button */}
         {pathname !== "/gbv/ask" && (
           <>
-            {/* Large screens: wide button that fills available space */}
-            <Link
-              href="/gbv/ask"
-              className="hidden lg:flex flex-1 items-center justify-center gap-2 px-4 h-12 text-sm font-medium rounded-lg transition-all mx-4 active:translate-y-[1px] text-black"
-              style={{
-                background: "linear-gradient(180deg, #f1f1f1 0%, #d9d9d9 100%)",
-                borderTop: "1px solid #f6f6f6",
-                borderLeft: "1px solid #eeeeee",
-                borderRight: "1px solid #c6c6c6",
-                borderBottom: "2px solid #b5b5b5",
-                boxShadow:
-                  "0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.4)",
-              }}
-            >
-              <Image
-                src="/gbv-rune.svg"
-                alt=""
-                width={32}
-                height={32}
-                className="h-8 w-8 gbv-nav-icon"
-              />
-              <span className="text-md text-black">ChatGBV</span>
-            </Link>
-
             {/* Small/medium screens: compact button */}
             <Link
               href="/gbv/ask"
-              className="lg:hidden flex items-center justify-center gap-2 px-3 h-12 text-sm font-medium rounded-lg transition-all ml-auto active:translate-y-[1px] text-black"
+              className="lg:hidden flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all ml-auto active:translate-y-[1px] text-black"
               style={{
-                background: "linear-gradient(180deg, #f1f1f1 0%, #d9d9d9 100%)",
+                background: "#ffffff",
                 borderTop: "1px solid #f6f6f6",
                 borderLeft: "1px solid #eeeeee",
                 borderRight: "1px solid #c6c6c6",
@@ -83,8 +62,32 @@ export function GbvHeader() {
           </>
         )}
 
-        {/* Search - large desktop only, far right */}
-        <div className="hidden lg:block flex-shrink-0 ml-auto">
+        {/* Desktop actions - chat to the left of search */}
+        <div className="hidden lg:flex items-center gap-4 ml-auto">
+          {pathname !== "/gbv/ask" && (
+            <Link
+              href="/gbv/ask"
+              className="flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] text-black"
+              style={{
+                background: "#ffffff",
+                borderTop: "1px solid #f6f6f6",
+                borderLeft: "1px solid #eeeeee",
+                borderRight: "1px solid #c6c6c6",
+                borderBottom: "2px solid #b5b5b5",
+                boxShadow:
+                  "0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.4)",
+              }}
+            >
+              <Image
+                src="/gbv-rune.svg"
+                alt=""
+                width={32}
+                height={32}
+                className="h-8 w-8 gbv-nav-icon"
+              />
+              <span className="text-md text-black">ChatGBV</span>
+            </Link>
+          )}
           <div className="w-72">
             <GbvSearch />
           </div>
@@ -92,7 +95,7 @@ export function GbvHeader() {
       </div>
 
       {/* Search - tablet and mobile, below header */}
-      <div className="container mt-3 lg:hidden">
+      <div className="container mt-1 lg:hidden">
         <GbvSearch />
       </div>
     </header>
