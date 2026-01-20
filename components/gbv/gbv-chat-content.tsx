@@ -308,7 +308,7 @@ export function GbvChatContent() {
             alt="Chat GBV"
             width={128}
             height={128}
-            className="h-32 w-32 mb-4"
+            className="h-32 w-32 mb-4 gbv-rune-white"
           />
           <h1 className="text-3xl font-bold mb-2">Chat GBV</h1>
 
@@ -365,7 +365,7 @@ export function GbvChatContent() {
                 alt="Chat GBV"
                 width={96}
                 height={96}
-                className="h-24 w-24"
+                className="h-24 w-24 gbv-rune-white"
               />
               <div className="flex-1">
                 <h1 className="text-2xl font-bold whitespace-nowrap">

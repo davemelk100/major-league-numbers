@@ -186,9 +186,9 @@ export function GbvAlbumsContent() {
         </div>
         <div className="flex flex-wrap gap-4">
           <Tabs value={releaseFilter} onValueChange={(v) => setReleaseFilter(v as typeof releaseFilter)}>
-            <TabsList>
-              <TabsTrigger value="albums">Albums</TabsTrigger>
-              <TabsTrigger value="singles">Singles</TabsTrigger>
+            <TabsList className="text-black">
+              <TabsTrigger value="albums" className="text-black">Albums</TabsTrigger>
+              <TabsTrigger value="singles" className="text-black">Singles</TabsTrigger>
             </TabsList>
           </Tabs>
           <div className="relative">

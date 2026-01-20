@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Music, Calendar, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { GbvTriviaPanel } from "@/components/gbv/gbv-trivia-card";
 
 interface Album {
   id: number;
@@ -100,27 +101,13 @@ function MemberAvatar({ name, imageUrl }: { name: string; imageUrl?: string | nu
   );
 }
 
-const recentFacts = [
-  "GBV has released over 100 albums across all projects",
-  "Robert Pollard has written over 2,500 songs",
-  "The band was formed in Dayton, Ohio in 1983",
-  "Bee Thousand was recorded for under $500",
-  "Alien Lanes contains 28 songs in just 41 minutes",
-  "The band broke up in 2004, reunited in 2010",
-  "Robert Pollard was a 4th grade teacher before GBV took off",
-  "The classic lineup recorded in Pollard's basement",
-];
-
 export function GbvDashboardContent() {
-  const [factIndex, setFactIndex] = useState(0);
   const [albums, setAlbums] = useState<Album[]>([]);
   const [artist, setArtist] = useState<ArtistData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    setFactIndex(Math.floor(Math.random() * recentFacts.length));
-
     async function fetchData() {
       try {
         const [albumsRes, artistRes] = await Promise.all([
@@ -237,17 +224,9 @@ export function GbvDashboardContent() {
         ))}
       </div>
 
-      {/* Daily Fact & Featured */}
+      {/* Daily Trivia & Featured */}
       <div className="grid gap-6 lg:grid-cols-2 mb-8">
-        {/* Daily GBV Fact */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="font-league text-2xl">Daily GBV Fact</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-lg">{recentFacts[factIndex]}</p>
-          </CardContent>
-        </Card>
+        <GbvTriviaPanel />
 
         {/* Featured Album */}
         <Card>
@@ -281,18 +260,6 @@ export function GbvDashboardContent() {
                   <div>
                     <h3 className="text-xl font-semibold">{featuredAlbums[0].title}</h3>
                     <p className="text-muted-foreground">{featuredAlbums[0].year}</p>
-                    <div className="flex flex-wrap gap-2 mt-2">
-                      <Badge variant="secondary">
-                        {featuredAlbums[0].year < 1998
-                          ? "Classic Era"
-                          : featuredAlbums[0].year < 2005
-                            ? "TVT Era"
-                            : "Reunion Era"}
-                      </Badge>
-                      <Badge variant="outline">
-                        {getReleaseType(featuredAlbums[0].format, featuredAlbums[0].releaseType)}
-                      </Badge>
-                    </div>
                   </div>
                 </div>
               </Link>
@@ -346,12 +313,7 @@ export function GbvDashboardContent() {
                         </div>
                       )}
                       <h3 className="font-semibold truncate">{album.title}</h3>
-                      <div className="flex items-center justify-between text-sm text-muted-foreground">
-                        <span>{album.year}</span>
-                        <Badge variant="outline">
-                          {getReleaseType(album.format, album.releaseType)}
-                        </Badge>
-                      </div>
+                      <p className="text-sm text-muted-foreground">{album.year}</p>
                     </CardContent>
                   </Card>
                 </Link>

@@ -124,10 +124,16 @@ export function GbvMembersContent() {
           Band Members ({filteredMembers.length})
         </h1>
         <Tabs value={filter} onValueChange={(v) => setFilter(v as typeof filter)}>
-          <TabsList>
-            <TabsTrigger value="all">All ({members.length})</TabsTrigger>
-            <TabsTrigger value="active">Active ({activeCount})</TabsTrigger>
-            <TabsTrigger value="inactive">Past ({inactiveCount})</TabsTrigger>
+          <TabsList className="text-black">
+            <TabsTrigger value="all" className="text-black">
+              All ({members.length})
+            </TabsTrigger>
+            <TabsTrigger value="active" className="text-black">
+              Active ({activeCount})
+            </TabsTrigger>
+            <TabsTrigger value="inactive" className="text-black">
+              Past ({inactiveCount})
+            </TabsTrigger>
           </TabsList>
         </Tabs>
       </div>

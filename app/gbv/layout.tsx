@@ -60,7 +60,7 @@ export default function GbvLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <div className="gbv-shell min-h-screen">
       <GbvLeftNav />
       <div className="sm:ml-20 flex flex-col flex-1">
         <GbvHeader />
@@ -70,6 +70,6 @@ export default function GbvLayout({
         <GbvFooter />
       </div>
       <GbvFooterNav />
-    </>
+    </div>
   );
 }

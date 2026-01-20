@@ -43,10 +43,10 @@ export function GbvLeftNav() {
               key={item.name}
               href={item.href}
               className={cn(
-                "flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-colors w-full",
+                "flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-colors w-full text-black",
                 isActive
-                  ? "text-primary bg-primary/10"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                  ? "bg-primary/10"
+                  : "hover:bg-muted"
               )}
             >
               {item.image ? (
@@ -55,12 +55,15 @@ export function GbvLeftNav() {
                   alt={item.name}
                   width={item.name === "Chat GBV" ? 24 : 20}
                   height={item.name === "Chat GBV" ? 24 : 20}
-                  className={item.name === "Chat GBV" ? "h-6 w-6" : "h-5 w-5"}
+                  className={cn(
+                    item.name === "Chat GBV" ? "h-6 w-6" : "h-5 w-5",
+                    item.name === "Chat GBV" ? "gbv-nav-icon" : ""
+                  )}
                 />
               ) : (
-                Icon && <Icon className="h-5 w-5" />
+                Icon && <Icon className="h-5 w-5 text-black" />
               )}
-              <span className="text-xs font-medium text-center leading-tight">
+              <span className="text-xs font-medium text-center leading-tight text-black">
                 {item.name}
               </span>
             </Link>
@@ -80,7 +83,7 @@ export function GbvFooterNav() {
     .slice(0, 5);
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t border-border safe-area-bottom sm:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-[60] bg-white/90 border-t border-black/10 safe-area-bottom sm:hidden backdrop-blur">
       <div className="flex items-center justify-around px-2 py-2">
         {mobileNavigation.map((item) => {
           const Icon = item.icon;
@@ -90,10 +93,8 @@ export function GbvFooterNav() {
               key={item.name}
               href={item.href}
               className={cn(
-                "flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 rounded-md transition-colors min-w-[48px]",
-                isActive
-                  ? "text-primary"
-                  : "text-muted-foreground hover:text-foreground"
+                "flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 rounded-md transition-colors min-w-[48px] text-black",
+                isActive ? "bg-black/5" : "hover:bg-black/5"
               )}
             >
               {item.image ? (
@@ -102,12 +103,15 @@ export function GbvFooterNav() {
                   alt={item.name}
                   width={item.name === "Chat GBV" ? 24 : 20}
                   height={item.name === "Chat GBV" ? 24 : 20}
-                  className={item.name === "Chat GBV" ? "h-6 w-6" : "h-5 w-5"}
+                  className={cn(
+                    item.name === "Chat GBV" ? "h-6 w-6" : "h-5 w-5",
+                    item.name === "Chat GBV" ? "gbv-nav-icon" : ""
+                  )}
                 />
               ) : (
-                Icon && <Icon className="h-5 w-5" />
+                Icon && <Icon className="h-5 w-5 text-black" />
               )}
-              <span className="text-sm font-medium">{item.name}</span>
+              <span className="text-sm font-medium text-black">{item.name}</span>
             </Link>
           );
         })}

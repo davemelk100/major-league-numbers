@@ -18,11 +18,11 @@ export function GbvHeader() {
             alt="GBV"
             width={40}
             height={40}
-            className="h-10 w-10"
+            className={pathname === "/gbv/ask" ? "h-10 w-10 gbv-rune-white" : "h-10 w-10"}
           />
         </Link>
         <Link href="/gbv">
-          <h1 className="uppercase tracking-wide flex-shrink-0 text-foreground">
+          <h1 className="uppercase tracking-wide flex-shrink-0 text-black">
             Guided By Data
           </h1>
         </Link>
@@ -33,7 +33,7 @@ export function GbvHeader() {
             {/* Large screens: wide button that fills available space */}
             <Link
               href="/gbv/ask"
-              className="hidden lg:flex flex-1 items-center justify-center gap-2 px-4 h-10 text-sm font-medium rounded-lg transition-all mx-4 active:translate-y-[1px]"
+              className="hidden lg:flex flex-1 items-center justify-center gap-2 px-4 h-10 text-sm font-medium rounded-lg transition-all mx-4 active:translate-y-[1px] text-black"
               style={{
                 background: "linear-gradient(180deg, #f1f1f1 0%, #d9d9d9 100%)",
                 borderTop: "1px solid #f6f6f6",
@@ -51,13 +51,13 @@ export function GbvHeader() {
                 height={32}
                 className="h-8 w-8"
               />
-              <span className="text-md">ChatGBV</span>
+              <span className="text-md text-black">ChatGBV</span>
             </Link>
 
             {/* Small/medium screens: compact button */}
             <Link
               href="/gbv/ask"
-              className="lg:hidden flex items-center justify-center gap-2 px-3 h-10 text-sm font-medium rounded-lg transition-all ml-auto active:translate-y-[1px]"
+              className="lg:hidden flex items-center justify-center gap-2 px-3 h-10 text-sm font-medium rounded-lg transition-all ml-auto active:translate-y-[1px] text-black"
               style={{
                 background: "linear-gradient(180deg, #f1f1f1 0%, #d9d9d9 100%)",
                 borderTop: "1px solid #f6f6f6",
@@ -75,7 +75,7 @@ export function GbvHeader() {
                 height={24}
                 className="h-6 w-6"
               />
-              <span className="text-sm hidden sm:inline">ChatGBV</span>
+              <span className="text-sm hidden sm:inline text-black">ChatGBV</span>
             </Link>
           </>
         )}

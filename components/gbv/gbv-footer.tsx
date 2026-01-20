@@ -12,18 +12,18 @@ export function GbvFooter() {
               alt="GBV"
               width={24}
               height={24}
-              className="h-6 w-6"
+              className="h-6 w-6 gbv-rune-white"
             />
           </div>
           <nav className="flex items-center gap-6 text-sm text-muted-foreground">
             <Link href="/gbv/albums" className="hover:text-foreground transition-colors">
               Albums
             </Link>
-            <Link href="/gbv/members" className="hover:text-foreground transition-colors">
-              Members
-            </Link>
             <Link href="/gbv/ask" className="hover:text-foreground transition-colors">
               Chat GBV
+            </Link>
+            <Link href="/gbv/members" className="hover:text-foreground transition-colors">
+              Members
             </Link>
           </nav>
         </div>

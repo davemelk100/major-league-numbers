@@ -180,6 +180,71 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@layer utilities {
+  .gbv-shell {
+    background-color: #0b1224;
+    background-image: radial-gradient(1200px 900px at 15% -10%, rgba(180, 160, 255, 0.5), transparent 60%),
+      radial-gradient(1000px 700px at 85% 5%, rgba(120, 210, 255, 0.4), transparent 55%),
+      linear-gradient(135deg, rgba(9, 14, 28, 0.95), rgba(25, 36, 58, 0.95));
+    background-attachment: fixed;
+  }
+
+  .gbv-shell [data-slot="card"] {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.06));
+    border: 1px solid rgba(255, 255, 255, 0.38);
+    box-shadow: 0 20px 40px rgba(2, 6, 23, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    color: #ffffff;
+  }
+
+  .gbv-shell [data-slot="card"] * {
+    color: inherit;
+  }
+
+  .gbv-shell {
+    color: #ffffff;
+  }
+
+  .gbv-shell .text-muted-foreground {
+    color: #ffffff;
+  }
+
+  .gbv-shell .text-foreground {
+    color: #ffffff;
+  }
+
+  .gbv-shell [data-slot="badge"] {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  .gbv-shell .text-primary,
+  .gbv-shell .text-secondary-foreground,
+  .gbv-shell .text-accent-foreground,
+  .gbv-shell .text-destructive {
+    color: #ffffff;
+  }
+
+  .gbv-shell .gbv-nav-icon {
+    filter: brightness(0);
+  }
+
+  .gbv-shell .gbv-rune-white {
+    filter: brightness(0) invert(1);
+  }
+
+  .gbv-shell input,
+  .gbv-shell textarea,
+  .gbv-shell select,
+  .gbv-shell [data-slot="input"] {
+    border-color: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
+    color: #000000;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
