@@ -214,7 +214,7 @@ export function GbvAlbumsContent() {
       </div>
 
       <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-        {visibleAlbums.map((album) => (
+        {visibleAlbums.map((album, index) => (
           <Link key={album.id} href={`/gbv/albums/${album.id}`}>
             <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
               <CardContent className="p-3">
@@ -226,6 +226,8 @@ export function GbvAlbumsContent() {
                     height={200}
                     className="w-full aspect-square rounded-lg object-cover mb-2"
                     unoptimized
+                    priority={index === 0}
+                    loading={index < 6 ? "eager" : "lazy"}
                   />
                 ) : (
                   <div className="w-full aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center">
@@ -234,7 +236,7 @@ export function GbvAlbumsContent() {
                       alt="GBV rune"
                       width={48}
                       height={48}
-                      className="h-12 w-12"
+                      className="h-12 w-12 gbv-nav-icon"
                     />
                   </div>
                 )}

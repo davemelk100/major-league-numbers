@@ -319,15 +319,13 @@ function GbvTriviaCardContent() {
 
 function GbvTriviaPanelContent() {
   return (
-      <div className="rounded-xl border p-4 w-full h-full">
-      <div className="flex items-center justify-between">
+    <div className="rounded-xl border p-4 w-full h-full">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-semibold">Daily GBV Trivia</h2>
         <div>
-            <h2 className="text-lg font-semibold">Daily GBV Trivia</h2>
-            <p className="text-sm">
-            Test your Guided By Voices knowledge.
-          </p>
+          <GbvTriviaCardContent />
         </div>
-        <GbvTriviaCardContent />
+        <p className="text-sm">Test your Guided By Voices knowledge.</p>
       </div>
     </div>
   );

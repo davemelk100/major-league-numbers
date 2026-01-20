@@ -239,6 +239,21 @@
     filter: brightness(0) invert(1);
   }
 
+  .gbv-shell [data-slot="select-trigger"] svg {
+    color: #ffffff;
+    opacity: 1;
+  }
+
+  .gbv-shell button,
+  .gbv-shell [data-slot="button"] {
+    color: #000000;
+  }
+
+  .gbv-shell button svg,
+  .gbv-shell [data-slot="button"] svg {
+    color: #000000;
+  }
+
   .gbv-shell input,
   .gbv-shell textarea,
   .gbv-shell select,

@@ -55,12 +55,14 @@ export function GbvLeftNav() {
                 <Image
                   src={item.image}
                   alt={item.name}
-                  width={item.name === "Chat GBV" ? 32 : 20}
-                  height={item.name === "Chat GBV" ? 32 : 20}
+                  width={item.name === "Chat GBV" ? 40 : 20}
+                  height={item.name === "Chat GBV" ? 40 : 20}
                   className={cn(
-                    item.name === "Chat GBV" ? "h-8 w-8" : "h-5 w-5",
+                    item.name === "Chat GBV" ? "h-10 w-10" : "h-5 w-5",
                     item.name === "Chat GBV" ? "gbv-nav-icon" : ""
                   )}
+                  priority={item.name === "Chat GBV"}
+                  loading={item.name === "Chat GBV" ? "eager" : "lazy"}
                 />
               ) : (
                 Icon && <Icon className="h-5 w-5 text-black" />

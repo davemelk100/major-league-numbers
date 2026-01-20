@@ -147,7 +147,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
                     alt="GBV rune"
                     width={96}
                     height={96}
-                    className="h-24 w-24"
+                    className="h-24 w-24 gbv-nav-icon"
                   />
                 </div>
               )}
@@ -213,7 +213,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
                             alt="GBV rune"
                             width={32}
                             height={32}
-                            className="h-8 w-8"
+                            className="h-8 w-8 gbv-nav-icon"
                           />
                         </div>
                       )}

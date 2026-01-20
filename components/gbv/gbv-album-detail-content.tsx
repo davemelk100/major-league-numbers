@@ -124,6 +124,8 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
                   height={500}
                   className="w-full aspect-square rounded-lg object-cover mb-4"
                   unoptimized
+                  priority
+                  loading="eager"
                 />
               ) : (
                 <div className="w-full aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center">
@@ -132,7 +134,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
                     alt="GBV rune"
                     width={96}
                     height={96}
-                    className="h-24 w-24"
+                    className="h-24 w-24 gbv-nav-icon"
                   />
                 </div>
               )}

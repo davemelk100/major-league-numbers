@@ -85,6 +85,7 @@ function MemberAvatar({ name, imageUrl }: { name: string; imageUrl?: string | nu
           width={32}
           height={32}
           className="h-8 w-8"
+          loading="eager"
         />
       </div>
     );
@@ -246,6 +247,8 @@ export function GbvDashboardContent() {
                       height={80}
                       className="w-20 h-20 rounded-lg object-cover"
                       unoptimized
+                      priority
+                      loading="eager"
                     />
                   ) : (
                     <div className="w-20 h-20 bg-muted rounded-lg flex items-center justify-center">
@@ -254,7 +257,8 @@ export function GbvDashboardContent() {
                         alt="GBV rune"
                         width={32}
                         height={32}
-                        className="h-8 w-8"
+                        className="h-8 w-8 gbv-nav-icon"
+                        loading="eager"
                       />
                     </div>
                   )}
@@ -288,7 +292,7 @@ export function GbvDashboardContent() {
         </div>
         <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
           {featuredAlbums.length > 0
-            ? featuredAlbums.map((album) => (
+            ? featuredAlbums.map((album, index) => (
                 <Link key={album.id} href={`/gbv/albums/${album.id}`}>
                   <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
                     <CardContent className="p-3">
@@ -300,7 +304,8 @@ export function GbvDashboardContent() {
                           height={200}
                           className="w-full aspect-square rounded-lg object-cover mb-2"
                           unoptimized
-                          loading="lazy"
+                          priority={index === 0}
+                          loading={index < 6 ? "eager" : "lazy"}
                         />
                       ) : (
                         <div className="w-full aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center">
@@ -309,7 +314,8 @@ export function GbvDashboardContent() {
                             alt="GBV rune"
                             width={48}
                             height={48}
-                            className="h-12 w-12"
+                            className="h-12 w-12 gbv-nav-icon"
+                            loading="eager"
                           />
                         </div>
                       )}
@@ -328,7 +334,8 @@ export function GbvDashboardContent() {
                         alt="GBV rune"
                         width={48}
                         height={48}
-                        className="h-12 w-12"
+                        className="h-12 w-12 gbv-nav-icon"
+                        loading="eager"
                       />
                     </div>
                     <p className="text-sm text-muted-foreground">Loading release...</p>
@@ -370,7 +377,8 @@ export function GbvDashboardContent() {
                         alt="GBV rune"
                         width={32}
                         height={32}
-                        className="h-8 w-8"
+                        className="h-8 w-8 gbv-nav-icon"
+                        loading="eager"
                       />
                     </div>
                     <p className="text-sm text-muted-foreground">Loading member...</p>

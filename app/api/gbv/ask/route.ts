@@ -1,6 +1,7 @@
-import { streamText, type CoreMessage } from "ai"
+import { streamText } from "ai"
 import { gateway } from "@ai-sdk/gateway"
 import { openai } from "@ai-sdk/openai"
+import { searchGbvSources, type GbvSourceDoc } from "@/lib/gbv-knowledge"
 
 export const maxDuration = 30
 
@@ -40,6 +41,8 @@ You can help users explore:
 - Comparisons between different eras of the band
 - Robert Pollard's songwriting process and influences`
 
+const SOURCE_PROMPT = `Answer ONLY using the sources provided below. If the sources do not contain the answer, say you don't know and suggest what source is missing. Always include a "Sources" section with the sources you used.`
+
 // Helper to extract text from UI message parts
 function getTextFromParts(parts: Array<{ type: string; text?: string }>): string {
   if (!parts || !Array.isArray(parts)) return ""
@@ -49,17 +52,55 @@ function getTextFromParts(parts: Array<{ type: string; text?: string }>): string
     .join("")
 }
 
+function formatSources(sources: GbvSourceDoc[]): string {
+  if (sources.length === 0) {
+    return "Sources: none";
+  }
+
+  const lines = sources.map((source, index) => {
+    const label = source.sourceLabel || "Source";
+    const url = source.sourceUrl;
+    const title = source.title ? ` — ${source.title}` : "";
+    return url
+      ? `${index + 1}. ${label}${title}: ${url}`
+      : `${index + 1}. ${label}${title}`;
+  });
+
+  return ["Sources:", ...lines].join("\n");
+}
+
+function formatSourceContext(sources: GbvSourceDoc[]): string {
+  if (sources.length === 0) return "No sources available.";
+
+  return sources
+    .map((source) => {
+      const label = source.sourceLabel || "Source";
+      const url = source.sourceUrl ? ` (${source.sourceUrl})` : "";
+      return `- ${label}${url}\n${source.text}`;
+    })
+    .join("\n\n");
+}
+
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json()
 
     // Convert UI messages to CoreMessage format (handle both parts and content formats)
-    const coreMessages: CoreMessage[] = messages.map(
-      (msg: { role: string; content?: string; parts?: Array<{ type: string; text?: string }> }) => ({
-        role: msg.role as "user" | "assistant",
-        content: msg.content || getTextFromParts(msg.parts || []),
-      })
-    )
+    const coreMessages: Array<{ role: "user" | "assistant"; content: string }> =
+      messages.map(
+        (msg: { role: string; content?: string; parts?: Array<{ type: string; text?: string }> }) => ({
+          role: msg.role as "user" | "assistant",
+          content: msg.content || getTextFromParts(msg.parts || []),
+        })
+      )
+
+    const lastUserMessage = [...coreMessages]
+      .reverse()
+      .find((message) => message.role === "user")?.content ?? "";
+
+    const sources = searchGbvSources(lastUserMessage, 6);
+    const sourceContext = formatSourceContext(sources);
+    const sourceList = formatSources(sources);
 
     // Use OpenAI directly if OPENAI_API_KEY is set (for Netlify/other hosts)
     // Otherwise use Vercel AI Gateway (for Vercel deployments)
@@ -69,7 +110,7 @@ export async function POST(req: Request) {
 
     const result = streamText({
       model,
-      system: SYSTEM_PROMPT,
+      system: `${SYSTEM_PROMPT}\n\n${SOURCE_PROMPT}\n\n${sourceList}\n\nSource context:\n${sourceContext}`,
       messages: coreMessages,
     })
 

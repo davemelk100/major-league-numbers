@@ -31,6 +31,11 @@ function getMessageText(message: UIMessage): string {
   return "";
 }
 
+function linkifyText(text: string) {
+  if (!text) return text;
+  return text.replace(/(?<!\]\()https?:\/\/[^\s)]+/g, (url) => `[${url}](${url})`);
+}
+
 const chatPrompts = [
   "Let's talk about GBV - fire away!",
   "What's your favorite GBV album?",
@@ -56,6 +61,7 @@ interface SavedChat {
 
 // Simple localStorage-based chat storage for GBV
 const GBV_CHATS_KEY = "gbv-saved-chats";
+const GBV_SESSION_KEY = "gbv-chat-session";
 
 function getGbvSavedChats(): SavedChat[] {
   if (typeof window === "undefined") return [];
@@ -83,6 +89,51 @@ function deleteGbvChat(chatId: string) {
   if (typeof window === "undefined") return;
   const chats = getGbvSavedChats().filter((c) => c.id !== chatId);
   localStorage.setItem(GBV_CHATS_KEY, JSON.stringify(chats));
+}
+
+function getGbvSessionSnapshot(): {
+  messages: UIMessage[];
+  currentChatId: string | null;
+  input: string;
+} | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = sessionStorage.getItem(GBV_SESSION_KEY);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function saveGbvSessionSnapshot(snapshot: {
+  messages: UIMessage[];
+  currentChatId: string | null;
+  input: string;
+}) {
+  if (typeof window === "undefined") return;
+  try {
+    sessionStorage.setItem(GBV_SESSION_KEY, JSON.stringify(snapshot));
+  } catch {
+    // Ignore storage errors.
+  }
+}
+
+function isHardRefresh(): boolean {
+  if (typeof window === "undefined") return false;
+  const nav = performance.getEntriesByType("navigation")[0] as
+    | PerformanceNavigationTiming
+    | undefined;
+  if (!nav || nav.type !== "reload") return false;
+  return nav.transferSize > 0;
+}
+
+function shouldRestoreSession(): boolean {
+  if (typeof window === "undefined") return false;
+  const nav = performance.getEntriesByType("navigation")[0] as
+    | PerformanceNavigationTiming
+    | undefined;
+  if (!nav || nav.type !== "reload") return false;
+  return !isHardRefresh();
 }
 
 function generateChatId(): string {
@@ -135,6 +186,24 @@ export function GbvChatContent() {
     setSavedChats(getGbvSavedChats());
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (isHardRefresh()) {
+      sessionStorage.removeItem(GBV_SESSION_KEY);
+      return;
+    }
+
+    if (shouldRestoreSession()) {
+      const snapshot = getGbvSessionSnapshot();
+      if (snapshot?.messages?.length) {
+        setMessages(snapshot.messages);
+        setCurrentChatId(snapshot.currentChatId ?? null);
+        setInput(snapshot.input ?? "");
+        setLastSavedLength(snapshot.messages.length);
+      }
+    }
+  }, [setMessages]);
+
   // Set random prompt on mount
   useEffect(() => {
     setRandomPrompt(
@@ -174,6 +243,10 @@ export function GbvChatContent() {
       setLastSavedLength(messages.length);
     }
   }, [messages, isLoading, currentChatId, savedChats, lastSavedLength]);
+
+  useEffect(() => {
+    saveGbvSessionSnapshot({ messages, currentChatId, input });
+  }, [messages, currentChatId, input]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -277,7 +350,7 @@ export function GbvChatContent() {
         variant="outline"
         size="sm"
         onClick={() => setShowHistory(!showHistory)}
-        className="gap-1"
+        className="gap-1 h-12 px-4"
       >
         <History className="h-4 w-4" />
         <span className="hidden sm:inline">History</span>
@@ -286,7 +359,7 @@ export function GbvChatContent() {
         variant="outline"
         size="sm"
         onClick={handleNewChat}
-        className="gap-1"
+        className="gap-1 h-12 px-4"
       >
         <Plus className="h-4 w-4" />
         <span className="hidden sm:inline">New</span>
@@ -308,7 +381,9 @@ export function GbvChatContent() {
             alt="Chat GBV"
             width={128}
             height={128}
-            className="h-32 w-32 mb-4"
+            className="h-32 w-32 mb-4 gbv-rune-white"
+            priority
+            loading="eager"
           />
           <h1 className="text-3xl font-bold mb-2">Chat GBV</h1>
 
@@ -331,15 +406,31 @@ export function GbvChatContent() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about GBV albums, songs, history..."
-              className="flex-1 h-10 px-4 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="flex-1 h-12 px-4 rounded-lg border border-black/60 bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
               disabled={isLoading}
               autoComplete="off"
             />
-            <Button type="submit" disabled={isLoading || !input.trim()}>
+            <Button
+              type="submit"
+              disabled={isLoading || !input.trim()}
+              className="h-12 px-4"
+            >
               {isLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin text-black" />
+                <Image
+                  src="/gbv-rune.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 animate-spin gbv-nav-icon"
+                />
               ) : (
-                <Send className="h-4 w-4" />
+                <Image
+                  src="/gbv-rune.svg"
+                  alt=""
+                  width={32}
+                  height={32}
+                  className="h-8 w-8 gbv-nav-icon"
+                />
               )}
             </Button>
           </form>
@@ -365,7 +456,9 @@ export function GbvChatContent() {
                 alt="Chat GBV"
                 width={96}
                 height={96}
-                className="h-24 w-24"
+                className="h-24 w-24 gbv-rune-white"
+                priority
+                loading="eager"
               />
               <div className="flex-1">
                 <h1 className="text-2xl font-bold whitespace-nowrap">
@@ -399,7 +492,7 @@ export function GbvChatContent() {
                     alt="Chat GBV"
                     width={20}
                     height={20}
-                    className="h-5 w-5"
+                    className="h-5 w-5 gbv-rune-white"
                   />
                 </div>
               )}
@@ -413,7 +506,22 @@ export function GbvChatContent() {
               >
                 {message.role === "assistant" ? (
                   <div className="prose max-w-none text-sm text-black [&_p]:text-sm [&_li]:text-sm [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0 [&_h1]:text-base [&_h2]:text-base [&_h3]:text-sm [&_h1]:my-2 [&_h2]:my-2 [&_h3]:my-1">
-                    <ReactMarkdown>{getMessageText(message)}</ReactMarkdown>
+                    <ReactMarkdown
+                      components={{
+                        a: ({ href, children, ...props }) => (
+                          <a
+                            href={href}
+                            target="_blank"
+                            rel="noreferrer"
+                            {...props}
+                          >
+                            {children}
+                          </a>
+                        ),
+                      }}
+                    >
+                      {linkifyText(getMessageText(message))}
+                    </ReactMarkdown>
                   </div>
                 ) : (
                   <div className="text-sm">{getMessageText(message)}</div>
@@ -435,11 +543,17 @@ export function GbvChatContent() {
                   alt="Chat GBV"
                   width={20}
                   height={20}
-                  className="h-5 w-5"
+                  className="h-5 w-5 gbv-rune-white"
                 />
               </div>
               <div className="rounded-lg px-4 py-2 bg-[#eaeaea]">
-                <Loader2 className="h-4 w-4 animate-spin text-black" />
+                <Image
+                  src="/gbv-rune.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 animate-spin gbv-nav-icon"
+                />
               </div>
             </div>
           )}
@@ -459,15 +573,31 @@ export function GbvChatContent() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about GBV albums, songs, history..."
-              className="flex-1 h-10 px-4 rounded-lg border bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+              className="flex-1 h-12 px-4 rounded-lg border border-black/60 bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
               disabled={isLoading}
               autoComplete="off"
             />
-            <Button type="submit" disabled={isLoading || !input.trim()}>
+            <Button
+              type="submit"
+              disabled={isLoading || !input.trim()}
+              className="h-12 px-4"
+            >
               {isLoading ? (
-                <Loader2 className="h-4 w-4 animate-spin text-black" />
+                <Image
+                  src="/gbv-rune.svg"
+                  alt=""
+                  width={20}
+                  height={20}
+                  className="h-5 w-5 animate-spin gbv-nav-icon"
+                />
               ) : (
-                <Send className="h-4 w-4" />
+                <Image
+                  src="/gbv-rune.svg"
+                  alt=""
+                  width={32}
+                  height={32}
+                  className="h-8 w-8 gbv-nav-icon"
+                />
               )}
             </Button>
           </form>
