@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Disc3, Loader2, Search } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -187,8 +187,14 @@ export function GbvAlbumsContent() {
                     unoptimized
                   />
                 ) : (
-                  <div className="w-full aspect-square bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg mb-2 flex items-center justify-center">
-                    <Disc3 className="h-12 w-12 text-white" />
+                  <div className="w-full aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center">
+                    <Image
+                      src="/gbv-rune.svg"
+                      alt="GBV rune"
+                      width={48}
+                      height={48}
+                      className="h-12 w-12"
+                    />
                   </div>
                 )}
                 <h3 className="font-semibold text-sm truncate">{album.title}</h3>

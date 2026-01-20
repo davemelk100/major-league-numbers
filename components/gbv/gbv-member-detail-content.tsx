@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Users, Loader2, ExternalLink, ArrowLeft, Disc3 } from "lucide-react";
+import { Users, Loader2, ExternalLink, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -193,8 +193,8 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
             <CardContent>
               {releases.length > 0 ? (
                 <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
-                  {releases.map((release) => (
-                    <div key={release.id} className="text-center">
+                  {releases.map((release, index) => (
+                    <div key={`${release.id}-${index}`} className="text-center">
                       {release.thumb ? (
                         <Image
                           src={release.thumb}
@@ -204,8 +204,14 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
                           className="w-full aspect-square rounded object-cover mb-2"
                         />
                       ) : (
-                        <div className="w-full aspect-square bg-gradient-to-br from-purple-500 to-blue-500 rounded mb-2 flex items-center justify-center">
-                          <Disc3 className="h-8 w-8 text-white" />
+                        <div className="w-full aspect-square bg-muted rounded mb-2 flex items-center justify-center">
+                          <Image
+                            src="/gbv-rune.svg"
+                            alt="GBV rune"
+                            width={32}
+                            height={32}
+                            className="h-8 w-8"
+                          />
                         </div>
                       )}
                       <p className="text-xs font-medium truncate">{release.title}</p>

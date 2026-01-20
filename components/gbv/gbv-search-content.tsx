@@ -1,0 +1,195 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2, Users, Disc3 } from "lucide-react";
+
+interface Album {
+  id: number;
+  title: string;
+  year: number;
+  thumb: string;
+  coverUrl?: string | null;
+}
+
+interface Member {
+  id: number;
+  name: string;
+  active: boolean;
+}
+
+export function GbvSearchContent() {
+  const searchParams = useSearchParams();
+  const query = (searchParams.get("q") || "").trim();
+  const [albums, setAlbums] = useState<Album[]>([]);
+  const [members, setMembers] = useState<Member[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    let isActive = true;
+    const fetchData = async () => {
+      if (!query) {
+        setIsLoading(false);
+        return;
+      }
+
+      setIsLoading(true);
+      try {
+        const [albumsRes, membersRes] = await Promise.all([
+          fetch("/api/gbv/discogs?type=albums"),
+          fetch("/api/gbv/discogs?type=artist"),
+        ]);
+
+        if (isActive) {
+          if (albumsRes.ok) {
+            const albumsData = await albumsRes.json();
+            setAlbums(albumsData.albums || []);
+          } else {
+            setAlbums([]);
+          }
+
+          if (membersRes.ok) {
+            const membersData = await membersRes.json();
+            setMembers(membersData.members || []);
+          } else {
+            setMembers([]);
+          }
+        }
+      } finally {
+        if (isActive) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    fetchData();
+    return () => {
+      isActive = false;
+    };
+  }, [query]);
+
+  const filteredAlbums = useMemo(() => {
+    if (!query) return [];
+    const lower = query.toLowerCase();
+    return albums.filter((album) => album.title.toLowerCase().includes(lower));
+  }, [albums, query]);
+
+  const filteredMembers = useMemo(() => {
+    if (!query) return [];
+    const lower = query.toLowerCase();
+    return members.filter((member) => member.name.toLowerCase().includes(lower));
+  }, [members, query]);
+
+  const getAlbumImage = (album: Album): string | null => {
+    return album.coverUrl || album.thumb || null;
+  };
+
+  if (!query) {
+    return (
+      <main className="container py-6">
+        <Card>
+          <CardContent className="p-6 text-center text-muted-foreground">
+            Enter a search term to find GBV albums or members.
+          </CardContent>
+        </Card>
+      </main>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <main className="container py-6">
+        <div className="flex flex-col items-center justify-center py-16 gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          <p className="text-muted-foreground text-sm">Searching GBV data...</p>
+        </div>
+      </main>
+    );
+  }
+
+  const hasResults = filteredAlbums.length > 0 || filteredMembers.length > 0;
+
+  return (
+    <main className="container py-6">
+      <div className="mb-6">
+        <h1 className="font-league text-4xl font-semibold">Search Results</h1>
+        <p className="text-muted-foreground text-sm">“{query}”</p>
+      </div>
+
+      {!hasResults && (
+        <Card>
+          <CardContent className="p-6 text-center text-muted-foreground">
+            No results found.
+          </CardContent>
+        </Card>
+      )}
+
+      {filteredMembers.length > 0 && (
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>Members</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+              {filteredMembers.map((member) => (
+                <Link
+                  key={member.id}
+                  href={`/gbv/members/${member.id}`}
+                  className="flex items-center gap-2 text-sm hover:text-foreground"
+                >
+                  <Users className="h-4 w-4 text-muted-foreground" />
+                  <span className="truncate">{member.name}</span>
+                </Link>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {filteredAlbums.length > 0 && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Albums</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+              {filteredAlbums.map((album) => (
+                <Link key={album.id} href={`/gbv/albums/${album.id}`}>
+                  <div className="flex flex-col gap-2">
+                    {getAlbumImage(album) ? (
+                      <Image
+                        src={getAlbumImage(album)!}
+                        alt={album.title}
+                        width={200}
+                        height={200}
+                        className="w-full aspect-square rounded-lg object-cover"
+                        unoptimized
+                      />
+                    ) : (
+                      <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
+                        <Image
+                          src="/gbv-rune.svg"
+                          alt="GBV rune"
+                          width={40}
+                          height={40}
+                          className="h-10 w-10"
+                        />
+                      </div>
+                    )}
+                    <div className="text-sm">
+                      <p className="font-medium truncate">{album.title}</p>
+                      <p className="text-xs text-muted-foreground">{album.year}</p>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </main>
+  );
+}

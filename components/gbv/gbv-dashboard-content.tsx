@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Disc3, Users, Music, Calendar, Loader2 } from "lucide-react";
+import { Users, Music, Calendar, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -186,8 +186,14 @@ export function GbvDashboardContent() {
                       unoptimized
                     />
                   ) : (
-                    <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
-                      <Disc3 className="h-10 w-10 text-white" />
+                    <div className="w-20 h-20 bg-muted rounded-lg flex items-center justify-center">
+                      <Image
+                        src="/gbv-rune.svg"
+                        alt="GBV rune"
+                        width={32}
+                        height={32}
+                        className="h-8 w-8"
+                      />
                     </div>
                   )}
                   <div>
@@ -238,8 +244,14 @@ export function GbvDashboardContent() {
                           loading="lazy"
                         />
                       ) : (
-                        <div className="w-full aspect-square bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg mb-3 flex items-center justify-center">
-                          <Disc3 className="h-16 w-16 text-white" />
+                        <div className="w-full aspect-square bg-muted rounded-lg mb-3 flex items-center justify-center">
+                          <Image
+                            src="/gbv-rune.svg"
+                            alt="GBV rune"
+                            width={48}
+                            height={48}
+                            className="h-12 w-12"
+                          />
                         </div>
                       )}
                       <h3 className="font-semibold truncate">{album.title}</h3>

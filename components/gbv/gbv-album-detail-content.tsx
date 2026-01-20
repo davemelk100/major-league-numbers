@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Disc3, Loader2, ExternalLink, ArrowLeft } from "lucide-react";
+import { Loader2, ExternalLink, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -126,8 +126,14 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
                   unoptimized
                 />
               ) : (
-                <div className="w-full aspect-square bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg mb-4 flex items-center justify-center">
-                  <Disc3 className="h-24 w-24 text-white" />
+                <div className="w-full aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center">
+                  <Image
+                    src="/gbv-rune.svg"
+                    alt="GBV rune"
+                    width={96}
+                    height={96}
+                    className="h-24 w-24"
+                  />
                 </div>
               )}
               <h1 className="font-league text-2xl font-semibold mb-2">{album.title}</h1>
