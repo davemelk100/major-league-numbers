@@ -221,7 +221,7 @@ export function GbvChatContent() {
       onClick={() => setShowHistory(false)}
     >
       <div
-        className="absolute right-0 top-0 h-full w-80 bg-background shadow-lg p-4 overflow-y-auto"
+        className="absolute right-0 top-0 h-full w-80 bg-background shadow-lg p-4 overflow-y-auto text-black"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
@@ -235,7 +235,7 @@ export function GbvChatContent() {
           </Button>
         </div>
         {savedChats.length === 0 ? (
-          <p className="text-muted-foreground text-sm">No saved chats yet.</p>
+          <p className="text-black text-sm">No saved chats yet.</p>
         ) : (
           <div className="space-y-2">
             {savedChats.map((chat) => (
@@ -249,8 +249,8 @@ export function GbvChatContent() {
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate">{chat.title}</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="font-medium truncate text-black">{chat.title}</p>
+                    <p className="text-xs text-black">
                       {new Date(chat.updatedAt).toLocaleDateString()}
                     </p>
                   </div>
@@ -304,11 +304,11 @@ export function GbvChatContent() {
         {/* Centered content */}
         <div className="flex-1 flex flex-col items-center justify-center px-4">
           <Image
-            src="/gbv-rune.svg"
+            src="/chat-gbv-box.svg"
             alt="Chat GBV"
             width={128}
             height={128}
-            className="h-32 w-32 mb-4 gbv-rune-white"
+            className="h-32 w-32 mb-4"
           />
           <h1 className="text-3xl font-bold mb-2">Chat GBV</h1>
 
@@ -361,11 +361,11 @@ export function GbvChatContent() {
           <div className="mb-4">
             <div className="flex items-center gap-4">
               <Image
-                src="/gbv-rune.svg"
+                src="/chat-gbv-box.svg"
                 alt="Chat GBV"
                 width={96}
                 height={96}
-                className="h-24 w-24 gbv-rune-white"
+                className="h-24 w-24"
               />
               <div className="flex-1">
                 <h1 className="text-2xl font-bold whitespace-nowrap">
@@ -395,11 +395,11 @@ export function GbvChatContent() {
               {message.role === "assistant" && (
                 <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                   <Image
-                    src="/gbv-rune.svg"
-                    alt="GBV rune"
+                    src="/chat-gbv-box.svg"
+                    alt="Chat GBV"
                     width={20}
                     height={20}
-                    className="h-5 w-5 gbv-rune-white"
+                    className="h-5 w-5"
                   />
                 </div>
               )}
@@ -431,11 +431,11 @@ export function GbvChatContent() {
             <div className="flex gap-3 justify-start">
               <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                 <Image
-                  src="/gbv-rune.svg"
-                  alt="GBV rune"
+                  src="/chat-gbv-box.svg"
+                  alt="Chat GBV"
                   width={20}
                   height={20}
-                  className="h-5 w-5 gbv-rune-white"
+                  className="h-5 w-5"
                 />
               </div>
               <div className="rounded-lg px-4 py-2 bg-[#eaeaea]">
