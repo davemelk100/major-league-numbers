@@ -197,7 +197,7 @@ export function GbvAlbumsContent() {
               placeholder="Search titles..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 w-64"
+              className="pl-9 w-64 text-white gbv-input-white"
             />
           </div>
           <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>

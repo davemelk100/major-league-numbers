@@ -220,6 +220,10 @@
     border-color: rgba(255, 255, 255, 0.28);
   }
 
+  .gbv-shell [data-slot="badge"].gbv-badge-black {
+    color: #000000;
+  }
+
   .gbv-shell .text-primary,
   .gbv-shell .text-secondary-foreground,
   .gbv-shell .text-accent-foreground,
@@ -242,6 +246,18 @@
     border-color: rgba(255, 255, 255, 0.55);
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
     color: #000000;
+  }
+
+  .gbv-shell input.gbv-input-white,
+  .gbv-shell textarea.gbv-input-white,
+  .gbv-shell [data-slot="input"].gbv-input-white {
+    color: #ffffff;
+  }
+
+  .gbv-shell input.gbv-input-white::placeholder,
+  .gbv-shell textarea.gbv-input-white::placeholder,
+  .gbv-shell [data-slot="input"].gbv-input-white::placeholder {
+    color: rgba(255, 255, 255, 0.75);
   }
 }
 

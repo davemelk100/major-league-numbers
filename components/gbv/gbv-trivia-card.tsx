@@ -175,7 +175,7 @@ function GbvTriviaCardContent() {
           {totalAnswered > 0 && (
             <Badge
               variant="secondary"
-              className="ml-1 text-xs bg-primary/20 text-black"
+              className="ml-1 text-xs bg-primary/20 gbv-badge-black"
             >
               Today: {totalCorrect}/5
             </Badge>
