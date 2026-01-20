@@ -36,12 +36,21 @@ export const metadata: Metadata = {
     siteName: "Guided By Data",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/gbv-rune.svg",
+        width: 1200,
+        height: 630,
+        alt: "Guided By Voices rune",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Guided By Data",
     description:
       "Explore Guided By Voices discography, albums, songs, and band history.",
+    images: ["/gbv-rune.svg"],
   },
 };
 

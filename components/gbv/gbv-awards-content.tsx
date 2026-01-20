@@ -17,7 +17,6 @@ const criticalAcclaim = [
     accolade: "Alien Lanes - 4 stars",
     year: 1995,
     sourceLabel: "Review excerpt",
-    sourceUrl: "https://robertpollard.net/oldgbvsite/rstone.html",
   },
   {
     publication: "Pitchfork",
