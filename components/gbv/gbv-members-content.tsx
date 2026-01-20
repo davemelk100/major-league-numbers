@@ -52,7 +52,7 @@ function MemberAvatar({ name, imageUrl }: { name: string; imageUrl?: string | nu
     return (
       <div className="w-16 h-16 bg-muted rounded-full mb-3 mx-auto flex items-center justify-center">
         <Image
-          src="/gbv-rune.svg"
+          src="/chat-gbv-box.svg"
           alt="GBV rune"
           width={32}
           height={32}

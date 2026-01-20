@@ -143,7 +143,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
               ) : (
                 <div className="w-full aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center">
                   <Image
-                    src="/gbv-rune.svg"
+                    src="/chat-gbv-box.svg"
                     alt="GBV rune"
                     width={96}
                     height={96}
@@ -209,7 +209,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
                       ) : (
                         <div className="w-full aspect-square bg-muted rounded mb-2 flex items-center justify-center">
                           <Image
-                            src="/gbv-rune.svg"
+                            src="/chat-gbv-box.svg"
                             alt="GBV rune"
                             width={32}
                             height={32}

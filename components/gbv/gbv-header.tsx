@@ -15,11 +15,11 @@ export function GbvHeader() {
       <div className="container flex items-center gap-4">
         <Link href="/gbv" className="flex-shrink-0 border-0 items-center gap-3">
           <Image
-            src="/gbv-rune.svg"
+            src="/chat-gbv-box.svg"
             alt="GBV"
-            width={40}
-            height={40}
-            className={pathname === "/gbv/ask" ? "h-10 w-10 gbv-rune-white" : "h-10 w-10"}
+            width={52}
+            height={52}
+            className={pathname === "/gbv/ask" ? "h-12 w-12 gbv-rune-white" : "h-12 w-12"}
           />
         </Link>
         <Link href="/gbv">
@@ -51,7 +51,7 @@ export function GbvHeader() {
               }}
             >
               <Image
-                src="/gbv-rune.svg"
+                src="/chat-gbv-box.svg"
                 alt=""
                 width={32}
                 height={32}
@@ -75,7 +75,7 @@ export function GbvHeader() {
               }}
             >
               <Image
-                src="/gbv-rune.svg"
+                src="/chat-gbv-box.svg"
                 alt=""
                 width={24}
                 height={24}

@@ -22,7 +22,7 @@ interface NavItem {
 }
 
 const navigation: NavItem[] = [
-  { name: "Chat GBV", href: "/gbv/ask", image: "/gbv-rune.svg" },
+  { name: "Chat GBV", href: "/gbv/ask", image: "/chat-gbv-box.svg" },
   { name: "Home", href: "/gbv", icon: Home },
   { name: "Albums", href: "/gbv/albums", icon: Disc3 },
   { name: "Members", href: "/gbv/members", icon: Users },
@@ -55,10 +55,10 @@ export function GbvLeftNav() {
                 <Image
                   src={item.image}
                   alt={item.name}
-                  width={item.name === "Chat GBV" ? 24 : 20}
-                  height={item.name === "Chat GBV" ? 24 : 20}
+                  width={item.name === "Chat GBV" ? 32 : 20}
+                  height={item.name === "Chat GBV" ? 32 : 20}
                   className={cn(
-                    item.name === "Chat GBV" ? "h-6 w-6" : "h-5 w-5",
+                    item.name === "Chat GBV" ? "h-8 w-8" : "h-5 w-5",
                     item.name === "Chat GBV" ? "gbv-nav-icon" : ""
                   )}
                 />

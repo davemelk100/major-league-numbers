@@ -18,10 +18,10 @@ export function GbvSideProjectsContent() {
       <div className="grid gap-6 lg:grid-cols-2">
         {pollardSideProjects.map((project) => (
           <Card key={project.name}>
-            <CardHeader>
+            <CardHeader className="pt-6">
               <CardTitle>{project.name}</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="space-y-3 pb-6">
               <p className="text-sm text-muted-foreground">{project.years}</p>
               <p className="text-sm">{project.description}</p>
               <div>
@@ -35,6 +35,16 @@ export function GbvSideProjectsContent() {
                   ))}
                 </ul>
               </div>
+              {project.discographyUrl && (
+                <a
+                  href={project.discographyUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-sm underline underline-offset-4"
+                >
+                  View discography
+                </a>
+              )}
             </CardContent>
           </Card>
         ))}

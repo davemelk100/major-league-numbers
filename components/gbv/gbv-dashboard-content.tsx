@@ -80,7 +80,7 @@ function MemberAvatar({ name, imageUrl }: { name: string; imageUrl?: string | nu
     return (
       <div className="w-16 h-16 bg-muted rounded-full mb-3 flex items-center justify-center">
         <Image
-          src="/gbv-rune.svg"
+          src="/chat-gbv-box.svg"
           alt="GBV rune"
           width={32}
           height={32}
@@ -250,7 +250,7 @@ export function GbvDashboardContent() {
                   ) : (
                     <div className="w-20 h-20 bg-muted rounded-lg flex items-center justify-center">
                       <Image
-                        src="/gbv-rune.svg"
+                        src="/chat-gbv-box.svg"
                         alt="GBV rune"
                         width={32}
                         height={32}
@@ -305,7 +305,7 @@ export function GbvDashboardContent() {
                       ) : (
                         <div className="w-full aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center">
                           <Image
-                            src="/gbv-rune.svg"
+                            src="/chat-gbv-box.svg"
                             alt="GBV rune"
                             width={48}
                             height={48}
@@ -324,7 +324,7 @@ export function GbvDashboardContent() {
                   <CardContent className="p-4 text-center">
                     <div className="w-full aspect-square bg-muted rounded-lg mb-3 flex items-center justify-center">
                       <Image
-                        src="/gbv-rune.svg"
+                        src="/chat-gbv-box.svg"
                         alt="GBV rune"
                         width={48}
                         height={48}
@@ -366,7 +366,7 @@ export function GbvDashboardContent() {
                   <CardContent className="p-4 text-center">
                     <div className="w-16 h-16 bg-muted rounded-full mb-3 mx-auto flex items-center justify-center">
                       <Image
-                        src="/gbv-rune.svg"
+                        src="/chat-gbv-box.svg"
                         alt="GBV rune"
                         width={32}
                         height={32}
@@ -400,6 +400,16 @@ export function GbvDashboardContent() {
                 <h3 className="font-semibold text-lg">{project.name}</h3>
                 <p className="text-sm text-muted-foreground">{project.years}</p>
                 <p className="text-sm mt-2">{project.description}</p>
+                {project.discographyUrl && (
+                  <a
+                    href={project.discographyUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm underline underline-offset-4 mt-3 inline-block"
+                  >
+                    View discography
+                  </a>
+                )}
               </CardContent>
             </Card>
           ))}

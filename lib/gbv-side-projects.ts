@@ -8,7 +8,11 @@ export interface SideProject {
   years: string;
   description: string;
   releases: SideProjectRelease[];
+  discographyUrl?: string;
 }
+
+const GBVDB_BASE = "https://www.gbvdb.com/artist.asp?artistsort=";
+const gbvdbUrl = (name: string) => `${GBVDB_BASE}${encodeURIComponent(name)}`;
 
 export const pollardSideProjects: SideProject[] = [
   {
@@ -23,6 +27,7 @@ export const pollardSideProjects: SideProject[] = [
       { title: "Silverfish Trivia", year: 2007 },
       { title: "Faulty Superheroes", year: 2015 },
     ],
+    discographyUrl: gbvdbUrl("Robert Pollard"),
   },
   {
     name: "Airport 5",
@@ -33,6 +38,7 @@ export const pollardSideProjects: SideProject[] = [
       { title: "Life Starts Here", year: 2002 },
       { title: "Make the Bass Jump", year: 2004 },
     ],
+    discographyUrl: gbvdbUrl("Airport 5"),
   },
   {
     name: "The Takeovers",
@@ -42,6 +48,7 @@ export const pollardSideProjects: SideProject[] = [
       { title: "Turn to Red", year: 2003 },
       { title: "Transmission Receiver", year: 2005 },
     ],
+    discographyUrl: gbvdbUrl("The Takeovers"),
   },
   {
     name: "Howling Wolf Orchestra",
@@ -51,6 +58,7 @@ export const pollardSideProjects: SideProject[] = [
       { title: "Coyote Bits", year: 2006 },
       { title: "Conundrum", year: 2007 },
     ],
+    discographyUrl: gbvdbUrl("Howling Wolf Orchestra"),
   },
   {
     name: "ESP Ohio",
@@ -59,6 +67,7 @@ export const pollardSideProjects: SideProject[] = [
     releases: [
       { title: "Ohio Players", year: 2022 },
     ],
+    discographyUrl: gbvdbUrl("ESP Ohio"),
   },
   {
     name: "Lifeguards",
@@ -68,6 +77,7 @@ export const pollardSideProjects: SideProject[] = [
       { title: "Crowd Can Talk", year: 2022 },
       { title: "Howlback", year: 2023 },
     ],
+    discographyUrl: gbvdbUrl("Lifeguards"),
   },
   {
     name: "Boston Spaceships",
@@ -79,6 +89,7 @@ export const pollardSideProjects: SideProject[] = [
       { title: "Zero to 99", year: 2009 },
       { title: "The Farewell Transmission", year: 2013 },
     ],
+    discographyUrl: gbvdbUrl("Boston Spaceships"),
   },
   {
     name: "Circus Devils",
@@ -90,6 +101,7 @@ export const pollardSideProjects: SideProject[] = [
       { title: "Gringo", year: 2004 },
       { title: "Ataxia", year: 2008 },
     ],
+    discographyUrl: gbvdbUrl("Circus Devils"),
   },
   {
     name: "The Moping Swans",
@@ -99,6 +111,7 @@ export const pollardSideProjects: SideProject[] = [
       { title: "The Moping Swans", year: 1992 },
       { title: "The Moping Swans (2)", year: 1994 },
     ],
+    discographyUrl: gbvdbUrl("Moping Swans, The"),
   },
   {
     name: "Keene Brothers",
@@ -108,6 +121,7 @@ export const pollardSideProjects: SideProject[] = [
       { title: "Blues and Boogie Shoes", year: 2005 },
       { title: "Tulipomania", year: 2006 },
     ],
+    discographyUrl: gbvdbUrl("Keene Brothers"),
   },
   {
     name: "Psychedelic Horseshit",
@@ -118,61 +132,68 @@ export const pollardSideProjects: SideProject[] = [
       { title: "Swampyankee", year: 2011 },
       { title: "Vegetable Oblivion", year: 2012 },
     ],
+    discographyUrl: gbvdbUrl("Psychedelic Horseshit"),
   },
-  { name: "Acid Ranch", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Anacrusis", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
+  { name: "Acid Ranch", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Acid Ranch") },
+  { name: "Anacrusis", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Anacrusis") },
   {
     name: "Bun E. Carlos (Featuring Robert Pollard)",
     years: "—",
     description: "Side project featuring Robert Pollard.",
     releases: [],
+    discographyUrl: gbvdbUrl("Bun E. Carlos (Featuring Robert Pollard)"),
   },
-  { name: "Carbon Whales", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
+  { name: "Carbon Whales", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Carbon Whales") },
   {
     name: "Cash Rivers And The Sinners",
     years: "—",
     description: "Side project featuring Robert Pollard.",
     releases: [],
+    discographyUrl: gbvdbUrl("Cash Rivers And The Sinners"),
   },
-  { name: "Cosmos", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Crowd, The", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
+  { name: "Cosmos", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Cosmos") },
+  { name: "Crowd, The", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Crowd, The") },
   {
     name: "Cub Scout Bowling Pins",
     years: "—",
     description: "Side project featuring Robert Pollard.",
     releases: [],
+    discographyUrl: gbvdbUrl("Cub Scout Bowling Pins"),
   },
-  { name: "Freedom Cruise", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Go Back Snowball", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Hazzard Hotrods", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Kim Deal & Bob Pollard", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Kuda Labranche", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Lexo and the Leapers", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Mars Classroom", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Nightwalker", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Phantom Tollbooth", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Psycho And The Birds", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
+  { name: "Freedom Cruise", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Freedom Cruise") },
+  { name: "Go Back Snowball", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Go Back Snowball") },
+  { name: "Hazzard Hotrods", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Hazzard Hotrods") },
+  { name: "Kim Deal & Bob Pollard", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Kim Deal & Bob Pollard") },
+  { name: "Kuda Labranche", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Kuda Labranche") },
+  { name: "Lexo and the Leapers", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Lexo and the Leapers") },
+  { name: "Mars Classroom", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Mars Classroom") },
+  { name: "Nightwalker", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Nightwalker") },
+  { name: "Phantom Tollbooth", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Phantom Tollbooth") },
+  { name: "Psycho And The Birds", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Psycho And The Birds") },
   {
     name: "Richard Meltzer, Robert Pollard, Smegma & Antler",
     years: "—",
     description: "Side project featuring Robert Pollard.",
     releases: [],
+    discographyUrl: gbvdbUrl("Richard Meltzer, Robert Pollard, Smegma & Antler"),
   },
-  { name: "Ricked Wicky", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "Rip Van Winkle", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
+  { name: "Ricked Wicky", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Ricked Wicky") },
+  { name: "Rip Van Winkle", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Rip Van Winkle") },
   {
     name: "Robert Pollard and his Soft Rock Renegades",
     years: "—",
     description: "Side project featuring Robert Pollard.",
     releases: [],
+    discographyUrl: gbvdbUrl("Robert Pollard and his Soft Rock Renegades"),
   },
   {
     name: "Robert Pollard With Doug Gillard",
     years: "—",
     description: "Side project featuring Robert Pollard.",
     releases: [],
+    discographyUrl: gbvdbUrl("Robert Pollard With Doug Gillard"),
   },
-  { name: "Teenage Guitar", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "The Sunflower Logic", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
-  { name: "We've Got Airplanes!", years: "—", description: "Side project featuring Robert Pollard.", releases: [] },
+  { name: "Teenage Guitar", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("Teenage Guitar") },
+  { name: "The Sunflower Logic", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("The Sunflower Logic") },
+  { name: "We've Got Airplanes!", years: "—", description: "Side project featuring Robert Pollard.", releases: [], discographyUrl: gbvdbUrl("We've Got Airplanes!") },
 ];

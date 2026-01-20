@@ -8,7 +8,7 @@ export function GbvFooter() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Image
-              src="/gbv-rune.svg"
+              src="/chat-gbv-box.svg"
               alt="GBV"
               width={24}
               height={24}

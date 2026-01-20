@@ -181,7 +181,7 @@ export function GbvSearchContent() {
                     ) : (
                       <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
                         <Image
-                          src="/gbv-rune.svg"
+                          src="/chat-gbv-box.svg"
                           alt="GBV rune"
                           width={40}
                           height={40}

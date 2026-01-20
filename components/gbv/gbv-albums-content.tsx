@@ -230,7 +230,7 @@ export function GbvAlbumsContent() {
                 ) : (
                   <div className="w-full aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center">
                     <Image
-                      src="/gbv-rune.svg"
+                      src="/chat-gbv-box.svg"
                       alt="GBV rune"
                       width={48}
                       height={48}
