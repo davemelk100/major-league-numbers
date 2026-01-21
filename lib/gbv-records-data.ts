@@ -74,7 +74,7 @@ export function getDailyGbvRecord(date = new Date()): GbvRecordOfDay {
   for (let i = 0; i < dateString.length; i++) {
     const char = dateString.charCodeAt(i);
     hash = (hash << 5) - hash + char;
-    hash = hash & hash;
+    hash = hash | 0;
   }
 
   const index = Math.abs(hash) % gbvRecordsOfTheDay.length;

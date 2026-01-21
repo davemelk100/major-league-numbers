@@ -353,10 +353,13 @@ function GbvTriviaPanelContent() {
 function GbvTriviaPanelSkeleton() {
   return (
     <Card className="w-full h-full min-h-[120px]">
-      <CardContent className="p-4 flex flex-col gap-2">
-        <div className="h-6 w-40 bg-muted rounded animate-pulse" />
-        <div className="h-10 w-32 bg-muted rounded animate-pulse" />
-        <div className="h-4 w-64 bg-muted rounded animate-pulse" />
+      <CardContent className="p-4 flex gap-4 items-stretch">
+        <div className="flex flex-col gap-2 w-1/2">
+          <div className="h-6 w-40 bg-muted rounded animate-pulse" />
+          <div className="h-10 w-32 bg-muted rounded animate-pulse" />
+          <div className="h-4 w-64 bg-muted rounded animate-pulse" />
+        </div>
+        <div className="w-1/2 bg-muted rounded animate-pulse" />
       </CardContent>
     </Card>
   );
