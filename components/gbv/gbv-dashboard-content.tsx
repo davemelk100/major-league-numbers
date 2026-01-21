@@ -14,7 +14,7 @@ import {
 } from "../../lib/gbv-side-projects";
 
 interface Member {
-  id: number;
+  id?: number;
   name: string;
   active: boolean;
   imageUrl?: string | null;
@@ -27,6 +27,11 @@ interface ArtistData {
   members?: Member[];
 }
 
+const MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
+  "mark shue":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FSpecial%3AFilePath%2FMark%2520Shue%2520GARP%2520music%2520festival%25202016.jpg",
+};
+
 function MemberAvatar({
   name,
   imageUrl,
@@ -36,8 +41,11 @@ function MemberAvatar({
 }) {
   const [hasError, setHasError] = useState(false);
   const normalizedImageUrl = imageUrl?.replace(/^http:/, "https:") || null;
+  const fallbackImageUrl =
+    MEMBER_IMAGE_FALLBACKS[name.toLowerCase()] || null;
+  const resolvedImageUrl = normalizedImageUrl || fallbackImageUrl;
 
-  if (!normalizedImageUrl || hasError) {
+  if (!resolvedImageUrl || hasError) {
     return (
       <div className="w-16 h-16 bg-muted rounded-full mb-3 flex items-center justify-center">
         <Image
@@ -55,7 +63,7 @@ function MemberAvatar({
   return (
     <div className="w-16 h-16 mb-3 relative">
       <Image
-        src={normalizedImageUrl}
+        src={resolvedImageUrl}
         alt={`${name} photo`}
         fill
         sizes="64px"
@@ -105,6 +113,15 @@ export function GbvDashboardContent() {
         }
 
         const artistData = await artistRes.json();
+        if (Array.isArray(artistData?.members) && artistData.members.length <= 1) {
+          const fallbackRes = await fetch("/api/gbv/discogs?type=artist");
+          if (fallbackRes.ok) {
+            const fallbackData = await fallbackRes.json();
+            if (Array.isArray(fallbackData?.members)) {
+              artistData.members = fallbackData.members;
+            }
+          }
+        }
         setArtist(artistData);
         try {
           localStorage.setItem(
@@ -130,6 +147,15 @@ export function GbvDashboardContent() {
   }, []);
 
   const activeMembers = artist?.members?.filter((m) => m.active) || [];
+  const fallbackMembers: Member[] = [
+    { name: "Robert Pollard", active: true },
+    { name: "Doug Gillard", active: true },
+    { name: "Kevin March", active: true },
+    { name: "Mark Shue", active: true },
+    { name: "Bobby Bare Jr.", active: true },
+  ];
+  const membersToShow =
+    activeMembers.length > 0 ? activeMembers.slice(0, 5) : fallbackMembers;
 
   const stats = [
     { label: "Studio Albums", value: "32+" },
@@ -193,42 +219,33 @@ export function GbvDashboardContent() {
           </Link>
         </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-          {activeMembers.length > 0
-            ? activeMembers.slice(0, 5).map((member) => (
+          {membersToShow.map((member, index) => {
+            const card = (
+              <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+                <CardContent className="p-4">
+                  <MemberAvatar name={member.name} imageUrl={member.imageUrl} />
+                  <h3 className="font-semibold">{member.name}</h3>
+                  <Badge variant="outline" className="mt-1">
+                    Active
+                  </Badge>
+                </CardContent>
+              </Card>
+            );
+
+            if (member.id) {
+              return (
                 <Link key={member.id} href={`/gbv/members/${member.id}`}>
-                  <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
-                    <CardContent className="p-4">
-                      <MemberAvatar
-                        name={member.name}
-                        imageUrl={member.imageUrl}
-                      />
-                      <h3 className="font-semibold">{member.name}</h3>
-                      <Badge variant="outline" className="mt-1">
-                        Active
-                      </Badge>
-                    </CardContent>
-                  </Card>
+                  {card}
                 </Link>
-              ))
-            : Array.from({ length: 4 }).map((_, i) => (
-                <Card key={i}>
-                  <CardContent className="p-4 text-center">
-                    <div className="w-16 h-16 rounded-full mb-3 mx-auto flex items-center justify-center">
-                      <Image
-                        src="/chat-gbv-box.svg"
-                        alt="GBV rune"
-                        width={32}
-                        height={32}
-                        className="h-8 w-8 gbv-nav-icon"
-                        loading="eager"
-                      />
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Loading member...
-                    </p>
-                  </CardContent>
-                </Card>
-              ))}
+              );
+            }
+
+            return (
+              <div key={`${member.name}-${index}`} className="cursor-default">
+                {card}
+              </div>
+            );
+          })}
         </div>
       </div>
 

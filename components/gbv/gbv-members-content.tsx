@@ -15,6 +15,11 @@ interface Member {
   imageUrl?: string | null;
 }
 
+const MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
+  "mark shue":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FSpecial%3AFilePath%2FMark%2520Shue%2520GARP%2520music%2520festival%25202016.jpg",
+};
+
 function MemberAvatar({
   name,
   imageUrl,
@@ -24,8 +29,11 @@ function MemberAvatar({
 }) {
   const [hasError, setHasError] = useState(false);
   const normalizedImageUrl = imageUrl?.replace(/^http:/, "https:") || null;
+  const fallbackImageUrl =
+    MEMBER_IMAGE_FALLBACKS[name.toLowerCase()] || null;
+  const resolvedImageUrl = normalizedImageUrl || fallbackImageUrl;
 
-  if (!normalizedImageUrl || hasError) {
+  if (!resolvedImageUrl || hasError) {
     return (
       <div className="w-16 h-16 rounded-full mb-3 mx-auto flex items-center justify-center">
         <Image
@@ -42,7 +50,7 @@ function MemberAvatar({
   return (
     <div className="w-16 h-16 mb-3 mx-auto relative">
       <Image
-        src={normalizedImageUrl}
+        src={resolvedImageUrl}
         alt={`${name} photo`}
         fill
         sizes="64px"
@@ -67,7 +75,17 @@ export function GbvMembersContent() {
         );
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
-        setMembers(data.members || []);
+        let nextMembers = data.members || [];
+        if (nextMembers.length <= 1) {
+          const fallbackRes = await fetch("/api/gbv/discogs?type=artist");
+          if (fallbackRes.ok) {
+            const fallbackData = await fallbackRes.json();
+            if (Array.isArray(fallbackData?.members)) {
+              nextMembers = fallbackData.members;
+            }
+          }
+        }
+        setMembers(nextMembers);
       } catch (err) {
         console.error(err);
       } finally {
