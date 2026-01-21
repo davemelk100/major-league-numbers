@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cacheRemoteImage } from "@/lib/gbv-image-cache";
 
 const MUSICBRAINZ_BASE = "https://musicbrainz.org/ws/2";
 const COVER_ART_BASE = "https://coverartarchive.org";
@@ -191,12 +192,16 @@ export async function GET(request: Request) {
 
     // Get cover art
     const coverUrl = await getCoverArt(releaseGroupId, size === "small");
+    const cachedCoverUrl = coverUrl
+      ? await cacheRemoteImage(coverUrl, "gbv-cover")
+      : null;
+    const finalCoverUrl = cachedCoverUrl || coverUrl;
 
     // Cache the result
-    coverArtCache.set(cacheKey, { url: coverUrl, timestamp: Date.now() });
+    coverArtCache.set(cacheKey, { url: finalCoverUrl, timestamp: Date.now() });
 
     return NextResponse.json({
-      coverUrl,
+      coverUrl: finalCoverUrl,
       mbid: releaseGroupId,
       cached: false,
     });
@@ -276,9 +281,13 @@ export async function POST(request: Request) {
           }
 
           const coverUrl = await getCoverArt(mbid, useSmallThumbnails);
-          coverArtCache.set(cacheKey, { url: coverUrl, timestamp: Date.now() });
+          const cachedCoverUrl = coverUrl
+            ? await cacheRemoteImage(coverUrl, "gbv-cover")
+            : null;
+          const finalCoverUrl = cachedCoverUrl || coverUrl;
+          coverArtCache.set(cacheKey, { url: finalCoverUrl, timestamp: Date.now() });
 
-          return { title, coverUrl, mbid };
+          return { title, coverUrl: finalCoverUrl, mbid };
         } catch {
           return { title, coverUrl: null };
         }

@@ -15,6 +15,9 @@ export function GbvRecordOfDayCard() {
     const daily = getDailyGbvRecord();
     setRecord(daily);
 
+    const normalizeImageUrl = (url: string | null | undefined) =>
+      url ? url.replace(/^http:/, "https:") : null;
+
     async function fetchCoverArt() {
       try {
         const res = await fetch(
@@ -27,7 +30,7 @@ export function GbvRecordOfDayCard() {
         if (!res.ok) return;
         const data = await res.json();
         if (data.coverUrl) {
-          setCoverUrl(data.coverUrl);
+          setCoverUrl(normalizeImageUrl(data.coverUrl));
         }
       } catch {
         // ignore cover art errors
@@ -52,6 +55,10 @@ export function GbvRecordOfDayCard() {
         const match = exact || fallback;
         if (match?.id) {
           setAlbumId(match.id);
+        }
+        const fallbackThumb = normalizeImageUrl(match?.thumb);
+        if (fallbackThumb && !coverUrl) {
+          setCoverUrl(fallbackThumb);
         }
       } catch {
         // ignore album lookup errors

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { cacheRemoteImage } from "@/lib/gbv-image-cache";
 
 const GBV_ARTIST_ID = 83529;
 const DISCOGS_BASE_URL = "https://api.discogs.com";
@@ -30,13 +31,16 @@ interface DiscogsArtist {
 const memberImageCache = new Map<number, { url: string | null; timestamp: number }>();
 const MEMBER_IMAGE_TTL = 24 * 60 * 60 * 1000;
 
-function pickDiscogsImage(images?: Array<{ uri?: string; uri150?: string; type?: string }>) {
+async function pickDiscogsImage(
+  images?: Array<{ uri?: string; uri150?: string; type?: string }>
+) {
   if (!images || images.length === 0) return null;
   const primary = images.find((img) => img.type === "primary") || images[0];
   const url = primary?.uri150 || primary?.uri || null;
   if (!url) return null;
   const httpsUrl = url.replace(/^http:/, "https:");
-  return `/api/gbv/image-proxy?url=${encodeURIComponent(httpsUrl)}`;
+  const cached = await cacheRemoteImage(httpsUrl, "discogs-member");
+  return cached || `/api/gbv/image-proxy?url=${encodeURIComponent(httpsUrl)}`;
 }
 
 async function fetchFromDiscogs(endpoint: string) {
@@ -82,7 +86,7 @@ export async function GET(request: Request) {
 
             try {
               const memberData: DiscogsArtist = await fetchFromDiscogs(`/artists/${member.id}`);
-              const imageUrl = pickDiscogsImage(memberData.images);
+              const imageUrl = await pickDiscogsImage(memberData.images);
               memberImageCache.set(member.id, { url: imageUrl, timestamp: Date.now() });
               return { id: member.id, imageUrl };
             } catch {
