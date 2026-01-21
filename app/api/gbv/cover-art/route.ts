@@ -113,22 +113,26 @@ async function getCoverArt(mbid: string): Promise<string | null> {
     const data = await response.json();
     const images: CoverArtImage[] = data.images || [];
 
+    // Helper to ensure HTTPS
+    const toHttps = (url: string | undefined) =>
+      url?.replace(/^http:/, "https:");
+
     // Find front cover
     const frontCover = images.find((img) => img.front);
     if (frontCover) {
       // Prefer 500px thumbnail for good quality without being too large
-      return (
+      return toHttps(
         frontCover.thumbnails["500"] ||
         frontCover.thumbnails["1200"] ||
         frontCover.thumbnails.large ||
         frontCover.image
-      );
+      ) || null;
     }
 
     // Fallback to first image
     if (images.length > 0) {
       const first = images[0];
-      return first.thumbnails["500"] || first.thumbnails.large || first.image;
+      return toHttps(first.thumbnails["500"] || first.thumbnails.large || first.image) || null;
     }
 
     return null;
