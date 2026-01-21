@@ -15,7 +15,13 @@ interface Member {
   imageUrl?: string | null;
 }
 
-function MemberAvatar({ name, imageUrl }: { name: string; imageUrl?: string | null }) {
+function MemberAvatar({
+  name,
+  imageUrl,
+}: {
+  name: string;
+  imageUrl?: string | null;
+}) {
   const [resolvedImageUrl, setResolvedImageUrl] = useState<string | null>(null);
 
   useEffect(() => {
@@ -28,7 +34,7 @@ function MemberAvatar({ name, imageUrl }: { name: string; imageUrl?: string | nu
     const fetchImage = async () => {
       try {
         const res = await fetch(
-          `/api/gbv/commons-image?name=${encodeURIComponent(name)}`
+          `/api/gbv/commons-image?name=${encodeURIComponent(name)}`,
         );
         if (!res.ok) return;
         const data = await res.json();
@@ -50,7 +56,7 @@ function MemberAvatar({ name, imageUrl }: { name: string; imageUrl?: string | nu
 
   if (!resolvedImageUrl) {
     return (
-      <div className="w-16 h-16 bg-muted rounded-full mb-3 mx-auto flex items-center justify-center">
+      <div className="w-16 h-16 rounded-full mb-3 mx-auto flex items-center justify-center">
         <Image
           src="/chat-gbv-box.svg"
           alt="GBV rune"
@@ -83,7 +89,7 @@ export function GbvMembersContent() {
     async function fetchMembers() {
       try {
         const res = await fetch(
-          "/api/gbv/discogs?type=artist&include_member_images=true&member_image_limit=60"
+          "/api/gbv/discogs?type=artist&include_member_images=true&member_image_limit=60",
         );
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
@@ -123,7 +129,10 @@ export function GbvMembersContent() {
         <h1 className="font-league text-4xl font-semibold">
           Band Members ({filteredMembers.length})
         </h1>
-        <Tabs value={filter} onValueChange={(v) => setFilter(v as typeof filter)}>
+        <Tabs
+          value={filter}
+          onValueChange={(v) => setFilter(v as typeof filter)}
+        >
           <TabsList className="text-black">
             <TabsTrigger value="all" className="text-black">
               All ({members.length})
@@ -145,7 +154,10 @@ export function GbvMembersContent() {
               <CardContent className="p-4 text-center">
                 <MemberAvatar name={member.name} imageUrl={member.imageUrl} />
                 <h3 className="font-semibold text-sm">{member.name}</h3>
-                <Badge variant={member.active ? "default" : "secondary"} className="mt-2">
+                <Badge
+                  variant={member.active ? "default" : "secondary"}
+                  className="mt-2"
+                >
                   {member.active ? "Active" : "Past"}
                 </Badge>
               </CardContent>

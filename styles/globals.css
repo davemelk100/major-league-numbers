@@ -259,7 +259,7 @@
   }
 
   .gbv-shell [data-slot="select-item"] {
-    color: #000000;
+    /* color: #000000; */
   }
 
   .gbv-shell button,
