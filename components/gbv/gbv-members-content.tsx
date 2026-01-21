@@ -75,8 +75,7 @@ function MemberAvatar({
         alt={`${name} photo`}
         fill
         className="rounded-full object-cover"
-        unoptimized
-      />
+              />
     </div>
   );
 }

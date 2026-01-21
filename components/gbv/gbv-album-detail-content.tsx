@@ -123,8 +123,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
                   width={500}
                   height={500}
                   className="w-full aspect-square rounded-lg object-cover mb-4"
-                  unoptimized
-                  priority
+                                    priority
                   loading="eager"
                 />
               ) : (

@@ -176,7 +176,6 @@ export function GbvSearchContent() {
                         width={200}
                         height={200}
                         className="w-full aspect-square rounded-lg object-cover"
-                        unoptimized
                       />
                     ) : (
                       <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">

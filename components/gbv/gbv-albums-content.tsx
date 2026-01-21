@@ -195,8 +195,7 @@ export function GbvAlbumsContent() {
                     height={200}
                     className="w-full aspect-square rounded-lg object-cover mb-2"
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16vw"
-                    unoptimized
-                    priority={index === 0}
+                                        priority={index === 0}
                     loading={index < 6 ? "eager" : "lazy"}
                   />
                 ) : (

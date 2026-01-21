@@ -250,8 +250,7 @@ export function GbvDashboardContent() {
                       width={80}
                       height={80}
                       className="w-20 h-20 rounded-lg object-cover"
-                      unoptimized
-                      priority
+                                            priority
                       loading="eager"
                     />
                   ) : (
@@ -314,8 +313,7 @@ export function GbvDashboardContent() {
                           width={200}
                           height={200}
                           className="w-full aspect-square rounded-lg object-cover mb-2"
-                          unoptimized
-                          priority={index === 0}
+                                                    priority={index === 0}
                           loading={index < 6 ? "eager" : "lazy"}
                         />
                       ) : (
