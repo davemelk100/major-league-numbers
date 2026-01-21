@@ -92,7 +92,7 @@ export function GbvAlbumsContent() {
   const hasMore = displayCount < filteredAlbums.length;
 
   const getAlbumImage = (album: Album): string | null => {
-    return album.thumb || null;
+    return album.thumb ? album.thumb.replace(/^http:/, "https:") : null;
   };
 
   const handleLoadMore = () => {
@@ -171,6 +171,7 @@ export function GbvAlbumsContent() {
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16vw"
                     priority={index === 0}
                     loading={index < 6 ? "eager" : "lazy"}
+                    unoptimized
                   />
                 ) : (
                   <div className="w-full aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center">

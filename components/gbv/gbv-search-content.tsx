@@ -86,7 +86,8 @@ export function GbvSearchContent() {
   }, [members, query]);
 
   const getAlbumImage = (album: Album): string | null => {
-    return album.coverUrl || album.thumb || null;
+    const raw = album.coverUrl || album.thumb || null;
+    return raw ? raw.replace(/^http:/, "https:") : null;
   };
 
   const getReleaseType = (format?: string | string[], releaseType?: string) => {
@@ -176,6 +177,7 @@ export function GbvSearchContent() {
                         width={200}
                         height={200}
                         className="w-full aspect-square rounded-lg object-cover"
+                        unoptimized
                       />
                     ) : (
                       <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">

@@ -141,6 +141,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
                   width={300}
                   height={300}
                   className="w-full aspect-square rounded-lg object-cover mb-4"
+                  unoptimized
                                   />
               ) : (
                 <div className="w-full aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center">
@@ -202,11 +203,12 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
                     >
                       {release.thumb ? (
                         <Image
-                          src={release.thumb}
+                          src={release.thumb.replace(/^http:/, "https:")}
                           alt={release.title}
                           width={100}
                           height={100}
                           className="w-full aspect-square rounded object-cover mb-2"
+                          unoptimized
                                                   />
                       ) : (
                         <div className="w-full aspect-square bg-muted rounded mb-2 flex items-center justify-center">

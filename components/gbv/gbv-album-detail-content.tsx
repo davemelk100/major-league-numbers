@@ -83,9 +83,10 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
   }
 
   // Use MusicBrainz cover art, fallback to Discogs images (which may be empty without auth)
-  const displayImage =
+  const displayImage = (
     album.images?.find((img) => img.type === "primary")?.uri ||
-    album.images?.[0]?.uri;
+    album.images?.[0]?.uri
+  )?.replace(/^http:/, "https:");
 
   return (
     <main className="container py-6">
@@ -109,6 +110,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
                   className="w-full aspect-square rounded-lg object-cover mb-4"
                                     priority
                   loading="eager"
+                  unoptimized
                 />
               ) : (
                 <div className="w-full aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center">
