@@ -28,8 +28,11 @@ export function createAlbumCacheKey(artist: string, album: string): string {
 }
 
 /**
- * Returns the image URL directly (proxy disabled for performance)
+ * Returns a proxy URL for remote images to avoid hotlink blocking.
  */
 export function getProxiedImageUrl(url: string | null | undefined): string | null {
-  return url || null;
+  if (!url) return null;
+  if (url.startsWith("/")) return url;
+  const normalized = url.replace(/^http:/, "https:");
+  return `/api/gbv/image-proxy?url=${encodeURIComponent(normalized)}`;
 }

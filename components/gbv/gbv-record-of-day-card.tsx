@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getDailyGbvRecord, type GbvRecordOfDay } from "@/lib/gbv-records-data";
 import Image from "next/image";
 import Link from "next/link";
+import { getProxiedImageUrl } from "@/lib/gbv-utils";
 
 export function GbvRecordOfDayCard() {
   const [record, setRecord] = useState<GbvRecordOfDay | null>(null);
@@ -51,7 +52,7 @@ export function GbvRecordOfDayCard() {
         if (match?.id) {
           setAlbumId(match.id);
         }
-        const thumbUrl = normalizeImageUrl(match?.thumb);
+        const thumbUrl = getProxiedImageUrl(match?.thumb);
         if (thumbUrl) {
           setCoverUrl(thumbUrl);
           try {

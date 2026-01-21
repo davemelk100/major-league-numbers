@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, ExternalLink, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { getProxiedImageUrl } from "@/lib/gbv-utils";
 
 interface Release {
   id: number;
@@ -136,7 +137,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
             <CardContent className="p-4">
               {commonsImageUrl ? (
                 <Image
-                  src={commonsImageUrl}
+                  src={getProxiedImageUrl(commonsImageUrl)!}
                   alt={member.name}
                   width={300}
                   height={300}
@@ -203,7 +204,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
                     >
                       {release.thumb ? (
                         <Image
-                          src={release.thumb.replace(/^http:/, "https:")}
+                          src={getProxiedImageUrl(release.thumb)!}
                           alt={release.title}
                           width={100}
                           height={100}

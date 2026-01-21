@@ -9,7 +9,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Loader2, Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { getReleaseType } from "@/lib/gbv-utils";
+import { getReleaseType, getProxiedImageUrl } from "@/lib/gbv-utils";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -92,7 +92,7 @@ export function GbvAlbumsContent() {
   const hasMore = displayCount < filteredAlbums.length;
 
   const getAlbumImage = (album: Album): string | null => {
-    return album.thumb ? album.thumb.replace(/^http:/, "https:") : null;
+    return getProxiedImageUrl(album.thumb);
   };
 
   const handleLoadMore = () => {

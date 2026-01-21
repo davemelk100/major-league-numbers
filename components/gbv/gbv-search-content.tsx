@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getProxiedImageUrl } from "@/lib/gbv-utils";
 import { Loader2, Users } from "lucide-react";
 
 interface Album {
@@ -87,7 +88,7 @@ export function GbvSearchContent() {
 
   const getAlbumImage = (album: Album): string | null => {
     const raw = album.coverUrl || album.thumb || null;
-    return raw ? raw.replace(/^http:/, "https:") : null;
+    return getProxiedImageUrl(raw);
   };
 
   const getReleaseType = (format?: string | string[], releaseType?: string) => {

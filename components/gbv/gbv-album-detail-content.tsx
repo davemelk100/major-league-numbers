@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2, ExternalLink, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { getProxiedImageUrl } from "@/lib/gbv-utils";
 
 interface Track {
   position: string;
@@ -83,10 +84,10 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
   }
 
   // Use MusicBrainz cover art, fallback to Discogs images (which may be empty without auth)
-  const displayImage = (
+  const displayImage = getProxiedImageUrl(
     album.images?.find((img) => img.type === "primary")?.uri ||
-    album.images?.[0]?.uri
-  )?.replace(/^http:/, "https:");
+      album.images?.[0]?.uri
+  );
 
   return (
     <main className="container py-6">
