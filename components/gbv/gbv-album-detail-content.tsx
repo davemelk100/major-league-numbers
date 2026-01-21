@@ -8,6 +8,7 @@ import { Loader2, ExternalLink, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
+import { getLocalAlbumImage } from "@/lib/gbv-album-images";
 
 interface Track {
   position: string;
@@ -85,6 +86,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
 
   // Use MusicBrainz cover art, fallback to Discogs images (which may be empty without auth)
   const displayImage =
+    getLocalAlbumImage(Number(albumId)) ||
     album.images?.find((img) => img.type === "primary")?.uri ||
     album.images?.[0]?.uri;
 

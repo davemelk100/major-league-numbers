@@ -6,6 +6,7 @@ import { getDailyGbvRecord, type GbvRecordOfDay } from "@/lib/gbv-records-data";
 import Image from "next/image";
 import Link from "next/link";
 import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
+import { getLocalAlbumImage } from "@/lib/gbv-album-images";
 
 export function GbvRecordOfDayCard() {
   const [record, setRecord] = useState<GbvRecordOfDay | null>(null);
@@ -55,13 +56,15 @@ export function GbvRecordOfDayCard() {
         if (match?.id) {
           setAlbumId(match.id);
         }
+        const localImage = getLocalAlbumImage(match?.id);
         const thumbUrl = match?.thumb || null;
-        if (thumbUrl) {
-          setCoverUrl(thumbUrl);
+        const resolvedUrl = localImage || thumbUrl;
+        if (resolvedUrl) {
+          setCoverUrl(resolvedUrl);
           try {
             localStorage.setItem(
               cacheKey,
-              JSON.stringify({ url: thumbUrl })
+              JSON.stringify({ url: resolvedUrl })
             );
           } catch {
             // ignore cache errors
