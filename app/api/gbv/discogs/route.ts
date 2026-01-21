@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { cacheRemoteImage } from "@/lib/gbv-image-cache";
 
+export const runtime = "nodejs";
+
 const GBV_ARTIST_ID = 83529;
 const DISCOGS_BASE_URL = "https://api.discogs.com";
 const USER_AGENT = "GuidedByNumbers/1.0";

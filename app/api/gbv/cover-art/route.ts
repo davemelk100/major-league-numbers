@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { cacheRemoteImage } from "@/lib/gbv-image-cache";
 
+export const runtime = "nodejs";
+
 const MUSICBRAINZ_BASE = "https://musicbrainz.org/ws/2";
 const COVER_ART_BASE = "https://coverartarchive.org";
 const USER_AGENT = "MajorLeagueNumbers/1.0 (https://majorleaguenumbers.com)";
