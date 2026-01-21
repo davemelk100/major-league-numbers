@@ -292,6 +292,11 @@
   .gbv-shell [data-slot="input"].gbv-input-white::placeholder {
     color: rgba(255, 255, 255, 0.75);
   }
+
+  .gbv-shell .prose a {
+    border-bottom: 1px solid currentColor;
+    text-decoration: none;
+  }
 }
 
 @layer base {

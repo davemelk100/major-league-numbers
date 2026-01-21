@@ -23,7 +23,7 @@ function getMessageText(message: UIMessage): string {
   if (message.parts && Array.isArray(message.parts)) {
     return message.parts
       .filter(
-        (part): part is { type: "text"; text: string } => part.type === "text"
+        (part): part is { type: "text"; text: string } => part.type === "text",
       )
       .map((part) => part.text)
       .join("");
@@ -33,7 +33,10 @@ function getMessageText(message: UIMessage): string {
 
 function linkifyText(text: string) {
   if (!text) return text;
-  return text.replace(/(?<!\]\()https?:\/\/[^\s)]+/g, (url) => `[${url}](${url})`);
+  return text.replace(
+    /(?<!\]\()https?:\/\/[^\s)]+/g,
+    (url) => `[${url}](${url})`,
+  );
 }
 
 const chatPrompts = [
@@ -163,7 +166,7 @@ export function GbvChatContent() {
 
   const transport = useMemo(
     () => new DefaultChatTransport({ api: "/api/gbv/ask" }),
-    []
+    [],
   );
 
   const { messages, sendMessage, status, error, setMessages } = useChat({
@@ -207,7 +210,7 @@ export function GbvChatContent() {
   // Set random prompt on mount
   useEffect(() => {
     setRandomPrompt(
-      chatPrompts[Math.floor(Math.random() * chatPrompts.length)]
+      chatPrompts[Math.floor(Math.random() * chatPrompts.length)],
     );
   }, []);
 
@@ -262,7 +265,7 @@ export function GbvChatContent() {
     setChatKey((prev) => prev + 1);
     setLastSavedLength(0);
     setRandomPrompt(
-      chatPrompts[Math.floor(Math.random() * chatPrompts.length)]
+      chatPrompts[Math.floor(Math.random() * chatPrompts.length)],
     );
     setShowHistory(false);
   }, [setMessages]);
@@ -284,7 +287,7 @@ export function GbvChatContent() {
         handleNewChat();
       }
     },
-    [currentChatId, handleNewChat]
+    [currentChatId, handleNewChat],
   );
 
   // Chat History Sidebar
@@ -316,13 +319,15 @@ export function GbvChatContent() {
                 key={chat.id}
                 className={cn(
                   "p-3 rounded-lg cursor-pointer hover:bg-muted transition-colors group",
-                  currentChatId === chat.id && "bg-muted"
+                  currentChatId === chat.id && "bg-muted",
                 )}
                 onClick={() => handleLoadChat(chat)}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
-                    <p className="font-medium truncate text-black">{chat.title}</p>
+                    <p className="font-medium truncate text-black">
+                      {chat.title}
+                    </p>
                     <p className="text-xs text-black">
                       {new Date(chat.updatedAt).toLocaleDateString()}
                     </p>
@@ -482,7 +487,7 @@ export function GbvChatContent() {
               key={message.id}
               className={cn(
                 "flex gap-3",
-                message.role === "user" ? "justify-end" : "justify-start"
+                message.role === "user" ? "justify-end" : "justify-start",
               )}
             >
               {message.role === "assistant" && (
@@ -501,7 +506,7 @@ export function GbvChatContent() {
                   "rounded-lg px-4 py-2 max-w-[80%]",
                   message.role === "user"
                     ? "bg-primary text-primary-foreground"
-                    : "bg-[#eaeaea] text-black"
+                    : "bg-[#eaeaea] text-black",
                 )}
               >
                 {message.role === "assistant" ? (
@@ -562,7 +567,7 @@ export function GbvChatContent() {
       </div>
 
       {/* Input area - fixed at bottom */}
-      <div className="shrink-0 pt-4 pb-4 bg-background">
+      <div className="shrink-0 pt-4 pb-4">
         <div className="mx-auto px-4 sm:px-[calc(1rem+25px)] max-w-4xl">
           <form id="chat-form" onSubmit={handleSubmit} className="flex gap-2">
             <input
