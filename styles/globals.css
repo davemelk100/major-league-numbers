@@ -327,11 +327,8 @@
 
   h1 {
     font-family: var(--font-league-gothic), sans-serif !important;
-    font-size: 26px;
     letter-spacing: 1px !important;
     font-weight: 400 !important;
-    /* text-transform: uppercase !important; */
-    /* padding-bottom: 15px !important; */
   }
 
   @media (min-width: 768px) {
@@ -345,8 +342,6 @@
     font-family: var(--font-league-gothic), sans-serif !important;
     letter-spacing: 1px !important;
     font-weight: 400 !important;
-    /* text-transform: uppercase !important; */
-    font-size: 34px !important;
   }
 }
 

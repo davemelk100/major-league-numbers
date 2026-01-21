@@ -44,13 +44,15 @@ const listAppearances = [
 export function GbvAwardsContent() {
   return (
     <main className="container py-6">
-      <h1 className="font-league text-4xl font-semibold mb-6">Awards & Recognition</h1>
+      <h1 className="font-league text-4xl font-semibold mb-6">
+        Awards & Recognition
+      </h1>
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Critical Acclaim */}
         <Card className="py-6">
-          <CardHeader>
-            <CardTitle>Critical Acclaim</CardTitle>
+          <CardHeader className="pb-6">
+            <h2 className="text-3xl font-semibold">Critical Acclaim</h2>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -79,8 +81,8 @@ export function GbvAwardsContent() {
 
         {/* List Appearances */}
         <Card className="py-6">
-          <CardHeader>
-            <CardTitle>Best-Of List Appearances</CardTitle>
+          <CardHeader className="pb-6">
+            <h2 className="text-3xl font-semibold">Best-Of List Appearances</h2>
           </CardHeader>
           <CardContent>
             <ul className="space-y-3">
