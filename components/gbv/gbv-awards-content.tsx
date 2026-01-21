@@ -52,7 +52,7 @@ export function GbvAwardsContent() {
         {/* Critical Acclaim */}
         <Card className="py-6">
           <CardHeader className="pb-6">
-            <h2 className="text-3xl font-semibold tracking-wide">Critical Acclaim</h2>
+            <h2 className="text-xl font-semibold">Critical Acclaim</h2>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -82,7 +82,7 @@ export function GbvAwardsContent() {
         {/* List Appearances */}
         <Card className="py-6">
           <CardHeader className="pb-6">
-            <h2 className="text-3xl font-semibold tracking-wide">Best-Of List Appearances</h2>
+            <h2 className="text-xl font-semibold">Best-Of List Appearances</h2>
           </CardHeader>
           <CardContent>
             <ul className="space-y-3">
