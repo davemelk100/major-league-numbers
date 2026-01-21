@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { PlayerStatsTable } from "@/components/player-stats-table";
-import { BaseballCardGallery } from "@/components/baseball-card";
 import { cn } from "@/lib/utils";
 
 interface PlayerPageContentProps {
@@ -35,7 +34,7 @@ export function PlayerPageContent({
     ? "pitching"
     : hasFieldingStats
     ? "fielding"
-    : "cards";
+    : "batting";
 
   const [activeView, setActiveView] = useState(defaultView);
 
@@ -84,18 +83,6 @@ export function PlayerPageContent({
             Fielding Stats
           </Button>
         )}
-        <Button
-          variant="ghost"
-          onClick={() => setActiveView("cards")}
-          className={cn(
-            "rounded-md px-4 text-sm font-medium transition-colors",
-            activeView === "cards"
-              ? "bg-background text-foreground shadow-sm"
-              : "text-muted-foreground hover:text-foreground"
-          )}
-        >
-          Baseball Cards
-        </Button>
       </div>
 
       {activeView === "batting" && hasHittingStats && (
@@ -110,11 +97,7 @@ export function PlayerPageContent({
         <PlayerStatsTable stats={fieldingStats} type="fielding" />
       )}
 
-      {activeView === "cards" && (
-        <BaseballCardGallery playerName={playerName} playerId={playerId} limit={4} />
-      )}
-
-      {!hasHittingStats && !hasPitchingStats && !hasFieldingStats && activeView !== "cards" && (
+      {!hasHittingStats && !hasPitchingStats && !hasFieldingStats && (
         <Card>
           <CardHeader>
             <CardTitle>Career Statistics</CardTitle>

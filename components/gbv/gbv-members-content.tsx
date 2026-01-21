@@ -7,6 +7,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Users, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { getLocalMemberImage } from "@/lib/gbv-member-images";
 
 interface Member {
   id: number;
@@ -23,18 +24,26 @@ const MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
 function MemberAvatar({
   name,
   imageUrl,
+  memberId,
 }: {
   name: string;
   imageUrl?: string | null;
+  memberId?: number;
 }) {
   const [hasError, setHasError] = useState(false);
   const [resolvedImageUrl, setResolvedImageUrl] = useState<string | null>(null);
   const [lookupAttempted, setLookupAttempted] = useState(false);
   const normalizedImageUrl = imageUrl?.replace(/^http:/, "https:") || null;
+  const localImageUrl = getLocalMemberImage(memberId);
   const fallbackImageUrl =
     MEMBER_IMAGE_FALLBACKS[name.toLowerCase()] || null;
 
   useEffect(() => {
+    if (localImageUrl && !hasError) {
+      setResolvedImageUrl(localImageUrl);
+      return;
+    }
+
     if (normalizedImageUrl && !hasError) {
       setResolvedImageUrl(normalizedImageUrl);
       return;
@@ -83,7 +92,14 @@ function MemberAvatar({
     }
 
     fetchCommons();
-  }, [fallbackImageUrl, hasError, lookupAttempted, name, normalizedImageUrl]);
+  }, [
+    fallbackImageUrl,
+    hasError,
+    localImageUrl,
+    lookupAttempted,
+    name,
+    normalizedImageUrl,
+  ]);
 
   if (!resolvedImageUrl || hasError) {
     return (
@@ -196,7 +212,11 @@ export function GbvMembersContent() {
           <Link key={member.id} href={`/gbv/members/${member.id}`}>
             <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
               <CardContent className="p-4 text-center">
-                <MemberAvatar name={member.name} imageUrl={member.imageUrl} />
+                <MemberAvatar
+                  name={member.name}
+                  imageUrl={member.imageUrl}
+                  memberId={member.id}
+                />
                 <h3 className="font-semibold text-sm">{member.name}</h3>
                 <Badge
                   variant={member.active ? "default" : "secondary"}

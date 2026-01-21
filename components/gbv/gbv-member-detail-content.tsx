@@ -8,6 +8,7 @@ import { Loader2, ExternalLink, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
+import { getLocalMemberImage } from "@/lib/gbv-member-images";
 
 interface Release {
   id: number;
@@ -33,6 +34,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [commonsImageUrl, setCommonsImageUrl] = useState<string | null>(null);
+  const localMemberImage = getLocalMemberImage(Number(memberId));
 
   useEffect(() => {
     async function fetchMember() {
@@ -135,7 +137,16 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
         <div className="lg:col-span-1">
           <Card>
             <CardContent className="p-4">
-              {commonsImageUrl ? (
+              {localMemberImage ? (
+                <Image
+                  src={localMemberImage}
+                  alt={member.name}
+                  width={300}
+                  height={300}
+                  className="w-full aspect-square rounded-lg object-cover mb-4"
+                  priority
+                />
+              ) : commonsImageUrl ? (
                 <GbvRemoteImage
                   src={commonsImageUrl}
                   alt={member.name}

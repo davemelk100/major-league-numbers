@@ -39,14 +39,6 @@ export function GbvFooter() {
               Discogs
             </a>
             <a
-              href="https://www.ebay.com/"
-              target="_blank"
-              rel="noreferrer"
-              className="transition-colors hover:underline hover:decoration-current"
-            >
-              eBay
-            </a>
-            <a
               href="https://www.gbvdb.com/"
               target="_blank"
               rel="noreferrer"

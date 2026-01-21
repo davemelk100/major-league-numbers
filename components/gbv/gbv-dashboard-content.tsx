@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { GbvTriviaPanel } from "@/components/gbv/gbv-trivia-card";
 import { GbvRecordOfDayCard } from "@/components/gbv/gbv-record-of-day-card";
+import { getLocalMemberImage } from "@/lib/gbv-member-images";
 import {
   pollardSideProjects,
   type SideProject,
@@ -35,18 +36,27 @@ const MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
 function MemberAvatar({
   name,
   imageUrl,
+  memberId,
 }: {
   name: string;
   imageUrl?: string | null;
+  memberId?: number;
 }) {
   const [hasError, setHasError] = useState(false);
   const [resolvedImageUrl, setResolvedImageUrl] = useState<string | null>(null);
   const [lookupAttempted, setLookupAttempted] = useState(false);
   const normalizedImageUrl = imageUrl?.replace(/^http:/, "https:") || null;
+  const localImageUrl = getLocalMemberImage(memberId);
   const fallbackImageUrl =
     MEMBER_IMAGE_FALLBACKS[name.toLowerCase()] || null;
 
   useEffect(() => {
+    const localImage = localImageUrl;
+    if (localImage && !hasError) {
+      setResolvedImageUrl(localImage);
+      return;
+    }
+
     if (normalizedImageUrl && !hasError) {
       setResolvedImageUrl(normalizedImageUrl);
       return;
@@ -95,7 +105,14 @@ function MemberAvatar({
     }
 
     fetchCommons();
-  }, [fallbackImageUrl, hasError, lookupAttempted, name, normalizedImageUrl]);
+  }, [
+    fallbackImageUrl,
+    hasError,
+    lookupAttempted,
+    localImageUrl,
+    name,
+    normalizedImageUrl,
+  ]);
 
   if (!resolvedImageUrl || hasError) {
     return (
@@ -253,7 +270,11 @@ export function GbvDashboardContent() {
             const card = (
               <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
                 <CardContent className="p-4">
-                  <MemberAvatar name={member.name} imageUrl={member.imageUrl} />
+                  <MemberAvatar
+                    name={member.name}
+                    imageUrl={member.imageUrl}
+                    memberId={member.id}
+                  />
                   <h3 className="font-semibold">{member.name}</h3>
                   <Badge variant="outline" className="mt-1">
                     Active
