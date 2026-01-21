@@ -72,6 +72,27 @@ export function GbvDashboardContent() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const cacheKey = "gbv-dashboard-artist";
+    const cacheTtlMs = 24 * 60 * 60 * 1000;
+    let hasCached = false;
+
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        const parsed = JSON.parse(cached) as {
+          timestamp: number;
+          data: ArtistData;
+        };
+        if (parsed?.data && Date.now() - parsed.timestamp < cacheTtlMs) {
+          setArtist(parsed.data);
+          setIsLoading(false);
+          hasCached = true;
+        }
+      }
+    } catch {
+      // ignore cache errors
+    }
+
     async function fetchData() {
       try {
         const artistRes = await fetch(
@@ -84,11 +105,23 @@ export function GbvDashboardContent() {
 
         const artistData = await artistRes.json();
         setArtist(artistData);
+        try {
+          localStorage.setItem(
+            cacheKey,
+            JSON.stringify({ timestamp: Date.now(), data: artistData })
+          );
+        } catch {
+          // ignore cache errors
+        }
       } catch (err) {
-        setError("Failed to load data from Discogs");
+        if (!hasCached) {
+          setError("Failed to load data from Discogs");
+        }
         console.error(err);
       } finally {
-        setIsLoading(false);
+        if (!hasCached) {
+          setIsLoading(false);
+        }
       }
     }
 
