@@ -131,11 +131,7 @@ export function GbvDashboardContent() {
         const albumsList: Album[] = albumsData.albums || [];
         setAlbums(albumsList);
         setArtist(artistData);
-
-        // Fetch cover art for the first 6 albums
-        if (albumsList.length > 0) {
-          fetchCoverArt(albumsList.slice(0, 6));
-        }
+        setCoversLoaded(true); // Skip cover art fetching on dashboard for faster load
       } catch (err) {
         setError("Failed to load data from Discogs");
         console.error(err);
