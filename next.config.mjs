@@ -21,6 +21,12 @@ const nextConfig = {
       {
         pathname: "/gbv-cache/**",
       },
+      {
+        pathname: "/gbv-members/**",
+      },
+      {
+        pathname: "/gbv-albums/**",
+      },
     ],
     remotePatterns: [
       {

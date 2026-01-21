@@ -1,6 +1,6 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, League_Gothic } from "next/font/google";
+import { Geist, Geist_Mono, League_Gothic, Lato } from "next/font/google";
 import { LayoutWrapper } from "@/components/layout-wrapper";
 import { WebsiteJsonLd } from "@/components/json-ld";
 import { Toaster } from "@/components/ui/sonner";
@@ -12,6 +12,12 @@ const _geistMono = Geist_Mono({ subsets: ["latin"], display: "swap" });
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
   variable: "--font-league-gothic",
+  display: "swap",
+});
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  variable: "--font-lato",
   display: "swap",
 });
 
@@ -103,7 +109,7 @@ export default function RootLayout({
         <WebsiteJsonLd />
       </head>
       <body
-        className={`font-sans antialiased min-h-screen flex flex-col ${leagueGothic.variable}`}
+        className={`${lato.className} antialiased min-h-screen flex flex-col ${leagueGothic.variable} ${lato.variable}`}
       >
         <LayoutWrapper>{children}</LayoutWrapper>
         <Toaster />

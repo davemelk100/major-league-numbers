@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export function GbvFooter() {
   return (
-    <footer className="bg-transparent py-3 mt-auto">
+    <footer className="bg-transparent py-2 mt-auto">
       <div className="container">
         <div className="flex flex-col md:flex-row items-center justify-between gap-2">
           <nav className="flex items-center gap-4 text-[11px] text-white md:hidden">
