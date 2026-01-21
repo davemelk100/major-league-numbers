@@ -35,7 +35,8 @@ function pickDiscogsImage(images?: Array<{ uri?: string; uri150?: string; type?:
   const primary = images.find((img) => img.type === "primary") || images[0];
   const url = primary?.uri150 || primary?.uri || null;
   if (!url) return null;
-  return url.replace(/^http:/, "https:");
+  const httpsUrl = url.replace(/^http:/, "https:");
+  return `/api/gbv/image-proxy?url=${encodeURIComponent(httpsUrl)}`;
 }
 
 async function fetchFromDiscogs(endpoint: string) {
