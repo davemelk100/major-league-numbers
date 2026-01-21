@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -10,6 +10,8 @@ import { Loader2, Search } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { getReleaseType } from "@/lib/gbv-utils";
+
+const ITEMS_PER_PAGE = 12;
 
 interface Album {
   id: number;
@@ -28,6 +30,9 @@ export function GbvAlbumsContent() {
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<"year-asc" | "year-desc" | "title">("year-asc");
   const [releaseFilter, setReleaseFilter] = useState<"all" | "albums" | "singles">("albums");
+  const [displayCount, setDisplayCount] = useState(ITEMS_PER_PAGE);
+  const [loadingCovers, setLoadingCovers] = useState(false);
+  const [loadedCoverTitles, setLoadedCoverTitles] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     async function fetchAlbums() {
@@ -35,13 +40,7 @@ export function GbvAlbumsContent() {
         const res = await fetch("/api/gbv/discogs?type=albums");
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
-        const albumsList = data.albums || [];
-        setAlbums(albumsList);
-
-        // Fetch cover art for first batch
-        if (albumsList.length > 0) {
-          fetchCoverArt(albumsList.slice(0, 20));
-        }
+        setAlbums(data.albums || []);
       } catch (err) {
         console.error(err);
       } finally {
@@ -51,47 +50,13 @@ export function GbvAlbumsContent() {
     fetchAlbums();
   }, []);
 
-  async function fetchCoverArt(albumsToFetch: Album[]) {
-    try {
-      const response = await fetch("/api/gbv/cover-art", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          albums: albumsToFetch.map((a) => ({
-            title: a.title,
-            year: a.year,
-          })),
-        }),
-      });
-
-      if (!response.ok) return;
-
-      const data = await response.json();
-      const coverMap = new Map<string, string | null>();
-
-      for (const result of data.results || []) {
-        coverMap.set(result.title, result.coverUrl);
-      }
-
-      setAlbums((prev) =>
-        prev.map((album) => ({
-          ...album,
-          coverUrl: coverMap.has(album.title)
-            ? coverMap.get(album.title)
-            : album.coverUrl,
-        }))
-      );
-    } catch (err) {
-      console.error("Failed to fetch cover art:", err);
-    }
-  }
-
-  const getAlbumImage = (album: Album): string | null => {
-    return album.coverUrl || album.thumb || null;
-  };
+  // Reset display count when filters change
+  useEffect(() => {
+    setDisplayCount(ITEMS_PER_PAGE);
+  }, [search, sortBy, releaseFilter]);
 
   // Memoized filtered and sorted albums
-  const visibleAlbums = useMemo(() => {
+  const filteredAlbums = useMemo(() => {
     let result = [...albums];
 
     // Filter by search
@@ -125,6 +90,74 @@ export function GbvAlbumsContent() {
     return result;
   }, [albums, search, sortBy, releaseFilter]);
 
+  // Albums to display (limited by displayCount)
+  const visibleAlbums = filteredAlbums.slice(0, displayCount);
+  const hasMore = displayCount < filteredAlbums.length;
+
+  // Fetch cover art for visible albums that don't have covers yet
+  useEffect(() => {
+    const albumsNeedingCovers = visibleAlbums.filter(
+      (album) => !album.coverUrl && !loadedCoverTitles.has(album.title)
+    );
+
+    if (albumsNeedingCovers.length === 0) return;
+
+    async function fetchCovers() {
+      setLoadingCovers(true);
+      try {
+        const response = await fetch("/api/gbv/cover-art", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            albums: albumsNeedingCovers.map((a) => ({
+              title: a.title,
+              year: a.year,
+            })),
+          }),
+        });
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+        const coverMap = new Map<string, string | null>();
+
+        for (const result of data.results || []) {
+          coverMap.set(result.title, result.coverUrl);
+        }
+
+        // Mark these titles as loaded
+        setLoadedCoverTitles((prev) => {
+          const newSet = new Set(prev);
+          albumsNeedingCovers.forEach((a) => newSet.add(a.title));
+          return newSet;
+        });
+
+        setAlbums((prev) =>
+          prev.map((album) => ({
+            ...album,
+            coverUrl: coverMap.has(album.title)
+              ? coverMap.get(album.title)
+              : album.coverUrl,
+          }))
+        );
+      } catch (err) {
+        console.error("Failed to fetch cover art:", err);
+      } finally {
+        setLoadingCovers(false);
+      }
+    }
+
+    fetchCovers();
+  }, [visibleAlbums.length, displayCount]);
+
+  const getAlbumImage = (album: Album): string | null => {
+    return album.coverUrl || album.thumb || null;
+  };
+
+  const handleLoadMore = () => {
+    setDisplayCount((prev) => prev + ITEMS_PER_PAGE);
+  };
+
   if (isLoading) {
     return (
       <main className="container py-6">
@@ -148,7 +181,7 @@ export function GbvAlbumsContent() {
                 : releaseFilter === "singles"
                   ? "Singles"
                   : "All"}{" "}
-              ({visibleAlbums.length})
+              ({filteredAlbums.length})
             </p>
           </div>
           <Tabs value={releaseFilter} onValueChange={(v) => setReleaseFilter(v as typeof releaseFilter)}>
@@ -195,7 +228,7 @@ export function GbvAlbumsContent() {
                     height={200}
                     className="w-full aspect-square rounded-lg object-cover mb-2"
                     sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16vw"
-                                        priority={index === 0}
+                    priority={index === 0}
                     loading={index < 6 ? "eager" : "lazy"}
                   />
                 ) : (
@@ -222,9 +255,30 @@ export function GbvAlbumsContent() {
         ))}
       </div>
 
+      {hasMore && (
+        <div className="flex justify-center mt-8">
+          <Button
+            onClick={handleLoadMore}
+            variant="outline"
+            className="text-black"
+            disabled={loadingCovers}
+          >
+            {loadingCovers ? (
+              <>
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                Loading...
+              </>
+            ) : (
+              `Load More (${filteredAlbums.length - displayCount} remaining)`
+            )}
+          </Button>
+        </div>
+      )}
+
       {visibleAlbums.length === 0 && !isLoading && (
         <div className="text-center py-12 text-muted-foreground">
-          No {releaseFilter === "albums" ? "albums" : "singles"} found matching &quot;{search}&quot;
+          No {releaseFilter === "albums" ? "albums" : releaseFilter === "singles" ? "singles" : "releases"} found
+          {search && <> matching &quot;{search}&quot;</>}
         </div>
       )}
     </main>
