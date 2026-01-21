@@ -7,6 +7,7 @@ import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { GbvTriviaPanel } from "@/components/gbv/gbv-trivia-card";
+import { GbvRecordOfDayCard } from "@/components/gbv/gbv-record-of-day-card";
 import {
   pollardSideProjects,
   type SideProject,
@@ -126,9 +127,10 @@ export function GbvDashboardContent() {
         ))}
       </div>
 
-      {/* Daily Trivia */}
-      <div className="mb-8">
+      {/* Daily Trivia + Record of the Day */}
+      <div className="mb-8 grid gap-4 md:grid-cols-2">
         <GbvTriviaPanel />
+        <GbvRecordOfDayCard />
       </div>
 
       {/* Error Message */}
