@@ -138,7 +138,7 @@ export function GbvAlbumsContent() {
   return (
     <main className="container py-6">
       <div className="flex flex-col gap-4 mb-6">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <h1 className="font-league text-4xl font-semibold">Discography</h1>
             <p className="text-sm text-muted-foreground">
@@ -150,7 +150,11 @@ export function GbvAlbumsContent() {
               ({filteredAlbums.length})
             </p>
           </div>
-          <Tabs value={releaseFilter} onValueChange={(v) => setReleaseFilter(v as typeof releaseFilter)}>
+          <Tabs
+            value={releaseFilter}
+            onValueChange={(v) => setReleaseFilter(v as typeof releaseFilter)}
+            className="sm:ml-auto"
+          >
             <TabsList className="text-black">
               <TabsTrigger value="all" className="text-black">All</TabsTrigger>
               <TabsTrigger value="albums" className="text-black">Albums</TabsTrigger>
