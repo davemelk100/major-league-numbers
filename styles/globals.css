@@ -264,7 +264,7 @@
 
   .gbv-shell button,
   .gbv-shell [data-slot="button"] {
-    color: #000000;
+    /* color: #000000; */
   }
 
   .gbv-shell button svg,

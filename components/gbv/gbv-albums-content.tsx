@@ -182,19 +182,19 @@ export function GbvAlbumsContent() {
 
   return (
     <main className="container py-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div>
-          <h1 className="font-league text-4xl font-semibold">Discography</h1>
-          <p className="text-sm text-muted-foreground">
-            {releaseFilter === "albums"
-              ? "Albums"
-              : releaseFilter === "singles"
-                ? "Singles"
-                : "All"}{" "}
-            ({visibleAlbums.length})
-          </p>
-        </div>
-        <div className="flex flex-wrap gap-4">
+      <div className="flex flex-col gap-4 mb-6">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h1 className="font-league text-4xl font-semibold">Discography</h1>
+            <p className="text-sm text-muted-foreground">
+              {releaseFilter === "albums"
+                ? "Albums"
+                : releaseFilter === "singles"
+                  ? "Singles"
+                  : "All"}{" "}
+              ({visibleAlbums.length})
+            </p>
+          </div>
           <Tabs value={releaseFilter} onValueChange={(v) => setReleaseFilter(v as typeof releaseFilter)}>
             <TabsList className="text-black">
               <TabsTrigger value="all" className="text-black">All</TabsTrigger>
@@ -202,17 +202,19 @@ export function GbvAlbumsContent() {
               <TabsTrigger value="singles" className="text-black">Singles</TabsTrigger>
             </TabsList>
           </Tabs>
-          <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/80" />
+        </div>
+        <div className="flex gap-4 w-full">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/80" />
             <Input
               placeholder="Search titles..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 w-64 text-white gbv-input-white"
+              className="pl-9 w-full text-white gbv-input-white"
             />
           </div>
           <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
-            <SelectTrigger className="w-40 text-white">
+            <SelectTrigger className="w-44 text-white">
               <SelectValue className="text-white" />
             </SelectTrigger>
             <SelectContent className="text-black">

@@ -30,7 +30,7 @@ function getMessageText(message: UIMessage): string {
   if (message.parts && Array.isArray(message.parts)) {
     return message.parts
       .filter(
-        (part): part is { type: "text"; text: string } => part.type === "text"
+        (part): part is { type: "text"; text: string } => part.type === "text",
       )
       .map((part) => part.text)
       .join("");
@@ -70,7 +70,7 @@ export function AskPageContent() {
 
   const transport = useMemo(
     () => new DefaultChatTransport({ api: "/api/ask" }),
-    []
+    [],
   );
 
   const { messages, sendMessage, status, error, setMessages } = useChat({
@@ -96,7 +96,7 @@ export function AskPageContent() {
   // Set random prompt on mount
   useEffect(() => {
     setRandomPrompt(
-      chatPrompts[Math.floor(Math.random() * chatPrompts.length)]
+      chatPrompts[Math.floor(Math.random() * chatPrompts.length)],
     );
   }, []);
 
@@ -152,7 +152,7 @@ export function AskPageContent() {
     setChatKey((prev) => prev + 1);
     setLastSavedLength(0);
     setRandomPrompt(
-      chatPrompts[Math.floor(Math.random() * chatPrompts.length)]
+      chatPrompts[Math.floor(Math.random() * chatPrompts.length)],
     );
     setShowHistory(false);
   }, [setMessages]);
@@ -174,7 +174,7 @@ export function AskPageContent() {
         handleNewChat();
       }
     },
-    [currentChatId, handleNewChat]
+    [currentChatId, handleNewChat],
   );
 
   // Chat History Sidebar (shared between both layouts)
@@ -206,7 +206,7 @@ export function AskPageContent() {
                 key={chat.id}
                 className={cn(
                   "p-3 rounded-lg cursor-pointer hover:bg-muted transition-colors group",
-                  currentChatId === chat.id && "bg-muted"
+                  currentChatId === chat.id && "bg-muted",
                 )}
                 onClick={() => handleLoadChat(chat)}
               >
@@ -265,7 +265,7 @@ export function AskPageContent() {
         {chatActions}
 
         {/* Centered content */}
-        <div className="flex-1 flex flex-col items-center justify-center px-4">
+        <div className="flex-1 flex flex-col items-center px-4">
           <img src="/chat-mlb-2.svg" alt="ChatMLB" className="h-32 w-32 mb-4" />
           <h1 className="text-3xl font-bold mb-2">ChatMLB</h1>
 
@@ -341,7 +341,7 @@ export function AskPageContent() {
               key={message.id}
               className={cn(
                 "flex gap-3",
-                message.role === "user" ? "justify-end" : "justify-start"
+                message.role === "user" ? "justify-end" : "justify-start",
               )}
             >
               {message.role === "assistant" && (
@@ -354,7 +354,7 @@ export function AskPageContent() {
                   "rounded-lg px-4 py-2 max-w-[80%]",
                   message.role === "user"
                     ? "bg-primary text-primary-foreground"
-                    : "bg-[#eaeaea]"
+                    : "bg-[#eaeaea]",
                 )}
               >
                 {message.role === "assistant" ? (
@@ -388,7 +388,7 @@ export function AskPageContent() {
       </div>
 
       {/* Input area - fixed at bottom */}
-      <div className="shrink-0 pt-4 pb-4 bg-background">
+      <div className="shrink-0 pt-4 pb-4">
         <div className="mx-auto px-4 sm:px-[calc(1rem+25px)] max-w-4xl">
           <form id="chat-form" onSubmit={handleSubmit} className="flex gap-2">
             <input
