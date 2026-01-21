@@ -15,7 +15,6 @@ interface Release {
   thumb: string;
   type: string;
   role: string;
-  coverUrl?: string | null;
 }
 
 interface ArtistDetail {
@@ -55,52 +54,12 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
           const releasesData = await releasesRes.json();
           const releasesList = releasesData.releases || [];
           setReleases(releasesList);
-
-          // Fetch cover art for releases
-          if (releasesList.length > 0) {
-            fetchCoverArt(releasesList);
-          }
         }
       } catch (err) {
         setError("Failed to load member details");
         console.error(err);
       } finally {
         setIsLoading(false);
-      }
-    }
-
-    async function fetchCoverArt(releasesToFetch: Release[]) {
-      try {
-        const response = await fetch("/api/gbv/cover-art", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            albums: releasesToFetch.map((r) => ({
-              title: r.title,
-              year: r.year,
-            })),
-          }),
-        });
-
-        if (!response.ok) return;
-
-        const data = await response.json();
-        const coverMap = new Map<string, string | null>();
-
-        for (const result of data.results || []) {
-          coverMap.set(result.title, result.coverUrl);
-        }
-
-        setReleases((prev) =>
-          prev.map((release) => ({
-            ...release,
-            coverUrl: coverMap.has(release.title)
-              ? coverMap.get(release.title)
-              : release.coverUrl,
-          }))
-        );
-      } catch (err) {
-        console.error("Failed to fetch cover art:", err);
       }
     }
 
@@ -241,9 +200,9 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
                       key={`${release.id}-${release.title}-${release.year ?? "unknown"}`}
                       className="text-center"
                     >
-                      {(release.coverUrl || release.thumb) ? (
+                      {release.thumb ? (
                         <Image
-                          src={release.coverUrl || release.thumb}
+                          src={release.thumb}
                           alt={release.title}
                           width={100}
                           height={100}

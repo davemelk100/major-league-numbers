@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { getDailyGbvRecord, type GbvRecordOfDay } from "@/lib/gbv-records-data";
 import Image from "next/image";
@@ -10,7 +10,6 @@ export function GbvRecordOfDayCard() {
   const [record, setRecord] = useState<GbvRecordOfDay | null>(null);
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
   const [albumId, setAlbumId] = useState<number | null>(null);
-  const coverSourceRef = useRef<"primary" | "fallback" | null>(null);
 
   useEffect(() => {
     const daily = getDailyGbvRecord();
@@ -28,46 +27,12 @@ export function GbvRecordOfDayCard() {
           source?: "primary" | "fallback";
         };
         if (parsed?.url) {
-          coverSourceRef.current = parsed.source || "fallback";
           setCoverUrl(parsed.url);
         }
       }
     } catch {
       // ignore cache errors
     }
-
-    async function fetchCoverArt() {
-      try {
-        const res = await fetch(
-          `/api/gbv/cover-art?album=${encodeURIComponent(
-            daily.title
-          )}&artist=${encodeURIComponent("Guided By Voices")}&year=${
-            daily.year
-          }&primaryType=album&size=small`
-        );
-        if (!res.ok) return;
-        const data = await res.json();
-        if (data.coverUrl) {
-          const normalized = normalizeImageUrl(data.coverUrl);
-          if (normalized) {
-            coverSourceRef.current = "primary";
-            setCoverUrl(normalized);
-            try {
-              localStorage.setItem(
-                cacheKey,
-                JSON.stringify({ url: normalized, source: "primary" })
-              );
-            } catch {
-              // ignore cache errors
-            }
-          }
-        }
-      } catch {
-        // ignore cover art errors
-      }
-    }
-
-    fetchCoverArt();
 
     async function fetchAlbumLink() {
       try {
@@ -86,14 +51,13 @@ export function GbvRecordOfDayCard() {
         if (match?.id) {
           setAlbumId(match.id);
         }
-        const fallbackThumb = normalizeImageUrl(match?.thumb);
-        if (fallbackThumb && coverSourceRef.current !== "primary") {
-          coverSourceRef.current = "fallback";
-          setCoverUrl(fallbackThumb);
+        const thumbUrl = normalizeImageUrl(match?.thumb);
+        if (thumbUrl) {
+          setCoverUrl(thumbUrl);
           try {
             localStorage.setItem(
               cacheKey,
-              JSON.stringify({ url: fallbackThumb, source: "fallback" })
+              JSON.stringify({ url: thumbUrl })
             );
           } catch {
             // ignore cache errors

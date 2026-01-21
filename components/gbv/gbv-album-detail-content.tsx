@@ -29,7 +29,6 @@ interface AlbumDetail {
 
 export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
   const [album, setAlbum] = useState<AlbumDetail | null>(null);
-  const [coverUrl, setCoverUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -44,28 +43,11 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
         const data = await res.json();
         setAlbum(data);
 
-        // Fetch cover art from MusicBrainz
-        if (data.title) {
-          fetchCoverArt(data.title);
-        }
       } catch (err) {
         setError("Failed to load album details");
         console.error(err);
       } finally {
         setIsLoading(false);
-      }
-    }
-
-    async function fetchCoverArt(title: string) {
-      try {
-        const res = await fetch(`/api/gbv/cover-art?album=${encodeURIComponent(title)}`);
-        if (!res.ok) return;
-        const data = await res.json();
-        if (data.coverUrl) {
-          setCoverUrl(data.coverUrl);
-        }
-      } catch (err) {
-        console.error("Failed to fetch cover art:", err);
       }
     }
 
@@ -101,7 +83,9 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
   }
 
   // Use MusicBrainz cover art, fallback to Discogs images (which may be empty without auth)
-  const displayImage = coverUrl || album.images?.find((img) => img.type === "primary")?.uri || album.images?.[0]?.uri;
+  const displayImage =
+    album.images?.find((img) => img.type === "primary")?.uri ||
+    album.images?.[0]?.uri;
 
   return (
     <main className="container py-6">
