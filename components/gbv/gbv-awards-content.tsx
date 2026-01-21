@@ -79,7 +79,7 @@ export function GbvAwardsContent() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Critical Acclaim */}
-        <Card>
+        <Card className="py-6">
           <CardHeader>
             <CardTitle>Critical Acclaim</CardTitle>
           </CardHeader>
@@ -109,7 +109,7 @@ export function GbvAwardsContent() {
         </Card>
 
         {/* List Appearances */}
-        <Card>
+        <Card className="py-6">
           <CardHeader>
             <CardTitle>Best-Of List Appearances</CardTitle>
           </CardHeader>

@@ -35,7 +35,7 @@ export function GbvLeftNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed top-0 left-0 bottom-0 z-40 w-20 bg-background border-r border-border pt-4 hidden sm:flex flex-col">
+    <nav className="fixed top-0 left-0 bottom-0 z-40 w-20 pt-4 hidden sm:flex flex-col">
       <div className="flex flex-col items-center gap-2 px-2 py-2">
         {navigation.map((item) => {
           const Icon = item.icon;
@@ -45,10 +45,10 @@ export function GbvLeftNav() {
               key={item.name}
               href={item.href}
               className={cn(
-                "flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-colors w-full text-black",
+                "flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-colors w-full text-white",
                 isActive
-                  ? "bg-primary/10"
-                  : "hover:bg-muted"
+                  ? "bg-white/10"
+                  : "hover:bg-white/10"
               )}
             >
               {item.image ? (
@@ -59,15 +59,15 @@ export function GbvLeftNav() {
                   height={item.name === "Chat GBV" ? 40 : 20}
                   className={cn(
                     item.name === "Chat GBV" ? "h-10 w-10" : "h-5 w-5",
-                    item.name === "Chat GBV" ? "gbv-nav-icon" : ""
+                    "brightness-0 invert"
                   )}
                   priority={item.name === "Chat GBV"}
                   loading={item.name === "Chat GBV" ? "eager" : "lazy"}
                 />
               ) : (
-                Icon && <Icon className="h-5 w-5 text-black" />
+                Icon && <Icon className="h-5 w-5 text-white" />
               )}
-              <span className="text-xs font-medium text-center leading-tight text-black">
+              <span className="text-xs font-medium text-center leading-tight text-white">
                 {item.name}
               </span>
             </Link>
