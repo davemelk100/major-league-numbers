@@ -11,12 +11,12 @@ export function GbvHeader() {
 
   return (
     <header className="z-50 w-full bg-transparent py-1">
-      {/* Mobile: Title on its own row */}
-      <div className="container sm:hidden">
+      {/* Mobile/Tablet: Title on its own row */}
+      <div className="container lg:hidden">
         <Link href="/gbv">
           <h1
             className="uppercase tracking-wide text-white text-center"
-            style={{ fontSize: "36px" }}
+            style={{ fontSize: "55px" }}
           >
             Guided By Data
           </h1>
@@ -36,8 +36,8 @@ export function GbvHeader() {
             fetchPriority="high"
           />
         </Link>
-        {/* Desktop/tablet: Title inline */}
-        <Link href="/gbv" className="hidden sm:block">
+        {/* Desktop: Title inline */}
+        <Link href="/gbv" className="hidden lg:block">
           <h1
             className={cn("uppercase tracking-wide flex-shrink-0 text-white")}
             style={{ fontSize: "55px" }}

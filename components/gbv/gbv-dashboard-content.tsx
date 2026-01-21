@@ -8,8 +8,10 @@ import { Music, Calendar, Loader2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { GbvTriviaPanel } from "@/components/gbv/gbv-trivia-card";
-import { pollardSideProjects, type SideProject } from "../../lib/gbv-side-projects";
-import { getReleaseType, getProxiedImageUrl } from "@/lib/gbv-utils";
+import {
+  pollardSideProjects,
+  type SideProject,
+} from "../../lib/gbv-side-projects";
 
 interface Album {
   id: number;
@@ -36,10 +38,54 @@ interface ArtistData {
   members?: Member[];
 }
 
-function MemberAvatar({ name, imageUrl }: { name: string; imageUrl?: string | null }) {
-  const proxiedUrl = getProxiedImageUrl(imageUrl);
+function getPrimaryType(format?: string | string[], releaseType?: string) {
+  if (!format && releaseType !== "release") return "Album";
+  const normalized = Array.isArray(format) ? format.join(" ") : format || "";
+  if (normalized.toLowerCase().includes("single")) return "Single";
+  if (releaseType === "release") return "Single";
+  return "Album";
+}
 
-  if (!proxiedUrl) {
+function MemberAvatar({
+  name,
+  imageUrl,
+}: {
+  name: string;
+  imageUrl?: string | null;
+}) {
+  const [resolvedImageUrl, setResolvedImageUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (imageUrl) {
+      setResolvedImageUrl(imageUrl);
+      return;
+    }
+
+    let isActive = true;
+    const fetchImage = async () => {
+      try {
+        const res = await fetch(
+          `/api/gbv/commons-image?name=${encodeURIComponent(name)}`,
+        );
+        if (!res.ok) return;
+        const data = await res.json();
+        if (isActive) {
+          setResolvedImageUrl(data.imageUrl || null);
+        }
+      } catch {
+        if (isActive) {
+          setResolvedImageUrl(null);
+        }
+      }
+    };
+
+    fetchImage();
+    return () => {
+      isActive = false;
+    };
+  }, [name, imageUrl]);
+
+  if (!resolvedImageUrl) {
     return (
       <div className="w-16 h-16 bg-muted rounded-full mb-3 flex items-center justify-center">
         <Image
@@ -57,11 +103,10 @@ function MemberAvatar({ name, imageUrl }: { name: string; imageUrl?: string | nu
   return (
     <div className="w-16 h-16 mb-3 relative">
       <Image
-        src={proxiedUrl}
+        src={resolvedImageUrl}
         alt={`${name} photo`}
         fill
         className="rounded-full object-cover"
-        unoptimized
       />
     </div>
   );
@@ -78,7 +123,9 @@ export function GbvDashboardContent() {
       try {
         const [albumsRes, artistRes] = await Promise.all([
           fetch("/api/gbv/discogs?type=albums&max_pages=1"),
-          fetch("/api/gbv/discogs?type=artist&include_member_images=true&member_image_limit=20"),
+          fetch(
+            "/api/gbv/discogs?type=artist&include_member_images=true&member_image_limit=20",
+          ),
         ]);
 
         if (!albumsRes.ok || !artistRes.ok) {
@@ -116,7 +163,7 @@ export function GbvDashboardContent() {
           albums: albumsToFetch.map((a) => ({
             title: a.title,
             year: a.year,
-            primaryType: getReleaseType(a.format, a.releaseType),
+            primaryType: getPrimaryType(a.format, a.releaseType),
           })),
         }),
       });
@@ -133,8 +180,10 @@ export function GbvDashboardContent() {
       setAlbums((prev) =>
         prev.map((album) => ({
           ...album,
-          coverUrl: coverMap.has(album.title) ? coverMap.get(album.title) : album.coverUrl,
-        }))
+          coverUrl: coverMap.has(album.title)
+            ? coverMap.get(album.title)
+            : album.coverUrl,
+        })),
       );
     } catch (err) {
       console.error("Failed to fetch cover art:", err);
@@ -146,16 +195,21 @@ export function GbvDashboardContent() {
   const albumCount = albums.length;
 
   const stats = [
-    { label: "Studio Albums", value: albumCount > 0 ? `${albumCount}+` : "32+" },
+    {
+      label: "Studio Albums",
+      value: albumCount > 0 ? `${albumCount}+` : "32+",
+    },
     { label: "Total Songs", value: "2,500+" },
-    { label: "Band Members", value: artist?.members ? `${artist.members.length}+` : "30+" },
+    {
+      label: "Band Members",
+      value: artist?.members ? `${artist.members.length}+` : "30+",
+    },
     { label: "Years Active", value: "40+" },
   ];
 
-  // Get the best available image for an album (proxied to avoid third-party cookies)
+  // Get the best available image for an album
   const getAlbumImage = (album: Album): string | null => {
-    const url = album.coverUrl || album.thumb || null;
-    return getProxiedImageUrl(url);
+    return album.coverUrl || album.thumb || null;
   };
 
   const getReleaseType = (format?: string | string[], releaseType?: string) => {
@@ -169,73 +223,9 @@ export function GbvDashboardContent() {
   if (isLoading) {
     return (
       <main className="container py-2">
-        {/* Stats Row Skeleton */}
-        <div className="grid gap-4 grid-cols-2 md:grid-cols-4 mb-8 mt-6">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <Card key={i}>
-              <CardContent className="p-4 text-center">
-                <Skeleton className="h-8 w-16 mx-auto mb-1" />
-                <Skeleton className="h-4 w-24 mx-auto" />
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Trivia & Featured Skeleton */}
-        <div className="grid gap-6 lg:grid-cols-2 mb-8">
-          <Card>
-            <CardContent className="p-4">
-              <Skeleton className="h-6 w-40 mb-2" />
-              <Skeleton className="h-10 w-32 mb-2" />
-              <Skeleton className="h-4 w-64" />
-            </CardContent>
-          </Card>
-          <Card>
-            <CardHeader>
-              <Skeleton className="h-6 w-32" />
-            </CardHeader>
-            <CardContent>
-              <Skeleton className="h-20 w-full" />
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Discography Skeleton */}
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-4">
-            <Skeleton className="h-10 w-48" />
-            <Skeleton className="h-4 w-20" />
-          </div>
-          <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <Card key={i}>
-                <CardContent className="p-3">
-                  <Skeleton className="w-full aspect-square rounded-lg mb-2" />
-                  <Skeleton className="h-4 w-full mb-1" />
-                  <Skeleton className="h-3 w-12" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* Members Skeleton */}
-        <div className="mb-8">
-          <div className="flex items-center gap-4 mb-4">
-            <Skeleton className="h-10 w-48" />
-            <Skeleton className="h-4 w-20" />
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Card key={i}>
-                <CardContent className="p-4">
-                  <Skeleton className="w-16 h-16 rounded-full mb-3" />
-                  <Skeleton className="h-4 w-24 mb-1" />
-                  <Skeleton className="h-5 w-14" />
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+        <div className="flex flex-col items-center justify-center py-16 gap-4">
+          <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          <p className="text-muted-foreground text-sm">Loading GBV data...</p>
         </div>
       </main>
     );
@@ -262,7 +252,9 @@ export function GbvDashboardContent() {
         {/* Featured Album */}
         <Card>
           <CardHeader>
-            <CardTitle className="font-league text-2xl">Album Spotlight</CardTitle>
+            <CardTitle className="font-league text-2xl">
+              Album Spotlight
+            </CardTitle>
           </CardHeader>
           <CardContent>
             {featuredAlbums[0] ? (
@@ -292,8 +284,12 @@ export function GbvDashboardContent() {
                     </div>
                   )}
                   <div>
-                    <h3 className="text-xl font-semibold">{featuredAlbums[0].title}</h3>
-                    <p className="text-muted-foreground">{featuredAlbums[0].year}</p>
+                    <h3 className="text-xl font-semibold">
+                      {featuredAlbums[0].title}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {featuredAlbums[0].year}
+                    </p>
                   </div>
                 </div>
               </Link>
@@ -315,7 +311,10 @@ export function GbvDashboardContent() {
       <div className="mb-8">
         <div className="flex items-center gap-4 mb-4">
           <h2 className="font-league text-4xl font-semibold">Discography</h2>
-          <Link href="/gbv/albums" className="text-sm text-muted-foreground hover:text-foreground">
+          <Link
+            href="/gbv/albums"
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
             View all →
           </Link>
         </div>
@@ -332,7 +331,6 @@ export function GbvDashboardContent() {
                           width={200}
                           height={200}
                           className="w-full aspect-square rounded-lg object-cover mb-2"
-                          sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16vw"
                           unoptimized
                           priority={index === 0}
                           loading={index < 6 ? "eager" : "lazy"}
@@ -350,7 +348,9 @@ export function GbvDashboardContent() {
                         </div>
                       )}
                       <h3 className="font-semibold truncate">{album.title}</h3>
-                      <p className="text-sm text-muted-foreground">{album.year}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {album.year}
+                      </p>
                     </CardContent>
                   </Card>
                 </Link>
@@ -368,7 +368,9 @@ export function GbvDashboardContent() {
                         loading="eager"
                       />
                     </div>
-                    <p className="text-sm text-muted-foreground">Loading release...</p>
+                    <p className="text-sm text-muted-foreground">
+                      Loading release...
+                    </p>
                   </CardContent>
                 </Card>
               ))}
@@ -378,8 +380,13 @@ export function GbvDashboardContent() {
       {/* Band Members */}
       <div className="mb-8">
         <div className="flex items-center gap-4 mb-4">
-          <h2 className="font-league text-4xl font-semibold">Current Members</h2>
-          <Link href="/gbv/members" className="text-sm text-muted-foreground hover:text-foreground">
+          <h2 className="font-league text-4xl font-semibold">
+            Current Members
+          </h2>
+          <Link
+            href="/gbv/members"
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
             View all →
           </Link>
         </div>
@@ -389,7 +396,10 @@ export function GbvDashboardContent() {
                 <Link key={member.id} href={`/gbv/members/${member.id}`}>
                   <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
                     <CardContent className="p-4">
-                      <MemberAvatar name={member.name} imageUrl={member.imageUrl} />
+                      <MemberAvatar
+                        name={member.name}
+                        imageUrl={member.imageUrl}
+                      />
                       <h3 className="font-semibold">{member.name}</h3>
                       <Badge variant="outline" className="mt-1">
                         Active
@@ -401,7 +411,7 @@ export function GbvDashboardContent() {
             : Array.from({ length: 4 }).map((_, i) => (
                 <Card key={i}>
                   <CardContent className="p-4 text-center">
-                    <div className="w-16 h-16 bg-muted rounded-full mb-3 mx-auto flex items-center justify-center">
+                    <div className="w-16 h-16 rounded-full mb-3 mx-auto flex items-center justify-center">
                       <Image
                         src="/chat-gbv-box.svg"
                         alt="GBV rune"
@@ -411,7 +421,9 @@ export function GbvDashboardContent() {
                         loading="eager"
                       />
                     </div>
-                    <p className="text-sm text-muted-foreground">Loading member...</p>
+                    <p className="text-sm text-muted-foreground">
+                      Loading member...
+                    </p>
                   </CardContent>
                 </Card>
               ))}
