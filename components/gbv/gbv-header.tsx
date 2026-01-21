@@ -5,22 +5,44 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { GbvSearch } from "@/components/gbv/gbv-search";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Search } from "lucide-react";
 
 export function GbvHeader() {
   const pathname = usePathname();
 
   return (
     <header className="z-50 w-full bg-transparent py-1">
-      {/* Mobile/Tablet: Title on its own row */}
-      <div className="container lg:hidden">
-        <Link href="/gbv">
+      {/* Mobile/Tablet: Title row with search */}
+      <div className="container lg:hidden flex items-center justify-between gap-3">
+        <Link href="/gbv" className="flex-1">
           <h1
-            className="uppercase tracking-wide text-white text-center"
+            className="uppercase tracking-wide text-white"
             style={{ fontSize: "55px" }}
           >
             Guided By Data
           </h1>
         </Link>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant="outline"
+              className="h-12 w-12 p-0 bg-white text-black hover:bg-white"
+              aria-label="Search GBV"
+            >
+              <Search className="h-5 w-5" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            className="w-[min(20rem,calc(100vw-2rem))] p-2"
+            align="end"
+            sideOffset={8}
+            collisionPadding={16}
+          >
+            <GbvSearch />
+          </PopoverContent>
+        </Popover>
       </div>
 
       {/* Main header row */}
@@ -46,13 +68,12 @@ export function GbvHeader() {
           </h1>
         </Link>
 
-        {/* ChatGBV button */}
-        {pathname !== "/gbv/ask" && (
-          <>
-            {/* Small/medium screens: compact button */}
+        {/* Mobile actions */}
+        <div className="ml-auto flex items-center gap-2 lg:hidden">
+          {pathname !== "/gbv/ask" && (
             <Link
               href="/gbv/ask"
-              className="lg:hidden flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all ml-auto active:translate-y-[1px] text-black"
+              className="flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] text-black"
               style={{
                 background: "#ffffff",
                 borderTop: "1px solid #f6f6f6",
@@ -72,8 +93,8 @@ export function GbvHeader() {
               />
               <span className="text-sm text-black">ChatGBV</span>
             </Link>
-          </>
-        )}
+          )}
+        </div>
 
         {/* Desktop actions - chat to the left of search */}
         <div className="hidden lg:flex items-center gap-4 ml-auto">
@@ -107,10 +128,6 @@ export function GbvHeader() {
         </div>
       </div>
 
-      {/* Search - tablet and mobile, below header */}
-      <div className="container mt-1 lg:hidden">
-        <GbvSearch />
-      </div>
     </header>
   );
 }
