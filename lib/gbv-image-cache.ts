@@ -32,26 +32,30 @@ export async function cacheRemoteImage(
 ): Promise<string | null> {
   if (!url || url.startsWith("/")) return url || null;
 
-  await ensureCacheDir();
+  try {
+    await ensureCacheDir();
 
-  const hash = crypto.createHash("sha256").update(url).digest("hex");
-  const filenameBase = `${prefix}-${hash}`;
-  const existing = await findCachedFile(filenameBase);
-  if (existing) return existing;
+    const hash = crypto.createHash("sha256").update(url).digest("hex");
+    const filenameBase = `${prefix}-${hash}`;
+    const existing = await findCachedFile(filenameBase);
+    if (existing) return existing;
 
-  const response = await fetch(url, {
-    headers: { "User-Agent": "MajorLeagueNumbers/1.0" },
-  });
+    const response = await fetch(url, {
+      headers: { "User-Agent": "MajorLeagueNumbers/1.0" },
+    });
 
-  if (!response.ok) return null;
+    if (!response.ok) return null;
 
-  const contentType = response.headers.get("content-type") || "image/jpeg";
-  const extension = getExtensionFromContentType(contentType);
-  const filename = `${filenameBase}.${extension}`;
-  const filePath = path.join(CACHE_DIR, filename);
-  const buffer = Buffer.from(await response.arrayBuffer());
+    const contentType = response.headers.get("content-type") || "image/jpeg";
+    const extension = getExtensionFromContentType(contentType);
+    const filename = `${filenameBase}.${extension}`;
+    const filePath = path.join(CACHE_DIR, filename);
+    const buffer = new Uint8Array(await response.arrayBuffer());
 
-  await fs.writeFile(filePath, buffer);
+    await fs.writeFile(filePath, buffer);
 
-  return `/gbv-cache/${filename}`;
+    return `/gbv-cache/${filename}`;
+  } catch {
+    return null;
+  }
 }
