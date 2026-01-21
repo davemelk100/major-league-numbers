@@ -4,6 +4,8 @@ import { cacheRemoteImage } from "@/lib/gbv-image-cache";
 const GBV_ARTIST_ID = 83529;
 const DISCOGS_BASE_URL = "https://api.discogs.com";
 const USER_AGENT = "GuidedByNumbers/1.0";
+const MARK_SHUE_IMAGE =
+  "https://commons.wikimedia.org/wiki/Special:FilePath/Mark%20Shue%20GARP%20music%20festival%202016.jpg";
 
 interface DiscogsRelease {
   id: number;
@@ -60,8 +62,22 @@ async function fetchFromDiscogs(endpoint: string) {
   return response.json();
 }
 
+async function fetchCommonsImage(
+  origin: string,
+  name: string
+): Promise<string | null> {
+  const res = await fetch(
+    `${origin}/api/gbv/commons-image?name=${encodeURIComponent(name)}`,
+    { headers: { "User-Agent": USER_AGENT } }
+  );
+  if (!res.ok) return null;
+  const data = await res.json();
+  return typeof data?.imageUrl === "string" ? data.imageUrl : null;
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
+  const origin = new URL(request.url).origin;
   const type = searchParams.get("type") || "artist";
   const page = searchParams.get("page") || "1";
   const perPage = searchParams.get("per_page") || "50";
@@ -86,7 +102,24 @@ export async function GET(request: Request) {
 
             try {
               const memberData: DiscogsArtist = await fetchFromDiscogs(`/artists/${member.id}`);
-              const imageUrl = await pickDiscogsImage(memberData.images);
+              let imageUrl = await pickDiscogsImage(memberData.images);
+
+              if (!imageUrl && member.name.toLowerCase() === "mark shue") {
+                const cachedOverride = await cacheRemoteImage(
+                  MARK_SHUE_IMAGE,
+                  "commons-member"
+                );
+                imageUrl = cachedOverride || MARK_SHUE_IMAGE;
+              }
+
+              if (!imageUrl && member.name.toLowerCase() === "mark shue") {
+                const commonsUrl = await fetchCommonsImage(origin, member.name);
+                const cachedCommonsUrl = commonsUrl
+                  ? await cacheRemoteImage(commonsUrl, "commons-member")
+                  : null;
+                imageUrl = cachedCommonsUrl || commonsUrl || null;
+              }
+
               memberImageCache.set(member.id, { url: imageUrl, timestamp: Date.now() });
               return { id: member.id, imageUrl };
             } catch {

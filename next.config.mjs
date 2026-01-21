@@ -18,6 +18,9 @@ const nextConfig = {
       {
         pathname: "/api/gbv/image-proxy",
       },
+      {
+        pathname: "/gbv-cache/**",
+      },
     ],
     remotePatterns: [
       {

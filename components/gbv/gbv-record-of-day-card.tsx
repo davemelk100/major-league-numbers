@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { getDailyGbvRecord, type GbvRecordOfDay } from "@/lib/gbv-records-data";
 import Image from "next/image";
@@ -10,6 +10,7 @@ export function GbvRecordOfDayCard() {
   const [record, setRecord] = useState<GbvRecordOfDay | null>(null);
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
   const [albumId, setAlbumId] = useState<number | null>(null);
+  const coverSourceRef = useRef<"primary" | "fallback" | null>(null);
 
   useEffect(() => {
     const daily = getDailyGbvRecord();
@@ -30,7 +31,11 @@ export function GbvRecordOfDayCard() {
         if (!res.ok) return;
         const data = await res.json();
         if (data.coverUrl) {
-          setCoverUrl(normalizeImageUrl(data.coverUrl));
+          const normalized = normalizeImageUrl(data.coverUrl);
+          if (normalized) {
+            coverSourceRef.current = "primary";
+            setCoverUrl(normalized);
+          }
         }
       } catch {
         // ignore cover art errors
@@ -57,7 +62,8 @@ export function GbvRecordOfDayCard() {
           setAlbumId(match.id);
         }
         const fallbackThumb = normalizeImageUrl(match?.thumb);
-        if (fallbackThumb && !coverUrl) {
+        if (fallbackThumb && coverSourceRef.current !== "primary") {
+          coverSourceRef.current = "fallback";
           setCoverUrl(fallbackThumb);
         }
       } catch {

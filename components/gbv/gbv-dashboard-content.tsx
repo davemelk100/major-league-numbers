@@ -34,9 +34,10 @@ function MemberAvatar({
   name: string;
   imageUrl?: string | null;
 }) {
+  const [hasError, setHasError] = useState(false);
   const normalizedImageUrl = imageUrl?.replace(/^http:/, "https:") || null;
 
-  if (!imageUrl) {
+  if (!normalizedImageUrl || hasError) {
     return (
       <div className="w-16 h-16 bg-muted rounded-full mb-3 flex items-center justify-center">
         <Image
@@ -54,11 +55,12 @@ function MemberAvatar({
   return (
     <div className="w-16 h-16 mb-3 relative">
       <Image
-        src={normalizedImageUrl || "/chat-gbv-box.svg"}
+        src={normalizedImageUrl}
         alt={`${name} photo`}
         fill
         sizes="64px"
         className="rounded-full object-cover"
+        onError={() => setHasError(true)}
       />
     </div>
   );

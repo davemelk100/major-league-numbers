@@ -24,7 +24,7 @@ interface NavItem {
 const navigation: NavItem[] = [
   { name: "Chat GBV", href: "/gbv/ask", image: "/chat-gbv-box.svg" },
   { name: "Home", href: "/gbv", icon: Home },
-  { name: "Albums", href: "/gbv/albums", icon: Disc3 },
+  { name: "Discography", href: "/gbv/albums", icon: Disc3 },
   { name: "Members", href: "/gbv/members", icon: Users },
   { name: "Side Projects", href: "/gbv/side-projects", icon: Star },
   { name: "Timeline", href: "/gbv/timeline", icon: Calendar },
