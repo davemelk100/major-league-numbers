@@ -5,12 +5,15 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getDailyGbvRecord, type GbvRecordOfDay } from "@/lib/gbv-records-data";
 import Image from "next/image";
 import Link from "next/link";
-import { getProxiedImageUrl } from "@/lib/gbv-utils";
+import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
 
 export function GbvRecordOfDayCard() {
   const [record, setRecord] = useState<GbvRecordOfDay | null>(null);
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
   const [albumId, setAlbumId] = useState<number | null>(null);
+  const cacheKey = record
+    ? `gbv-record-cover:${record.title}:${record.year}`
+    : "gbv-record-cover";
 
   useEffect(() => {
     const daily = getDailyGbvRecord();
@@ -52,7 +55,7 @@ export function GbvRecordOfDayCard() {
         if (match?.id) {
           setAlbumId(match.id);
         }
-        const thumbUrl = getProxiedImageUrl(match?.thumb);
+        const thumbUrl = match?.thumb || null;
         if (thumbUrl) {
           setCoverUrl(thumbUrl);
           try {
@@ -95,25 +98,23 @@ export function GbvRecordOfDayCard() {
           {coverUrl ? (
             albumHref ? (
               <Link href={albumHref} className="absolute inset-0">
-                <Image
+                <GbvRemoteImage
                   src={coverUrl}
                   alt={`${record.title} cover`}
-                  fill
-                  sizes="(min-width: 768px) 25vw, 50vw"
-                  className="rounded-md object-cover"
+                  className="rounded-md object-cover w-full h-full"
                   loading="eager"
-                  unoptimized
+                  cacheKey={cacheKey}
+                  preferProxy
                 />
               </Link>
             ) : (
-              <Image
+              <GbvRemoteImage
                 src={coverUrl}
                 alt={`${record.title} cover`}
-                fill
-                sizes="(min-width: 768px) 25vw, 50vw"
-                className="rounded-md object-cover"
+                className="rounded-md object-cover w-full h-full"
                 loading="eager"
-                unoptimized
+                cacheKey={cacheKey}
+                preferProxy
               />
             )
           ) : (
