@@ -418,7 +418,7 @@ export function GbvChatContent() {
             <Button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="h-12 px-4"
+              className="h-12 px-4 gbv-submit-button"
             >
               {isLoading ? (
                 <Image
@@ -585,7 +585,7 @@ export function GbvChatContent() {
             <Button
               type="submit"
               disabled={isLoading || !input.trim()}
-              className="h-12 px-4"
+              className="h-12 px-4 gbv-submit-button"
             >
               {isLoading ? (
                 <Image

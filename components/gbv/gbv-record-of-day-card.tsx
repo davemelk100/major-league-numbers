@@ -23,6 +23,7 @@ export function GbvRecordOfDayCard() {
     const normalizeImageUrl = (url: string | null | undefined) =>
       url ? url.replace(/^http:/, "https:") : null;
     const cacheKey = `gbv-record-cover:${daily.title}:${daily.year}`;
+    const albumsCacheKey = "gbv-albums-cache";
 
     try {
       const cached = localStorage.getItem(cacheKey);
@@ -41,10 +42,33 @@ export function GbvRecordOfDayCard() {
 
     async function fetchAlbumLink() {
       try {
-        const res = await fetch("/api/gbv/discogs?type=albums");
-        if (!res.ok) return;
-        const data = await res.json();
-        const albums = Array.isArray(data.albums) ? data.albums : [];
+        let albums: Array<{ id?: number; title?: string; year?: number; thumb?: string }> = [];
+        try {
+          const cachedAlbums = localStorage.getItem(albumsCacheKey);
+          if (cachedAlbums) {
+            const parsed = JSON.parse(cachedAlbums) as { albums?: typeof albums };
+            if (parsed?.albums?.length) {
+              albums = parsed.albums;
+            }
+          }
+        } catch {
+          // ignore cache errors
+        }
+
+        if (albums.length === 0) {
+          const res = await fetch("/api/gbv/discogs?type=albums");
+          if (!res.ok) return;
+          const data = await res.json();
+          albums = Array.isArray(data.albums) ? data.albums : [];
+          try {
+            localStorage.setItem(
+              albumsCacheKey,
+              JSON.stringify({ albums })
+            );
+          } catch {
+            // ignore cache errors
+          }
+        }
         const titleMatch = (album: { title?: string }) =>
           (album.title || "").toLowerCase() === daily.title.toLowerCase();
         const exact = albums.find(

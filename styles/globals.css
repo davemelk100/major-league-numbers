@@ -262,6 +262,15 @@
     /* color: #000000; */
   }
 
+  .gbv-shell .gbv-submit-button {
+    background-color: #ffffff;
+    color: #000000;
+  }
+
+  .gbv-shell .gbv-submit-button:hover {
+    background-color: #f2f2f2;
+  }
+
   .gbv-shell button,
   .gbv-shell [data-slot="button"] {
     /* color: #000000; */
