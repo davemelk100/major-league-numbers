@@ -104,6 +104,7 @@ export function GbvRecordOfDayCard() {
                   sizes="(min-width: 768px) 25vw, 50vw"
                   className="rounded-md object-cover"
                   loading="eager"
+                  unoptimized
                 />
               </Link>
             ) : (
@@ -114,6 +115,7 @@ export function GbvRecordOfDayCard() {
                 sizes="(min-width: 768px) 25vw, 50vw"
                 className="rounded-md object-cover"
                 loading="eager"
+                unoptimized
               />
             )
           ) : (

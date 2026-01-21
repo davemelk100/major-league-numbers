@@ -48,6 +48,7 @@ function MemberAvatar({
         sizes="64px"
         className="rounded-full object-cover"
         onError={() => setHasError(true)}
+        unoptimized
       />
     </div>
   );
