@@ -18,7 +18,7 @@ export function GbvHeader() {
       <div className="container lg:hidden flex items-center justify-between gap-3">
         <Link href="/gbv" className="flex-1">
           <h1
-            className="uppercase tracking-wide text-white"
+            className="uppercase tracking-wide text-white font-semibold"
             style={{ fontSize: "55px" }}
           >
             Guided By Data
@@ -59,7 +59,7 @@ export function GbvHeader() {
             alt="GBV"
             width={140}
             height={140}
-            className="w-full h-auto p-0 sm:w-[173px] sm:h-[173px] sm:p-0"
+            className="w-full h-auto p-0 lg:w-[173px] lg:h-[173px] lg:p-0"
             priority
             fetchPriority="high"
           />

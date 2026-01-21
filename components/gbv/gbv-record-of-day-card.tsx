@@ -110,7 +110,7 @@ export function GbvRecordOfDayCard() {
     <Card className="w-full h-full min-h-[120px]">
       <CardContent className="p-4 flex gap-4 items-stretch">
         <div className="flex flex-col gap-1 w-1/2">
-          <h2 className="text-3xl font-semibold">Record of the Day</h2>
+          <h2 className="text-3xl font-semibold tracking-wide">Record of the Day</h2>
           {albumHref ? (
             <Link href={albumHref} className="text-base font-semibold hover:underline">
               {record.title}

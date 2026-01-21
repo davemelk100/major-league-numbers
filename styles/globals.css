@@ -342,8 +342,7 @@
 
   h1 {
     font-family: var(--font-league-gothic), sans-serif !important;
-    letter-spacing: 1px !important;
-    font-weight: 400 !important;
+    font-weight: 600 !important;
   }
 
   @media (min-width: 768px) {
@@ -355,8 +354,6 @@
   h2,
   .font-league {
     font-family: var(--font-league-gothic), sans-serif !important;
-    letter-spacing: 1px !important;
-    font-weight: 400 !important;
   }
 }
 

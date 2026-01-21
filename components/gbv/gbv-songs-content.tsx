@@ -11,7 +11,7 @@ export function GbvSongsContent() {
       <Card>
         <CardContent className="p-12 text-center">
           <Music className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-          <h2 className="text-3xl font-semibold mb-2">Coming Soon</h2>
+          <h2 className="text-3xl font-semibold tracking-wide mb-2">Coming Soon</h2>
           <p className="text-muted-foreground max-w-md mx-auto">
             Song data requires additional API integration. Check out the Albums section
             to see tracklists for each album.

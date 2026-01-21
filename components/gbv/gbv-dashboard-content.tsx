@@ -255,7 +255,7 @@ export function GbvDashboardContent() {
       {/* Band Members */}
       <div className="mb-8">
         <div className="flex items-center gap-4 mb-4">
-          <h2 className="font-league text-3xl font-semibold">
+          <h2 className="font-league text-3xl font-semibold tracking-wide">
             Current Members
           </h2>
           <Link
@@ -303,7 +303,7 @@ export function GbvDashboardContent() {
       {/* Robert Pollard Side Projects */}
       <div className="mb-8">
         <div className="flex items-center gap-4 mb-4">
-          <h2 className="font-league text-3xl font-semibold">
+          <h2 className="font-league text-3xl font-semibold tracking-wide mb-0">
             Robert Pollard Side Projects
           </h2>
           <Link

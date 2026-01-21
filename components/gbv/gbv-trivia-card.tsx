@@ -329,21 +329,23 @@ function GbvTriviaPanelContent() {
     <Card className="w-full h-full min-h-[120px]">
       <CardContent className="p-4 flex gap-4 items-stretch">
         <div className="flex flex-col gap-2 w-1/2">
-          <h2 className="text-3xl font-semibold">Daily GBV Trivia</h2>
+          <h2 className="text-3xl font-semibold tracking-wide">Daily GBV Trivia</h2>
           <div>
             <GbvTriviaCardContent />
           </div>
           <p className="text-sm">Test your Guided By Voices knowledge.</p>
         </div>
-        <div className="w-1/2 relative">
-          <Image
-            src="/chat-gbv-box.svg"
-            alt="GBV rune"
-            fill
-            sizes="(min-width: 768px) 25vw, 50vw"
-            className="gbv-rune-white object-contain"
-            loading="eager"
-          />
+        <div className="w-1/2 relative flex items-center justify-center">
+          <div className="relative h-[75%] w-full sm:h-full">
+            <Image
+              src="/chat-gbv-box.svg"
+              alt="GBV rune"
+              fill
+              sizes="(min-width: 768px) 25vw, 50vw"
+              className="gbv-rune-white object-contain"
+              loading="eager"
+            />
+          </div>
         </div>
       </CardContent>
     </Card>

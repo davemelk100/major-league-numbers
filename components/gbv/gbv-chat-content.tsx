@@ -301,7 +301,7 @@ export function GbvChatContent() {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-3xl font-semibold text-black">Saved Chats</h2>
+          <h2 className="text-3xl font-semibold tracking-wide text-black">Saved Chats</h2>
           <Button
             variant="ghost"
             size="sm"
