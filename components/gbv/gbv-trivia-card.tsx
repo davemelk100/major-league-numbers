@@ -134,7 +134,7 @@ function GbvTriviaCardContent() {
       month: "numeric",
       day: "numeric",
     });
-    const text = `I got ${score}/5 on today's (${date}) Guided By Data trivia!\n\nPlay here: https://guidedbynumbers.com/gbv?trivia=open`;
+    const text = `I got ${score}/5 on today's (${date}) Guided By Data trivia!\n\nPlay here: https://majorleaguenumbers.com/gbv?trivia=open`;
 
     if (navigator.share) {
       try {

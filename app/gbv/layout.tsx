@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   description:
     "Explore Guided By Voices discography, albums, songs, and band history.",
-  metadataBase: new URL("https://guidedbynumbers.com"),
+  metadataBase: new URL("https://majorleaguenumbers.com"),
   alternates: {
     canonical: "/gbv",
   },
@@ -33,13 +33,13 @@ export const metadata: Metadata = {
     title: "Guided By Data",
     description:
       "Explore Guided By Voices discography, albums, songs, and band history.",
-    url: "https://guidedbynumbers.com/gbv",
+    url: "https://majorleaguenumbers.com/gbv",
     siteName: "Guided By Data",
     locale: "en_US",
     type: "website",
     images: [
       {
-        url: "/gbv-rune.png",
+        url: "https://majorleaguenumbers.com/gbv-rune.png",
         width: 1200,
         height: 630,
         alt: "Guided By Data",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     title: "Guided By Data",
     description:
       "Explore Guided By Voices discography, albums, songs, and band history.",
-    images: ["/gbv-rune.png"],
+    images: ["https://majorleaguenumbers.com/gbv-rune.png"],
   },
 };
 
@@ -67,14 +67,14 @@ export default function GbvLayout({
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Guided By Data",
-          url: "https://guidedbynumbers.com/gbv",
+          url: "https://majorleaguenumbers.com/gbv",
           description:
             "Explore Guided By Voices discography, albums, songs, and band history.",
           potentialAction: {
             "@type": "SearchAction",
             target: {
               "@type": "EntryPoint",
-              urlTemplate: "https://guidedbynumbers.com/gbv/search?q={search_term_string}",
+              urlTemplate: "https://majorleaguenumbers.com/gbv/search?q={search_term_string}",
             },
             "query-input": "required name=search_term_string",
           },
