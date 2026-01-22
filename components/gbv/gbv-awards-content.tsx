@@ -1,8 +1,7 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Trophy } from "lucide-react";
 
 const criticalAcclaim = [
   {
@@ -43,7 +42,7 @@ const listAppearances = [
 
 export function GbvAwardsContent() {
   return (
-    <main className="container py-6">
+    <div className="container py-6">
       <h1 className="font-league text-2xl font-semibold mb-6">
         Awards & Recognition
       </h1>
@@ -87,9 +86,8 @@ export function GbvAwardsContent() {
           <CardContent>
             <ul className="space-y-3">
               {listAppearances.map((item, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <Trophy className="h-4 w-4 mt-1 text-yellow-500 flex-shrink-0" />
-                  <span className="text-sm">{item}</span>
+                <li key={index} className="text-sm">
+                  {item}
                 </li>
               ))}
             </ul>
@@ -97,6 +95,6 @@ export function GbvAwardsContent() {
         </Card>
       </div>
 
-    </main>
+    </div>
   );
 }
