@@ -72,7 +72,7 @@ const editorialSources: Source[] = [
 export function GbvSourcesContent() {
   return (
     <div className="container py-6">
-      <h1 className="font-league text-2xl font-semibold mb-6">Sources</h1>
+      <h1 className="font-league mb-6">Sources</h1>
       <p className="text-muted-foreground mb-8">
         Data and content for Guided By Data is compiled from the following sources.
       </p>
@@ -80,7 +80,7 @@ export function GbvSourcesContent() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="py-6">
           <CardHeader className="pb-4">
-            <h2 className="text-xl font-semibold">Data Sources</h2>
+            <h2>Data Sources</h2>
             <p className="text-sm text-muted-foreground">
               APIs and databases used for discography and artist information.
             </p>
@@ -108,7 +108,7 @@ export function GbvSourcesContent() {
 
         <Card className="py-6">
           <CardHeader className="pb-4">
-            <h2 className="text-xl font-semibold">Editorial Sources</h2>
+            <h2>Editorial Sources</h2>
             <p className="text-sm text-muted-foreground">
               Publications referenced for awards, reviews, and critical acclaim.
             </p>

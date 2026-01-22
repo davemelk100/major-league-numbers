@@ -50,9 +50,12 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
           fetch(`https://api.discogs.com/artists/${memberId}`, {
             headers: { "User-Agent": "MajorLeagueNumbers/1.0" },
           }),
-          fetch(`https://api.discogs.com/artists/${memberId}/releases?per_page=20`, {
-            headers: { "User-Agent": "MajorLeagueNumbers/1.0" },
-          }),
+          fetch(
+            `https://api.discogs.com/artists/${memberId}/releases?per_page=20`,
+            {
+              headers: { "User-Agent": "MajorLeagueNumbers/1.0" },
+            },
+          ),
         ]);
 
         if (!memberRes.ok) throw new Error("Failed to fetch member");
@@ -83,7 +86,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
     const fetchCommonsImage = async () => {
       try {
         const res = await fetch(
-          `/api/gbv/commons-image?name=${encodeURIComponent(member.name)}`
+          `/api/gbv/commons-image?name=${encodeURIComponent(member.name)}`,
         );
         if (!res.ok) return;
         const data = await res.json();
@@ -174,7 +177,9 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
                   />
                 </div>
               )}
-              <h1 className="font-league text-2xl font-semibold mb-2">{member.name}</h1>
+              <h1 className="font-league mb-2">
+                {member.name}
+              </h1>
               {member.realname && member.realname !== member.name && (
                 <p className="text-sm text-muted-foreground mb-4">
                   Real name: {member.realname}

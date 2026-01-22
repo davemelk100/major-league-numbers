@@ -16,10 +16,7 @@ export function Header() {
       {/* Mobile/Tablet: Title row with search */}
       <div className="container lg:hidden flex items-center justify-between gap-3">
         <Link href="/" className="flex-1">
-          <h1
-            className="uppercase tracking-wide text-[32px] sm:text-[55px]"
-            style={{ color: "#f4232b" }}
-          >
+          <h1 className="uppercase tracking-wide text-[#f4232b]">
             Major League Numbers
           </h1>
         </Link>
@@ -59,10 +56,7 @@ export function Header() {
           />
         </Link>
         <Link href="/" className="hidden lg:block">
-          <h1
-            className="uppercase tracking-wide flex-shrink-0 text-[32px] sm:text-[55px]"
-            style={{ color: "#f4232b" }}
-          >
+          <h1 className="uppercase flex-shrink-0 text-[#f4232b]">
             Major League Numbers
           </h1>
         </Link>
@@ -72,16 +66,7 @@ export function Header() {
           {pathname !== "/ask" && (
             <Link
               href="/ask"
-              className="flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all active:translate-y-[1px]"
-              style={{
-                background: "linear-gradient(180deg, #d8e0e8 0%, #b8c4d0 100%)",
-                borderTop: "1px solid #e8eef4",
-                borderLeft: "1px solid #dce4ec",
-                borderRight: "1px solid #a8b4c0",
-                borderBottom: "2px solid #98a4b0",
-                boxShadow:
-                  "0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.4)",
-              }}
+              className="flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] bg-[linear-gradient(180deg,_#d8e0e8_0%,_#b8c4d0_100%)] border-t border-t-[#e8eef4] border-l border-l-[#dce4ec] border-r border-r-[#a8b4c0] border-b-2 border-b-[#98a4b0] shadow-[0_2px_4px_rgba(0,0,0,0.1),_inset_0_1px_0_rgba(255,255,255,0.4)]"
             >
               <Image
                 src="/chat-mlb-2.svg"
@@ -104,16 +89,7 @@ export function Header() {
         <div className="container mt-2 lg:hidden">
           <Link
             href="/ask"
-            className="flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all active:translate-y-[1px]"
-            style={{
-              background: "linear-gradient(180deg, #d8e0e8 0%, #b8c4d0 100%)",
-              borderTop: "1px solid #e8eef4",
-              borderLeft: "1px solid #dce4ec",
-              borderRight: "1px solid #a8b4c0",
-              borderBottom: "2px solid #98a4b0",
-              boxShadow:
-                "0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.4)",
-            }}
+            className="flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] bg-[linear-gradient(180deg,_#d8e0e8_0%,_#b8c4d0_100%)] border-t border-t-[#e8eef4] border-l border-l-[#dce4ec] border-r border-r-[#a8b4c0] border-b-2 border-b-[#98a4b0] shadow-[0_2px_4px_rgba(0,0,0,0.1),_inset_0_1px_0_rgba(255,255,255,0.4)]"
           >
             <Image
               src="/chat-mlb-2.svg"

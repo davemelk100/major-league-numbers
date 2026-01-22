@@ -46,7 +46,7 @@ export function PlayerSpotlight() {
         try {
           localStorage.setItem(
             STORAGE_KEY,
-            JSON.stringify({ date: todayKey, player: newPlayer })
+            JSON.stringify({ date: todayKey, player: newPlayer }),
           );
         } catch {
           // Ignore localStorage errors
@@ -59,9 +59,7 @@ export function PlayerSpotlight() {
     return (
       <div className="w-full h-full bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
         <div className="flex items-center gap-2">
-          <h2 className="font-league text-xl sm:text-4xl font-semibold mr-4 text-primary tracking-wider">
-            Daily Random Player
-          </h2>
+          <h2 className="font-league mr-4 text-primary">Daily Random Player</h2>
         </div>
         <div className="flex items-center justify-center py-12">
           <Loader2 className="h-8 w-8 animate-spin text-primary" />
@@ -75,9 +73,7 @@ export function PlayerSpotlight() {
   return (
     <div className="w-full h-full bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
       <div className="flex items-center gap-2">
-        <h2 className="font-league text-xl sm:text-4xl font-semibold mr-4 text-primary tracking-wider">
-          Daily Random Player
-        </h2>
+        <h2 className="font-league mr-4 text-primary">Daily Random Player</h2>
       </div>
       <div className="flex gap-3 sm:gap-6 items-center">
         <Link
@@ -139,41 +135,86 @@ export function PlayerSpotlight() {
               <div className="flex flex-col gap-1 text-sm text-muted-foreground mt-1">
                 {player.careerStats.isPitcher ? (
                   <>
-                    {player.careerStats.wins !== undefined && player.careerStats.losses !== undefined && (
-                      <span><strong>{player.careerStats.wins}-{player.careerStats.losses}</strong> W-L</span>
-                    )}
+                    {player.careerStats.wins !== undefined &&
+                      player.careerStats.losses !== undefined && (
+                        <span>
+                          <strong>
+                            {player.careerStats.wins}-
+                            {player.careerStats.losses}
+                          </strong>{" "}
+                          W-L
+                        </span>
+                      )}
                     {player.careerStats.era && (
-                      <span><strong>{player.careerStats.era}</strong> ERA</span>
+                      <span>
+                        <strong>{player.careerStats.era}</strong> ERA
+                      </span>
                     )}
                     {player.careerStats.strikeouts !== undefined && (
-                      <span><strong>{player.careerStats.strikeouts.toLocaleString()}</strong> K</span>
+                      <span>
+                        <strong>
+                          {player.careerStats.strikeouts.toLocaleString()}
+                        </strong>{" "}
+                        K
+                      </span>
                     )}
                     {player.careerStats.saves !== undefined && (
-                      <span><strong>{player.careerStats.saves}</strong> SV</span>
+                      <span>
+                        <strong>{player.careerStats.saves}</strong> SV
+                      </span>
                     )}
                     {player.careerStats.inningsPitched && (
-                      <span><strong>{player.careerStats.inningsPitched}</strong> IP</span>
+                      <span>
+                        <strong>{player.careerStats.inningsPitched}</strong> IP
+                      </span>
                     )}
                   </>
                 ) : (
                   <>
                     {player.careerStats.avg && (
-                      <span><strong>{player.careerStats.avg}</strong> AVG</span>
+                      <span>
+                        <strong>{player.careerStats.avg}</strong> AVG
+                      </span>
                     )}
                     {player.careerStats.hr !== undefined && (
-                      <span><strong>{player.careerStats.hr.toLocaleString()}</strong> HR</span>
+                      <span>
+                        <strong>
+                          {player.careerStats.hr.toLocaleString()}
+                        </strong>{" "}
+                        HR
+                      </span>
                     )}
                     {player.careerStats.rbi !== undefined && (
-                      <span><strong>{player.careerStats.rbi.toLocaleString()}</strong> RBI</span>
+                      <span>
+                        <strong>
+                          {player.careerStats.rbi.toLocaleString()}
+                        </strong>{" "}
+                        RBI
+                      </span>
                     )}
                     {player.careerStats.hits !== undefined && (
-                      <span><strong>{player.careerStats.hits.toLocaleString()}</strong> H</span>
+                      <span>
+                        <strong>
+                          {player.careerStats.hits.toLocaleString()}
+                        </strong>{" "}
+                        H
+                      </span>
                     )}
                     {player.careerStats.sb !== undefined && (
-                      <span><strong>{player.careerStats.sb.toLocaleString()}</strong> SB</span>
+                      <span>
+                        <strong>
+                          {player.careerStats.sb.toLocaleString()}
+                        </strong>{" "}
+                        SB
+                      </span>
                     )}
                     {player.careerStats.games !== undefined && (
-                      <span><strong>{player.careerStats.games.toLocaleString()}</strong> G</span>
+                      <span>
+                        <strong>
+                          {player.careerStats.games.toLocaleString()}
+                        </strong>{" "}
+                        G
+                      </span>
                     )}
                   </>
                 )}

@@ -59,7 +59,7 @@ const videos: Video[] = [
 export function GbvVideosContent() {
   return (
     <div className="container py-6">
-      <h1 className="font-league text-2xl font-semibold mb-2">Videos</h1>
+      <h1 className="font-league mb-2">Videos</h1>
 
       <div className="grid gap-6 md:grid-cols-2">
         {videos.map((video) => (

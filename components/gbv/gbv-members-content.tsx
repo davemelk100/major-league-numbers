@@ -34,8 +34,7 @@ function MemberAvatar({
   const [lookupAttempted, setLookupAttempted] = useState(false);
   const normalizedImageUrl = imageUrl?.replace(/^http:/, "https:") || null;
   const localImageUrl = getLocalMemberImage(memberId);
-  const fallbackImageUrl =
-    MEMBER_IMAGE_FALLBACKS[name.toLowerCase()] || null;
+  const fallbackImageUrl = MEMBER_IMAGE_FALLBACKS[name.toLowerCase()] || null;
 
   useEffect(() => {
     if (localImageUrl && !hasError) {
@@ -71,7 +70,7 @@ function MemberAvatar({
     async function fetchCommons() {
       try {
         const res = await fetch(
-          `/api/gbv/commons-image?name=${encodeURIComponent(name)}`
+          `/api/gbv/commons-image?name=${encodeURIComponent(name)}`,
         );
         if (!res.ok) return;
         const data = await res.json();
@@ -185,11 +184,9 @@ export function GbvMembersContent() {
   return (
     <div className="container py-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <h1 className="font-league text-2xl font-semibold">
+        <h1 className="font-league">
           Band Members{" "}
-          <span className="text-xs align-baseline">
-            ({filteredMembers.length})
-          </span>
+          <span className="align-baseline">({filteredMembers.length})</span>
         </h1>
         <Tabs
           value={filter}
@@ -197,22 +194,13 @@ export function GbvMembersContent() {
         >
           <TabsList className="text-black">
             <TabsTrigger value="all" className="text-black">
-              All{" "}
-              <span className="text-xs align-baseline">
-                ({members.length})
-              </span>
+              All <span className="align-baseline">({members.length})</span>
             </TabsTrigger>
             <TabsTrigger value="active" className="text-black">
-              Active{" "}
-              <span className="text-xs align-baseline">
-                ({activeCount})
-              </span>
+              Active <span className="align-baseline">({activeCount})</span>
             </TabsTrigger>
             <TabsTrigger value="inactive" className="text-black">
-              Past{" "}
-              <span className="text-xs align-baseline">
-                ({inactiveCount})
-              </span>
+              Past <span className="align-baseline">({inactiveCount})</span>
             </TabsTrigger>
           </TabsList>
         </Tabs>

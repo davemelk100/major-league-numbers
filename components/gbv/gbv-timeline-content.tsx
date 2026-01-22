@@ -28,7 +28,7 @@ const timelineEvents = [
 export function GbvTimelineContent() {
   return (
     <div className="container py-6">
-      <h1 className="font-league text-2xl font-semibold mb-6">Timeline</h1>
+      <h1 className="font-league mb-6">Timeline</h1>
 
       <div className="space-y-4">
         {timelineEvents.map((item, index) => (

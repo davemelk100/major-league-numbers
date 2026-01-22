@@ -72,8 +72,7 @@ export function StatCard({ title, value, description, leaders, icon: Icon, trend
                           alt={leader.name}
                           width={75}
                           height={75}
-                          style={{ width: 'auto', height: '75px' }}
-                          className="rounded-lg"
+                          className="rounded-lg h-[75px] w-auto"
                         />
                       </div>
                     </Link>

@@ -79,7 +79,7 @@ function TriviaCardContent() {
         setIsComplete(true);
       } else {
         const firstUnanswered = questions.findIndex(
-          (q) => !parsed.some((a) => a.questionId === q.id)
+          (q) => !parsed.some((a) => a.questionId === q.id),
         );
         if (firstUnanswered !== -1) {
           setCurrentIndex(firstUnanswered);
@@ -92,7 +92,7 @@ function TriviaCardContent() {
     ? yesterdayQuestions[currentIndex]
     : dailyQuestions[currentIndex];
   const currentAnswered = answeredQuestions.find(
-    (a) => a.questionId === currentQuestion?.id
+    (a) => a.questionId === currentQuestion?.id,
   );
   const totalAnswered = answeredQuestions.length;
   const totalCorrect = answeredQuestions.filter((a) => a.isCorrect).length;
@@ -171,7 +171,7 @@ function TriviaCardContent() {
             "gap-2 font-semibold",
             totalAnswered > 0
               ? "border-primary/30 bg-primary/10 hover:bg-primary/20 text-primary"
-              : "bg-primary hover:bg-primary/90 text-primary-foreground shadow-md"
+              : "bg-primary hover:bg-primary/90 text-primary-foreground shadow-md",
           )}
         >
           <HelpCircle className="h-4 w-4" />
@@ -234,7 +234,7 @@ function TriviaCardContent() {
                       isSelected &&
                       !isCorrectAnswer &&
                       "border-red-500 bg-red-500/10",
-                    !currentAnswered && !showYesterday && "hover:bg-muted"
+                    !currentAnswered && !showYesterday && "hover:bg-muted",
                   )}
                   onClick={() => handleAnswer(index)}
                   disabled={!!currentAnswered || showYesterday}
@@ -262,7 +262,7 @@ function TriviaCardContent() {
                 "p-2 rounded-lg text-sm",
                 currentAnswered?.isCorrect || showYesterday
                   ? "bg-green-500/10 text-green-400"
-                  : "bg-muted"
+                  : "bg-muted",
               )}
             >
               {!showYesterday &&
@@ -379,7 +379,7 @@ function TriviaPanelContent() {
         setIsComplete(true);
       } else {
         const firstUnanswered = questions.findIndex(
-          (q) => !parsed.some((a) => a.questionId === q.id)
+          (q) => !parsed.some((a) => a.questionId === q.id),
         );
         if (firstUnanswered !== -1) {
           setCurrentIndex(firstUnanswered);
@@ -392,7 +392,7 @@ function TriviaPanelContent() {
     ? yesterdayQuestions[currentIndex]
     : dailyQuestions[currentIndex];
   const currentAnswered = answeredQuestions.find(
-    (a) => a.questionId === currentQuestion?.id
+    (a) => a.questionId === currentQuestion?.id,
   );
   const totalCorrect = answeredQuestions.filter((a) => a.isCorrect).length;
 
@@ -466,9 +466,7 @@ function TriviaPanelContent() {
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h2 className="font-league text-4xl font-semibold mr-4 text-primary tracking-wider">
-              Daily Trivia
-            </h2>
+            <h2 className="font-league mr-4 text-primary">Daily Trivia</h2>
             {isComplete && (
               <Badge
                 variant="secondary"
@@ -527,7 +525,7 @@ function TriviaPanelContent() {
                   isSelected &&
                   !isCorrectAnswer &&
                   "border-red-500 bg-red-500/10",
-                !currentAnswered && !showYesterday && "hover:bg-muted"
+                !currentAnswered && !showYesterday && "hover:bg-muted",
               )}
               onClick={() => handleAnswer(index)}
               disabled={!!currentAnswered || showYesterday}

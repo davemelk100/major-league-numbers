@@ -188,7 +188,7 @@ export function AskPageContent() {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-4xl font-semibold">Saved Chats</h2>
+          <h2>Saved Chats</h2>
           <Button
             variant="ghost"
             size="sm"
@@ -267,7 +267,7 @@ export function AskPageContent() {
         {/* Centered content */}
         <div className="flex-1 flex flex-col items-center px-4">
           <img src="/chat-mlb-2.svg" alt="ChatMLB" className="h-32 w-32 mb-4" />
-          <h1 className="text-2xl font-bold mb-2">ChatMLB</h1>
+          <h1 className="mb-2">ChatMLB</h1>
 
           {randomPrompt && (
             <p className="text-center text-muted-foreground mb-4 text-lg">
@@ -319,7 +319,7 @@ export function AskPageContent() {
             <div className="flex items-center gap-4">
               <img src="/chat-mlb-2.svg" alt="ChatMLB" className="h-24 w-24" />
               <div className="flex-1">
-                <h1 className="text-2xl font-bold whitespace-nowrap">
+                <h1 className="whitespace-nowrap">
                   ChatMLB
                 </h1>
               </div>

@@ -1,60 +1,95 @@
-"use client"
+"use client";
 
-import { useTransition, useState } from "react"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
-import Image from "next/image"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Skeleton } from "@/components/ui/skeleton"
-import { getPlayerHeadshotUrl, type AwardWinner } from "@/lib/mlb-api"
-import { SeasonSelector } from "@/components/season-selector"
+import { useTransition, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getPlayerHeadshotUrl, type AwardWinner } from "@/lib/mlb-api";
+import { SeasonSelector } from "@/components/season-selector";
 
 interface AllStarPageContentProps {
-  initialSeason: number
+  initialSeason: number;
   rosters: {
-    al: AwardWinner[]
-    nl: AwardWinner[]
-  }
+    al: AwardWinner[];
+    nl: AwardWinner[];
+  };
 }
 
-export function AllStarPageContent({ initialSeason, rosters }: AllStarPageContentProps) {
-  const router = useRouter()
-  const [isPending, startTransition] = useTransition()
-  const [selectedLeague, setSelectedLeague] = useState<"al" | "nl" | "all">("al")
+export function AllStarPageContent({
+  initialSeason,
+  rosters,
+}: AllStarPageContentProps) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [selectedLeague, setSelectedLeague] = useState<"al" | "nl" | "all">(
+    "al",
+  );
 
   const handleSeasonChange = (season: number) => {
     startTransition(() => {
-      router.push(`/all-star?season=${season}`)
-    })
-  }
+      router.push(`/all-star?season=${season}`);
+    });
+  };
 
-  const currentRoster = selectedLeague === "al" ? rosters.al : selectedLeague === "nl" ? rosters.nl : [...rosters.al, ...rosters.nl]
-  const leagueTitle = selectedLeague === "al" ? "American League" : selectedLeague === "nl" ? "National League" : "All-Star"
+  const currentRoster =
+    selectedLeague === "al"
+      ? rosters.al
+      : selectedLeague === "nl"
+        ? rosters.nl
+        : [...rosters.al, ...rosters.nl];
+  const leagueTitle =
+    selectedLeague === "al"
+      ? "American League"
+      : selectedLeague === "nl"
+        ? "National League"
+        : "All-Star";
 
   const RosterGrid = ({ players }: { players: AwardWinner[] }) => (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       {players.length > 0 ? (
         players.map((player) => (
-          <Link key={`${player.playerId}-${player.id}`} href={`/players/${player.playerId}`}>
+          <Link
+            key={`${player.playerId}-${player.id}`}
+            href={`/players/${player.playerId}`}
+          >
             <Card className="hover:bg-secondary/50 transition-colors cursor-pointer h-full">
               <CardContent className="p-2 pl-4">
                 <div className="flex items-center gap-3">
                   <div className="shrink-0">
                     <Image
-                      src={getPlayerHeadshotUrl(player.playerId, "small") || "/placeholder.svg" || "/placeholder.svg"}
+                      src={
+                        getPlayerHeadshotUrl(player.playerId, "small") ||
+                        "/placeholder.svg" ||
+                        "/placeholder.svg"
+                      }
                       alt={player.playerName}
                       width={96}
                       height={96}
-                      style={{ width: "auto", height: "96px" }}
-                      className="rounded-lg"
+                      className="rounded-lg h-24 w-auto"
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold truncate">{player.playerName}</h3>
-                    {player.team && <p className="text-sm text-muted-foreground truncate">{player.team.name}</p>}
+                    <h3 className="font-semibold truncate">
+                      {player.playerName}
+                    </h3>
+                    {player.team && (
+                      <p className="text-sm text-muted-foreground truncate">
+                        {player.team.name}
+                      </p>
+                    )}
                     {player.notes && (
-                      <p className="text-xs text-muted-foreground italic mt-1 truncate">{player.notes}</p>
+                      <p className="text-xs text-muted-foreground italic mt-1 truncate">
+                        {player.notes}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -68,7 +103,7 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
         </div>
       )}
     </div>
-  )
+  );
 
   const RosterGridSkeleton = () => (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -86,20 +121,27 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
         </Card>
       ))}
     </div>
-  )
+  );
 
   return (
     <main className="container py-2">
       <div className="mb-6 flex flex-wrap md:flex-nowrap items-center gap-4">
         <div className="flex items-center gap-4">
-          <h2 className="mb-0 shrink-0 whitespace-nowrap">All-Star Game Rosters</h2>
+          <h2 className="mb-0 shrink-0 whitespace-nowrap">
+            All-Star Game Rosters
+          </h2>
           <SeasonSelector
             season={initialSeason}
             onSeasonChange={handleSeasonChange}
             isLoading={isPending}
             startYear={1933}
           />
-          <Select value={selectedLeague} onValueChange={(val) => setSelectedLeague(val as "al" | "nl" | "all")}>
+          <Select
+            value={selectedLeague}
+            onValueChange={(val) =>
+              setSelectedLeague(val as "al" | "nl" | "all")
+            }
+          >
             <SelectTrigger className="w-auto border-0 shadow-none p-0 h-auto bg-transparent hover:bg-transparent focus:ring-0 focus-visible:ring-0">
               <span className="font-league text-[40px] leading-none font-bold border-b-2 border-foreground">
                 <SelectValue />
@@ -128,7 +170,9 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
           <CardHeader>
             <CardTitle className="flex justify-between items-center">
               <span>{leagueTitle} Roster</span>
-              <span className="text-sm font-normal text-muted-foreground">{currentRoster.length} Players</span>
+              <span className="text-sm font-normal text-muted-foreground">
+                {currentRoster.length} Players
+              </span>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -137,5 +181,5 @@ export function AllStarPageContent({ initialSeason, rosters }: AllStarPageConten
         </Card>
       )}
     </main>
-  )
+  );
 }

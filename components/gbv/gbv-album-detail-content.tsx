@@ -41,7 +41,6 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
         if (!res.ok) throw new Error("Failed to fetch album");
         const data = await res.json();
         setAlbum(data);
-
       } catch (err) {
         setError("Failed to load album details");
         console.error(err);
@@ -122,33 +121,43 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
                   />
                 </div>
               )}
-              <h1 className="font-league text-2xl font-semibold mb-2">{album.title}</h1>
+              <h1 className="font-league mb-2">{album.title}</h1>
               <p className="text-lg text-muted-foreground mb-4">{album.year}</p>
 
               <div className="flex flex-wrap gap-2 mb-4">
                 {album.genres?.map((genre) => (
-                  <Badge key={genre} variant="secondary">{genre}</Badge>
+                  <Badge key={genre} variant="secondary">
+                    {genre}
+                  </Badge>
                 ))}
                 {album.styles?.map((style) => (
-                  <Badge key={style} variant="outline">{style}</Badge>
+                  <Badge key={style} variant="outline">
+                    {style}
+                  </Badge>
                 ))}
               </div>
 
               {album.labels && album.labels.length > 0 && (
                 <p className="text-sm text-muted-foreground mb-2">
-                  <span className="font-medium">Label:</span> {album.labels.map((l) => l.name).join(", ")}
+                  <span className="font-medium">Label:</span>{" "}
+                  {album.labels.map((l) => l.name).join(", ")}
                 </p>
               )}
 
               {album.formats && album.formats.length > 0 && (
                 <p className="text-sm text-muted-foreground mb-4">
-                  <span className="font-medium">Format:</span> {album.formats.map((f) => f.name).join(", ")}
+                  <span className="font-medium">Format:</span>{" "}
+                  {album.formats.map((f) => f.name).join(", ")}
                 </p>
               )}
 
               {album.uri && (
                 <a
-                  href={album.uri.startsWith("http") ? album.uri : `https://www.discogs.com${album.uri}`}
+                  href={
+                    album.uri.startsWith("http")
+                      ? album.uri
+                      : `https://www.discogs.com${album.uri}`
+                  }
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center text-sm text-primary hover:underline"
@@ -166,7 +175,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
             <CardHeader>
               <CardTitle>
                 Tracklist{" "}
-                <span className="text-xs align-baseline">
+                <span className="align-baseline">
                   ({album.tracklist?.length || 0} tracks)
                 </span>
               </CardTitle>
@@ -175,7 +184,10 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
               {album.tracklist && album.tracklist.length > 0 ? (
                 <div className="divide-y">
                   {album.tracklist.map((track, index) => (
-                    <div key={index} className="flex items-center justify-between py-2">
+                    <div
+                      key={index}
+                      className="flex items-center justify-between py-2"
+                    >
                       <div className="flex items-center gap-3">
                         <span className="text-sm text-muted-foreground w-8">
                           {track.position || index + 1}
@@ -183,7 +195,9 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
                         <span>{track.title}</span>
                       </div>
                       {track.duration && (
-                        <span className="text-sm text-muted-foreground">{track.duration}</span>
+                        <span className="text-sm text-muted-foreground">
+                          {track.duration}
+                        </span>
                       )}
                     </div>
                   ))}

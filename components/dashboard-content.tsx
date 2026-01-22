@@ -5,7 +5,13 @@ import dynamicImport from "next/dynamic";
 import { StatCard } from "@/components/stat-card";
 import { LeadersTable } from "@/components/leaders-table";
 import { SeasonSelector } from "@/components/season-selector";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -20,7 +26,7 @@ const TriviaPanel = dynamicImport(
   {
     loading: () => <Skeleton className="h-[300px] w-full" />,
     ssr: false,
-  }
+  },
 );
 
 const PlayerSpotlight = dynamicImport(
@@ -30,7 +36,7 @@ const PlayerSpotlight = dynamicImport(
     })),
   {
     loading: () => <Skeleton className="h-[80px] w-full" />,
-  }
+  },
 );
 
 interface LeagueLeader {
@@ -58,7 +64,7 @@ interface DashboardData {
 }
 
 async function fetchClientData(
-  season: number
+  season: number,
 ): Promise<DashboardData & { error?: string }> {
   try {
     const response = await fetch(`/api/dashboard?season=${season}`);
@@ -110,7 +116,7 @@ export function DashboardContent({ initialSeason }: { initialSeason: number }) {
 
   const formatLeader = (
     al: LeagueLeader | undefined,
-    nl: LeagueLeader | undefined
+    nl: LeagueLeader | undefined,
   ) => {
     const leader = selectedLeague === "AL" ? al : nl;
     if (!leader) return undefined;
@@ -160,7 +166,7 @@ export function DashboardContent({ initialSeason }: { initialSeason: number }) {
       {/* Quick Stats */}
       {/* <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="font-league text-4xl font-semibold mr-4">League Best</h2>
+          <h2 className="font-league mr-4">League Best</h2>
           <Tabs value={selectedLeague} onValueChange={(value) => setSelectedLeague(value as "AL" | "NL")}>
             <TabsList>
               <TabsTrigger value="AL">AL</TabsTrigger>
@@ -193,15 +199,13 @@ export function DashboardContent({ initialSeason }: { initialSeason: number }) {
       {/* Leaders Grid */}
       <div className="mb-8">
         <div className="flex items-center mb-4">
-          <h2 className="font-league text-4xl font-semibold mr-4">
-            League Leaders
-          </h2>
+          <h2 className="font-league mr-4">League Leaders</h2>
           <div className="flex items-center gap-4">
-            <SeasonSelector
-              season={season}
-              onSeasonChange={setSeason}
-            />
-            <Select value={tableLeague} onValueChange={(val) => setTableLeague(val as "AL" | "NL")}>
+            <SeasonSelector season={season} onSeasonChange={setSeason} />
+            <Select
+              value={tableLeague}
+              onValueChange={(val) => setTableLeague(val as "AL" | "NL")}
+            >
               <SelectTrigger className="w-auto border-0 shadow-none p-0 h-auto bg-transparent hover:bg-transparent focus:ring-0 focus-visible:ring-0">
                 <span className="font-league text-[40px] leading-none font-bold border-b-2 border-foreground">
                   <SelectValue />

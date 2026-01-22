@@ -301,7 +301,7 @@ export function GbvChatContent() {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-black">Saved Chats</h2>
+          <h2 className="text-black">Saved Chats</h2>
           <Button
             variant="ghost"
             size="sm"
@@ -390,7 +390,7 @@ export function GbvChatContent() {
               priority
               loading="eager"
             />
-            <h1 className="text-2xl font-bold mb-2">Chat GBV</h1>
+            <h1 className="mb-2">Chat GBV</h1>
 
             {randomPrompt && (
               <p className="text-center text-muted-foreground mb-4 text-lg">

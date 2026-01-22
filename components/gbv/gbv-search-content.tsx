@@ -71,7 +71,7 @@ function MemberAvatar({
     async function fetchCommons() {
       try {
         const res = await fetch(
-          `/api/gbv/commons-image?name=${encodeURIComponent(name)}`
+          `/api/gbv/commons-image?name=${encodeURIComponent(name)}`,
         );
         if (!res.ok) return;
         const data = await res.json();
@@ -181,7 +181,9 @@ export function GbvSearchContent() {
   const filteredMembers = useMemo(() => {
     if (!query) return [];
     const lower = query.toLowerCase();
-    return members.filter((member) => member.name.toLowerCase().includes(lower));
+    return members.filter((member) =>
+      member.name.toLowerCase().includes(lower),
+    );
   }, [members, query]);
 
   const getAlbumImage = (album: Album): string | null => {
@@ -219,7 +221,7 @@ export function GbvSearchContent() {
   return (
     <div className="container py-6">
       <div className="mb-6">
-        <h1 className="font-league text-2xl font-semibold">Search Results</h1>
+        <h1 className="font-league">Search Results</h1>
         <p className="text-muted-foreground text-sm">"{query}"</p>
       </div>
 
@@ -233,11 +235,9 @@ export function GbvSearchContent() {
 
       {filteredMembers.length > 0 && (
         <div className="mb-8">
-          <h2 className="font-league text-xl font-semibold mb-4">
+          <h2 className="font-league mb-4">
             Members{" "}
-            <span className="text-xs align-baseline">
-              ({filteredMembers.length})
-            </span>
+            <span className="align-baseline">({filteredMembers.length})</span>
           </h2>
           <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {filteredMembers.map((member) => (
@@ -260,11 +260,9 @@ export function GbvSearchContent() {
 
       {filteredAlbums.length > 0 && (
         <div className="mb-8">
-          <h2 className="font-league text-xl font-semibold mb-4">
+          <h2 className="font-league mb-4">
             Albums{" "}
-            <span className="text-xs align-baseline">
-              ({filteredAlbums.length})
-            </span>
+            <span className="align-baseline">({filteredAlbums.length})</span>
           </h2>
           <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
             {filteredAlbums.map((album) => (
@@ -292,7 +290,9 @@ export function GbvSearchContent() {
                         />
                       </div>
                     )}
-                    <h3 className="font-semibold text-sm truncate">{album.title}</h3>
+                    <h3 className="font-semibold text-sm truncate">
+                      {album.title}
+                    </h3>
                     <div className="flex items-center justify-between text-xs text-muted-foreground">
                       <span>{album.year}</span>
                       <span className="border border-border rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide">

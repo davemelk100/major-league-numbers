@@ -140,14 +140,14 @@ export function GbvAlbumsContent() {
       <div className="flex flex-col gap-4 mb-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="font-league text-2xl font-semibold">Discography</h1>
+            <h1 className="font-league">Discography</h1>
             <p className="text-sm text-muted-foreground">
               {releaseFilter === "albums"
                 ? "Albums"
                 : releaseFilter === "singles"
                   ? "Singles"
                   : "All"}{" "}
-              <span className="text-xs align-baseline">
+              <span className="align-baseline">
                 ({filteredAlbums.length})
               </span>
             </p>
@@ -235,7 +235,7 @@ export function GbvAlbumsContent() {
             className="text-black"
           >
             Load More{" "}
-            <span className="text-xs align-baseline">
+            <span className="align-baseline">
               ({filteredAlbums.length - displayCount} remaining)
             </span>
           </Button>

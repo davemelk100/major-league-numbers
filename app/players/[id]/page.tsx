@@ -143,7 +143,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
           </div>
           <div className="flex-1">
             <div className="mb-1 flex items-center gap-3">
-              <h2 className="font-league leading-tight">{player.fullName}</h2>
+              <h2 className="leading-tight">{player.fullName}</h2>
               {player.active && (
                 <Badge
                   variant="outline"
@@ -209,7 +209,7 @@ export default async function PlayerPage({ params }: PlayerPageProps) {
         {/* Current Season Stats Quick View */}
         {(currentHitting || currentPitching) && (
           <div className="mb-8">
-            <h2 className="font-league text-4xl font-semibold mb-4">
+            <h2 className="mb-4">
               2024 Season
             </h2>
             {isPitcher && currentPitching ? (

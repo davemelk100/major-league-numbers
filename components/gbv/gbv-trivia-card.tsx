@@ -332,7 +332,7 @@ function GbvTriviaPanelContent() {
     <Card className="w-full h-full min-h-[120px]">
       <CardContent className="p-4 flex gap-4 items-stretch">
         <div className="flex flex-col gap-2 w-1/2">
-          <h2 className="text-xl font-semibold">Daily GBV Trivia</h2>
+          <h2>Daily GBV Trivia</h2>
           <div>
             <GbvTriviaCardContent />
           </div>

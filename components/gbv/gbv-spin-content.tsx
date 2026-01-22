@@ -165,7 +165,7 @@ export function GbvSpinContent() {
 
   return (
     <div className="container py-6">
-      <h1 className="font-league text-2xl font-semibold mb-6">Spin</h1>
+      <h1 className="font-league mb-6">Spin</h1>
 
       <div className="flex flex-col items-center gap-8">
         {/* Vinyl Record with Zoetrope */}

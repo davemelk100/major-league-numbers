@@ -103,7 +103,7 @@ export function SearchPageContent() {
 
   return (
     <div className="container py-6">
-      <h2 className="text-4xl font-bold mb-6">Search</h2>
+      <h2 className="mb-6">Search</h2>
 
       <div className="relative max-w-2xl">
         <div className="relative group">

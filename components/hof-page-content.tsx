@@ -77,7 +77,7 @@ export function HofPageContent({ hofMembers }: HofPageContentProps) {
         <div className="space-y-8">
           {sortedYears.map((year) => (
             <div key={year}>
-              <h2 className="font-league text-4xl font-semibold mr-4 mb-4">{year}</h2>
+              <h2 className="font-league mr-4 mb-4">{year}</h2>
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {groupedByYear[year].map((member) => (
                   <Link key={`${member.playerId}-${year}`} href={`/players/${member.playerId}`}>
@@ -94,8 +94,7 @@ export function HofPageContent({ hofMembers }: HofPageContentProps) {
                               alt={member.playerName}
                               width={96}
                               height={96}
-                              style={{ width: "auto", height: "96px" }}
-                              className="rounded-lg"
+                              className="rounded-lg h-24 w-auto"
                             />
                           </div>
                           <div className="flex-1 min-w-0">
