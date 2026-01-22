@@ -89,6 +89,7 @@ export async function GET(request: Request) {
   const maxPages = Math.max(1, Number(maxPagesParam || 5));
   const includeMemberImages = searchParams.get("include_member_images") === "true";
   const memberImageLimit = Math.max(0, Number(searchParams.get("member_image_limit") || 30));
+  const id = searchParams.get("id");
 
   try {
     if (type === "artist") {
@@ -230,6 +231,14 @@ export async function GET(request: Request) {
 
       albumsCache.set(cacheKey, { albums, timestamp: Date.now() });
       return NextResponse.json({ albums });
+    }
+
+    if (type === "master") {
+      if (!id) {
+        return NextResponse.json({ error: "Missing id parameter" }, { status: 400 });
+      }
+      const data = await fetchFromDiscogs(`/masters/${id}`);
+      return NextResponse.json(data);
     }
 
     return NextResponse.json({ error: "Invalid type parameter" }, { status: 400 });

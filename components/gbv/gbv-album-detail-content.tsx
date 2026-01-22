@@ -37,10 +37,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
   useEffect(() => {
     async function fetchAlbum() {
       try {
-        // Fetch master release details from Discogs
-        const res = await fetch(`https://api.discogs.com/masters/${albumId}`, {
-          headers: { "User-Agent": "GuidedByNumbers/1.0" },
-        });
+        const res = await fetch(`/api/gbv/discogs?type=master&id=${albumId}`);
         if (!res.ok) throw new Error("Failed to fetch album");
         const data = await res.json();
         setAlbum(data);
