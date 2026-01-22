@@ -185,10 +185,13 @@ function GbvTriviaCardContent() {
         </Button>
       </PopoverTrigger>
       <PopoverContent
-        className="w-[min(20rem,calc(100vw-2rem))] p-0"
+        className="w-[min(20rem,calc(100vw-2rem))] p-0 max-h-[calc(100vh-2rem)] overflow-y-auto"
         align="end"
+        side="bottom"
         sideOffset={8}
-        collisionPadding={16}
+        collisionPadding={{ top: 16, bottom: 16, left: 16, right: 16 }}
+        avoidCollisions={true}
+        sticky="always"
       >
         <div className="p-4 space-y-4">
           <div className="flex flex-col gap-1">
