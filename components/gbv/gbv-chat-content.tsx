@@ -350,12 +350,12 @@ export function GbvChatContent() {
   );
 
   const chatActions = (
-    <div className="flex justify-end gap-2 px-4 pt-4">
+    <div className="flex justify-center gap-2">
       <Button
         variant="outline"
         size="sm"
         onClick={() => setShowHistory(!showHistory)}
-        className="gap-1 h-12 px-4"
+        className="gap-1 h-10 px-4"
       >
         <History className="h-4 w-4" />
         <span className="hidden sm:inline">History</span>
@@ -364,7 +364,7 @@ export function GbvChatContent() {
         variant="outline"
         size="sm"
         onClick={handleNewChat}
-        className="gap-1 h-12 px-4"
+        className="gap-1 h-10 px-4"
       >
         <Plus className="h-4 w-4" />
         <span className="hidden sm:inline">New</span>
@@ -379,8 +379,6 @@ export function GbvChatContent() {
         {historySidebar}
 
         <div className="flex-1 overflow-y-auto">
-          {chatActions}
-
           {/* Centered content */}
           <div className="flex flex-col items-center justify-start px-4 pt-4">
             <Image
@@ -418,6 +416,10 @@ export function GbvChatContent() {
                 autoComplete="off"
               />
             </form>
+
+            <div className="mt-4">
+              {chatActions}
+            </div>
           </div>
         </div>
       </div>
@@ -429,11 +431,10 @@ export function GbvChatContent() {
     <div className="flex flex-col h-[calc(100vh-140px)]">
       {historySidebar}
 
-      {/* Scrollable area - includes actions, header, and messages */}
+      {/* Scrollable area - messages */}
       <div className="flex-1 overflow-y-auto">
-        {chatActions}
         {/* Messages */}
-        <div className="mx-auto px-4 sm:px-[calc(1rem+25px)] max-w-4xl space-y-1">
+        <div className="mx-auto px-4 sm:px-[calc(1rem+25px)] max-w-4xl space-y-1 pt-4">
           {error && (
             <div className="bg-destructive/10 text-destructive p-3 rounded-lg text-sm">
               Error: {error.message}
@@ -526,7 +527,7 @@ export function GbvChatContent() {
 
       {/* Input area - fixed at bottom */}
       <div className="shrink-0 pt-4 pb-4">
-        <div className="mx-auto px-4 sm:px-[calc(1rem+25px)] max-w-4xl">
+        <div className="mx-auto px-4 sm:px-[calc(1rem+25px)] max-w-4xl space-y-3">
           <form id="chat-form" onSubmit={handleSubmit} className="flex">
             <input
               ref={inputRef}
@@ -541,6 +542,7 @@ export function GbvChatContent() {
               autoComplete="off"
             />
           </form>
+          {chatActions}
         </div>
       </div>
     </div>
