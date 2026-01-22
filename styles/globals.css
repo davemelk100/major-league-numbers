@@ -354,6 +354,30 @@
     letter-spacing: normal !important;
   }
 
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  h3 {
+    font-size: 1.125rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  h5 {
+    font-size: 0.95rem;
+  }
+
+  h6 {
+    font-size: 0.9rem;
+  }
+
   header h1 {
     font-family: var(--font-league-gothic), sans-serif !important;
   }
@@ -370,7 +394,7 @@
 
   @media (min-width: 768px) {
     h1 {
-      font-size: 42px;
+      font-size: 1.75rem;
     }
   }
 
