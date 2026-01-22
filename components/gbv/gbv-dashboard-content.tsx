@@ -273,9 +273,10 @@ export function GbvDashboardContent() {
     { name: "Kevin March", active: true },
     { name: "Mark Shue", active: true },
     { name: "Bobby Bare Jr.", active: true },
+    { name: "Travis Harrison", active: true },
   ];
   const membersToShow =
-    activeMembers.length > 0 ? activeMembers.slice(0, 5) : fallbackMembers;
+    activeMembers.length > 0 ? activeMembers.slice(0, 6) : fallbackMembers;
 
   const fallbackAlbums: Album[] = [
     { title: "Bee Thousand", year: 1994 },
@@ -283,9 +284,10 @@ export function GbvDashboardContent() {
     { title: "Under the Bushes Under the Stars", year: 1996 },
     { title: "Mag Earwhig!", year: 1997 },
     { title: "Propeller", year: 1992 },
+    { title: "Isolation Drills", year: 2001 },
   ];
   const albumsToShow =
-    albums.length > 0 ? albums.slice(0, 5) : fallbackAlbums;
+    albums.length > 0 ? albums.slice(0, 6) : fallbackAlbums;
 
   const getAlbumImage = (album: Album): string | null => {
     if (album.id) {
@@ -334,7 +336,7 @@ export function GbvDashboardContent() {
             View all →
           </Link>
         </div>
-        <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        <div className="grid gap-4 grid-cols-3 sm:grid-cols-6">
           {membersToShow.map((member, index) => {
             const card = (
               <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
@@ -379,7 +381,7 @@ export function GbvDashboardContent() {
             View all →
           </Link>
         </div>
-        <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        <div className="grid gap-4 grid-cols-3 sm:grid-cols-6">
           {albumsToShow.map((album, index) => {
             const albumImage = getAlbumImage(album);
             const card = (
