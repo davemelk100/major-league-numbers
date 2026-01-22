@@ -36,7 +36,7 @@ const eraColors: Record<string, string> = {
 export function GbvTimelineContent() {
   return (
     <main className="container py-6">
-      <h1 className="font-league text-4xl font-semibold mb-6">Timeline</h1>
+      <h1 className="font-league text-3xl font-semibold mb-6">Timeline</h1>
 
       <div className="flex gap-2 mb-6">
         {Object.entries(eraColors).map(([era, color]) => (
@@ -61,7 +61,7 @@ export function GbvTimelineContent() {
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3 mb-1">
-                    <span className="font-league text-2xl font-bold">{item.year}</span>
+                    <span className="text-2xl font-bold">{item.year}</span>
                     <Badge variant="outline">{item.era} Era</Badge>
                   </div>
                   <p className="text-muted-foreground">{item.event}</p>

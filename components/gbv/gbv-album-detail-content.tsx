@@ -169,7 +169,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
             <CardHeader>
               <CardTitle>
                 Tracklist{" "}
-                <span className="text-[10px] align-baseline">
+                <span className="text-xs align-baseline">
                   ({album.tracklist?.length || 0} tracks)
                 </span>
               </CardTitle>

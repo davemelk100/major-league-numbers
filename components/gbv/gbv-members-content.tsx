@@ -186,9 +186,9 @@ export function GbvMembersContent() {
   return (
     <main className="container py-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <h1 className="font-league text-4xl font-semibold">
+        <h1 className="font-league text-3xl font-semibold">
           Band Members{" "}
-          <span className="text-[10px] align-baseline">
+          <span className="text-xs align-baseline">
             ({filteredMembers.length})
           </span>
         </h1>
@@ -199,19 +199,19 @@ export function GbvMembersContent() {
           <TabsList className="text-black">
             <TabsTrigger value="all" className="text-black">
               All{" "}
-              <span className="text-[10px] align-baseline">
+              <span className="text-xs align-baseline">
                 ({members.length})
               </span>
             </TabsTrigger>
             <TabsTrigger value="active" className="text-black">
               Active{" "}
-              <span className="text-[10px] align-baseline">
+              <span className="text-xs align-baseline">
                 ({activeCount})
               </span>
             </TabsTrigger>
             <TabsTrigger value="inactive" className="text-black">
               Past{" "}
-              <span className="text-[10px] align-baseline">
+              <span className="text-xs align-baseline">
                 ({inactiveCount})
               </span>
             </TabsTrigger>
