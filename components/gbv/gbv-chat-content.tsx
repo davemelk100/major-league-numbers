@@ -375,47 +375,50 @@ export function GbvChatContent() {
   // Empty state - centered layout
   if (messages.length === 0) {
     return (
-      <div className="flex flex-col h-[calc(100vh-180px)]">
+      <div className="flex flex-col h-[calc(100vh-140px)]">
         {historySidebar}
-        {chatActions}
 
-        {/* Centered content */}
-        <div className="flex-1 flex flex-col items-center justify-start px-4">
-          <Image
-            src="/chat-gbv-box.svg"
-            alt="Chat GBV"
-            width={128}
-            height={128}
-            className="h-32 w-32 mb-4 gbv-rune-white"
-            priority
-            loading="eager"
-          />
-          <h1 className="text-3xl font-bold mb-2">Chat GBV</h1>
+        <div className="flex-1 overflow-y-auto">
+          {chatActions}
 
-          {randomPrompt && (
-            <p className="text-center text-muted-foreground mb-4 text-lg">
-              {randomPrompt}
-            </p>
-          )}
-
-          <form
-            id="chat-form"
-            onSubmit={handleSubmit}
-            className="flex w-full max-w-2xl"
-          >
-            <input
-              ref={inputRef}
-              id="chat-input"
-              name="chat-input"
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about GBV albums, songs, history..."
-              className="flex-1 h-12 px-4 rounded-lg border border-black/60 bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
-              disabled={isLoading}
-              autoComplete="off"
+          {/* Centered content */}
+          <div className="flex flex-col items-center justify-start px-4 pt-4">
+            <Image
+              src="/chat-gbv-box.svg"
+              alt="Chat GBV"
+              width={128}
+              height={128}
+              className="h-32 w-32 mb-4 gbv-rune-white"
+              priority
+              loading="eager"
             />
-          </form>
+            <h1 className="text-3xl font-bold mb-2">Chat GBV</h1>
+
+            {randomPrompt && (
+              <p className="text-center text-muted-foreground mb-4 text-lg">
+                {randomPrompt}
+              </p>
+            )}
+
+            <form
+              id="chat-form"
+              onSubmit={handleSubmit}
+              className="flex w-full max-w-2xl"
+            >
+              <input
+                ref={inputRef}
+                id="chat-input"
+                name="chat-input"
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ask about GBV albums, songs, history..."
+                className="flex-1 h-12 px-4 rounded-lg border border-black/60 bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+                disabled={isLoading}
+                autoComplete="off"
+              />
+            </form>
+          </div>
         </div>
       </div>
     );
@@ -423,34 +426,12 @@ export function GbvChatContent() {
 
   // Messages layout - input at bottom
   return (
-    <div className="flex flex-col h-[calc(100vh-180px)]">
+    <div className="flex flex-col h-[calc(100vh-140px)]">
       {historySidebar}
-      {chatActions}
 
-      {/* Scrollable area - includes header and messages */}
+      {/* Scrollable area - includes actions, header, and messages */}
       <div className="flex-1 overflow-y-auto">
-        {/* Header */}
-        <div className="mx-auto px-4 sm:px-[calc(1rem+25px)] max-w-4xl w-full">
-          <div className="mb-2">
-            <div className="flex items-center gap-4">
-              <Image
-                src="/chat-gbv-box.svg"
-                alt="Chat GBV"
-                width={96}
-                height={96}
-                className="h-24 w-24 gbv-rune-white"
-                priority
-                loading="eager"
-              />
-              <div className="flex-1">
-                <h1 className="text-2xl font-bold whitespace-nowrap">
-                  Chat GBV
-                </h1>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        {chatActions}
         {/* Messages */}
         <div className="mx-auto px-4 sm:px-[calc(1rem+25px)] max-w-4xl space-y-1">
           {error && (
@@ -487,7 +468,7 @@ export function GbvChatContent() {
                 )}
               >
                 {message.role === "assistant" ? (
-                  <div className="prose max-w-none text-sm text-black [&_p]:text-sm [&_li]:text-sm [&_p]:my-1 [&_ul]:my-1 [&_ol]:my-1 [&_li]:my-0 [&_h1]:text-base [&_h2]:text-base [&_h3]:text-sm [&_h1]:my-2 [&_h2]:my-2 [&_h3]:my-1">
+                  <div className="prose max-w-none text-sm text-black [&_p]:text-sm [&_li]:text-sm [&_p]:my-3 [&_ul]:my-2.5 [&_ol]:my-2.5 [&_li]:my-1 [&_h1]:text-base [&_h2]:text-base [&_h3]:text-sm [&_h1]:my-3 [&_h2]:my-3 [&_h3]:my-2">
                     <ReactMarkdown
                       components={{
                         a: ({ href, children, ...props }) => (
