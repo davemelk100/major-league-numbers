@@ -61,53 +61,106 @@ export function GbvSpinContent() {
     };
   }, [isSpinning, speed]);
 
-  // Walking figure component with animation frame and dynamic color
+  // Walking figure component with animation frame and muted color
   const WalkingFigure = ({ frame, hue }: { frame: number; hue: number }) => {
     const walkCycle = frame % 4;
-    const color = `hsl(${hue}, 80%, 65%)`;
+    const color = `hsl(${hue}, 35%, 55%)`;
     return (
-      <svg width="20" height="30" viewBox="0 0 24 36" className="sm:w-6 sm:h-9 md:w-8 md:h-12">
-        {/* Head */}
-        <circle cx="12" cy="4" r="4" fill={color} />
-        {/* Body */}
-        <line x1="12" y1="8" x2="12" y2="20" stroke={color} strokeWidth="2" strokeLinecap="round" />
-        {/* Arms */}
-        <line x1="12" y1="12" x2={walkCycle < 2 ? "5" : "19"} y2={walkCycle % 2 === 0 ? "18" : "14"} stroke={color} strokeWidth="2" strokeLinecap="round" />
-        <line x1="12" y1="12" x2={walkCycle < 2 ? "19" : "5"} y2={walkCycle % 2 === 0 ? "14" : "18"} stroke={color} strokeWidth="2" strokeLinecap="round" />
-        {/* Legs */}
+      <svg width="24" height="36" viewBox="0 0 24 36" className="sm:w-8 sm:h-12 md:w-10 md:h-14">
+        <circle cx="12" cy="5" r="5" fill={color} />
+        <line x1="12" y1="10" x2="12" y2="22" stroke={color} strokeWidth="4" strokeLinecap="round" />
+        <line x1="12" y1="14" x2={walkCycle < 2 ? "4" : "20"} y2={walkCycle % 2 === 0 ? "20" : "12"} stroke={color} strokeWidth="4" strokeLinecap="round" />
+        <line x1="12" y1="14" x2={walkCycle < 2 ? "20" : "4"} y2={walkCycle % 2 === 0 ? "12" : "20"} stroke={color} strokeWidth="4" strokeLinecap="round" />
         {walkCycle === 0 && (
           <>
-            <line x1="12" y1="20" x2="4" y2="34" stroke={color} strokeWidth="2" strokeLinecap="round" />
-            <line x1="12" y1="20" x2="20" y2="34" stroke={color} strokeWidth="2" strokeLinecap="round" />
+            <line x1="12" y1="22" x2="3" y2="35" stroke={color} strokeWidth="4" strokeLinecap="round" />
+            <line x1="12" y1="22" x2="21" y2="35" stroke={color} strokeWidth="4" strokeLinecap="round" />
           </>
         )}
         {walkCycle === 1 && (
           <>
-            <line x1="12" y1="20" x2="8" y2="34" stroke={color} strokeWidth="2" strokeLinecap="round" />
-            <line x1="12" y1="20" x2="16" y2="34" stroke={color} strokeWidth="2" strokeLinecap="round" />
+            <line x1="12" y1="22" x2="7" y2="35" stroke={color} strokeWidth="4" strokeLinecap="round" />
+            <line x1="12" y1="22" x2="17" y2="35" stroke={color} strokeWidth="4" strokeLinecap="round" />
           </>
         )}
         {walkCycle === 2 && (
           <>
-            <line x1="12" y1="20" x2="20" y2="34" stroke={color} strokeWidth="2" strokeLinecap="round" />
-            <line x1="12" y1="20" x2="4" y2="34" stroke={color} strokeWidth="2" strokeLinecap="round" />
+            <line x1="12" y1="22" x2="21" y2="35" stroke={color} strokeWidth="4" strokeLinecap="round" />
+            <line x1="12" y1="22" x2="3" y2="35" stroke={color} strokeWidth="4" strokeLinecap="round" />
           </>
         )}
         {walkCycle === 3 && (
           <>
-            <line x1="12" y1="20" x2="16" y2="34" stroke={color} strokeWidth="2" strokeLinecap="round" />
-            <line x1="12" y1="20" x2="8" y2="34" stroke={color} strokeWidth="2" strokeLinecap="round" />
+            <line x1="12" y1="22" x2="17" y2="35" stroke={color} strokeWidth="4" strokeLinecap="round" />
+            <line x1="12" y1="22" x2="7" y2="35" stroke={color} strokeWidth="4" strokeLinecap="round" />
           </>
         )}
       </svg>
     );
   };
 
-  // Generate figures for each ring
+  // Geometric shape components with muted colors
+  const SpinningTriangle = ({ hue, size }: { hue: number; size: number }) => {
+    const color = `hsl(${hue}, 30%, 50%)`;
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24">
+        <polygon points="12,2 22,20 2,20" fill="none" stroke={color} strokeWidth="4" strokeLinejoin="round" />
+      </svg>
+    );
+  };
+
+  const PulsingCircle = ({ hue, size, frame }: { hue: number; size: number; frame: number }) => {
+    const color = `hsl(${hue}, 30%, 45%)`;
+    const pulseSize = 6 + (frame % 4) * 1.5;
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r={pulseSize} fill="none" stroke={color} strokeWidth="4" />
+        <circle cx="12" cy="12" r={pulseSize * 0.4} fill={color} opacity="0.6" />
+      </svg>
+    );
+  };
+
+  const SpinningStar = ({ hue, size, points }: { hue: number; size: number; points: number }) => {
+    const color = `hsl(${hue}, 35%, 50%)`;
+    const starPoints = Array.from({ length: points }, (_, i) => {
+      const angle = (i / points) * Math.PI * 2 - Math.PI / 2;
+      const r = i % 2 === 0 ? 10 : 5;
+      return `${12 + r * Math.cos(angle)},${12 + r * Math.sin(angle)}`;
+    }).join(' ');
+    return (
+      <svg width={size} height={size} viewBox="0 0 24 24">
+        <polygon points={starPoints} fill={color} stroke={color} strokeWidth="2" opacity="0.8" />
+      </svg>
+    );
+  };
+
+  const WavyLine = ({ hue, frame }: { hue: number; frame: number }) => {
+    const color = `hsl(${hue}, 25%, 55%)`;
+    const offset = (frame % 8) * 3;
+    return (
+      <svg width="30" height="20" viewBox="0 0 30 20">
+        <path
+          d={`M 0 10 Q ${5 + offset % 10} ${5 - (frame % 4)}, 15 10 T 30 10`}
+          fill="none"
+          stroke={color}
+          strokeWidth="4"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  };
+
+  // Generate figures for each ring - varying sizes, overlapping, more circles
   const rings = [
-    { radius: 46, scale: 0.65 },
-    { radius: 38, scale: 0.7 },
-    { radius: 30, scale: 0.75 },
+    { radius: 47, scale: 1.3, count: 24, type: 'circle', offset: 0 },
+    { radius: 44, scale: 0.5, count: 32, type: 'circle', offset: 7 },
+    { radius: 41, scale: 1.0, count: 28, type: 'circle', offset: 3 },
+    { radius: 38, scale: 0.6, count: 36, type: 'circle', offset: 10 },
+    { radius: 35, scale: 0.9, count: 26, type: 'circle', offset: 5 },
+    { radius: 32, scale: 0.4, count: 40, type: 'circle', offset: 12 },
+    { radius: 29, scale: 1.1, count: 22, type: 'circle', offset: 8 },
+    { radius: 26, scale: 0.55, count: 34, type: 'circle', offset: 2 },
+    { radius: 23, scale: 0.8, count: 30, type: 'circle', offset: 15 },
   ];
 
   return (
@@ -122,44 +175,54 @@ export function GbvSpinContent() {
             className="relative w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] rounded-full bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 shadow-2xl overflow-hidden"
             style={{ transform: mounted ? `rotate(${rotation}deg)` : 'rotate(0deg)' }}
           >
-            {/* Grooves */}
-            <div className="absolute inset-4 rounded-full border border-zinc-700/30" />
-            <div className="absolute inset-8 rounded-full border border-zinc-700/20" />
-            <div className="absolute inset-12 rounded-full border border-zinc-700/30" />
-            <div className="absolute inset-16 rounded-full border border-zinc-700/20" />
-            <div className="absolute inset-20 rounded-full border border-zinc-700/30" />
-            <div className="absolute inset-24 rounded-full border border-zinc-700/20" />
+            {/* Base color layer - covers the black */}
+            <div className="absolute inset-0 rounded-full bg-[#d4875a]" />
 
-            {/* Zoetrope figures with motion trail effect */}
+            {/* Complex overlapping animated elements - all spinning same direction */}
             {rings.map((ring, ringIndex) =>
-              Array.from({ length: frameCount }, (_, i) => {
-                const angle = (i / frameCount) * 360;
+              Array.from({ length: ring.count }, (_, i) => {
+                // Add offset to create overlapping positions between rings
+                const angle = (i / ring.count) * 360 + ring.offset;
                 const angleRad = (angle * Math.PI) / 180;
                 const x = Math.round((50 + ring.radius * Math.sin(angleRad)) * 100) / 100;
                 const y = Math.round((50 - ring.radius * Math.cos(angleRad)) * 100) / 100;
-                // Animation frame changes based on rotation - slower than vinyl spin for mesmerizing effect
-                const rotationCycles = Math.floor(rotation / 90); // Change frame every 90 degrees (slower animation)
+                const rotationCycles = Math.floor(rotation / 180);
                 const animFrame = (i + ringIndex * 3 + rotationCycles) % frameCount;
 
-                // Create trail/ghost copies for overlap illusion
                 const trailCount = 4;
-                const trailSpacing = 360 / frameCount / (trailCount + 1);
+                const trailSpacing = 360 / ring.count / (trailCount + 1);
                 const trailOpacities = [0.6, 0.45, 0.3, 0.15];
 
-                // Calculate hue based on position and rotation for color mixing
-                const baseHue = (angle + ringIndex * 60) % 360;
+                const baseHue = (angle + ringIndex * 45) % 360;
                 const animatedHue = Math.round((baseHue + rotation * 2) % 360);
+
+                // Shapes spin slower than the record
+                const shapeRotation = rotation * 0.3;
+
+                const renderShape = (frame: number, hue: number, spin: number) => {
+                  const spinStyle = { transform: `rotate(${spin}deg)` };
+                  switch (ring.type) {
+                    case 'triangle':
+                      return <div style={spinStyle}><SpinningTriangle hue={hue} size={28} /></div>;
+                    case 'circle':
+                      return <div style={spinStyle}><PulsingCircle hue={hue} size={28} frame={frame} /></div>;
+                    case 'star':
+                      return <div style={spinStyle}><SpinningStar hue={hue} size={28} points={10} /></div>;
+                    default:
+                      return <WalkingFigure frame={frame} hue={hue} />;
+                  }
+                };
 
                 return (
                   <div key={`${ringIndex}-${i}`}>
-                    {/* Trail copies (ghosts) */}
                     {Array.from({ length: trailCount }, (_, t) => {
                       const trailAngle = Math.round((angle - (t + 1) * trailSpacing) * 100) / 100;
                       const trailAngleRad = (trailAngle * Math.PI) / 180;
                       const trailX = Math.round((50 + ring.radius * Math.sin(trailAngleRad)) * 100) / 100;
                       const trailY = Math.round((50 - ring.radius * Math.cos(trailAngleRad)) * 100) / 100;
                       const trailFrame = (animFrame - t - 1 + frameCount) % frameCount;
-                      const trailHue = Math.round((animatedHue - (t + 1) * 15) % 360);
+                      const trailHue = Math.round((animatedHue - (t + 1) * 15 + 360) % 360);
+                      const trailSpin = shapeRotation - (t + 1) * 10;
                       return (
                         <div
                           key={`trail-${t}`}
@@ -167,36 +230,63 @@ export function GbvSpinContent() {
                           style={{
                             left: `${trailX}%`,
                             top: `${trailY}%`,
-                            transform: `translate(-50%, -50%) rotate(${trailAngle}deg) scale(${ring.scale})`,
+                            transform: `translate(-50%, -50%) scale(${ring.scale})`,
                             opacity: mounted && isSpinning ? trailOpacities[t] : 0,
                           }}
                         >
-                          <WalkingFigure frame={trailFrame} hue={trailHue} />
+                          {renderShape(trailFrame, trailHue, trailSpin)}
                         </div>
                       );
                     })}
-                    {/* Main figure */}
                     <div
                       className="absolute"
                       style={{
                         left: `${x}%`,
                         top: `${y}%`,
-                        transform: `translate(-50%, -50%) rotate(${angle}deg) scale(${ring.scale})`,
+                        transform: `translate(-50%, -50%) scale(${ring.scale})`,
                       }}
                     >
-                      <WalkingFigure frame={animFrame} hue={animatedHue} />
+                      {renderShape(animFrame, animatedHue, shapeRotation)}
                     </div>
                   </div>
                 );
               })
             )}
 
-            {/* Label */}
-            <div className="absolute inset-[35%] rounded-full bg-gradient-to-br from-red-700 via-red-600 to-red-800 flex items-center justify-center z-10">
-              <div
-                className="text-center"
-                style={{ transform: `rotate(${-rotation}deg)` }}
-              >
+            {/* Additional overlay ring - slower spin */}
+            <div
+              className="absolute inset-[5%] rounded-full pointer-events-none"
+              style={{ transform: mounted ? `rotate(${rotation * 0.2}deg)` : 'rotate(0deg)' }}
+            >
+              {Array.from({ length: 12 }, (_, i) => {
+                const angle = (i / 12) * 360 + 15;
+                const angleRad = (angle * Math.PI) / 180;
+                const x = Math.round((50 + 44 * Math.sin(angleRad)) * 100) / 100;
+                const y = Math.round((50 - 44 * Math.cos(angleRad)) * 100) / 100;
+                const hue = Math.round((angle + rotation * 0.5) % 360);
+                return (
+                  <div
+                    key={`overlay-${i}`}
+                    className="absolute"
+                    style={{
+                      left: `${x}%`,
+                      top: `${y}%`,
+                      transform: `translate(-50%, -50%) rotate(${rotation * 0.3}deg)`,
+                      opacity: 0.5,
+                    }}
+                  >
+                    <WavyLine hue={hue} frame={Math.floor(rotation / 30) + i} />
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Label - spins faster than animation but slower than record */}
+            <div
+              className="absolute inset-[35%] rounded-full bg-gradient-to-br from-red-700 via-red-600 to-red-800 flex items-center justify-center z-10"
+              style={{ transform: mounted ? `rotate(${-rotation + rotation * 0.5}deg)` : 'rotate(0deg)' }}
+            >
+              <div className="text-center">
                 <div className="text-white font-bold text-xs sm:text-sm md:text-base">
                   GBV
                 </div>
