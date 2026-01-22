@@ -6,7 +6,11 @@ import { usePathname } from "next/navigation";
 import { GbvSearch } from "@/components/gbv/gbv-search";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { Search } from "lucide-react";
 
 export function GbvHeader() {
@@ -17,10 +21,7 @@ export function GbvHeader() {
       {/* Mobile/Tablet: Title row with search */}
       <div className="container lg:hidden flex items-center justify-between gap-3">
         <Link href="/gbv" className="flex-1">
-          <h1
-            className="uppercase tracking-wide text-white font-semibold text-[32px] sm:text-[55px]"
-            style={{ fontFamily: "var(--font-league-gothic), sans-serif" }}
-          >
+          <h1 className="uppercase tracking-wide text-white font-semibold text-[32px] sm:text-[55px]">
             Guided By Data
           </h1>
         </Link>
@@ -61,7 +62,7 @@ export function GbvHeader() {
             height={140}
             className={cn(
               "w-full h-auto p-0 lg:w-[173px] lg:h-[173px] lg:p-0",
-              pathname === "/gbv/ask" && "hidden sm:block"
+              pathname === "/gbv/ask" && "hidden sm:block",
             )}
             priority
             fetchPriority="high"
@@ -69,16 +70,10 @@ export function GbvHeader() {
         </Link>
         {/* Desktop: Title inline */}
         <Link href="/gbv" className="hidden lg:block">
-          <h1
-            className={cn(
-              "uppercase tracking-wide flex-shrink-0 text-white text-[32px] sm:text-[55px]"
-            )}
-            style={{ fontFamily: "var(--font-league-gothic), sans-serif" }}
-          >
+          <h1 className={cn("font-league text-2xl font-semibold")}>
             Guided By Data
           </h1>
         </Link>
-
 
         {/* Desktop actions - chat to the left of search */}
         <div className="hidden lg:flex items-center gap-4 ml-auto">
@@ -139,7 +134,6 @@ export function GbvHeader() {
           </Link>
         </div>
       )}
-
     </header>
   );
 }

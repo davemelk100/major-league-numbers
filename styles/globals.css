@@ -344,8 +344,6 @@
     font-size: 1rem;
   }
 
-  h1,
-  h2,
   h3,
   h4,
   h5,
@@ -355,11 +353,17 @@
   }
 
   h1 {
-    font-size: 1.5rem;
+    font-family: var(--font-league-gothic), sans-serif !important;
+    @apply uppercase tracking-wide sm:text-[64px];
+    font-size: 36px !important;
+    text-transform: uppercase !important;
   }
 
   h2 {
-    font-size: 1.25rem;
+    font-family: var(--font-league-gothic), sans-serif !important;
+    @apply uppercase tracking-wide sm:text-[64px];
+    font-size: 36px !important;
+    text-transform: uppercase !important;
   }
 
   h3 {
@@ -378,28 +382,21 @@
     font-size: 0.9rem;
   }
 
-  header h1 {
-    font-family: var(--font-league-gothic), sans-serif !important;
-  }
-
   h1.font-league,
   h2.font-league,
   h3.font-league,
   h4.font-league,
   h5.font-league,
   h6.font-league {
-    font-family: var(--font-lato), sans-serif !important;
-    letter-spacing: normal !important;
-  }
-
-  @media (min-width: 768px) {
-    h1 {
-      font-size: 1.5rem;
-    }
+    font-family: var(--font-league-gothic), sans-serif !important;
+    letter-spacing: inherit !important;
+    text-transform: uppercase !important;
   }
 
   .font-league {
     font-family: var(--font-league-gothic), sans-serif !important;
+    letter-spacing: inherit !important;
+    text-transform: uppercase !important;
   }
 }
 
