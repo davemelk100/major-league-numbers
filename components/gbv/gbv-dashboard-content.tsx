@@ -11,10 +11,6 @@ import { getLocalMemberImage } from "@/lib/gbv-member-images";
 import { getLocalAlbumImage } from "@/lib/gbv-album-images";
 import { getProxiedImageUrl, getReleaseType } from "@/lib/gbv-utils";
 import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
-import {
-  pollardSideProjects,
-  type SideProject,
-} from "../../lib/gbv-side-projects";
 
 interface Member {
   id?: number;
@@ -438,41 +434,6 @@ export function GbvDashboardContent() {
         </div>
       </div>
 
-      {/* Robert Pollard Side Projects */}
-      <div className="mb-8">
-        <div className="flex items-center gap-4 mb-4">
-          <h2 className="font-league text-xl font-semibold mb-0">
-            Robert Pollard Side Projects
-          </h2>
-          <Link
-            href="/gbv/side-projects"
-            className="uppercase text-sm text-muted-foreground hover:text-foreground"
-          >
-            View all →
-          </Link>
-        </div>
-        <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-          {pollardSideProjects.slice(0, 3).map((project: SideProject) => (
-            <Card key={project.name} className="h-full">
-              <CardContent className="p-4">
-                <h3 className="font-semibold text-lg">{project.name}</h3>
-                <p className="text-sm text-muted-foreground">{project.years}</p>
-                <p className="text-sm mt-2">{project.description}</p>
-                {project.discographyUrl && (
-                  <a
-                    href={project.discographyUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="text-sm underline underline-offset-4 mt-3 inline-block"
-                  >
-                    View discography
-                  </a>
-                )}
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
