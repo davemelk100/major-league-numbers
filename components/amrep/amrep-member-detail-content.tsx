@@ -1,19 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Loader2, ExternalLink, ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import Image from "next/image";
 import { GbvRemoteImage } from "@/components/amrep/amrep-remote-image";
 import { getLocalMemberImage } from "@/lib/gbv-member-images";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { getAmrepArtistById } from "@/lib/amrep-artists-data";
 import { amrepReleases } from "@/lib/amrep-releases-data";
-import { AMREP_MEMBER_IMAGE_FALLBACKS } from "@/lib/amrep-member-images";
+import {
+  AMREP_MEMBER_IMAGE_FALLBACKS,
+  AMREP_MEMBER_IMAGE_SKIP,
+} from "@/lib/amrep-member-images";
 
 interface Release {
   id: number;
@@ -56,12 +58,23 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
   const [releases, setReleases] = useState<Release[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [commonsImageUrl, setCommonsImageUrl] = useState<string | null>(null);
+  const [resolvedImageUrl, setResolvedImageUrl] = useState<string | null>(null);
+  const [lookupAttempted, setLookupAttempted] = useState(false);
   const localMemberImage = getLocalMemberImage(Number(memberId));
   const amrepFallbackImage =
     isAmrep && member?.name
       ? AMREP_MEMBER_IMAGE_FALLBACKS[member.name.toLowerCase()] || null
       : null;
+  const skipRemoteLookup =
+    isAmrep && member?.name
+      ? AMREP_MEMBER_IMAGE_SKIP[member.name.toLowerCase()] || false
+      : false;
+  const memberImageFromDiscogs = useMemo(() => {
+    const images = member?.images || [];
+    const primary = images.find((image) => image.type === "primary") || images[0];
+    const url = primary?.uri || null;
+    return url ? url.replace(/^http:/, "https:") : null;
+  }, [member?.images]);
 
   useEffect(() => {
     let isActive = true;
@@ -192,7 +205,43 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
   }, [memberId, isAmrep]);
 
   useEffect(() => {
-    if (!member?.name || isAmrep) return;
+    setResolvedImageUrl(null);
+    setLookupAttempted(false);
+  }, [memberId]);
+
+  useEffect(() => {
+    if (!member?.name) return;
+
+    if (localMemberImage) {
+      setResolvedImageUrl(localMemberImage);
+      return;
+    }
+
+    if (memberImageFromDiscogs) {
+      setResolvedImageUrl(memberImageFromDiscogs);
+      return;
+    }
+
+    if (amrepFallbackImage && !lookupAttempted) {
+      setResolvedImageUrl(amrepFallbackImage);
+      setLookupAttempted(true);
+      return;
+    }
+
+    if (skipRemoteLookup || lookupAttempted) return;
+
+    const cacheKey = `${site.id}-member-image:${member.name.toLowerCase()}`;
+    try {
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        setResolvedImageUrl(cached);
+        setLookupAttempted(true);
+        return;
+      }
+    } catch {
+      // ignore cache errors
+    }
+
     let isActive = true;
 
     const fetchCommonsImage = async () => {
@@ -202,12 +251,19 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
         );
         if (!res.ok) return;
         const data = await res.json();
-        if (isActive) {
-          setCommonsImageUrl(data.imageUrl || null);
+        if (isActive && typeof data?.imageUrl === "string") {
+          setResolvedImageUrl(data.imageUrl);
+          try {
+            localStorage.setItem(cacheKey, data.imageUrl);
+          } catch {
+            // ignore cache errors
+          }
         }
       } catch {
+        // ignore lookup errors
+      } finally {
         if (isActive) {
-          setCommonsImageUrl(null);
+          setLookupAttempted(true);
         }
       }
     };
@@ -216,7 +272,15 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
     return () => {
       isActive = false;
     };
-  }, [member?.name]);
+  }, [
+    amrepFallbackImage,
+    localMemberImage,
+    lookupAttempted,
+    member?.name,
+    memberImageFromDiscogs,
+    site.id,
+    skipRemoteLookup,
+  ]);
 
   if (isLoading) {
     return (
@@ -259,33 +323,15 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
         <div className="lg:col-span-1">
           <Card>
             <CardContent className="p-4">
-              {localMemberImage ? (
-                <Image
-                  src={localMemberImage}
-                  alt={member.name}
-                  width={300}
-                  height={300}
-                  className="w-full aspect-square rounded-lg object-contain mb-4"
-                  priority
-                />
-              ) : amrepFallbackImage ? (
+              {resolvedImageUrl ? (
                 <GbvRemoteImage
-                  src={amrepFallbackImage}
+                  src={resolvedImageUrl}
                   alt={member.name}
                   width={300}
                   height={300}
                   className="w-full aspect-square rounded-lg object-contain mb-4"
-                  cacheKey={`amrep-member-fallback:${memberId}`}
-                  preferProxy
-                />
-              ) : commonsImageUrl ? (
-                <GbvRemoteImage
-                  src={commonsImageUrl}
-                  alt={member.name}
-                  width={300}
-                  height={300}
-                  className="w-full aspect-square rounded-lg object-contain mb-4"
-                  cacheKey={`gbv-member-photo:${memberId}`}
+                  fallbackSrc={site.placeholderIconSrc}
+                  cacheKey={`${site.id}-member-image:${member.name.toLowerCase()}`}
                   preferProxy
                 />
               ) : (

@@ -49,7 +49,7 @@ export const AMREP_MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
   "the thrown ups":
     "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2Far0%2Fece7b846cab5c525fc0eb7147fb86ed0.jpg",
   vertigo:
-    "/api/gbv/image-proxy?url=https%3A%2F%2Fi.discogs.com%2Fo2HzpPmu2gW6wHKOxiUwXp8RpiRvwFsvbS9QlIHf22A%2Frs%3Afit%2Fg%3Asm%2Fq%3A40%2Fh%3A300%2Fw%3A300%2FczM6Ly9kaXNjb2dz%2FLWRhdGFiYXNlLWltYWdlcy9BLTI2NTQwNS0xMzM1ODg1MDMwLmpwZWc.jpeg",
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fblogger.googleusercontent.com%2Fimg%2Fb%2FR29vZ2xl%2FAVvXsEipd6KiHDAbQRs8CrRmxCtqbg5yoSbtwAR2w4FDFERXJfP-Wgf3Cz4jKCnaAK371bePkk6lKYG-xjoKhUdF7yW1blhH6YjV-KoEofpS4GD9XwZyDKQbxxbHb3Q5NFTmvea6ecFdMdVZWqoj%2Fs854-r%2F1.jpg",
 };
 
 export const AMREP_MEMBER_IMAGE_SKIP: Record<string, true> = {

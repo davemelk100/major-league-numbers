@@ -7,14 +7,14 @@ import { FooterNav, LeftNav } from "@/components/footer-nav";
 import { UpdatesBanner } from "@/components/updates-banner";
 import { Suspense } from "react";
 import { PageLoader } from "@/components/page-loader";
+import { isMusicSiteRoute } from "@/lib/music-site";
 
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isGbvRoute = pathname?.startsWith("/gbv");
-  const isAmrepRoute = pathname?.startsWith("/amrep");
+  const isTopicRoute = isMusicSiteRoute(pathname);
 
   // For GBV/AmRep routes, render children directly (they have their own layout)
-  if (isGbvRoute || isAmrepRoute) {
+  if (isTopicRoute) {
     return <>{children}</>;
   }
 
