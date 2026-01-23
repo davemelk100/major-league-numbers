@@ -17,6 +17,7 @@ export interface MusicSiteConfig {
     members: string;
     sideProjects: string;
   };
+  footerDisclaimer?: string;
   sources: Array<{ label: string; url: string }>;
   imageSources: Array<{ label: string; url: string }>;
   searchPlaceholder: string;
@@ -104,6 +105,8 @@ export const AMREP_SITE: MusicSiteConfig = {
     members: "Artists",
     sideProjects: "Imprints",
   },
+  footerDisclaimer:
+    "All Content, Rights, Copyrights, etc. are the property of Tom Hazelmyer and AmRep records. This is simply a fan site.",
   sources: [
     { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Amphetamine_Reptile_Records" },
     { label: "Shoxop", url: "https://www.shoxop.com/" },

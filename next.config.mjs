@@ -16,6 +16,9 @@ const nextConfig = {
   images: {
     localPatterns: [
       {
+        pathname: "/**",
+      },
+      {
         pathname: "/api/gbv/image-proxy",
       },
       {
