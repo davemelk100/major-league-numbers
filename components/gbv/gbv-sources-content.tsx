@@ -1,6 +1,8 @@
 "use client";
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname } from "@/lib/music-site";
 
 interface Source {
   name: string;
@@ -69,12 +71,44 @@ const editorialSources: Source[] = [
   },
 ];
 
+const amrepDataSources: Source[] = [
+  {
+    name: "Wikipedia",
+    url: "https://en.wikipedia.org/wiki/Amphetamine_Reptile_Records",
+    description: "History, roster, and label overview.",
+  },
+  {
+    name: "Shoxop",
+    url: "https://www.shoxop.com/",
+    description: "Official AmRep shop with current catalog and archive items.",
+  },
+  {
+    name: "Facebook",
+    url: "https://www.facebook.com/amphetaminereptile/",
+    description: "Official updates and announcements.",
+  },
+];
+
+const amrepEditorialSources: Source[] = [
+  {
+    name: "Amphetamine Reptile Records",
+    url: "https://en.wikipedia.org/wiki/Amphetamine_Reptile_Records",
+    description: "Label background, artist roster, and notable milestones.",
+  },
+];
+
 export function GbvSourcesContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
+  const isAmrep = site.id === "amrep";
+  const data = isAmrep ? amrepDataSources : dataSources;
+  const editorial = isAmrep ? amrepEditorialSources : editorialSources;
+
   return (
     <div className="container py-6">
       <h1 className="font-league mb-6">Sources</h1>
       <p className="text-muted-foreground mb-8">
-        Data and content for Guided By Data is compiled from the following sources.
+        Data and content for {site.name} is compiled from the following sources.
       </p>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -87,7 +121,7 @@ export function GbvSourcesContent() {
           </CardHeader>
           <CardContent>
             <ul className="space-y-4">
-              {dataSources.map((source) => (
+              {data.map((source) => (
                 <li key={source.name}>
                   <a
                     href={source.url}
@@ -115,7 +149,7 @@ export function GbvSourcesContent() {
           </CardHeader>
           <CardContent>
             <ul className="space-y-4">
-              {editorialSources.map((source) => (
+              {editorial.map((source) => (
                 <li key={source.name}>
                   <a
                     href={source.url}

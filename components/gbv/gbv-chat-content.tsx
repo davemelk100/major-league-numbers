@@ -17,6 +17,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname } from "@/lib/music-site";
 
 // Helper to extract text content from a message
 function getMessageText(message: UIMessage): string {
@@ -54,6 +56,15 @@ const chatPrompts = [
   "Ready to recommend some hidden gems?",
 ];
 
+const amrepChatPrompts = [
+  "Want a quick AmRep label history?",
+  "Ask about an AmRep artist or release.",
+  "Looking for noisy rock from the AmRep roster?",
+  "Which AmRep era are you exploring?",
+  "Need a quick primer on the label’s catalog?",
+  "Let’s dig into AmRep’s artist roster.",
+];
+
 interface SavedChat {
   id: string;
   title: string;
@@ -62,60 +73,72 @@ interface SavedChat {
   updatedAt: number;
 }
 
-// Simple localStorage-based chat storage for GBV
-const GBV_CHATS_KEY = "gbv-saved-chats";
-const GBV_SESSION_KEY = "gbv-chat-session";
+const CHAT_KEYS = {
+  gbv: {
+    chats: "gbv-saved-chats",
+    session: "gbv-chat-session",
+    idPrefix: "gbv",
+  },
+  amrep: {
+    chats: "amrep-saved-chats",
+    session: "amrep-chat-session",
+    idPrefix: "amrep",
+  },
+};
 
-function getGbvSavedChats(): SavedChat[] {
+function getSavedChats(storageKey: string): SavedChat[] {
   if (typeof window === "undefined") return [];
   try {
-    const saved = localStorage.getItem(GBV_CHATS_KEY);
+    const saved = localStorage.getItem(storageKey);
     return saved ? JSON.parse(saved) : [];
   } catch {
     return [];
   }
 }
 
-function saveGbvChat(chat: SavedChat) {
+function saveChat(storageKey: string, chat: SavedChat) {
   if (typeof window === "undefined") return;
-  const chats = getGbvSavedChats();
+  const chats = getSavedChats(storageKey);
   const index = chats.findIndex((c) => c.id === chat.id);
   if (index >= 0) {
     chats[index] = chat;
   } else {
     chats.unshift(chat);
   }
-  localStorage.setItem(GBV_CHATS_KEY, JSON.stringify(chats.slice(0, 50)));
+  localStorage.setItem(storageKey, JSON.stringify(chats.slice(0, 50)));
 }
 
-function deleteGbvChat(chatId: string) {
+function deleteChat(storageKey: string, chatId: string) {
   if (typeof window === "undefined") return;
-  const chats = getGbvSavedChats().filter((c) => c.id !== chatId);
-  localStorage.setItem(GBV_CHATS_KEY, JSON.stringify(chats));
+  const chats = getSavedChats(storageKey).filter((c) => c.id !== chatId);
+  localStorage.setItem(storageKey, JSON.stringify(chats));
 }
 
-function getGbvSessionSnapshot(): {
+function getSessionSnapshot(storageKey: string): {
   messages: UIMessage[];
   currentChatId: string | null;
   input: string;
 } | null {
   if (typeof window === "undefined") return null;
   try {
-    const raw = sessionStorage.getItem(GBV_SESSION_KEY);
+    const raw = sessionStorage.getItem(storageKey);
     return raw ? JSON.parse(raw) : null;
   } catch {
     return null;
   }
 }
 
-function saveGbvSessionSnapshot(snapshot: {
-  messages: UIMessage[];
-  currentChatId: string | null;
-  input: string;
-}) {
+function saveSessionSnapshot(
+  storageKey: string,
+  snapshot: {
+    messages: UIMessage[];
+    currentChatId: string | null;
+    input: string;
+  },
+) {
   if (typeof window === "undefined") return;
   try {
-    sessionStorage.setItem(GBV_SESSION_KEY, JSON.stringify(snapshot));
+    sessionStorage.setItem(storageKey, JSON.stringify(snapshot));
   } catch {
     // Ignore storage errors.
   }
@@ -139,8 +162,8 @@ function shouldRestoreSession(): boolean {
   return !isHardRefresh();
 }
 
-function generateChatId(): string {
-  return `gbv-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+function generateChatId(prefix: string): string {
+  return `${prefix}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
 function generateChatTitle(messages: UIMessage[]): string {
@@ -153,6 +176,10 @@ function generateChatTitle(messages: UIMessage[]): string {
 }
 
 export function GbvChatContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
+  const keys = CHAT_KEYS[site.id];
+  const sitePrompts = site.id === "amrep" ? amrepChatPrompts : chatPrompts;
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [input, setInput] = useState("");
@@ -165,13 +192,16 @@ export function GbvChatContent() {
   const pendingMessagesRef = useRef<UIMessage[] | null>(null);
 
   const transport = useMemo(
-    () => new DefaultChatTransport({ api: "/api/gbv/ask" }),
+    () =>
+      new DefaultChatTransport({
+        api: site.id === "amrep" ? "/api/amrep/ask" : "/api/gbv/ask",
+      }),
     [],
   );
 
   const { messages, sendMessage, status, error, setMessages } = useChat({
     transport,
-    id: `gbv-chat-${chatKey}`,
+    id: `${keys.idPrefix}-chat-${chatKey}`,
   });
 
   // Apply pending messages after chat key changes
@@ -186,18 +216,18 @@ export function GbvChatContent() {
 
   // Load saved chats on mount
   useEffect(() => {
-    setSavedChats(getGbvSavedChats());
-  }, []);
+    setSavedChats(getSavedChats(keys.chats));
+  }, [keys.chats]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (isHardRefresh()) {
-      sessionStorage.removeItem(GBV_SESSION_KEY);
+      sessionStorage.removeItem(keys.session);
       return;
     }
 
     if (shouldRestoreSession()) {
-      const snapshot = getGbvSessionSnapshot();
+      const snapshot = getSessionSnapshot(keys.session);
       if (snapshot?.messages?.length) {
         setMessages(snapshot.messages);
         setCurrentChatId(snapshot.currentChatId ?? null);
@@ -205,12 +235,12 @@ export function GbvChatContent() {
         setLastSavedLength(snapshot.messages.length);
       }
     }
-  }, [setMessages]);
+  }, [keys.session, setMessages]);
 
   // Set random prompt on mount
   useEffect(() => {
     setRandomPrompt(
-      chatPrompts[Math.floor(Math.random() * chatPrompts.length)],
+      sitePrompts[Math.floor(Math.random() * sitePrompts.length)],
     );
   }, []);
 
@@ -228,7 +258,7 @@ export function GbvChatContent() {
       messages.length !== lastSavedLength &&
       messages[messages.length - 1]?.role === "assistant"
     ) {
-      const chatId = currentChatId || generateChatId();
+      const chatId = currentChatId || generateChatId(keys.idPrefix);
       const chat: SavedChat = {
         id: chatId,
         title: generateChatTitle(messages),
@@ -240,16 +270,24 @@ export function GbvChatContent() {
         updatedAt: Date.now(),
       };
 
-      saveGbvChat(chat);
+      saveChat(keys.chats, chat);
       setCurrentChatId(chatId);
-      setSavedChats(getGbvSavedChats());
+      setSavedChats(getSavedChats(keys.chats));
       setLastSavedLength(messages.length);
     }
-  }, [messages, isLoading, currentChatId, savedChats, lastSavedLength]);
+  }, [
+    messages,
+    isLoading,
+    currentChatId,
+    savedChats,
+    lastSavedLength,
+    keys.chats,
+    keys.idPrefix,
+  ]);
 
   useEffect(() => {
-    saveGbvSessionSnapshot({ messages, currentChatId, input });
-  }, [messages, currentChatId, input]);
+    saveSessionSnapshot(keys.session, { messages, currentChatId, input });
+  }, [messages, currentChatId, input, keys.session]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -265,7 +303,7 @@ export function GbvChatContent() {
     setChatKey((prev) => prev + 1);
     setLastSavedLength(0);
     setRandomPrompt(
-      chatPrompts[Math.floor(Math.random() * chatPrompts.length)],
+      sitePrompts[Math.floor(Math.random() * sitePrompts.length)],
     );
     setShowHistory(false);
   }, [setMessages]);
@@ -281,13 +319,13 @@ export function GbvChatContent() {
   const handleDeleteChat = useCallback(
     (chatId: string, e: React.MouseEvent) => {
       e.stopPropagation();
-      deleteGbvChat(chatId);
-      setSavedChats(getGbvSavedChats());
+      deleteChat(keys.chats, chatId);
+      setSavedChats(getSavedChats(keys.chats));
       if (currentChatId === chatId) {
         handleNewChat();
       }
     },
-    [currentChatId, handleNewChat],
+    [currentChatId, handleNewChat, keys.chats],
   );
 
   // Chat History Sidebar
@@ -382,15 +420,15 @@ export function GbvChatContent() {
           {/* Centered content */}
           <div className="flex flex-col items-center justify-start px-4 pt-4">
             <Image
-              src="/chat-gbv-box.svg"
-              alt="Chat GBV"
+              src={site.chatIconSrc}
+              alt={site.chatLabel}
               width={128}
               height={128}
-              className="h-32 w-32 mb-4 gbv-rune-white"
+              className="h-32 w-32 mb-4 gbv-rune-white object-contain"
               priority
               loading="eager"
             />
-            <h1 className="mb-2">Chat GBV</h1>
+            <h1 className="mb-2">{site.chatLabel}</h1>
 
             {randomPrompt && (
               <p className="text-center text-muted-foreground mb-4 text-lg">
@@ -410,16 +448,14 @@ export function GbvChatContent() {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about GBV albums, songs, history..."
+                placeholder={`Ask about ${site.shortName} artists, releases, history...`}
                 className="flex-1 h-12 px-4 rounded-lg border border-black/60 bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
                 disabled={isLoading}
                 autoComplete="off"
               />
             </form>
 
-            <div className="mt-4">
-              {chatActions}
-            </div>
+            <div className="mt-4">{chatActions}</div>
           </div>
         </div>
       </div>
@@ -452,11 +488,11 @@ export function GbvChatContent() {
               {message.role === "assistant" && (
                 <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
                   <Image
-                    src="/chat-gbv-box.svg"
-                    alt="Chat GBV"
+                    src={site.chatIconSrc}
+                    alt={site.chatLabel}
                     width={20}
                     height={20}
-                    className="h-5 w-5 gbv-rune-white"
+                    className="h-5 w-5 gbv-rune-white object-contain"
                   />
                 </div>
               )}
@@ -503,20 +539,20 @@ export function GbvChatContent() {
             <div className="flex gap-3 justify-start">
               <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
                 <Image
-                  src="/chat-gbv-box.svg"
-                  alt="Chat GBV"
+                  src={site.chatIconSrc}
+                  alt={site.chatLabel}
                   width={20}
                   height={20}
-                  className="h-5 w-5 gbv-rune-white"
+                  className="h-5 w-5 gbv-rune-white object-contain"
                 />
               </div>
               <div className="rounded-lg px-4 py-2">
                 <Image
-                  src="/gbv-rune.svg"
-                  alt=""
+                  src={site.chatIconSrc}
+                  alt={site.chatLabel}
                   width={20}
                   height={20}
-                  className="h-5 w-5 animate-spin gbv-rune-white"
+                  className="h-5 w-5 animate-spin gbv-rune-white object-contain"
                 />
               </div>
             </div>
@@ -536,7 +572,7 @@ export function GbvChatContent() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about GBV albums, songs, history..."
+              placeholder={`Ask about ${site.shortName} artists, releases, history...`}
               className="flex-1 h-12 px-4 rounded-lg border border-black/60 bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
               disabled={isLoading}
               autoComplete="off"

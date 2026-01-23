@@ -4,8 +4,12 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname } from "@/lib/music-site";
 
 export function GbvSpinContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
   const [mounted, setMounted] = useState(false);
   const [isSpinning, setIsSpinning] = useState(true);
   const [speed, setSpeed] = useState<"33" | "45" | "78">("33");
@@ -288,7 +292,7 @@ export function GbvSpinContent() {
             >
               <div className="text-center">
                 <div className="text-white font-bold text-xs sm:text-sm md:text-base">
-                  GBV
+                  {site.shortName.toUpperCase()}
                 </div>
                 <div className="text-white/70 text-[8px] sm:text-[10px] md:text-xs">
                   {speed} RPM

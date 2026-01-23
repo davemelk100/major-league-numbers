@@ -2,6 +2,8 @@
 
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname } from "@/lib/music-site";
 
 const criticalAcclaim = [
   {
@@ -40,27 +42,52 @@ const listAppearances = [
   "AllMusic's Essential Lo-Fi Albums",
 ];
 
+const amrepMilestones = [
+  {
+    label: "Founded",
+    detail: "Amphetamine Reptile Records founded in 1986.",
+  },
+  {
+    label: "Breakthrough release",
+    detail: "Helmet’s Strap It On helped sustain the label in the 1990s.",
+  },
+  {
+    label: "Documentary",
+    detail: "The Color of Noise (2015) spotlights AmRep’s history.",
+  },
+];
+
+const amrepNotablePerformances = [
+  "CMJ / Amphetamine Reptile Tour (1992) featuring multiple AmRep artists.",
+];
+
 export function GbvAwardsContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
+  const isAmrep = site.id === "amrep";
+
   return (
     <div className="container py-6">
       <h1 className="font-league mb-6">
-        Awards & Recognition
+        {isAmrep ? "Milestones & Recognition" : "Awards & Recognition"}
       </h1>
 
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Critical Acclaim */}
         <Card className="py-6">
           <CardHeader className="pb-6">
-            <h2>Critical Acclaim</h2>
+            <h2>{isAmrep ? "Label Milestones" : "Critical Acclaim"}</h2>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {criticalAcclaim.map((item, index) => (
+              {(isAmrep ? amrepMilestones : criticalAcclaim).map((item, index) => (
                 <div key={index} className="flex items-start justify-between border-b pb-3 last:border-0">
                   <div>
-                    <p className="font-medium">{item.publication}</p>
-                    <p className="text-sm text-muted-foreground">{item.accolade}</p>
-                    {item.sourceUrl && (
+                    <p className="font-medium">{isAmrep ? item.label : item.publication}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {isAmrep ? item.detail : item.accolade}
+                    </p>
+                    {!isAmrep && item.sourceUrl && (
                       <a
                         href={item.sourceUrl}
                         target="_blank"
@@ -71,7 +98,7 @@ export function GbvAwardsContent() {
                       </a>
                     )}
                   </div>
-                  <Badge variant="outline">{item.year}</Badge>
+                  {!isAmrep && <Badge variant="outline">{item.year}</Badge>}
                 </div>
               ))}
             </div>
@@ -81,11 +108,11 @@ export function GbvAwardsContent() {
         {/* List Appearances */}
         <Card className="py-6">
           <CardHeader className="pb-6">
-            <h2>Best-Of List Appearances</h2>
+            <h2>{isAmrep ? "Notable Performances" : "Best-Of List Appearances"}</h2>
           </CardHeader>
           <CardContent>
             <ul className="space-y-3">
-              {listAppearances.map((item, index) => (
+              {(isAmrep ? amrepNotablePerformances : listAppearances).map((item, index) => (
                 <li key={index} className="text-sm">
                   {item}
                 </li>

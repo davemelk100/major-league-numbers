@@ -1,5 +1,7 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname } from "@/lib/music-site";
 
 interface Video {
   id: string;
@@ -56,25 +58,63 @@ const videos: Video[] = [
   },
 ];
 
+const amrepVideos: Video[] = [
+  {
+    id: "L7uWBm7FnZU",
+    title: "AmRep video highlight 1",
+  },
+  {
+    id: "pvCaa4sxEIs",
+    title: "AmRep video highlight 2",
+  },
+  {
+    id: "JkiW8T3pjMI",
+    title: "AmRep video highlight 3",
+  },
+  {
+    id: "TdC03iMqQHc",
+    title: "AmRep video highlight 4",
+  },
+  {
+    id: "Oiu98b3QwV8",
+    title: "AmRep video highlight 5",
+  },
+  {
+    id: "aIwNKAGI9FM",
+    title: "AmRep video highlight 6",
+  },
+];
+
 export function GbvVideosContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
+  const isAmrep = site.id === "amrep";
+  const list = isAmrep ? amrepVideos : videos;
+
   return (
     <div className="container py-6">
       <h1 className="font-league mb-2">Videos</h1>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        {videos.map((video) => (
-          <div key={video.id} className="aspect-video rounded-lg overflow-hidden">
-            <iframe
-              src={`https://www.youtube-nocookie.com/embed/${video.id}`}
-              title={video.title}
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-              className="w-full h-full border-0"
-              loading="lazy"
-            />
-          </div>
-        ))}
-      </div>
+      {list.length === 0 ? (
+        <p className="text-sm text-muted-foreground">
+          Video content coming soon.
+        </p>
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2">
+          {list.map((video) => (
+            <div key={video.id} className="aspect-video rounded-lg overflow-hidden">
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${video.id}`}
+                title={video.title}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="w-full h-full border-0"
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

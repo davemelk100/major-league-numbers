@@ -1,6 +1,9 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname } from "@/lib/music-site";
+import { amrepTimeline } from "@/lib/amrep-timeline-data";
 
 const timelineEvents = [
   { year: 1983, event: "Band formed in Dayton, Ohio by Robert Pollard" },
@@ -26,12 +29,22 @@ const timelineEvents = [
 ];
 
 export function GbvTimelineContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
+  const isAmrep = site.id === "amrep";
+  const events = isAmrep
+    ? amrepTimeline.map((item) => ({
+        year: item.year,
+        event: `${item.title} — ${item.description}`,
+      }))
+    : timelineEvents;
+
   return (
     <div className="container py-6">
       <h1 className="font-league mb-6">Timeline</h1>
 
       <div className="space-y-4">
-        {timelineEvents.map((item, index) => (
+        {events.map((item, index) => (
           <Card key={index}>
             <CardContent className="p-4">
               <div className="flex items-center gap-3 mb-1">
