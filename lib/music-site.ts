@@ -1,7 +1,7 @@
-export type MusicSiteId = "gbv" | "amrep";
+import type { Metadata } from "next";
 
 export interface MusicSiteConfig {
-  id: MusicSiteId;
+  id: string;
   name: string;
   shortName: string;
   basePath: string;
@@ -11,6 +11,7 @@ export interface MusicSiteConfig {
   logoSrc: string;
   chatIconSrc: string;
   placeholderIconSrc: string;
+  shellClass: string;
   navLabels: {
     discography: string;
     members: string;
@@ -19,6 +20,16 @@ export interface MusicSiteConfig {
   sources: Array<{ label: string; url: string }>;
   imageSources: Array<{ label: string; url: string }>;
   searchPlaceholder: string;
+  seo: {
+    title: string;
+    titleTemplate?: string;
+    description: string;
+    keywords: string[];
+    siteName?: string;
+    ogImage: string;
+    ogImageAlt: string;
+    twitterImage?: string;
+  };
 }
 
 export const GBV_SITE: MusicSiteConfig = {
@@ -32,6 +43,7 @@ export const GBV_SITE: MusicSiteConfig = {
   logoSrc: "/gbv-mlb.svg",
   chatIconSrc: "/gbv-rune.svg",
   placeholderIconSrc: "/chat-gbv-box.svg",
+  shellClass: "gbv-shell",
   navLabels: {
     discography: "Discography",
     members: "Members",
@@ -53,6 +65,26 @@ export const GBV_SITE: MusicSiteConfig = {
     { label: "Archive.org", url: "https://archive.org/" },
   ],
   searchPlaceholder: "Search GBV...",
+  seo: {
+    title: "Guided By Data",
+    titleTemplate: "%s | Guided By Data",
+    description:
+      "Explore Guided By Voices discography, albums, songs, and band history.",
+    keywords: [
+      "Guided By Voices",
+      "GBV",
+      "Robert Pollard",
+      "indie rock",
+      "lo-fi",
+      "discography",
+      "albums",
+      "songs",
+    ],
+    siteName: "Guided By Data",
+    ogImage: "https://majorleaguenumbers.com/gbv-rune.png",
+    ogImageAlt: "Guided By Data",
+    twitterImage: "https://majorleaguenumbers.com/gbv-rune.png",
+  },
 };
 
 export const AMREP_SITE: MusicSiteConfig = {
@@ -66,6 +98,7 @@ export const AMREP_SITE: MusicSiteConfig = {
   logoSrc: "/amrep-logo-black.svg",
   chatIconSrc: "/noise-bird.png",
   placeholderIconSrc: "/noise-bird.png",
+  shellClass: "amrep-shell",
   navLabels: {
     discography: "Releases",
     members: "Artists",
@@ -99,11 +132,106 @@ export const AMREP_SITE: MusicSiteConfig = {
     { label: "Rokkos Adventures", url: "https://www.rokkosadventures.at/" },
   ],
   searchPlaceholder: "Search AmRep...",
+  seo: {
+    title: "Amphetamine Reptile Records",
+    titleTemplate: "%s | Amphetamine Reptile Records",
+    description:
+      "Explore Amphetamine Reptile Records: artist roster, releases, label history, and milestones.",
+    keywords: [
+      "Amphetamine Reptile Records",
+      "AmRep",
+      "noise rock",
+      "independent label",
+      "artists",
+      "releases",
+      "label history",
+    ],
+    siteName: "Major League Numbers",
+    ogImage: "https://majorleaguenumbers.com/amrep-logo.svg",
+    ogImageAlt: "Amphetamine Reptile Records",
+    twitterImage: "https://majorleaguenumbers.com/amrep-logo.svg",
+  },
 };
+
+export const MUSIC_SITES = [GBV_SITE, AMREP_SITE] as const;
+
+export type MusicSiteId = (typeof MUSIC_SITES)[number]["id"];
+
+export const SITE_URL = "https://majorleaguenumbers.com";
+
+export function getMusicSites(): MusicSiteConfig[] {
+  return [...MUSIC_SITES];
+}
+
+export function getMusicSiteById(id: MusicSiteId): MusicSiteConfig {
+  return MUSIC_SITES.find((site) => site.id === id) ?? GBV_SITE;
+}
 
 export function getMusicSiteFromPathname(
   pathname?: string | null
 ): MusicSiteConfig {
-  if (pathname?.startsWith("/amrep")) return AMREP_SITE;
-  return GBV_SITE;
+  if (!pathname) return GBV_SITE;
+  const match = MUSIC_SITES.find((site) => pathname.startsWith(site.basePath));
+  return match ?? GBV_SITE;
+}
+
+export function isMusicSiteRoute(pathname?: string | null): boolean {
+  if (!pathname) return false;
+  return MUSIC_SITES.some((site) => pathname.startsWith(site.basePath));
+}
+
+export function createSiteMetadata(site: MusicSiteConfig): Metadata {
+  return {
+    title: {
+      default: site.seo.title,
+      template: site.seo.titleTemplate ?? `%s | ${site.seo.title}`,
+    },
+    description: site.seo.description,
+    metadataBase: new URL(SITE_URL),
+    alternates: {
+      canonical: site.basePath,
+    },
+    keywords: site.seo.keywords,
+    authors: [{ name: site.seo.title }],
+    openGraph: {
+      title: site.seo.title,
+      description: site.seo.description,
+      url: `${SITE_URL}${site.basePath}`,
+      siteName: site.seo.siteName ?? site.seo.title,
+      locale: "en_US",
+      type: "website",
+      images: [
+        {
+          url: site.seo.ogImage,
+          width: 1200,
+          height: 630,
+          alt: site.seo.ogImageAlt,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: site.seo.title,
+      description: site.seo.description,
+      images: [site.seo.twitterImage ?? site.seo.ogImage],
+    },
+  };
+}
+
+export function getSiteJsonLd(site: MusicSiteConfig) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: site.seo.title,
+    url: `${SITE_URL}${site.basePath}`,
+    description: site.seo.description,
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}${site.basePath}/search?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
 }

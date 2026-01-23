@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
-type SourceState = "direct" | "fallback";
+type SourceState = "direct" | "proxy" | "fallback";
 
 type GbvRemoteImageProps = {
   src?: string | null;
@@ -24,6 +24,10 @@ function normalizeUrl(url?: string | null): string | null {
   return url.replace(/^http:/, "https:");
 }
 
+function getProxyUrl(url: string): string {
+  return `/api/gbv/image-proxy?url=${encodeURIComponent(url)}`;
+}
+
 export function GbvRemoteImage({
   src,
   alt,
@@ -34,12 +38,12 @@ export function GbvRemoteImage({
   fallbackSrc = "/noise-bird.png",
   fit = "contain",
   cacheKey,
-  preferProxy: _preferProxy = false,
+  preferProxy = false,
 }: GbvRemoteImageProps) {
   const normalized = normalizeUrl(src);
   const [currentSrc, setCurrentSrc] = useState<string | null>(normalized);
   const [sourceState, setSourceState] = useState<SourceState>("direct");
-  const effectiveFit = "contain";
+  const effectiveFit = sourceState === "fallback" ? "contain" : fit;
 
   useEffect(() => {
     let initialSrc = normalized;
@@ -60,10 +64,15 @@ export function GbvRemoteImage({
       }
     }
 
-    setSourceState("direct");
+    if (preferProxy && normalized && !normalized.startsWith("/")) {
+      initialSrc = getProxyUrl(normalized);
+      setSourceState("proxy");
+    } else {
+      setSourceState("direct");
+    }
 
     setCurrentSrc(initialSrc);
-  }, [cacheKey, normalized]);
+  }, [cacheKey, normalized, preferProxy]);
 
   const handleError = () => {
     if (!normalized) {
@@ -73,6 +82,12 @@ export function GbvRemoteImage({
     }
 
     if (sourceState === "direct") {
+      setCurrentSrc(getProxyUrl(normalized));
+      setSourceState("proxy");
+      return;
+    }
+
+    if (sourceState === "proxy") {
       setCurrentSrc(fallbackSrc);
       setSourceState("fallback");
     }
@@ -97,7 +112,11 @@ export function GbvRemoteImage({
           // ignore cache errors
         }
       }}
-      className={cn("block", "object-contain", className)}
+      className={cn(
+        "block",
+        effectiveFit === "cover" ? "object-cover" : "object-contain",
+        className
+      )}
     />
   );
 }
