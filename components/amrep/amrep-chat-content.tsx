@@ -178,7 +178,7 @@ function generateChatTitle(messages: UIMessage[]): string {
 export function GbvChatContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
-  const keys = CHAT_KEYS[site.id];
+  const keys = CHAT_KEYS[site.id as keyof typeof CHAT_KEYS];
   const sitePrompts = site.id === "amrep" ? amrepChatPrompts : chatPrompts;
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -486,7 +486,7 @@ export function GbvChatContent() {
               )}
             >
               {message.role === "assistant" && (
-                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <div className="flex-shrink-0 w-8 h-8 rounded-none bg-primary/10 flex items-center justify-center">
                   <Image
                     src={site.chatIconSrc}
                     alt={site.chatLabel}

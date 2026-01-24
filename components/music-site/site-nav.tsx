@@ -3,6 +3,7 @@
  import Link from "next/link";
  import Image from "next/image";
  import { usePathname } from "next/navigation";
+ import { useEffect, useState } from "react";
  import {
    Home,
    Disc3,
@@ -11,6 +12,7 @@
    Award,
    Star,
    Video,
+   Loader2,
    type LucideIcon,
  } from "lucide-react";
  import { cn } from "@/lib/utils";
@@ -26,8 +28,12 @@
 
  export function SiteLeftNav() {
    const pathname = usePathname();
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
    const site = getMusicSiteFromPathname(pathname);
    const isAmrep = site.id === "amrep";
+  useEffect(() => {
+    setPendingHref(null);
+  }, [pathname]);
    const navigation: NavItem[] = [
      { name: site.chatLabel, href: `${site.basePath}/ask`, image: site.chatIconSrc },
      { name: "Home", href: site.basePath, icon: Home },
@@ -44,15 +50,24 @@
        <div className="flex flex-col items-center gap-2 px-2 py-2">
          {navigation.map((item) => {
            const Icon = item.icon;
-           const isActive = pathname === item.href;
+          const isActive = pathname === item.href;
+          const isPending = pendingHref === item.href && pendingHref !== pathname;
+          const showActive = isActive || isPending;
            const isChat = item.href === `${site.basePath}/ask`;
            return (
              <Link
                key={item.name}
                href={item.href}
+              aria-current={showActive ? "page" : undefined}
+              aria-busy={isPending ? "true" : undefined}
+              onClick={() => {
+                if (item.href !== pathname) {
+                  setPendingHref(item.href);
+                }
+              }}
                className={cn(
                  "group flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-all duration-200 w-full text-white",
-                 isActive
+                showActive
                    ? isAmrep
                      ? "bg-white/10 -translate-y-0.5 shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
                      : "bg-white/10 ring-1 ring-white/25"
@@ -78,9 +93,12 @@
                    <Icon className="h-5 w-5 text-white transition-transform duration-200 group-hover:scale-110" />
                  )
                )}
-               <span className="text-xs font-medium text-center leading-tight text-white transition-colors duration-200 group-hover:text-white/90">
-                 {item.name}
-               </span>
+              <span className="flex items-center justify-center gap-1 text-xs font-medium text-center leading-tight text-white transition-colors duration-200 group-hover:text-white/90">
+                {item.name}
+                {isPending ? (
+                  <Loader2 className="h-3 w-3 animate-spin text-white/90" />
+                ) : null}
+              </span>
              </Link>
            );
          })}
@@ -91,8 +109,12 @@
 
  export function SiteFooterNav() {
    const pathname = usePathname();
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
    const site = getMusicSiteFromPathname(pathname);
    const isAmrep = site.id === "amrep";
+  useEffect(() => {
+    setPendingHref(null);
+  }, [pathname]);
    const navigation: NavItem[] = [
      { name: site.chatLabel, href: `${site.basePath}/ask`, image: site.chatIconSrc },
      { name: "Home", href: site.basePath, icon: Home },
@@ -113,15 +135,24 @@
        <div className="flex items-center justify-around px-2 py-1.5">
          {mobileNavigation.map((item) => {
            const Icon = item.icon;
-           const isActive = pathname === item.href;
+          const isActive = pathname === item.href;
+          const isPending = pendingHref === item.href && pendingHref !== pathname;
+          const showActive = isActive || isPending;
            const isChat = item.href === `${site.basePath}/ask`;
            return (
              <Link
                key={item.name}
                href={item.href}
+              aria-current={showActive ? "page" : undefined}
+              aria-busy={isPending ? "true" : undefined}
+              onClick={() => {
+                if (item.href !== pathname) {
+                  setPendingHref(item.href);
+                }
+              }}
                className={cn(
                  "flex flex-col items-center justify-center gap-0.5 px-1.5 py-1 rounded-md transition-colors min-w-[44px] text-black",
-                 isActive
+                showActive
                    ? isAmrep
                      ? "bg-black/10 ring-1 ring-black/30 shadow-[0_0_0_1px_rgba(0,0,0,0.15),_inset_0_0_0_1px_rgba(0,0,0,0.08)]"
                      : "bg-black/5 ring-1 ring-black/20"
@@ -144,7 +175,12 @@
                ) : (
                  Icon && <Icon className="h-5 w-5 text-black" />
                )}
-               <span className="text-xs font-medium text-black">{item.name}</span>
+              <span className="flex items-center justify-center gap-1 text-xs font-medium text-black">
+                {item.name}
+                {isPending ? (
+                  <Loader2 className="h-3 w-3 animate-spin text-black/70" />
+                ) : null}
+              </span>
              </Link>
            );
          })}

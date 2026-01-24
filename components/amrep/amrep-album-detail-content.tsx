@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, ExternalLink } from "lucide-react";
-import { GbvRemoteImage } from "@/components/amrep/amrep-remote-image";
+import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
 import { getLocalAlbumImage } from "@/lib/gbv-album-images";
 import { getProxiedImageUrl, getReleaseType } from "@/lib/gbv-utils";
 import {
@@ -76,7 +76,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
     <AlbumDetailLeft
       image={
         albumImage ? (
-          <GbvRemoteImage
+          <AmrepRemoteImage
             src={albumImage}
             alt={detail.title}
             width={300}

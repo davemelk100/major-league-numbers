@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { GbvRemoteImage } from "@/components/amrep/amrep-remote-image";
+import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
 import { getLocalAlbumImage } from "@/lib/gbv-album-images";
 import { getReleaseType, getProxiedImageUrl } from "@/lib/gbv-utils";
 import { useSiteAlbumsData } from "@/components/music-site/use-site-albums-data";
@@ -108,7 +108,7 @@ export function GbvAlbumsContent() {
         site={site}
         getAlbumImage={getAlbumImage}
         getReleaseTypeLabel={(album) => getReleaseType(album.format, album.releaseType)}
-        RemoteImage={GbvRemoteImage}
+        RemoteImage={AmrepRemoteImage}
         linkBasePath={`${site.basePath}/albums`}
         cacheKeyPrefix="gbv-album-thumb"
         imageFit={isAmrep ? "contain" : "cover"}

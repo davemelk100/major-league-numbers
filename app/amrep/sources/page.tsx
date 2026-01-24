@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GbvSourcesContent } from "@/components/amrep/amrep-sources-content";
+import { SiteSourcesContent } from "@/components/music-site/site-sources-content";
 
 export const metadata: Metadata = {
   title: "Sources",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AmrepSourcesPage() {
-  return <GbvSourcesContent />;
+  return <SiteSourcesContent />;
 }

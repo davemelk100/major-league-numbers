@@ -73,6 +73,16 @@ const editorialSources: Source[] = [
 
 const amrepDataSources: Source[] = [
   {
+    name: "AmRep Discography (Wikipedia)",
+    url: "https://en.wikipedia.org/wiki/Amphetamine_Reptile_Records_discography",
+    description: "Release catalog used for the AmRep discography.",
+  },
+  {
+    name: "Hammerhead Discography",
+    url: "https://en.wikipedia.org/wiki/Hammerhead_(band)",
+    description: "Reference for Hammerhead releases.",
+  },
+  {
     name: "Wikipedia",
     url: "https://en.wikipedia.org/wiki/Amphetamine_Reptile_Records",
     description: "History, roster, and label overview.",
@@ -81,6 +91,16 @@ const amrepDataSources: Source[] = [
     name: "Shoxop",
     url: "https://www.shoxop.com/",
     description: "Official AmRep shop with current catalog and archive items.",
+  },
+  {
+    name: "Shoxop Archive (Sold Out)",
+    url: "https://www.shoxop.com/collections/archive-sold-out-releases-over-the-years",
+    description: "Archive of sold-out releases and historical catalog items.",
+  },
+  {
+    name: "Shoxop All Releases",
+    url: "https://www.shoxop.com/collections/all",
+    description: "Full current catalog listing for AmRep releases.",
   },
   {
     name: "Facebook",
@@ -97,7 +117,7 @@ const amrepEditorialSources: Source[] = [
   },
 ];
 
-export function GbvSourcesContent() {
+export function SiteSourcesContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";

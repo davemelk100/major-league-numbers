@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GbvSourcesContent } from "@/components/gbv/gbv-sources-content";
+import { SiteSourcesContent } from "@/components/music-site/site-sources-content";
 
 export const metadata: Metadata = {
   title: "Sources",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function GbvSourcesPage() {
-  return <GbvSourcesContent />;
+  return <SiteSourcesContent />;
 }

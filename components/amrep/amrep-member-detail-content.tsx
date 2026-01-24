@@ -3,7 +3,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, ExternalLink } from "lucide-react";
-import { GbvRemoteImage } from "@/components/amrep/amrep-remote-image";
+import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
 import { getLocalMemberImage } from "@/lib/gbv-member-images";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
@@ -261,12 +261,12 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
     <MemberDetailLeft
       image={
         resolvedImageUrl ? (
-          <GbvRemoteImage
+          <AmrepRemoteImage
             src={resolvedImageUrl}
             alt={member.name}
             width={300}
             height={300}
-            className="w-full aspect-square rounded-lg object-contain"
+            className="w-full aspect-square object-contain"
             fallbackSrc={site.placeholderIconSrc}
             cacheKey={`${site.id}-member-image:${member.name.toLowerCase()}`}
             preferProxy

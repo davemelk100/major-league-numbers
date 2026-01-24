@@ -17,7 +17,8 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 48,
+          fontSize: 56,
+          lineHeight: 1,
           backgroundColor: "transparent",
           fontFamily:
             '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif',

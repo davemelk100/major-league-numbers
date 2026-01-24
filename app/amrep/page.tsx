@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GbvDashboardContent } from "@/components/amrep/amrep-dashboard-content";
+import { AmrepDashboardContent } from "@/components/amrep/amrep-dashboard-content";
 
 export const metadata: Metadata = {
   title: "Amphetamine Reptile Records",
@@ -10,5 +10,5 @@ export const metadata: Metadata = {
 export const revalidate = 60;
 
 export default function AmrepPage() {
-  return <GbvDashboardContent />;
+  return <AmrepDashboardContent />;
 }

@@ -1,6 +1,7 @@
  "use client";
 
- import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { getProxiedImageUrl } from "@/lib/image-utils";
 
  type UseMemberImageOptions = {
    siteId: string;
@@ -23,7 +24,10 @@
  }: UseMemberImageOptions) {
    const [resolvedImageUrl, setResolvedImageUrl] = useState<string | null>(null);
    const [lookupAttempted, setLookupAttempted] = useState(false);
-   const normalizedName = memberName?.toLowerCase().trim() || "";
+  const normalizedName = memberName?.toLowerCase().trim() || "";
+  const proxiedLocalImageUrl = getProxiedImageUrl(localImageUrl);
+  const proxiedDiscogsImageUrl = getProxiedImageUrl(discogsImageUrl);
+  const proxiedFallbackImageUrl = getProxiedImageUrl(fallbackImageUrl);
 
    useEffect(() => {
      setResolvedImageUrl(null);
@@ -33,18 +37,18 @@
    useEffect(() => {
      if (!memberName) return;
 
-     if (localImageUrl) {
-       setResolvedImageUrl(localImageUrl);
+    if (proxiedLocalImageUrl) {
+      setResolvedImageUrl(proxiedLocalImageUrl);
        return;
      }
 
-     if (discogsImageUrl) {
-       setResolvedImageUrl(discogsImageUrl);
+    if (proxiedDiscogsImageUrl) {
+      setResolvedImageUrl(proxiedDiscogsImageUrl);
        return;
      }
 
-     if (fallbackImageUrl && !lookupAttempted) {
-       setResolvedImageUrl(fallbackImageUrl);
+    if (proxiedFallbackImageUrl && !lookupAttempted) {
+      setResolvedImageUrl(proxiedFallbackImageUrl);
        setLookupAttempted(true);
        return;
      }
@@ -53,9 +57,10 @@
 
      const cacheKey = `${siteId}-member-image:${normalizedName}`;
      try {
-       const cached = localStorage.getItem(cacheKey);
+        const cached = localStorage.getItem(cacheKey);
        if (cached) {
-         setResolvedImageUrl(cached);
+          const cachedUrl = getProxiedImageUrl(cached) ?? cached;
+          setResolvedImageUrl(cachedUrl);
          setLookupAttempted(true);
          return;
        }
@@ -71,10 +76,15 @@
          );
          if (!res.ok) return;
          const data = await res.json();
-         if (isActive && typeof data?.imageUrl === "string") {
-           setResolvedImageUrl(data.imageUrl);
+        if (isActive && typeof data?.imageUrl === "string") {
+          const proxiedUrl = getProxiedImageUrl(data.imageUrl);
+          if (proxiedUrl) {
+            setResolvedImageUrl(proxiedUrl);
+          }
            try {
-             localStorage.setItem(cacheKey, data.imageUrl);
+            if (proxiedUrl) {
+              localStorage.setItem(cacheKey, proxiedUrl);
+            }
            } catch {
              // ignore cache errors
            }
@@ -93,9 +103,9 @@
        isActive = false;
      };
    }, [
-     discogsImageUrl,
-     fallbackImageUrl,
-     localImageUrl,
+    proxiedDiscogsImageUrl,
+    proxiedFallbackImageUrl,
+    proxiedLocalImageUrl,
      lookupAttempted,
      memberName,
      normalizedName,

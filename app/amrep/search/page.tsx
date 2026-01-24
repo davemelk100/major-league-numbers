@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GbvSearchContent } from "@/components/amrep/amrep-search-content";
+import { SiteSearchContent } from "@/components/music-site/site-search-content";
 
 export const metadata: Metadata = {
   title: "Search",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AmrepSearchPage() {
-  return <GbvSearchContent />;
+  return <SiteSearchContent />;
 }

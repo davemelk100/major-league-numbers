@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GbvAwardsContent } from "@/components/gbv/gbv-awards-content";
+import { SiteAwardsContent } from "@/components/music-site/site-awards-content";
 
 export const metadata: Metadata = {
   title: "Awards",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function GbvAwardsPage() {
-  return <GbvAwardsContent />;
+  return <SiteAwardsContent />;
 }

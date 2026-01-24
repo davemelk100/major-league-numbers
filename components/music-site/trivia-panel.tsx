@@ -41,7 +41,7 @@ interface AnsweredQuestion {
   isCorrect: boolean;
 }
 
-function GbvTriviaCardContent() {
+function TriviaCardContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";
@@ -218,103 +218,94 @@ function GbvTriviaCardContent() {
         <div className="p-4 space-y-4">
           <div className="flex flex-col gap-1">
             <div className="flex items-center justify-between">
-              <h3 className="font-semibold text-lg">Daily Trivia</h3>
-              <Button
-                size="sm"
-                variant="ghost"
-                onClick={() => setIsOpen(false)}
-              >
-                Close
-              </Button>
-            </div>
-            <div className="text-xs text-muted-foreground">
-              {isComplete
-                ? "Come back tomorrow for more trivia!"
-                : "Answer all 5 questions to complete today's trivia."}
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={goToPrev}
-              disabled={currentIndex === 0}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-            <div className="text-xs text-muted-foreground">
-              {currentIndex + 1} / 5
+              <h3 className="text-xs font-semibold uppercase tracking-wider">
+                Daily Trivia
+              </h3>
             </div>
             <Button
-              variant="ghost"
+              variant="link"
               size="sm"
-              onClick={goToNext}
-              disabled={currentIndex === 4}
+              className="text-[10px] uppercase tracking-wider text-black p-0 h-auto justify-start"
+              onClick={() => setShowYesterday(!showYesterday)}
             >
-              <ChevronRight className="h-4 w-4" />
+              {showYesterday ? "View Today" : "View Yesterday"}
             </Button>
           </div>
 
-          <div className="space-y-3">
-            <div className="text-sm font-semibold">
-              {currentQuestion.question}
-            </div>
-            <div className="grid gap-2">
-              {currentQuestion.options.map((option, index) => {
-                const isSelected = currentAnswered?.selectedAnswer === index;
-                const isCorrect =
-                  currentAnswered?.isCorrect && isSelected;
-                const isIncorrect =
-                  currentAnswered &&
-                  !currentAnswered.isCorrect &&
-                  isSelected;
-                return (
-                  <Button
-                    key={option}
-                    variant="outline"
-                    className={cn(
-                      "justify-start text-left font-normal",
-                      isCorrect && "border-green-500 text-green-600",
-                      isIncorrect && "border-red-500 text-red-600",
-                    )}
-                    onClick={() => handleAnswer(index)}
-                    disabled={!!currentAnswered || showYesterday}
-                  >
-                    {option}
-                    {isCorrect && <CheckCircle2 className="h-4 w-4 ml-auto" />}
-                    {isIncorrect && <XCircle className="h-4 w-4 ml-auto" />}
-                  </Button>
-                );
-              })}
-            </div>
+          <div className="space-y-2">
+            <div className="text-xs">Question {currentIndex + 1} of 5</div>
+            <div className="font-semibold">{currentQuestion.question}</div>
+          </div>
+
+          <div className="space-y-2">
+            {currentQuestion.options.map((option, index) => {
+              const isSelected = currentAnswered?.selectedAnswer === index;
+              const isCorrect = currentQuestion.correctAnswer === index;
+              const showAnswerState = currentAnswered || showYesterday;
+
+              return (
+                <button
+                  key={`${currentQuestion.id}-${index}`}
+                  onClick={() => handleAnswer(index)}
+                  className={cn(
+                    "w-full text-left p-2 rounded-md text-sm border transition-colors",
+                    showAnswerState
+                      ? isCorrect
+                        ? "border-green-400 bg-green-500/10"
+                        : isSelected
+                          ? "border-red-400 bg-red-500/10"
+                          : "border-transparent bg-muted/40"
+                      : "border-transparent bg-muted/40 hover:bg-muted/60",
+                  )}
+                  disabled={!!currentAnswered || showYesterday}
+                >
+                  <div className="flex items-center gap-2">
+                    {showAnswerState ? (
+                      isCorrect ? (
+                        <CheckCircle2 className="h-4 w-4 text-green-500" />
+                      ) : isSelected ? (
+                        <XCircle className="h-4 w-4 text-red-500" />
+                      ) : null
+                    ) : null}
+                    <span>{option}</span>
+                  </div>
+                </button>
+              );
+            })}
           </div>
 
           {showYesterday || currentAnswered ? (
-            <div className="text-xs text-muted-foreground border-t border-border pt-3">
+            <div className="text-xs border-t pt-3">
               {currentQuestion.explanation}
             </div>
           ) : null}
 
-          <div className="flex items-center justify-between text-xs text-muted-foreground border-t border-border pt-3">
-            <div>
-              Score: {totalCorrect} / {totalAnswered}
-            </div>
+          <div className="flex items-center justify-between">
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
-              className="gap-1"
-              onClick={handleShare}
-              disabled={totalAnswered === 0}
+              className="gap-1 text-black"
+              onClick={goToPrev}
+              disabled={currentIndex === 0}
             >
-              <Share2 className="h-3 w-3" />
-              Share
+              <ChevronLeft className="h-4 w-4" />
+              Prev
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-1 text-black"
+              onClick={goToNext}
+              disabled={currentIndex === 4}
+            >
+              Next
+              <ChevronRight className="h-4 w-4" />
             </Button>
           </div>
 
-          <div className="flex items-center justify-between text-xs text-muted-foreground border-t border-border pt-3">
-            <div>
-              Next trivia in{" "}
+          <div className="flex items-center justify-between border-t pt-3 text-xs">
+            <span>
+              Next quiz in{" "}
               {Math.max(
                 0,
                 Math.floor(
@@ -329,33 +320,41 @@ function GbvTriviaCardContent() {
                 ),
               )}
               h
-            </div>
+            </span>
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => setShowYesterday(!showYesterday)}
+              className="gap-1 text-black"
+              onClick={handleShare}
             >
-              {showYesterday ? "Today" : "Yesterday"}
+              <Share2 className="h-4 w-4" />
+              Share
             </Button>
           </div>
 
-          {showYesterday && (
-            <div className="grid gap-2 text-xs text-muted-foreground border-t border-border pt-3">
-              {questionsToLink.map((question) => (
-                <div key={question.id} className="flex gap-2">
-                  <span className="font-semibold">{question.id}.</span>
-                  <span>{question.question}</span>
-                </div>
-              ))}
+          {isComplete && (
+            <div className="text-xs text-center">
+              Completed! Score: {totalCorrect}/5
             </div>
           )}
+        </div>
+
+        <div className="border-t px-4 py-2 text-xs">
+          {questionsToLink.length > 0 ? (
+            <a
+              href={`${site.basePath}/ask?trivia=open`}
+              className="underline underline-offset-4"
+            >
+              Open {site.shortName} trivia
+            </a>
+          ) : null}
         </div>
       </PopoverContent>
     </Popover>
   );
 }
 
-function GbvTriviaPanelContent() {
+function TriviaPanelContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
 
@@ -366,7 +365,7 @@ function GbvTriviaPanelContent() {
         <div className="flex gap-4 items-stretch">
           <div className="flex flex-col gap-2 w-1/2">
             <div>
-              <GbvTriviaCardContent />
+              <TriviaCardContent />
             </div>
             <p className="text-sm">Test your {site.shortName} knowledge.</p>
           </div>
@@ -388,7 +387,7 @@ function GbvTriviaPanelContent() {
   );
 }
 
-function GbvTriviaPanelSkeleton() {
+function TriviaPanelSkeleton() {
   return (
     <Card className="w-full h-full min-h-[120px]">
       <CardContent className="p-4 flex gap-4 items-stretch">
@@ -403,10 +402,10 @@ function GbvTriviaPanelSkeleton() {
   );
 }
 
-export function GbvTriviaPanel() {
+export function TriviaPanel() {
   return (
-    <Suspense fallback={<GbvTriviaPanelSkeleton />}>
-      <GbvTriviaPanelContent />
+    <Suspense fallback={<TriviaPanelSkeleton />}>
+      <TriviaPanelContent />
     </Suspense>
   );
 }

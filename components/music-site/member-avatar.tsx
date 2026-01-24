@@ -1,8 +1,10 @@
  "use client";
 
  import { useEffect, useState } from "react";
- import Image from "next/image";
- import { getLocalMemberImage } from "@/lib/gbv-member-images";
+import Image from "next/image";
+import { RemoteImage } from "@/components/music-site/remote-image";
+import { getLocalMemberImage } from "@/lib/gbv-member-images";
+import { getProxiedImageUrl } from "@/lib/image-utils";
 
  type MemberAvatarProps = {
    name: string;
@@ -30,10 +32,10 @@
    const [hasError, setHasError] = useState(false);
    const [resolvedImageUrl, setResolvedImageUrl] = useState<string | null>(null);
    const [lookupAttempted, setLookupAttempted] = useState(false);
-   const normalizedImageUrl = imageUrl?.replace(/^http:/, "https:") || null;
+  const normalizedImageUrl = getProxiedImageUrl(imageUrl);
    const localImageUrl = getLocalMemberImage(memberId);
    const nameKey = name.toLowerCase();
-   const fallbackImageUrl = fallbackImages?.[nameKey] || null;
+  const fallbackImageUrl = getProxiedImageUrl(fallbackImages?.[nameKey] || null);
    const shouldSkipLookup = skipRemoteLookup || Boolean(skipImages?.[nameKey]);
 
    useEffect(() => {
@@ -57,9 +59,10 @@
 
      const cacheKey = `${cacheKeyPrefix}-member-image:${nameKey}`;
      try {
-       const cached = localStorage.getItem(cacheKey);
-       if (cached) {
-         setResolvedImageUrl(cached);
+        const cached = localStorage.getItem(cacheKey);
+        if (cached) {
+          const cachedUrl = getProxiedImageUrl(cached) ?? cached;
+          setResolvedImageUrl(cachedUrl);
          setLookupAttempted(true);
          return;
        }
@@ -75,12 +78,14 @@
          );
          if (!res.ok) return;
          const data = await res.json();
-         if (typeof data?.imageUrl === "string" && data.imageUrl.length > 0) {
+        if (typeof data?.imageUrl === "string" && data.imageUrl.length > 0) {
+          const proxiedUrl = getProxiedImageUrl(data.imageUrl);
+          if (!proxiedUrl) return;
            if (isActive) {
-             setResolvedImageUrl(data.imageUrl);
+            setResolvedImageUrl(proxiedUrl);
            }
            try {
-             localStorage.setItem(cacheKey, data.imageUrl);
+            localStorage.setItem(cacheKey, proxiedUrl);
            } catch {
              // ignore cache errors
            }
@@ -111,8 +116,8 @@
    ]);
 
    if (!resolvedImageUrl || hasError) {
-     return (
-       <div className="w-full aspect-square rounded-lg mb-2 mx-auto flex items-center justify-center">
+    return (
+      <div className="w-full aspect-square rounded-lg mb-2 mx-auto flex items-center justify-center">
          <Image
            src={fallbackIconSrc}
            alt="Artist placeholder"
@@ -125,15 +130,18 @@
    }
 
    return (
-     <div className="w-full aspect-square mb-2 mx-auto relative">
-       <Image
+    <div className="w-full aspect-square mb-2 mx-auto relative rounded-lg overflow-hidden">
+      <RemoteImage
          src={resolvedImageUrl}
          alt={`${name} photo`}
-         fill
-         sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 16vw"
-         className={fit === "contain" ? "rounded-lg object-contain" : "rounded-lg object-cover"}
-         onError={() => setHasError(true)}
-         unoptimized
+        width={400}
+        height={400}
+        fallbackSrc={fallbackIconSrc}
+        className={
+          fit === "contain"
+            ? "rounded-lg object-contain w-full h-full"
+            : "rounded-lg object-cover w-full h-full"
+        }
        />
      </div>
    );

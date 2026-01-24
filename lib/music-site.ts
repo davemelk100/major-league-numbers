@@ -57,6 +57,11 @@ export const GBV_SITE: MusicSiteConfig = {
     { label: "Cover Art Archive", url: "https://coverartarchive.org/" },
     { label: "Wikidata", url: "https://www.wikidata.org/" },
     { label: "Wikimedia Commons", url: "https://commons.wikimedia.org/" },
+    { label: "Pitchfork", url: "https://pitchfork.com/" },
+    { label: "Rolling Stone", url: "https://www.rollingstone.com/" },
+    { label: "NME", url: "https://www.nme.com/" },
+    { label: "Spin", url: "https://www.spin.com/" },
+    { label: "AllMusic", url: "https://www.allmusic.com/" },
   ],
   imageSources: [
     { label: "Discogs", url: "https://www.discogs.com/" },
@@ -97,8 +102,8 @@ export const AMREP_SITE: MusicSiteConfig = {
   headerTitle: "Noise By The Numbers",
   headerTextClass: "text-black",
   logoSrc: "/amrep-logo-black.svg",
-  chatIconSrc: "/noise-bird.png",
-  placeholderIconSrc: "/noise-bird.png",
+  chatIconSrc: "/noise-bird.svg",
+  placeholderIconSrc: "/noise-bird.svg",
   shellClass: "amrep-shell",
   navLabels: {
     discography: "Releases",
@@ -108,8 +113,25 @@ export const AMREP_SITE: MusicSiteConfig = {
   footerDisclaimer:
     "All Content, Rights, Copyrights, etc. are the property of Tom Hazelmyer and AmRep records. This is simply a fan site.",
   sources: [
+    {
+      label: "Discogs",
+      url: "https://www.discogs.com/label/5126-Amphetamine-Reptile-Records",
+    },
+    {
+      label: "AmRep Discography",
+      url: "https://en.wikipedia.org/wiki/Amphetamine_Reptile_Records_discography",
+    },
+    {
+      label: "Hammerhead Discography",
+      url: "https://en.wikipedia.org/wiki/Hammerhead_(band)",
+    },
     { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Amphetamine_Reptile_Records" },
     { label: "Shoxop", url: "https://www.shoxop.com/" },
+    {
+      label: "Shoxop Archive",
+      url: "https://www.shoxop.com/collections/archive-sold-out-releases-over-the-years",
+    },
+    { label: "Shoxop All Releases", url: "https://www.shoxop.com/collections/all" },
     { label: "Facebook", url: "https://www.facebook.com/amphetaminereptile/" },
   ],
   imageSources: [

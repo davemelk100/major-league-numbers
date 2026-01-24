@@ -3,11 +3,10 @@
 import { useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
 import { Card, CardContent } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
 import { getProxiedImageUrl, getReleaseType } from "@/lib/gbv-utils";
 import { getLocalAlbumImage } from "@/lib/gbv-album-images";
-import { Loader2 } from "lucide-react";
 import {
   useSiteSearchData,
   type SiteSearchAlbum,
@@ -15,8 +14,10 @@ import {
 } from "@/components/music-site/use-site-search-data";
 import { MemberAvatar } from "@/components/music-site/member-avatar";
 import { AlbumGrid } from "@/components/music-site/album-grid";
+import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
+import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
 
-export function GbvSearchContent() {
+export function SiteSearchContent() {
   const searchParams = useSearchParams();
   const query = (searchParams.get("q") || "").trim();
   const { site, isAmrep, albums, members, isLoading } = useSiteSearchData(query);
@@ -36,12 +37,12 @@ export function GbvSearchContent() {
   }, [members, query]);
 
   const getAlbumImage = (album: SiteSearchAlbum): string | null => {
-    if (isAmrep) return album.thumb ? getProxiedImageUrl(album.thumb) : null;
-    const local = getLocalAlbumImage(album.id);
-    if (local) return local;
     const raw = album.coverUrl || album.thumb || null;
-    return getProxiedImageUrl(raw);
+    if (isAmrep) return raw ? getProxiedImageUrl(raw) : null;
+    return getLocalAlbumImage(album.id) || getProxiedImageUrl(raw);
   };
+
+  const RemoteImage = isAmrep ? AmrepRemoteImage : GbvRemoteImage;
 
   if (!query) {
     return (
@@ -132,9 +133,9 @@ export function GbvSearchContent() {
             getReleaseTypeLabel={(album) =>
               getReleaseType(album.format, album.releaseType)
             }
-            RemoteImage={GbvRemoteImage}
+            RemoteImage={RemoteImage}
             linkBasePath={`${site.basePath}/albums`}
-            cacheKeyPrefix="gbv-search-album"
+            cacheKeyPrefix={`${site.id}-search-album`}
             imageFit={isAmrep ? "contain" : "cover"}
           />
         </div>
