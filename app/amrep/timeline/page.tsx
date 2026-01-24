@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GbvTimelineContent } from "@/components/amrep/amrep-timeline-content";
+import { SiteTimelineContent } from "@/components/music-site/site-timeline-content";
 
 export const metadata: Metadata = {
   title: "Timeline",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AmrepTimelinePage() {
-  return <GbvTimelineContent />;
+  return <SiteTimelineContent />;
 }

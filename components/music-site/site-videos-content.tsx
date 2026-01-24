@@ -60,32 +60,38 @@ const videos: Video[] = [
 
 const amrepVideos: Video[] = [
   {
-    id: "L7uWBm7FnZU",
-    title: "AmRep video highlight 1",
+    id: "C8aNGVt79r4",
+    title: "Halo of Flies - No Time",
+    description: "Amphetamine Reptile Records video from Halo of Flies.",
   },
   {
-    id: "pvCaa4sxEIs",
-    title: "AmRep video highlight 2",
+    id: "g1Vv8OTguzY",
+    title: 'Melvins 1983 - "Beer Hippy"',
+    description: "AmRep video from the Melvins 1983 release.",
   },
   {
-    id: "JkiW8T3pjMI",
-    title: "AmRep video highlight 3",
+    id: "WLl2eNYznNM",
+    title: "H•O•F - A New Kind Of Hate",
+    description: "Another AmRep cut highlighting Halo of Flies.",
   },
   {
-    id: "TdC03iMqQHc",
-    title: "AmRep video highlight 4",
+    id: "uyYqiW-LIAA",
+    title: "AmRep video feature: uyYqiW-LIAA",
+    description: "Amphetamine Reptile Records video highlight.",
   },
   {
-    id: "Oiu98b3QwV8",
-    title: "AmRep video highlight 5",
+    id: "DJwIgdInEy0",
+    title: "AmRep video feature: DJwIgdInEy0",
+    description: "Amphetamine Reptile Records video highlight.",
   },
   {
-    id: "aIwNKAGI9FM",
-    title: "AmRep video highlight 6",
+    id: "HjC0pEl0kSE",
+    title: "AmRep video feature: HjC0pEl0kSE",
+    description: "Amphetamine Reptile Records video highlight.",
   },
 ];
 
-export function GbvVideosContent() {
+export function SiteVideosContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";

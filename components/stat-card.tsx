@@ -122,7 +122,7 @@ export function StatCard({ title, value, description, leaders, icon: Icon, trend
             </Button>
 
             <div className="flex flex-col items-center gap-4 pt-4">
-              <div className="relative w-48 h-48 rounded-full overflow-hidden border-4 border-muted">
+              <div className="relative w-48 h-48 rounded-none overflow-hidden border-4 border-muted">
                 <Image
                   src={getPlayerHeadshotUrl(selectedPlayer.id, "large")}
                   alt={selectedPlayer.name}

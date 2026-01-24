@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GbvSideProjectsContent } from "@/components/amrep/amrep-side-projects-content";
+import { SiteSideProjectsContent } from "@/components/music-site/site-side-projects-content";
 
 export const metadata: Metadata = {
   title: "Imprints",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AmrepSideProjectsPage() {
-  return <GbvSideProjectsContent />;
+  return <SiteSideProjectsContent />;
 }

@@ -1,0 +1,228 @@
+"use client";
+
+import type { ComponentProps, ComponentType, ReactNode } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import type { MusicSiteConfig } from "@/lib/music-site";
+import { MemberAvatar } from "@/components/music-site/member-avatar";
+
+type RemoteImageProps = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  className?: string;
+  loading?: "lazy" | "eager";
+  cacheKey?: string;
+  preferProxy?: boolean;
+};
+
+type DashboardMember = {
+  id?: number;
+  name: string;
+  imageUrl?: string | null;
+};
+
+type DashboardAlbum = {
+  id?: number;
+  title: string;
+  year?: number;
+  format?: string | string[];
+  releaseType?: string;
+  thumb?: string;
+};
+
+type MemberAvatarOptions = Pick<
+  ComponentProps<typeof MemberAvatar>,
+  "fallbackImages" | "skipImages" | "fit" | "skipRemoteLookup"
+>;
+
+type DashboardDailyRowProps = {
+  children: ReactNode;
+};
+
+type DashboardSectionHeaderProps = {
+  title: string;
+  href: string;
+  linkLabel?: string;
+};
+
+type DashboardMembersGridProps = {
+  members: DashboardMember[];
+  site: MusicSiteConfig;
+  linkBasePath: string;
+  memberAvatarProps?: MemberAvatarOptions;
+};
+
+type DashboardDiscographyGridProps<T extends DashboardAlbum> = {
+  albums: T[];
+  site: MusicSiteConfig;
+  linkBasePath: string;
+  getAlbumImage: (album: T) => string | null;
+  getReleaseTypeLabel: (album: T) => string;
+  RemoteImage: ComponentType<RemoteImageProps>;
+  cacheKeyPrefix: string;
+  imageFit?: "cover" | "contain";
+  placeholderVariant?: "next-image" | "img";
+  placeholderClassName?: string;
+  placeholderSize?: number;
+};
+
+export function DashboardDailyRow({ children }: DashboardDailyRowProps) {
+  return <div className="mb-8 grid gap-4 md:grid-cols-2">{children}</div>;
+}
+
+export function DashboardSectionHeader({
+  title,
+  href,
+  linkLabel = "View all →",
+}: DashboardSectionHeaderProps) {
+  return (
+    <div className="flex items-center gap-4 mb-4">
+      <h2 className="font-league">{title}</h2>
+      <Link
+        href={href}
+        className="uppercase text-sm text-muted-foreground hover:text-foreground"
+      >
+        {linkLabel}
+      </Link>
+    </div>
+  );
+}
+
+export function DashboardMembersGrid({
+  members,
+  site,
+  linkBasePath,
+  memberAvatarProps,
+}: DashboardMembersGridProps) {
+  return (
+    <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+      {members.map((member, index) => {
+        const card = (
+          <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+            <CardContent className="p-3 text-center">
+              <MemberAvatar
+                name={member.name}
+                imageUrl={member.imageUrl}
+                memberId={member.id}
+                fallbackIconSrc={site.placeholderIconSrc}
+                cacheKeyPrefix={site.id}
+                {...memberAvatarProps}
+              />
+              <h3 className="font-semibold text-sm">{member.name}</h3>
+            </CardContent>
+          </Card>
+        );
+
+        if (member.id) {
+          return (
+            <Link key={member.id} href={`${linkBasePath}/${member.id}`}>
+              {card}
+            </Link>
+          );
+        }
+
+        return (
+          <div key={`${member.name}-${index}`} className="cursor-default">
+            {card}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+export function DashboardDiscographyGrid<T extends DashboardAlbum>({
+  albums,
+  site,
+  linkBasePath,
+  getAlbumImage,
+  getReleaseTypeLabel,
+  RemoteImage,
+  cacheKeyPrefix,
+  imageFit = "cover",
+  placeholderVariant = "next-image",
+  placeholderClassName = "w-1/2 h-1/2 gbv-nav-icon object-contain",
+  placeholderSize = 24,
+}: DashboardDiscographyGridProps<T>) {
+  const imageClassName = `w-full aspect-square rounded-lg object-${imageFit} mb-2`;
+
+  const renderPlaceholder = () => (
+    <div className="w-full aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center">
+      {placeholderVariant === "img" ? (
+        <img
+          src={site.placeholderIconSrc}
+          alt={`${site.shortName} logo`}
+          className={placeholderClassName}
+          loading="eager"
+        />
+      ) : (
+        <Image
+          src={site.placeholderIconSrc}
+          alt={`${site.shortName} logo`}
+          width={placeholderSize}
+          height={placeholderSize}
+          className={placeholderClassName}
+          loading="eager"
+        />
+      )}
+    </div>
+  );
+
+  return (
+    <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+      {albums.map((album, index) => {
+        const albumImage = getAlbumImage(album);
+        const card = (
+          <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+            <CardContent className="p-3">
+              {albumImage ? (
+                <RemoteImage
+                  src={albumImage}
+                  alt={album.title}
+                  width={200}
+                  height={200}
+                  className={imageClassName}
+                  loading={index < 5 ? "eager" : "lazy"}
+                  cacheKey={album.id ? `${cacheKeyPrefix}:${album.id}` : undefined}
+                  preferProxy
+                />
+              ) : (
+                renderPlaceholder()
+              )}
+              <h3 className="font-semibold text-sm truncate">{album.title}</h3>
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span>{album.year ?? "—"}</span>
+                <span className="border border-border rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide">
+                  {getReleaseTypeLabel(album)}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+        );
+
+        if (album.id) {
+          return (
+            <Link
+              key={`${album.id}-${index}`}
+              href={`${linkBasePath}/${album.id}`}
+            >
+              {card}
+            </Link>
+          );
+        }
+
+        return (
+          <div
+            key={`${album.title}-${album.year ?? "unknown"}-${index}`}
+            className="cursor-default"
+          >
+            {card}
+          </div>
+        );
+      })}
+    </div>
+  );
+}

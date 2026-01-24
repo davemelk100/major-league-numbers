@@ -1,32 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { usePathname } from "next/navigation";
 import { getDailyGbvRecord, type GbvRecordOfDay } from "@/lib/gbv-records-data";
 import { getDailyAmrepRecord, type AmrepRecordOfDay } from "@/lib/amrep-records-data";
-import Image from "next/image";
-import Link from "next/link";
-import { GbvRemoteImage } from "@/components/amrep/amrep-remote-image";
 import { getLocalAlbumImage } from "@/lib/gbv-album-images";
-import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { amrepReleases } from "@/lib/amrep-releases-data";
 
-export function GbvRecordOfDayCard() {
+export function useRecordOfDay() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";
   const [record, setRecord] = useState<GbvRecordOfDay | AmrepRecordOfDay | null>(null);
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
   const [albumId, setAlbumId] = useState<number | null>(null);
-  const cacheKeyPrefix = isAmrep ? "amrep" : "gbv";
-  const cacheKey = record
-    ? `${cacheKeyPrefix}-record-cover:${record.title}:${record.year}`
-    : `${cacheKeyPrefix}-record-cover`;
 
   useEffect(() => {
     const daily = isAmrep ? getDailyAmrepRecord() : getDailyGbvRecord();
     setRecord(daily);
+
+    const cacheKeyPrefix = isAmrep ? "amrep" : "gbv";
 
     if (isAmrep) {
       const amrepDaily = daily as AmrepRecordOfDay;
@@ -51,7 +45,7 @@ export function GbvRecordOfDayCard() {
       const match = amrepReleases.find(
         (release) =>
           release.title.toLowerCase() === daily.title.toLowerCase() &&
-          release.year === daily.year
+          release.year === daily.year,
       );
       if (match?.id) setAlbumId(match.id);
 
@@ -64,14 +58,14 @@ export function GbvRecordOfDayCard() {
 
           for (let page = 1; page <= maxPages; page += 1) {
             const res = await fetch(
-              `/api/amrep/discogs?type=releases&per_page=${perPage}&page=${page}`
+              `/api/amrep/discogs?type=releases&per_page=${perPage}&page=${page}`,
             );
             if (!res.ok) return;
             const data = await res.json();
             const releases = Array.isArray(data?.releases) ? data.releases : [];
             const exact = releases.find(
               (release: { title?: string; year?: number }) =>
-                titleMatch(release) && release.year === daily.year
+                titleMatch(release) && release.year === daily.year,
             );
             const fallback = releases.find(titleMatch);
             const resolved = exact || fallback;
@@ -83,7 +77,7 @@ export function GbvRecordOfDayCard() {
               try {
                 localStorage.setItem(
                   cacheKey,
-                  JSON.stringify({ url: resolved.thumb })
+                  JSON.stringify({ url: resolved.thumb }),
                 );
               } catch {
                 // ignore cache errors
@@ -122,7 +116,8 @@ export function GbvRecordOfDayCard() {
 
     async function fetchAlbumLink() {
       try {
-        let albums: Array<{ id?: number; title?: string; year?: number; thumb?: string }> = [];
+        let albums: Array<{ id?: number; title?: string; year?: number; thumb?: string }> =
+          [];
         try {
           const cachedAlbums = localStorage.getItem(albumsCacheKey);
           if (cachedAlbums) {
@@ -141,10 +136,7 @@ export function GbvRecordOfDayCard() {
           const data = await res.json();
           albums = Array.isArray(data.albums) ? data.albums : [];
           try {
-            localStorage.setItem(
-              albumsCacheKey,
-              JSON.stringify({ albums })
-            );
+            localStorage.setItem(albumsCacheKey, JSON.stringify({ albums }));
           } catch {
             // ignore cache errors
           }
@@ -153,22 +145,22 @@ export function GbvRecordOfDayCard() {
           (album.title || "").toLowerCase() === daily.title.toLowerCase();
         const exact = albums.find(
           (album: { title?: string; year?: number }) =>
-            titleMatch(album) && album.year === daily.year
+            titleMatch(album) && album.year === daily.year,
         );
         const fallback = albums.find(titleMatch);
-        const match = exact || fallback;
-        if (match?.id) {
-          setAlbumId(match.id);
+        const matchRecord = exact || fallback;
+        if (matchRecord?.id) {
+          setAlbumId(matchRecord.id);
         }
-        const localImage = getLocalAlbumImage(match?.id);
-        const thumbUrl = match?.thumb || null;
+        const localImage = getLocalAlbumImage(matchRecord?.id);
+        const thumbUrl = matchRecord?.thumb || null;
         const resolvedUrl = localImage || thumbUrl;
         if (resolvedUrl) {
           setCoverUrl(resolvedUrl);
           try {
             localStorage.setItem(
               cacheKey,
-              JSON.stringify({ url: normalizeImageUrl(resolvedUrl) })
+              JSON.stringify({ url: normalizeImageUrl(resolvedUrl) }),
             );
           } catch {
             // ignore cache errors
@@ -180,9 +172,7 @@ export function GbvRecordOfDayCard() {
     }
 
     fetchAlbumLink();
-  }, []);
-
-  if (!record) return null;
+  }, [isAmrep]);
 
   const albumHref = albumId ? `${site.basePath}/albums/${albumId}` : null;
   const displayTitle =
@@ -190,66 +180,12 @@ export function GbvRecordOfDayCard() {
       ? `${record.artist} — ${record.title}`
       : record?.title;
 
-  return (
-    <Card className="w-full h-full min-h-[120px]">
-      <CardContent className="p-4 flex gap-4 items-stretch">
-        <div className="flex flex-col gap-1 w-1/2">
-          <h2>Record of the Day</h2>
-          {albumHref ? (
-            <Link href={albumHref} className="text-base font-semibold hover:underline">
-              {displayTitle}
-            </Link>
-          ) : (
-            <div className="text-base font-semibold">{displayTitle}</div>
-          )}
-          <div className="text-xs text-muted-foreground">{record.year}</div>
-          <p className="text-sm text-muted-foreground">{record.highlight}</p>
-        </div>
-        <div className="w-1/2 relative">
-          {coverUrl ? (
-            albumHref ? (
-              <Link href={albumHref} className="absolute inset-0">
-                <GbvRemoteImage
-                  src={coverUrl}
-                  alt={`${record.title} cover`}
-                  className="rounded-md object-contain w-full h-full"
-                  loading="eager"
-                  preferProxy={false}
-                />
-              </Link>
-            ) : (
-              <GbvRemoteImage
-                src={coverUrl}
-                alt={`${record.title} cover`}
-                className="rounded-md object-contain w-full h-full"
-                loading="eager"
-                preferProxy={false}
-              />
-            )
-          ) : (
-            albumHref ? (
-              <Link
-                href={albumHref}
-                className="w-full h-full bg-muted rounded-md flex items-center justify-center"
-              >
-                <img
-                  src={site.placeholderIconSrc}
-                  alt={`${site.shortName} logo`}
-                  className="w-auto h-auto max-w-1/2 max-h-1/2 gbv-nav-icon object-contain"
-                />
-              </Link>
-            ) : (
-              <div className="w-full h-full bg-muted rounded-md flex items-center justify-center">
-                <img
-                  src={site.placeholderIconSrc}
-                  alt={`${site.shortName} logo`}
-                  className="w-auto h-auto max-w-1/2 max-h-1/2 gbv-nav-icon object-contain"
-                />
-              </div>
-            )
-          )}
-        </div>
-      </CardContent>
-    </Card>
-  );
+  return {
+    site,
+    isAmrep,
+    record,
+    coverUrl,
+    albumHref,
+    displayTitle,
+  };
 }

@@ -16,6 +16,9 @@ const nextConfig = {
   images: {
     localPatterns: [
       {
+        pathname: "/**",
+      },
+      {
         pathname: "/api/gbv/image-proxy",
       },
       {
@@ -28,7 +31,7 @@ const nextConfig = {
         pathname: "/gbv-albums/**",
       },
       {
-        pathname: "/noise-bird.png",
+        pathname: "/noise-bird.svg",
       },
     ],
     remotePatterns: [
@@ -74,11 +77,35 @@ const nextConfig = {
       },
       {
         protocol: "https",
+        hostname: "majorleaguenumbers.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.majorleaguenumbers.com",
+      },
+      {
+        protocol: "https",
         hostname: "coverartarchive.org",
       },
       {
         protocol: "https",
         hostname: "*.archive.org",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.shopify.com",
+      },
+      {
+        protocol: "https",
+        hostname: "bigtakeover.com",
+      },
+      {
+        protocol: "https",
+        hostname: "f4.bcbits.com",
+      },
+      {
+        protocol: "https",
+        hostname: "i.scdn.co",
       },
     ],
     formats: ["image/avif", "image/webp"],

@@ -1,12 +1,12 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { pollardSideProjects } from "../../lib/gbv-side-projects";
+import { pollardSideProjects } from "@/lib/gbv-side-projects";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { amrepImprints } from "@/lib/amrep-imprints-data";
 
-export function GbvSideProjectsContent() {
+export function SiteSideProjectsContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";

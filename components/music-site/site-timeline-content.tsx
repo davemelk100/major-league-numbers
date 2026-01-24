@@ -28,7 +28,7 @@ const timelineEvents = [
   { year: 2024, event: "Band continues prolific output" },
 ];
 
-export function GbvTimelineContent() {
+export function SiteTimelineContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";

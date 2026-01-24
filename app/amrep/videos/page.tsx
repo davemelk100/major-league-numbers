@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GbvVideosContent } from "@/components/amrep/amrep-videos-content";
+import { SiteVideosContent } from "@/components/music-site/site-videos-content";
 
 export const metadata: Metadata = {
   title: "Videos",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function AmrepVideosPage() {
-  return <GbvVideosContent />;
+  return <SiteVideosContent />;
 }

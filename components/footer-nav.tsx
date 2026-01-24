@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
   Home,
   Users,
@@ -10,6 +11,7 @@ import {
   BarChart3,
   Star,
   Award,
+  Loader2,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -33,6 +35,11 @@ const navigation: NavItem[] = [
 
 export function LeftNav() {
   const pathname = usePathname();
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
+
+  useEffect(() => {
+    setPendingHref(null);
+  }, [pathname]);
 
   return (
     <nav className="fixed top-0 left-0 bottom-0 z-40 w-20 bg-background border-r border-border pt-4 hidden sm:flex flex-col">
@@ -40,13 +47,22 @@ export function LeftNav() {
         {navigation.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
+          const isPending = pendingHref === item.href && pendingHref !== pathname;
+          const showActive = isActive || isPending;
           return (
             <Link
               key={item.name}
               href={item.href}
+              aria-current={showActive ? "page" : undefined}
+              aria-busy={isPending ? "true" : undefined}
+              onClick={() => {
+                if (item.href !== pathname) {
+                  setPendingHref(item.href);
+                }
+              }}
               className={cn(
                 "flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-colors w-full",
-                isActive
+                showActive
                   ? "text-primary bg-primary/10"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted"
               )}
@@ -62,8 +78,11 @@ export function LeftNav() {
               ) : Icon ? (
                 <Icon className="h-5 w-5" />
               ) : null}
-              <span className="text-xs font-medium text-center leading-tight">
+              <span className="flex items-center justify-center gap-1 text-xs font-medium text-center leading-tight">
                 {item.name}
+                {isPending ? (
+                  <Loader2 className="h-3 w-3 animate-spin text-current" />
+                ) : null}
               </span>
             </Link>
           );
@@ -76,6 +95,11 @@ export function LeftNav() {
 // Keep FooterNav for mobile
 export function FooterNav() {
   const pathname = usePathname();
+  const [pendingHref, setPendingHref] = useState<string | null>(null);
+
+  useEffect(() => {
+    setPendingHref(null);
+  }, [pathname]);
 
   // Only show essential nav items on mobile footer
   const mobileNavigation = navigation
@@ -92,13 +116,22 @@ export function FooterNav() {
         {mobileNavigation.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;
+          const isPending = pendingHref === item.href && pendingHref !== pathname;
+          const showActive = isActive || isPending;
           return (
             <Link
               key={item.name}
               href={item.href}
+              aria-current={showActive ? "page" : undefined}
+              aria-busy={isPending ? "true" : undefined}
+              onClick={() => {
+                if (item.href !== pathname) {
+                  setPendingHref(item.href);
+                }
+              }}
               className={cn(
                 "flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 rounded-md transition-colors min-w-[48px]",
-                isActive
+                showActive
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
               )}
@@ -114,7 +147,12 @@ export function FooterNav() {
               ) : Icon ? (
                 <Icon className="h-5 w-5" />
               ) : null}
-              <span className="text-sm font-medium">{item.name}</span>
+              <span className="flex items-center justify-center gap-1 text-sm font-medium">
+                {item.name}
+                {isPending ? (
+                  <Loader2 className="h-3 w-3 animate-spin text-current" />
+                ) : null}
+              </span>
             </Link>
           );
         })}
