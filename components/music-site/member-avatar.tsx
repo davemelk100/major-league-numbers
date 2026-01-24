@@ -6,6 +6,11 @@ import { RemoteImage } from "@/components/music-site/remote-image";
 import { getLocalMemberImage } from "@/lib/gbv-member-images";
 import { getProxiedImageUrl } from "@/lib/image-utils";
 
+const SITE_LOOKUP_CONTEXT: Record<string, string> = {
+  gbv: "Guided By Voices",
+  amrep: "Amphetamine Reptile Records",
+};
+
  type MemberAvatarProps = {
    name: string;
    imageUrl?: string | null;
@@ -71,11 +76,14 @@ import { getProxiedImageUrl } from "@/lib/image-utils";
      }
 
      let isActive = true;
-     async function fetchCommons() {
+    const lookupContext = SITE_LOOKUP_CONTEXT[cacheKeyPrefix];
+    async function fetchCommons() {
        try {
-         const res = await fetch(
-           `/api/gbv/commons-image?name=${encodeURIComponent(name)}`,
-         );
+        const query = new URLSearchParams({ name });
+        if (lookupContext) {
+          query.set("context", lookupContext);
+        }
+        const res = await fetch(`/api/gbv/commons-image?${query.toString()}`);
          if (!res.ok) return;
          const data = await res.json();
         if (typeof data?.imageUrl === "string" && data.imageUrl.length > 0) {

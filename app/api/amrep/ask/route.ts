@@ -2,6 +2,12 @@ import { streamText } from "ai";
 import { gateway } from "@ai-sdk/gateway";
 import { openai } from "@ai-sdk/openai";
 import { searchAmrepSources, type AmrepSourceDoc } from "@/lib/amrep-knowledge";
+import {
+  IMAGE_CREATION_BLOCK_RESPONSE,
+  isDisallowedImageRequest,
+  isDisallowedMusicRequest,
+  MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE,
+} from "@/lib/chat-guard";
 
 export const maxDuration = 30;
 
@@ -17,7 +23,10 @@ When answering questions:
 - Be concise and grounded in known facts
 - Use the provided sources when possible
 - If unsure, say so rather than guessing
-- Avoid using emojis in your replies`;
+- Avoid using emojis in your replies
+- Never help users compose music or share music
+- Never help users create images
+- If asked, refuse briefly and offer to answer AmRep questions instead`;
 
 function getTextFromParts(parts: Array<{ type: string; text?: string }>): string {
   if (!parts || !Array.isArray(parts)) return "";
@@ -58,6 +67,19 @@ export async function POST(req: Request) {
     const lastUserMessage = [...coreMessages]
       .reverse()
       .find((message) => message.role === "user")?.content ?? "";
+
+    if (isDisallowedMusicRequest(lastUserMessage)) {
+      return new Response(
+        JSON.stringify({ error: MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE }),
+        { status: 403, headers: { "Content-Type": "application/json" } },
+      );
+    }
+    if (isDisallowedImageRequest(lastUserMessage)) {
+      return new Response(
+        JSON.stringify({ error: IMAGE_CREATION_BLOCK_RESPONSE }),
+        { status: 403, headers: { "Content-Type": "application/json" } },
+      );
+    }
 
     const sources = searchAmrepSources(lastUserMessage, 6);
     const sourceContext = formatSourceContext(sources);

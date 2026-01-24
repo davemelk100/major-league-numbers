@@ -1,6 +1,12 @@
 import { streamText, type CoreMessage } from "ai"
 import { gateway } from "@ai-sdk/gateway"
 import { openai } from "@ai-sdk/openai"
+import {
+  IMAGE_CREATION_BLOCK_RESPONSE,
+  isDisallowedImageRequest,
+  isDisallowedMusicRequest,
+  MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE,
+} from "@/lib/chat-guard"
 
 export const maxDuration = 30
 
@@ -27,7 +33,12 @@ You can help users explore:
 - League leaders and records
 - Award winners
 - Historical matchups and memorable moments
-- Statistical comparisons between players`
+- Statistical comparisons between players
+
+Safety requirements:
+- Never help users compose music or share music
+- Never help users create images
+- If asked, refuse briefly and offer to answer baseball questions instead`
 
 // Helper to extract text from UI message parts
 function getTextFromParts(parts: Array<{ type: string; text?: string }>): string {
@@ -49,6 +60,23 @@ export async function POST(req: Request) {
         content: msg.content || getTextFromParts(msg.parts || []),
       })
     )
+
+    const lastUserMessage = [...coreMessages]
+      .reverse()
+      .find((message) => message.role === "user")?.content ?? ""
+
+    if (isDisallowedMusicRequest(lastUserMessage)) {
+      return new Response(
+        JSON.stringify({ error: MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE }),
+        { status: 403, headers: { "Content-Type": "application/json" } },
+      )
+    }
+    if (isDisallowedImageRequest(lastUserMessage)) {
+      return new Response(
+        JSON.stringify({ error: IMAGE_CREATION_BLOCK_RESPONSE }),
+        { status: 403, headers: { "Content-Type": "application/json" } },
+      )
+    }
 
     // Use OpenAI directly if OPENAI_API_KEY is set (for Netlify/other hosts)
     // Otherwise use Vercel AI Gateway (for Vercel deployments)

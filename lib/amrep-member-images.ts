@@ -12,13 +12,17 @@ export const AMREP_MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
   godheadsilo:
     "/api/gbv/image-proxy?url=https%3A%2F%2Fsubpop-img.s3.amazonaws.com%2Fasset%2Fartist_images%2Fattachments%2F000%2F004%2F023%2Fmax_960%2F2599.jpg%3F1389019541",
   feedtime:
-    "/api/gbv/image-proxy?url=https%3A%2F%2Fblogger.googleusercontent.com%2Fimg%2Fb%2FR29vZ2xl%2FAVvXsEifkiuREakx2nobgg6oAbn48dOH7pt08shcvMHNlQ4SlNxiVuAxFScUcSz_jkyXs1yYqIcbmexTrvwT_3Wr_irdui8VrGi-MwsrEH1Lf-6t8yJu6uuRyr8-4DiDtk4N-fRQIFDeh2oOaXgcLU7ZdT32LG3YVwmZl-GbbwdtuRUTRkhZIEjC_XYAqtncnFU%2Fs1484%2Fft.png",
+    "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0004294904_10.jpg",
   guzzard:
     "/api/gbv/image-proxy?url=https%3A%2F%2Fi.discogs.com%2Fi0KlQVkGitf6ESETMz2mya75cJp5gHp_wzDSRBs-xaE%2Frs%3Afit%2Fg%3Asm%2Fq%3A90%2Fh%3A581%2Fw%3A600%2FczM6Ly9kaXNjb2dz%2FLWRhdGFiYXNlLWltYWdlcy9BLTI3OTM3NC0xMjU2MTU0OTEwLmpwZWc.jpeg",
   gaunt:
     "/api/gbv/image-proxy?url=https%3A%2F%2Flollipopmagazine.com%2Fwp-content%2Fuploads%2F2017%2F12%2Fgauntphoto.jpg",
+  "king snake roost":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fen%2F4%2F41%2FRoost.jpg",
   "lubricated goat":
-    "/api/gbv/image-proxy?url=https%3A%2F%2Fwww.rokkosadventures.at%2F_FIN%2520FOR%2520MEIKO%2F02%2520Stu%2520Spasm%2Flubricated%2520goat%2520at%2520casa%2520sondra%2520london%2FPart%2520002%2Fweb%2Fsondra-01.jpg",
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2F300x300%2Fdacbd6fc7208965df11ca2593fd0b1cd.jpg",
+  lowercase:
+    "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0021188507_10.jpg",
   "halo of flies":
     "/api/gbv/image-proxy?url=https%3A%2F%2Fimages.squarespace-cdn.com%2Fcontent%2Fv1%2F600594e0259ef06ca93df13f%2F1611524978577-D6S8X4HIZEW6V80Q7X9L%2Fhalo3.jpeg",
   "halo of flies / h•o•f":
@@ -28,9 +32,9 @@ export const AMREP_MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
   "bailter space":
     "/api/gbv/image-proxy?url=https%3A%2F%2Fsun-13.com%2Fwp-content%2Fuploads%2F2023%2F04%2Fbailterspace201812403.jpg",
   brainiac:
-    "/api/gbv/image-proxy?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fen%2F2%2F2a%2FBrainiac_-_Hissing_Prigs_in_Static_Couture.jpg",
+    "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0020101279_10.jpg",
   "boss hog":
-    "/api/gbv/image-proxy?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fen%2F1%2F18%2FBoss_Hog_-_Boss_Hog.jpg",
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F4%2F46%2FBoss_Hog.jpg",
   "strapping fieldhands":
     "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0024692884_10.jpg",
   supernova:
@@ -41,6 +45,10 @@ export const AMREP_MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
     "/api/gbv/image-proxy?url=https%3A%2F%2Fbeautifulnoise.wordpress.com%2Fwp-content%2Fuploads%2F2008%2F08%2Fnew_sheiks.jpg",
   "the heroine sheiks":
     "/api/gbv/image-proxy?url=https%3A%2F%2Fbeautifulnoise.wordpress.com%2Fwp-content%2Fuploads%2F2008%2F08%2Fnew_sheiks.jpg",
+  "thee headcoats":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fsubpop-img.s3.amazonaws.com%2Fasset%2Fartist_images%2Fattachments%2F000%2F004%2F281%2Fmax_960%2F2607.jpg%3F1389021118",
+  "thee mighty caesars":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2F300x300%2F3c5bf84a50194627c6c60a8a5ad918bb.jpg",
   "janitor joe":
     "/api/gbv/image-proxy?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fen%2Fthumb%2F9%2F9f%2FJanitor_Joe.jpg%2F330px-Janitor_Joe.jpg",
   tar: "/api/gbv/image-proxy?url=https%3A%2F%2Fi.scdn.co%2Fimage%2F6b561f9e6f2eac88a1704625d8f2588422e748da",

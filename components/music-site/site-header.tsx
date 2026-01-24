@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -18,6 +19,11 @@ export function SiteHeader() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const askPath = `${site.basePath}/ask`;
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <header className="z-50 w-full bg-transparent py-1">
@@ -49,33 +55,48 @@ export function SiteHeader() {
         </Link>
 
         <div className="ml-auto flex items-center gap-3">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="ghost"
-                className="h-12 w-12 p-0 gbv-search-button lg:hidden"
-                aria-label={`Search ${site.shortName}`}
+          {isMounted ? (
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="h-12 w-12 p-0 gbv-search-button lg:hidden"
+                  aria-label={`Search ${site.shortName}`}
+                >
+                  <Search
+                    className={cn(
+                      "gbv-search-icon",
+                      site.id === "amrep" && "text-black",
+                    )}
+                  />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-[min(20rem,calc(100vw-2rem))] p-2"
+                align="end"
+                sideOffset={8}
+                collisionPadding={16}
               >
-                <Search
-                  className={cn(
-                    "gbv-search-icon",
-                    site.id === "amrep" && "text-black",
-                  )}
+                <SiteSearch
+                  placeholder={site.searchPlaceholder}
+                  inputClassName="text-black placeholder:text-gray-400 bg-white"
                 />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent
-              className="w-[min(20rem,calc(100vw-2rem))] p-2"
-              align="end"
-              sideOffset={8}
-              collisionPadding={16}
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <Button
+              variant="ghost"
+              className="h-12 w-12 p-0 gbv-search-button lg:hidden"
+              aria-label={`Search ${site.shortName}`}
             >
-              <SiteSearch
-                placeholder={site.searchPlaceholder}
-                inputClassName="text-black placeholder:text-gray-400 bg-white"
+              <Search
+                className={cn(
+                  "gbv-search-icon",
+                  site.id === "amrep" && "text-black",
+                )}
               />
-            </PopoverContent>
-          </Popover>
+            </Button>
+          )}
           <div className="hidden lg:flex items-center gap-4">
             {pathname !== askPath && (
               <Link

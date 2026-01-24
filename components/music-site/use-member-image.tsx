@@ -3,6 +3,11 @@
 import { useEffect, useState } from "react";
 import { getProxiedImageUrl } from "@/lib/image-utils";
 
+const SITE_LOOKUP_CONTEXT: Record<string, string> = {
+  gbv: "Guided By Voices",
+  amrep: "Amphetamine Reptile Records",
+};
+
  type UseMemberImageOptions = {
    siteId: string;
    memberName?: string | null;
@@ -36,6 +41,8 @@ import { getProxiedImageUrl } from "@/lib/image-utils";
 
    useEffect(() => {
      if (!memberName) return;
+
+    const lookupContext = SITE_LOOKUP_CONTEXT[siteId];
 
     if (proxiedLocalImageUrl) {
       setResolvedImageUrl(proxiedLocalImageUrl);
@@ -71,9 +78,11 @@ import { getProxiedImageUrl } from "@/lib/image-utils";
      let isActive = true;
      const fetchCommonsImage = async () => {
        try {
-         const res = await fetch(
-           `/api/gbv/commons-image?name=${encodeURIComponent(memberName)}`,
-         );
+        const query = new URLSearchParams({ name: memberName });
+        if (lookupContext) {
+          query.set("context", lookupContext);
+        }
+        const res = await fetch(`/api/gbv/commons-image?${query.toString()}`);
          if (!res.ok) return;
          const data = await res.json();
         if (isActive && typeof data?.imageUrl === "string") {

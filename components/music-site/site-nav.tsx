@@ -72,7 +72,7 @@
                    : "hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
                )}
              >
-               {item.image ? (
+                 {item.image ? (
                  <Image
                    src={item.image}
                    alt={item.name}
@@ -81,6 +81,7 @@
                    className={cn(
                      isChat ? "h-10 w-10" : "h-5 w-5",
                      "object-contain transition-transform duration-200 group-hover:scale-110",
+                     isPending && "animate-spin [animation-duration:2s]",
                      !isAmrep ? "brightness-0 invert" : ""
                    )}
                    priority={isChat}
@@ -88,14 +89,16 @@
                  />
                ) : (
                  Icon && (
-                   <Icon className="h-5 w-5 text-white transition-transform duration-200 group-hover:scale-110" />
+                   <Icon
+                     className={cn(
+                       "h-5 w-5 text-white transition-transform duration-200 group-hover:scale-110",
+                       isPending && "animate-spin [animation-duration:2s]"
+                     )}
+                   />
                  )
                )}
-              <span className="flex items-center justify-center gap-1 text-xs font-medium text-center leading-tight text-white transition-colors duration-200 group-hover:text-white/90">
+              <span className="flex items-center justify-center text-xs font-medium text-center leading-tight text-white transition-colors duration-200 group-hover:text-white/90">
                 {item.name}
-                {isPending ? (
-                  <Loader2 className="h-3 w-3 animate-spin text-white/90" />
-                ) : null}
               </span>
              </Link>
            );
@@ -165,17 +168,22 @@
                      isChat ? "h-6 w-6" : "h-5 w-5",
                      "object-contain",
                      isChat ? "gbv-nav-icon" : "",
+                     isPending && "animate-spin [animation-duration:2s]",
                      !isAmrep ? "brightness-0 invert" : ""
                    )}
                  />
                ) : (
-                 Icon && <Icon className="h-5 w-5 text-black" />
+                 Icon && (
+                   <Icon
+                     className={cn(
+                       "h-5 w-5 text-black",
+                       isPending && "animate-spin [animation-duration:2s]"
+                     )}
+                   />
+                 )
                )}
-              <span className="flex items-center justify-center gap-1 text-xs font-medium text-black">
+              <span className="flex items-center justify-center text-xs font-medium text-black">
                 {item.name}
-                {isPending ? (
-                  <Loader2 className="h-3 w-3 animate-spin text-black/70" />
-                ) : null}
               </span>
              </Link>
            );

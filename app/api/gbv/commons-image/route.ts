@@ -62,6 +62,7 @@ async function findImageFromResults(results: Array<{ id: string }>) {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const name = searchParams.get("name");
+  const context = searchParams.get("context");
 
   if (!name) {
     return NextResponse.json({ error: "Name is required" }, { status: 400 });
@@ -80,7 +81,8 @@ export async function GET(request: Request) {
       return NextResponse.json(firstPass);
     }
 
-    const fallbackResults = await searchWikidata(`${name} Guided By Voices`);
+    const fallbackContext = context?.trim() || "Guided By Voices";
+    const fallbackResults = await searchWikidata(`${name} ${fallbackContext}`);
     if (fallbackResults.length === 0) {
       return NextResponse.json({ imageUrl: null }, { status: 200 });
     }

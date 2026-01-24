@@ -24,6 +24,12 @@ import {
   generateChatTitle,
   type SavedChat,
 } from "@/lib/chat-storage";
+import {
+  isDisallowedMusicRequest,
+  isDisallowedImageRequest,
+  IMAGE_CREATION_BLOCK_RESPONSE,
+  MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE,
+} from "@/lib/chat-guard";
 
 // Helper to extract text content from a message
 function getMessageText(message: UIMessage): string {
@@ -36,6 +42,18 @@ function getMessageText(message: UIMessage): string {
       .join("");
   }
   return "";
+}
+
+function createLocalMessage(
+  id: string,
+  role: "user" | "assistant",
+  text: string,
+): UIMessage {
+  return {
+    id,
+    role,
+    parts: [{ type: "text", text }],
+  };
 }
 
 const chatPrompts = [
@@ -143,6 +161,36 @@ export function AskPageContent() {
     if (!input.trim() || isLoading) return;
     const message = input.trim();
     setInput("");
+    if (isDisallowedMusicRequest(message)) {
+      const baseId = `local-${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2, 8)}`;
+      setMessages([
+        ...messages,
+        createLocalMessage(`${baseId}-user`, "user", message),
+        createLocalMessage(
+          `${baseId}-assistant`,
+          "assistant",
+          MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE,
+        ),
+      ]);
+      return;
+    }
+    if (isDisallowedImageRequest(message)) {
+      const baseId = `local-${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2, 8)}`;
+      setMessages([
+        ...messages,
+        createLocalMessage(`${baseId}-user`, "user", message),
+        createLocalMessage(
+          `${baseId}-assistant`,
+          "assistant",
+          IMAGE_CREATION_BLOCK_RESPONSE,
+        ),
+      ]);
+      return;
+    }
     await sendMessage({ text: message });
   };
 

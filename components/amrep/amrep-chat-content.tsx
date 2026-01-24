@@ -19,6 +19,12 @@ import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
+import {
+  isDisallowedMusicRequest,
+  isDisallowedImageRequest,
+  IMAGE_CREATION_BLOCK_RESPONSE,
+  MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE,
+} from "@/lib/chat-guard";
 
 // Helper to extract text content from a message
 function getMessageText(message: UIMessage): string {
@@ -39,6 +45,18 @@ function linkifyText(text: string) {
     /(?<!\]\()https?:\/\/[^\s)]+/g,
     (url) => `[${url}](${url})`,
   );
+}
+
+function createLocalMessage(
+  id: string,
+  role: "user" | "assistant",
+  text: string,
+): UIMessage {
+  return {
+    id,
+    role,
+    parts: [{ type: "text", text }],
+  };
 }
 
 const chatPrompts = [
@@ -294,6 +312,36 @@ export function GbvChatContent() {
     if (!input.trim() || isLoading) return;
     const message = input.trim();
     setInput("");
+    if (isDisallowedMusicRequest(message)) {
+      const baseId = `local-${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2, 8)}`;
+      setMessages([
+        ...messages,
+        createLocalMessage(`${baseId}-user`, "user", message),
+        createLocalMessage(
+          `${baseId}-assistant`,
+          "assistant",
+          MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE,
+        ),
+      ]);
+      return;
+    }
+    if (isDisallowedImageRequest(message)) {
+      const baseId = `local-${Date.now()}-${Math.random()
+        .toString(36)
+        .slice(2, 8)}`;
+      setMessages([
+        ...messages,
+        createLocalMessage(`${baseId}-user`, "user", message),
+        createLocalMessage(
+          `${baseId}-assistant`,
+          "assistant",
+          IMAGE_CREATION_BLOCK_RESPONSE,
+        ),
+      ]);
+      return;
+    }
     await sendMessage({ text: message });
   };
 

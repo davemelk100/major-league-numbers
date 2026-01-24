@@ -108,7 +108,6 @@ export function SiteSearchContent() {
                       memberId={member.id}
                       fallbackIconSrc={site.placeholderIconSrc}
                       cacheKeyPrefix={site.id}
-                      skipRemoteLookup={isAmrep}
                       fit={isAmrep ? "contain" : "cover"}
                     />
                     <h3 className="font-semibold text-sm">{member.name}</h3>

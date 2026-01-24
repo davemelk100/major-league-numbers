@@ -19,6 +19,7 @@ const ALLOWED_DOMAINS = [
   "chaoscontrol.com",
   "sun-13.com",
   "i.scdn.co",
+  "f4.bcbits.com",
   "m.media-amazon.com",
   "beautifulnoise.wordpress.com",
   "www.theurinals.com",

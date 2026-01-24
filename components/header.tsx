@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -14,6 +15,11 @@ import { Search } from "lucide-react";
 
 export function Header() {
   const pathname = usePathname();
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <header className="z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 py-3">
@@ -33,25 +39,35 @@ export function Header() {
 
         {/* Desktop actions - chat to the left of search */}
         <div className="ml-auto flex items-center gap-3">
-          <Popover>
-            <PopoverTrigger asChild>
-              <Button
-                variant="ghost"
-                className="h-12 w-12 p-0 lg:hidden"
-                aria-label="Search MLB"
+          {isMounted ? (
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="h-12 w-12 p-0 lg:hidden"
+                  aria-label="Search MLB"
+                >
+                  <Search className="h-6 w-6" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent
+                className="w-[min(20rem,calc(100vw-2rem))] p-2"
+                align="end"
+                sideOffset={8}
+                collisionPadding={16}
               >
-                <Search className="h-6 w-6" />
-              </Button>
-            </PopoverTrigger>
-            <PopoverContent
-              className="w-[min(20rem,calc(100vw-2rem))] p-2"
-              align="end"
-              sideOffset={8}
-              collisionPadding={16}
+                <PlayerSearch />
+              </PopoverContent>
+            </Popover>
+          ) : (
+            <Button
+              variant="ghost"
+              className="h-12 w-12 p-0 lg:hidden"
+              aria-label="Search MLB"
             >
-              <PlayerSearch />
-            </PopoverContent>
-          </Popover>
+              <Search className="h-6 w-6" />
+            </Button>
+          )}
           <div className="hidden lg:flex items-center gap-4">
             {pathname !== "/ask" && (
               <Link
