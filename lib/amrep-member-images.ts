@@ -80,6 +80,8 @@ export const AMREP_MEMBER_IMAGE_SKIP: Record<string, true> = {
   "halo of flies / h•o•f": true,
   melvins: true,
   "bailter space": true,
+  brainiac: true,
+  "boss hog": true,
   "strapping fieldhands": true,
   supernova: true,
   surgery: true,

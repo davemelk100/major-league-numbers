@@ -38,33 +38,12 @@
 
      const fetchData = async () => {
        if (isAmrep) {
-         try {
-           const res = await fetch("/api/amrep/discogs?type=releases&per_page=100");
-           if (!res.ok) throw new Error("Failed to fetch releases");
-           const data = await res.json();
-           const releases = Array.isArray(data?.releases) ? data.releases : [];
-           if (releases.length > 0 && isActive) {
-             const mapped = releases.map((release: any) => ({
-               id: release.id,
-              title: release.artist ? `${release.artist} — ${release.title}` : release.title,
-               year: release.year,
-               thumb: release.thumb || "",
-               mainRelease: release.mainRelease ?? release.main_release,
-               format: release.format,
-             }));
-             setAlbums(dedupeReleases(mapped));
-             setIsLoading(false);
-             return;
-           }
-         } catch (err) {
-           console.error(err);
-         }
-
+         // Use local discography data (more complete than Discogs API)
          if (isActive) {
            const mapped = amrepReleases.map((release) => ({
              id: release.id,
-            title: release.artist ? `${release.artist} — ${release.title}` : release.title,
-             year: release.year,
+             title: release.artist ? `${release.artist} — ${release.title}` : release.title,
+             year: release.year ?? 0,
              thumb: "",
              format: release.format,
            }));

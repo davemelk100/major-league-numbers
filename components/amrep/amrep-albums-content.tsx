@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
 import { getLocalAlbumImage } from "@/lib/gbv-album-images";
+import { getAmrepAlbumImage } from "@/lib/amrep-album-images";
 import { getReleaseType, getProxiedImageUrl } from "@/lib/gbv-utils";
 import { useSiteAlbumsData } from "@/components/music-site/use-site-albums-data";
 import { AlbumGrid } from "@/components/music-site/album-grid";
@@ -68,7 +69,7 @@ export function GbvAlbumsContent() {
   const hasMore = displayCount < filteredAlbums.length;
 
   const getAlbumImage = (album: typeof albums[number]): string | null => {
-    if (isAmrep) return album.thumb ? getProxiedImageUrl(album.thumb) : null;
+    if (isAmrep) return getAmrepAlbumImage(album.id);
     return getLocalAlbumImage(album.id) || getProxiedImageUrl(album.thumb);
   };
 

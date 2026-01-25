@@ -6,6 +6,7 @@ import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { amrepArtists } from "@/lib/amrep-artists-data";
 import { amrepReleases } from "@/lib/amrep-releases-data";
 import { getLocalAlbumImage } from "@/lib/gbv-album-images";
+import { getAmrepAlbumImage } from "@/lib/amrep-album-images";
 import { getProxiedImageUrl } from "@/lib/gbv-utils";
 
 export type DashboardMember = {
@@ -160,43 +161,17 @@ export function useDashboardData() {
 
   useEffect(() => {
     if (isAmrep) {
-      const fetchAmrepReleases = async () => {
-        try {
-          const res = await fetch(
-            "/api/amrep/discogs?type=releases&per_page=100",
-          );
-          if (!res.ok) throw new Error("Failed to fetch releases");
-          const data = await res.json();
-          const releases = Array.isArray(data?.releases) ? data.releases : [];
-          if (releases.length > 0) {
-            const mapped = releases.map((release: any) => ({
-              id: release.id,
-              title: `${release.artist} — ${release.title}`,
-              year: release.year,
-              format: release.format,
-              thumb: release.thumb,
-              mainRelease: release.mainRelease ?? release.main_release,
-            }));
-            setAlbums(dedupeReleases(mapped));
-            return;
-          }
-        } catch (err) {
-          console.error(err);
-        }
-
-        setAlbums(
-          dedupeReleases(
-            amrepReleases.map((release) => ({
-              id: release.id,
-              title: `${release.artist} — ${release.title}`,
-              year: release.year,
-              format: release.format,
-            })),
-          ),
-        );
-      };
-
-      fetchAmrepReleases();
+      // Use local discography data (more complete than Discogs API)
+      setAlbums(
+        dedupeReleases(
+          amrepReleases.map((release) => ({
+            id: release.id,
+            title: `${release.artist} — ${release.title}`,
+            year: release.year,
+            format: release.format,
+          })),
+        ),
+      );
       return;
     }
 
@@ -270,7 +245,7 @@ export function useDashboardData() {
 
   const getAlbumImage = useCallback(
     (album: DashboardAlbum): string | null => {
-      if (isAmrep) return album.thumb ? getProxiedImageUrl(album.thumb) : null;
+      if (isAmrep && album.id) return getAmrepAlbumImage(album.id);
       if (album.id) {
         const local = getLocalAlbumImage(album.id);
         if (local) return local;

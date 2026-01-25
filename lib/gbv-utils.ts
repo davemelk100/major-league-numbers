@@ -8,7 +8,11 @@
 export function getReleaseType(format?: string | string[], releaseType?: string): "Album" | "Single" {
   if (!format && releaseType !== "release") return "Album";
   const normalized = Array.isArray(format) ? format.join(" ") : format || "";
-  if (normalized.toLowerCase().includes("single")) return "Single";
+  const lowerFormat = normalized.toLowerCase();
+  // Check for single indicators
+  if (lowerFormat.includes("single")) return "Single";
+  if (lowerFormat.includes('7"') || lowerFormat.includes("7\"")) return "Single";
+  if (lowerFormat.includes('12"') || lowerFormat.includes("12\"")) return "Single";
   if (releaseType === "release") return "Single";
   return "Album";
 }
