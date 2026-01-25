@@ -19,11 +19,7 @@ export function Footer() {
       <div className="container py-6">
         <div className="relative flex flex-col items-center gap-4 mb-4">
           <p className="text-xs text-muted-foreground max-w-2xl text-center">
-            Major League Numbers is not affiliated with, endorsed by, or
-            sponsored by Major League Baseball (MLB) or its teams. All MLB
-            logos, trademarks, and data are the property of MLB and its
-            respective teams. This site is an independent fan project for
-            informational purposes only.
+          All rights, including content and copyrights, are reserved by Tom Hazelmyer and AmRep Records. This website is an independent, unofficial fan site.
           </p>
         </div>
         <div className="text-center text-xs text-muted-foreground/80">
