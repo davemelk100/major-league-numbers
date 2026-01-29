@@ -139,6 +139,15 @@
     background-attachment: fixed;
   }
 
+  @keyframes record-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   .gbv-shell [data-slot="card"] {
     background: rgba(255, 255, 255, 0.12) !important;
     border-color: rgba(255, 255, 255, 0.28) !important;

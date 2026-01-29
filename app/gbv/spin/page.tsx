@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GbvSpinContent } from "@/components/gbv/gbv-spin-content";
+import { SpinContent } from "@/components/music-site/spin-content";
 
 export const metadata: Metadata = {
   title: "Spin",
@@ -7,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function GbvSpinPage() {
-  return <GbvSpinContent />;
+  return <SpinContent />;
 }
