@@ -160,16 +160,23 @@ function TriviaPanelContent() {
 
   if (!currentQuestion) return null;
 
+  const txt = isAmrep ? "text-black" : "text-white";
+  const txtMuted = isAmrep ? "text-black/70" : "text-white/70";
+  const border = isAmrep ? "border-black/20" : "border-white/20";
+  const bgMuted = isAmrep ? "bg-black/5" : "bg-white/10";
+  const hoverBg = isAmrep ? "hover:bg-black/10 hover:text-black" : "hover:bg-white/10 hover:text-white";
+  const badgeBg = isAmrep ? "bg-black/10" : "bg-white/20";
+
   return (
-    <div className="w-full h-full bg-black/20 rounded-lg border border-white/20 p-4 space-y-4">
+    <div className={`w-full h-full ${isAmrep ? "bg-white/20" : "bg-black/20"} rounded-lg border ${border} p-4 space-y-4`}>
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h2 className="font-semibold text-white">Daily Trivia</h2>
+            <h2 className={`font-semibold ${txt}`}>Daily Trivia</h2>
             {isComplete && (
               <Badge
                 variant="secondary"
-                className="ml-1 text-xs bg-white/20 text-white"
+                className={`ml-1 text-xs ${badgeBg} ${txt}`}
               >
                 Today: {totalCorrect}/5
               </Badge>
@@ -181,7 +188,7 @@ function TriviaPanelContent() {
                 variant="outline"
                 size="sm"
                 onClick={handleShare}
-                className="gap-1 h-7 text-xs border-white/30 text-white hover:bg-white/10"
+                className={`gap-1 h-7 text-xs ${border} ${txt} ${hoverBg}`}
               >
                 <Share2 className="h-3 w-3" />
                 Share
@@ -192,7 +199,7 @@ function TriviaPanelContent() {
         <Button
           variant="link"
           size="sm"
-          className="text-[10px] uppercase tracking-wider text-white/70 hover:text-white p-0 h-auto justify-start"
+          className={`text-[10px] uppercase tracking-wider p-0 h-auto justify-start ${txtMuted} ${isAmrep ? "hover:text-black" : "hover:text-white"}`}
           onClick={() => {
             setShowYesterday(!showYesterday);
             setCurrentIndex(0);
@@ -202,7 +209,7 @@ function TriviaPanelContent() {
         </Button>
       </div>
 
-      <p className="font-medium text-sm text-white">{currentQuestion.question}</p>
+      <p className={`font-medium text-sm ${txt}`}>{currentQuestion.question}</p>
 
       <div className="grid gap-2">
         {currentQuestion.options.map((option, index) => {
@@ -215,7 +222,7 @@ function TriviaPanelContent() {
               variant="outline"
               size="sm"
               className={cn(
-                "justify-start h-auto py-2 px-3 text-left text-sm whitespace-normal border-white/30 text-white hover:bg-white/10",
+                `justify-start h-auto py-2 px-3 text-left text-sm whitespace-normal ${border} ${txt} ${hoverBg}`,
                 (currentAnswered || showYesterday) &&
                   isCorrectAnswer &&
                   "border-green-500 bg-green-500/20",
@@ -246,35 +253,35 @@ function TriviaPanelContent() {
       </div>
 
       {(currentAnswered || showYesterday) && (
-        <div className="p-2 rounded-lg text-sm bg-white/10">
+        <div className={`p-2 rounded-lg text-sm ${bgMuted}`}>
           {!showYesterday &&
             (currentAnswered?.isCorrect ? (
-              <p className="font-medium text-sm text-green-400">Correct!</p>
+              <p className={`font-medium text-sm ${isAmrep ? "text-green-700" : "text-green-400"}`}>Correct!</p>
             ) : (
-              <p className="font-medium text-red-400 text-sm">Not quite!</p>
+              <p className={`font-medium text-sm ${isAmrep ? "text-red-700" : "text-red-400"}`}>Not quite!</p>
             ))}
           {showYesterday && (
-            <p className="font-medium text-green-400 text-sm">Correct Answer:</p>
+            <p className={`font-medium text-sm ${isAmrep ? "text-green-700" : "text-green-400"}`}>Correct Answer:</p>
           )}
-          <p className="mt-1 text-white/70 text-sm">
+          <p className={`mt-1 text-sm ${txtMuted}`}>
             {currentQuestion.explanation}
           </p>
         </div>
       )}
 
-      <div className="flex items-center justify-between pt-2 border-t border-white/20">
+      <div className={`flex items-center justify-between pt-2 border-t ${border}`}>
         <Button
           variant="ghost"
           size="sm"
           onClick={goToPrev}
           disabled={currentIndex === 0}
-          className="gap-1 text-white hover:bg-white/10"
+          className={`gap-1 ${txt} ${hoverBg}`}
         >
           <ChevronLeft className="h-4 w-4" />
           Prev
         </Button>
 
-        <span className="text-xs text-white/70 font-medium">
+        <span className={`text-xs font-medium ${txtMuted}`}>
           {currentIndex + 1} of 5
         </span>
 
@@ -283,7 +290,7 @@ function TriviaPanelContent() {
             variant="ghost"
             size="sm"
             onClick={goToNext}
-            className="gap-1 text-white hover:bg-white/10"
+            className={`gap-1 ${txt} ${hoverBg}`}
           >
             Next
             <ChevronRight className="h-4 w-4" />

@@ -38,7 +38,7 @@
 
      const fetchData = async () => {
        if (isAmrep) {
-         // Use local discography data (more complete than Discogs API)
+         // Use local discography data
          if (isActive) {
            const mapped = amrepReleases.map((release) => ({
              id: release.id,
