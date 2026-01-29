@@ -50,6 +50,8 @@ export const GBV_SITE: MusicSiteConfig = {
     members: "Members",
     sideProjects: "Side Projects",
   },
+  footerDisclaimer:
+    "All Content, Rights, Copyrights, etc. are the property of Robert Pollard unless otherwise noted. This is simply a fan site.",
   sources: [
     { label: "Discogs", url: "https://www.discogs.com/" },
     { label: "GBVDB", url: "https://www.gbvdb.com/" },

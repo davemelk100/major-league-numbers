@@ -96,14 +96,12 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
       title={detail.title}
       subtitle={detail.year ? String(detail.year) : null}
       badges={[
-        ...(detail.genres?.map((genre) => ({
-          label: genre,
-          variant: "secondary" as const,
-        })) ?? []),
-        ...(detail.styles?.map((style) => ({
-          label: style,
-          variant: "outline" as const,
-        })) ?? []),
+        ...(detail.genres
+          ?.filter((genre) => !["Rock", "Lo-Fi", "Indie Rock"].includes(genre))
+          .map((genre) => ({
+            label: genre,
+            variant: "secondary" as const,
+          })) ?? []),
       ]}
       meta={[
         ...(detail.labels && detail.labels.length > 0

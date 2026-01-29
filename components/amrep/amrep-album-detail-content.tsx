@@ -102,10 +102,6 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
           label: getReleaseType(detail.format, detail.releaseType),
           variant: "outline" as const,
         },
-        ...(detail.styles?.map((style) => ({
-          label: style,
-          variant: "secondary" as const,
-        })) ?? []),
       ]}
       meta={[
         ...(detail.labels && detail.labels.length > 0

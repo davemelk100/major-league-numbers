@@ -6,14 +6,20 @@ import { Play, Pause } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 
-const decorativeRings = [
-  { radius: 44, count: 20, dotSize: 3 },
-  { radius: 40, count: 16, dotSize: 4 },
-  { radius: 36, count: 14, dotSize: 3 },
-  { radius: 32, count: 12, dotSize: 5 },
-  { radius: 28, count: 10, dotSize: 3 },
-  { radius: 24, count: 8, dotSize: 4 },
-];
+// Zoetrope frames: 12 sequential frames of a bouncing ball
+// Each frame has a different vertical offset to create the illusion of a bounce
+const ZOETROPE_FRAMES = 12;
+const ZOETROPE_RADIUS = 42; // % from center
+const GREY_RING_RADIUS = 34; // % from center - inner ring
+const bounceOffsets = Array.from({ length: ZOETROPE_FRAMES }, (_, i) => {
+  const t = i / ZOETROPE_FRAMES;
+  return Math.abs(Math.sin(t * Math.PI)) * 5;
+});
+// Grey ring: pulsing size effect - circles grow and shrink sequentially
+const greySizes = Array.from({ length: ZOETROPE_FRAMES }, (_, i) => {
+  const t = i / ZOETROPE_FRAMES;
+  return 36 + Math.abs(Math.sin(t * Math.PI * 2)) * 34;
+});
 
 const grooves = Array.from({ length: 18 }, (_, i) => 20 + i * 3.4);
 
@@ -23,24 +29,15 @@ export function SpinContent() {
   const [isSpinning, setIsSpinning] = useState(true);
   const [speed, setSpeed] = useState<"33" | "45" | "78">("33");
 
-  const getDuration = () => {
-    switch (speed) {
-      case "33":
-        return 60 / 33.33;
-      case "45":
-        return 60 / 45;
-      case "78":
-        return 60 / 78;
-    }
-  };
-
   const isAmrep = site.id === "amrep";
+  const spinClass = `animate-vinyl-spin-${speed}${isSpinning ? "" : " vinyl-paused"}`;
 
   const labelGradient = isAmrep
     ? "from-amber-600 via-yellow-500 to-amber-700"
     : "from-red-700 via-red-600 to-red-800";
   const labelTextColor = isAmrep ? "text-black" : "text-white";
   const labelSubTextColor = isAmrep ? "text-black/60" : "text-white/70";
+  const zoetropeColor = isAmrep ? "#d4a017" : "#ef4444";
 
   return (
     <div className="container py-6">
@@ -48,13 +45,17 @@ export function SpinContent() {
 
       <div className="flex flex-col items-center gap-8">
         <div className="relative">
+          {/* Viewing slit overlay - stays fixed while disc spins */}
+          <div className="absolute inset-0 z-30 pointer-events-none flex items-start justify-center">
+            <div
+              className="w-[2px] bg-white/40"
+              style={{ height: "18%", marginTop: "1%" }}
+            />
+          </div>
+
           {/* Record */}
           <div
-            className="relative w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] rounded-full shadow-2xl overflow-hidden"
-            style={{
-              animation: `record-spin ${getDuration()}s linear infinite`,
-              animationPlayState: isSpinning ? "running" : "paused",
-            }}
+            className={`relative w-[320px] h-[320px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] rounded-full shadow-2xl overflow-hidden ${spinClass}`}
           >
             {/* Vinyl surface */}
             <div className="absolute inset-0 rounded-full bg-zinc-950" />
@@ -71,32 +72,80 @@ export function SpinContent() {
               />
             ))}
 
-            {/* Decorative dot rings */}
-            {decorativeRings.map((ring, ri) =>
-              Array.from({ length: ring.count }, (_, i) => {
-                const angle = ((i / ring.count) * 360 * Math.PI) / 180;
-                const x = 50 + ring.radius * Math.sin(angle);
-                const y = 50 - ring.radius * Math.cos(angle);
-                const hue = isAmrep
-                  ? 30 + ri * 8
-                  : 240 + ri * 20;
-                return (
-                  <div
-                    key={`d-${ri}-${i}`}
-                    className="absolute rounded-full"
-                    style={{
-                      left: `${x}%`,
-                      top: `${y}%`,
-                      width: ring.dotSize,
-                      height: ring.dotSize,
-                      transform: "translate(-50%, -50%)",
-                      backgroundColor: `hsl(${hue}, 30%, ${40 + (i % 3) * 8}%)`,
-                      opacity: 0.6,
-                    }}
-                  />
-                );
-              })
-            )}
+            {/* Zoetrope animation frames - bouncing ball */}
+            {bounceOffsets.map((offset, i) => {
+              const angle = ((i / ZOETROPE_FRAMES) * 360 * Math.PI) / 180;
+              const x = Math.round((50 + ZOETROPE_RADIUS * Math.sin(angle)) * 100) / 100;
+              const y = Math.round((50 - ZOETROPE_RADIUS * Math.cos(angle) + offset) * 100) / 100;
+              return (
+                <div
+                  key={`z-${i}`}
+                  className="absolute rounded-full"
+                  style={{
+                    left: `${x}%`,
+                    top: `${y}%`,
+                    width: "40px",
+                    height: "40px",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: zoetropeColor,
+                    boxShadow: `0 0 6px ${zoetropeColor}80`,
+                  }}
+                />
+              );
+            })}
+
+            {/* Inner grey zoetrope ring - pulsing size */}
+            {greySizes.map((size, i) => {
+              const angle = ((i / ZOETROPE_FRAMES) * 360 * Math.PI) / 180;
+              const x = Math.round((50 + GREY_RING_RADIUS * Math.sin(angle)) * 100) / 100;
+              const y = Math.round((50 - GREY_RING_RADIUS * Math.cos(angle)) * 100) / 100;
+              const s = Math.round(size * 100) / 100;
+              return (
+                <div
+                  key={`zg-${i}`}
+                  className="absolute rounded-full"
+                  style={{
+                    left: `${x}%`,
+                    top: `${y}%`,
+                    width: `${s}px`,
+                    height: `${s}px`,
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "#888",
+                    boxShadow: "0 0 6px rgba(136,136,136,0.5)",
+                  }}
+                />
+              );
+            })}
+
+            {/* Zoetrope slit marks between frames */}
+            {Array.from({ length: ZOETROPE_FRAMES }, (_, i) => {
+              const angle = (((i + 0.5) / ZOETROPE_FRAMES) * 360 * Math.PI) / 180;
+              const innerR = 38;
+              const outerR = 46;
+              const x1 = Math.round((50 + innerR * Math.sin(angle)) * 100) / 100;
+              const y1 = Math.round((50 - innerR * Math.cos(angle)) * 100) / 100;
+              const x2 = Math.round((50 + outerR * Math.sin(angle)) * 100) / 100;
+              const y2 = Math.round((50 - outerR * Math.cos(angle)) * 100) / 100;
+              const dx = x2 - x1;
+              const dy = y2 - y1;
+              const len = Math.sqrt(dx * dx + dy * dy);
+              const deg = Math.round((Math.atan2(dy, dx) * 180) / Math.PI * 100) / 100;
+              return (
+                <div
+                  key={`s-${i}`}
+                  className="absolute"
+                  style={{
+                    left: `${x1}%`,
+                    top: `${y1}%`,
+                    width: `${len}%`,
+                    height: "1px",
+                    transform: `rotate(${deg}deg)`,
+                    transformOrigin: "0 0",
+                    backgroundColor: "rgba(255,255,255,0.08)",
+                  }}
+                />
+              );
+            })}
 
             {/* Label */}
             <div
@@ -157,8 +206,9 @@ export function SpinContent() {
           </div>
 
           <p className="text-sm text-muted-foreground text-center max-w-md">
+            Watch the bouncing ball through the slit at the top.
             A zoetrope creates the illusion of motion by showing sequential
-            animation frames through narrow slits as the disc spins.
+            frames through a narrow viewing slit as the disc spins.
           </p>
         </div>
       </div>

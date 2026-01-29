@@ -556,3 +556,7 @@
 .animate-vinyl-spin-78 {
   animation: vinyl-spin 0.77s linear infinite;
 }
+
+.vinyl-paused {
+  animation-play-state: paused;
+}

@@ -25,7 +25,9 @@ export function SiteFooter() {
         <div className="flex items-center justify-between text-[10px] text-white md:text-[11px]">
           {/* Left: Disclaimer */}
           {site.footerDisclaimer && (
-            <span className="text-black">{site.footerDisclaimer}</span>
+            <span className={site.id === "amrep" ? "text-black" : "text-white/70"}>
+              {site.footerDisclaimer}
+            </span>
           )}
 
           {/* Right: Sources */}

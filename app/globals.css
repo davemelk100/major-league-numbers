@@ -130,6 +130,15 @@
   }
 }
 
+@keyframes record-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @layer utilities {
   .gbv-shell {
     background-color: #0b1224;
@@ -137,15 +146,6 @@
       radial-gradient(1000px 700px at 85% 5%, rgba(120, 210, 255, 0.4), transparent 55%),
       linear-gradient(135deg, rgba(9, 14, 28, 0.95), rgba(25, 36, 58, 0.95));
     background-attachment: fixed;
-  }
-
-  @keyframes record-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
   }
 
   .gbv-shell [data-slot="card"] {
