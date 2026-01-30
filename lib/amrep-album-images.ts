@@ -21,6 +21,18 @@ const amrepAlbumImages: Record<number, string> = {
   36: "https://upload.wikimedia.org/wikipedia/en/9/90/Helmet-BornAnnoying.jpg",
   39: "https://upload.wikimedia.org/wikipedia/en/6/6f/ScattredUnsane.jpg",
   46: "https://upload.wikimedia.org/wikipedia/en/2/21/Today_Is_the_Day_Today_Is_the_Day.jpg",
+  47: "https://upload.wikimedia.org/wikipedia/en/4/43/Cows_-_Old_Gold.jpg",
+  50: "https://upload.wikimedia.org/wikipedia/en/6/6e/Cows_Whorn.jpeg",
+  56: "https://upload.wikimedia.org/wikipedia/en/7/7e/Feedtime_-_Billy.jpg",
+  62: "https://upload.wikimedia.org/wikipedia/en/f/f9/Servotronspare.jpg",
+  63: "https://upload.wikimedia.org/wikipedia/en/c/c4/Melvins_Singles_1-12.jpg",
+  64: "https://upload.wikimedia.org/wikipedia/en/7/72/Melvins-honky.jpg",
+  66: "https://upload.wikimedia.org/wikipedia/en/b/b1/Sorry_In_Pig_Minor.png",
+  69: "https://upload.wikimedia.org/wikipedia/en/8/85/Letthemeatpussy.JPG",
+  72: "https://upload.wikimedia.org/wikipedia/en/8/8c/Melvins-aatfc.jpg",
+  74: "https://upload.wikimedia.org/wikipedia/en/7/75/Melvins_vs._Minneapolis.jpg",
+  78: "https://upload.wikimedia.org/wikipedia/en/6/65/Melvins2010.jpg",
+  83: "https://upload.wikimedia.org/wikipedia/en/0/0c/Melvins_-_The_Bulls_%26_The_Bees_front_cover.jpg",
 };
 
 /**
