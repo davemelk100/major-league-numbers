@@ -113,6 +113,7 @@ export function GbvAlbumsContent() {
         linkBasePath={`${site.basePath}/albums`}
         cacheKeyPrefix="gbv-album-thumb"
         imageFit={isAmrep ? "contain" : "cover"}
+        preferProxy={!isAmrep}
       />
 
       {hasMore && (

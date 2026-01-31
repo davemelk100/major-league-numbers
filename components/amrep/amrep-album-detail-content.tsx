@@ -83,7 +83,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
             height={300}
             className="w-full aspect-square rounded-lg object-contain"
             cacheKey={`gbv-album-thumb:${detail.id}`}
-            preferProxy
+            preferProxy={!isAmrep}
           />
         ) : (
           <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">

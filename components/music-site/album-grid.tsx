@@ -35,6 +35,7 @@ export type AlbumGridItem = {
    cacheKeyPrefix: string;
    eagerCount?: number;
    imageFit?: "cover" | "contain";
+   preferProxy?: boolean;
  };
 
 export function AlbumGrid<T extends AlbumGridItem>({
@@ -47,6 +48,7 @@ export function AlbumGrid<T extends AlbumGridItem>({
    cacheKeyPrefix,
    eagerCount = 6,
    imageFit = "cover",
+   preferProxy = true,
 }: AlbumGridProps<T>) {
    const imageClassName = `w-full aspect-square rounded-lg object-${imageFit} mb-2`;
 
@@ -68,7 +70,7 @@ export function AlbumGrid<T extends AlbumGridItem>({
                    className={imageClassName}
                    loading={index < eagerCount ? "eager" : "lazy"}
                    cacheKey={`${cacheKeyPrefix}:${album.id}`}
-                   preferProxy
+                   preferProxy={preferProxy}
                  />
                ) : (
                  <div className="w-full aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center">
