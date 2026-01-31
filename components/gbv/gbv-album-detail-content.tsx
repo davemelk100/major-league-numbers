@@ -12,6 +12,7 @@ import {
 import { AlbumDetailLayout } from "@/components/music-site/album-detail-layout";
 import { AlbumDetailTracklist } from "@/components/music-site/album-detail-tracklist";
 import { AlbumDetailLeft } from "@/components/music-site/album-detail-left";
+import { getRockathonUrl } from "@/lib/gbv-rockathon-data";
 
 export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
   const { site, album, isLoading, error } = useSiteAlbumDetail(albumId);
@@ -129,6 +130,11 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
           : null
       }
       linkLabel={detail.uri ? "View on Discogs" : null}
+      links={[
+        ...(getRockathonUrl(detail.title)
+          ? [{ href: getRockathonUrl(detail.title)!, label: "Buy on Rockathon Records" }]
+          : []),
+      ]}
     />
   );
 

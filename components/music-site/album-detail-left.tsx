@@ -12,6 +12,12 @@ type AlbumDetailMeta = {
   value: string;
 };
 
+type AlbumDetailLink = {
+  href: string;
+  label: string;
+  className?: string;
+};
+
 type AlbumDetailLeftProps = {
   image: React.ReactNode;
   title: string;
@@ -21,6 +27,7 @@ type AlbumDetailLeftProps = {
   linkHref?: string | null;
   linkLabel?: string | null;
   linkClassName?: string;
+  links?: AlbumDetailLink[];
   children?: React.ReactNode;
 };
 
@@ -33,6 +40,7 @@ export function AlbumDetailLeft({
   linkHref,
   linkLabel,
   linkClassName,
+  links,
   children,
 }: AlbumDetailLeftProps) {
   return (
@@ -59,18 +67,33 @@ export function AlbumDetailLeft({
         </div>
       )}
       {children}
-      {linkHref && linkLabel && (
-        <a
-          href={linkHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={
-            linkClassName ?? "inline-flex items-center text-sm text-primary hover:underline"
-          }
-        >
-          {linkLabel} <ExternalLink className="h-3 w-3 ml-1" />
-        </a>
-      )}
+      <div className="flex flex-col gap-1">
+        {linkHref && linkLabel && (
+          <a
+            href={linkHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={
+              linkClassName ?? "inline-flex items-center text-sm text-primary hover:underline"
+            }
+          >
+            {linkLabel} <ExternalLink className="h-3 w-3 ml-1" />
+          </a>
+        )}
+        {links?.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={
+              link.className ?? "inline-flex items-center text-sm text-primary hover:underline"
+            }
+          >
+            {link.label} <ExternalLink className="h-3 w-3 ml-1" />
+          </a>
+        ))}
+      </div>
     </>
   );
 }
