@@ -98,41 +98,51 @@ export async function GET(request: Request) {
 
       if (includeMemberImages && members.length > 0 && memberImageLimit > 0) {
         const membersToFetch = members.slice(0, memberImageLimit);
-        const results = await Promise.all(
-          membersToFetch.map(async (member) => {
-            const cached = memberImageCache.get(member.id);
-            if (cached && Date.now() - cached.timestamp < MEMBER_IMAGE_TTL) {
-              return { id: member.id, imageUrl: cached.url };
+
+        async function fetchMemberImage(
+          member: { id: number; name: string; active: boolean }
+        ): Promise<{ id: number; imageUrl: string | null }> {
+          const cached = memberImageCache.get(member.id);
+          if (cached && Date.now() - cached.timestamp < MEMBER_IMAGE_TTL) {
+            return { id: member.id, imageUrl: cached.url };
+          }
+
+          try {
+            const memberData: DiscogsArtist = await fetchFromDiscogs(`/artists/${member.id}`);
+            let imageUrl = await pickDiscogsImage(memberData.images);
+
+            if (!imageUrl && member.name.toLowerCase() === "mark shue") {
+              const cachedOverride = await cacheRemoteImage(
+                MARK_SHUE_IMAGE,
+                "commons-member"
+              );
+              imageUrl = cachedOverride || MARK_SHUE_IMAGE;
             }
 
-            try {
-              const memberData: DiscogsArtist = await fetchFromDiscogs(`/artists/${member.id}`);
-              let imageUrl = await pickDiscogsImage(memberData.images);
-
-              if (!imageUrl && member.name.toLowerCase() === "mark shue") {
-                const cachedOverride = await cacheRemoteImage(
-                  MARK_SHUE_IMAGE,
-                  "commons-member"
-                );
-                imageUrl = cachedOverride || MARK_SHUE_IMAGE;
-              }
-
-              if (!imageUrl && member.name.toLowerCase() === "mark shue") {
-                const commonsUrl = await fetchCommonsImage(origin, member.name);
-                const cachedCommonsUrl = commonsUrl
-                  ? await cacheRemoteImage(commonsUrl, "commons-member")
-                  : null;
-                imageUrl = cachedCommonsUrl || commonsUrl || null;
-              }
-
-              memberImageCache.set(member.id, { url: imageUrl, timestamp: Date.now() });
-              return { id: member.id, imageUrl };
-            } catch {
-              memberImageCache.set(member.id, { url: null, timestamp: Date.now() });
-              return { id: member.id, imageUrl: null };
+            if (!imageUrl && member.name.toLowerCase() === "mark shue") {
+              const commonsUrl = await fetchCommonsImage(origin, member.name);
+              const cachedCommonsUrl = commonsUrl
+                ? await cacheRemoteImage(commonsUrl, "commons-member")
+                : null;
+              imageUrl = cachedCommonsUrl || commonsUrl || null;
             }
-          })
-        );
+
+            memberImageCache.set(member.id, { url: imageUrl, timestamp: Date.now() });
+            return { id: member.id, imageUrl };
+          } catch {
+            memberImageCache.set(member.id, { url: null, timestamp: Date.now() });
+            return { id: member.id, imageUrl: null };
+          }
+        }
+
+        // Batch requests in groups of 5 to avoid Discogs rate limits
+        const BATCH_SIZE = 5;
+        const results: { id: number; imageUrl: string | null }[] = [];
+        for (let i = 0; i < membersToFetch.length; i += BATCH_SIZE) {
+          const batch = membersToFetch.slice(i, i + BATCH_SIZE);
+          const batchResults = await Promise.all(batch.map(fetchMemberImage));
+          results.push(...batchResults);
+        }
 
         const imageMap = new Map(results.map((result) => [result.id, result.imageUrl]));
         const enrichedMembers = members.map((member) => ({

@@ -66,7 +66,18 @@ export function GbvMembersContent() {
         }
         setMembers(nextMembers);
       } catch (err) {
-        console.error(err);
+        console.error("Image-enriched fetch failed, retrying without images:", err);
+        try {
+          const fallbackRes = await fetch("/api/gbv/discogs?type=artist");
+          if (fallbackRes.ok) {
+            const fallbackData = await fallbackRes.json();
+            if (Array.isArray(fallbackData?.members) && fallbackData.members.length > 0) {
+              setMembers(fallbackData.members);
+            }
+          }
+        } catch (fallbackErr) {
+          console.error("Fallback fetch also failed:", fallbackErr);
+        }
       } finally {
         setIsLoading(false);
       }
