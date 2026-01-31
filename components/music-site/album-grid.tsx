@@ -98,10 +98,10 @@ export function AlbumGrid<T extends AlbumGridItem>({
                    href={getPurchaseUrl(album)!}
                    target="_blank"
                    rel="noopener noreferrer"
-                   className="flex items-center justify-center gap-1 w-full text-[11px] text-primary hover:underline mt-1 border border-primary/30 rounded px-2 py-1"
+                   className="flex items-center justify-center gap-1.5 w-full text-xs text-primary hover:underline mt-1 border border-primary/30 rounded px-2 py-1.5"
                    onClick={(e) => e.stopPropagation()}
                  >
-                   <ShoppingCart className="h-3 w-3" />
+                   <ShoppingCart className="h-3.5 w-3.5" />
                    Buy on Rockathon
                  </a>
                )}
