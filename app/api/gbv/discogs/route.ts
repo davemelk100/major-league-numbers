@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cacheRemoteImage } from "@/lib/gbv-image-cache";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 const GBV_ARTIST_ID = 83529;
 const DISCOGS_BASE_URL = "https://api.discogs.com";
@@ -51,15 +52,18 @@ async function pickDiscogsImage(
 
 async function fetchFromDiscogs(endpoint: string) {
   const token = process.env.DISCOGS_USER_TOKEN || process.env.DISCOGS_TOKEN;
-  const response = await fetch(`${DISCOGS_BASE_URL}${endpoint}`, {
+  const url = `${DISCOGS_BASE_URL}${endpoint}`;
+  const response = await fetch(url, {
     headers: {
       "User-Agent": USER_AGENT,
       ...(token ? { Authorization: `Discogs token=${token}` } : {}),
     },
-    next: { revalidate: 3600 },
+    cache: "no-store",
   });
 
   if (!response.ok) {
+    const body = await response.text().catch(() => "");
+    console.error(`Discogs API error: ${response.status} for ${url}`, body);
     throw new Error(`Discogs API error: ${response.status}`);
   }
 
