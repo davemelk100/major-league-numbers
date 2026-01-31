@@ -8,6 +8,7 @@ import { getReleaseType, getProxiedImageUrl } from "@/lib/gbv-utils";
 import { useSiteAlbumsData } from "@/components/music-site/use-site-albums-data";
 import { AlbumGrid } from "@/components/music-site/album-grid";
 import { AlbumsControls } from "@/components/music-site/albums-controls";
+import { getRockathonUrl } from "@/lib/gbv-rockathon-data";
 
 const ITEMS_PER_PAGE = 30;
 
@@ -129,6 +130,7 @@ export function GbvAlbumsContent() {
         linkBasePath={`${site.basePath}/albums`}
         cacheKeyPrefix="gbv-album-thumb"
         imageFit={isAmrep ? "contain" : "cover"}
+        getPurchaseUrl={isAmrep ? undefined : (album) => getRockathonUrl(album.title)}
       />
 
       {hasMore && <div ref={sentinelRef} className="h-1" />}

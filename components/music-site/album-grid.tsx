@@ -3,6 +3,7 @@
  import Link from "next/link";
  import Image from "next/image";
  import type { ComponentType } from "react";
+ import { ShoppingCart } from "lucide-react";
  import { Card, CardContent } from "@/components/ui/card";
  import type { MusicSiteConfig } from "@/lib/music-site";
 
@@ -36,6 +37,7 @@ export type AlbumGridItem = {
    eagerCount?: number;
    imageFit?: "cover" | "contain";
    preferProxy?: boolean;
+   getPurchaseUrl?: (album: T) => string | null;
  };
 
 export function AlbumGrid<T extends AlbumGridItem>({
@@ -49,6 +51,7 @@ export function AlbumGrid<T extends AlbumGridItem>({
    eagerCount = 6,
    imageFit = "cover",
    preferProxy = true,
+   getPurchaseUrl,
 }: AlbumGridProps<T>) {
    const imageClassName = `w-full aspect-square rounded-lg object-${imageFit} mb-2`;
 
@@ -90,6 +93,18 @@ export function AlbumGrid<T extends AlbumGridItem>({
                    {getReleaseTypeLabel(album)}
                  </span>
                </div>
+               {getPurchaseUrl?.(album) && (
+                 <a
+                   href={getPurchaseUrl(album)!}
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="inline-flex items-center gap-1 text-[11px] text-primary hover:underline mt-1"
+                   onClick={(e) => e.stopPropagation()}
+                 >
+                   <ShoppingCart className="h-3 w-3" />
+                   Buy on Rockathon
+                 </a>
+               )}
              </CardContent>
            </Card>
          </Link>
