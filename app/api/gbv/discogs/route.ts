@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { cacheRemoteImage } from "@/lib/gbv-image-cache";
+import { gbvMembers } from "@/lib/gbv-members-data";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -97,8 +98,23 @@ export async function GET(request: Request) {
 
   try {
     if (type === "artist") {
-      const data: DiscogsArtist = await fetchFromDiscogs(`/artists/${GBV_ARTIST_ID}`);
-      const members = data.members || [];
+      // Use static member data as primary source; try Discogs for fresh data
+      let members: Array<{ id: number; name: string; active: boolean }> = gbvMembers;
+      let profile = "American indie rock band formed in Dayton, Ohio in 1983.";
+      let namevariations: string[] | undefined;
+      let urls: string[] | undefined;
+
+      try {
+        const data: DiscogsArtist = await fetchFromDiscogs(`/artists/${GBV_ARTIST_ID}`);
+        if (data.members && data.members.length > 0) {
+          members = data.members;
+        }
+        profile = data.profile || profile;
+        namevariations = data.namevariations;
+        urls = data.urls;
+      } catch (err) {
+        console.error("Discogs artist fetch failed, using static members:", err);
+      }
 
       if (includeMemberImages && members.length > 0 && memberImageLimit > 0) {
         const membersToFetch = members.slice(0, memberImageLimit);
@@ -155,22 +171,22 @@ export async function GET(request: Request) {
         }));
 
         return NextResponse.json({
-          id: data.id,
-          name: data.name,
-          profile: data.profile,
+          id: GBV_ARTIST_ID,
+          name: "Guided by Voices",
+          profile,
           members: enrichedMembers,
-          namevariations: data.namevariations,
-          urls: data.urls,
+          namevariations,
+          urls,
         });
       }
 
       return NextResponse.json({
-        id: data.id,
-        name: data.name,
-        profile: data.profile,
+        id: GBV_ARTIST_ID,
+        name: "Guided by Voices",
+        profile,
         members,
-        namevariations: data.namevariations,
-        urls: data.urls,
+        namevariations,
+        urls,
       });
     }
 
@@ -265,13 +281,7 @@ export async function GET(request: Request) {
         id: GBV_ARTIST_ID,
         name: "Guided by Voices",
         profile: "American indie rock band formed in Dayton, Ohio in 1983.",
-        members: [
-          { id: 1, name: "Robert Pollard", active: true },
-          { id: 2, name: "Doug Gillard", active: true },
-          { id: 3, name: "Kevin March", active: true },
-          { id: 4, name: "Mark Shue", active: true },
-          { id: 5, name: "Bobby Bare Jr.", active: true },
-        ],
+        members: gbvMembers,
       });
     }
 

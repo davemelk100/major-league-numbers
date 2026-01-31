@@ -8,6 +8,7 @@ import { amrepReleases } from "@/lib/amrep-releases-data";
 import { getLocalAlbumImage } from "@/lib/gbv-album-images";
 import { getAmrepAlbumImage } from "@/lib/amrep-album-images";
 import { getProxiedImageUrl } from "@/lib/gbv-utils";
+import { gbvMembers } from "@/lib/gbv-members-data";
 
 export type DashboardMember = {
   id?: number;
@@ -35,14 +36,7 @@ type ArtistData = {
 
 const GBV_ARTIST_ID = 83529;
 
-const GBV_FALLBACK_MEMBERS: DashboardMember[] = [
-  { name: "Robert Pollard", active: true },
-  { name: "Doug Gillard", active: true },
-  { name: "Kevin March", active: true },
-  { name: "Mark Shue", active: true },
-  { name: "Bobby Bare Jr.", active: true },
-  { name: "Travis Harrison", active: true },
-];
+const GBV_FALLBACK_MEMBERS: DashboardMember[] = gbvMembers.filter((m) => m.active);
 
 const GBV_FALLBACK_ALBUMS: DashboardAlbum[] = [
   { title: "Bee Thousand", year: 1994 },
