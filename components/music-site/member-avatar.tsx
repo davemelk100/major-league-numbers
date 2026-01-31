@@ -54,7 +54,7 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
        return;
      }
 
-     if (fallbackImageUrl && !lookupAttempted) {
+     if (fallbackImageUrl) {
        setResolvedImageUrl(fallbackImageUrl);
        setLookupAttempted(true);
        return;

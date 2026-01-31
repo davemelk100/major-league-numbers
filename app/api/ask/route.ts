@@ -2,10 +2,8 @@ import { streamText, type CoreMessage } from "ai"
 import { gateway } from "@ai-sdk/gateway"
 import { openai } from "@ai-sdk/openai"
 import {
-  IMAGE_CREATION_BLOCK_RESPONSE,
-  isDisallowedImageRequest,
-  isDisallowedMusicRequest,
-  MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE,
+  MEDIA_GENERATION_BLOCK_RESPONSE,
+  isDisallowedMediaRequest,
 } from "@/lib/chat-guard"
 
 export const maxDuration = 30
@@ -36,9 +34,8 @@ You can help users explore:
 - Statistical comparisons between players
 
 Safety requirements:
-- Never help users compose music or share music
-- Never help users create images
-- If asked, refuse briefly and offer to answer baseball questions instead`
+- Never generate, create, or produce any media content — no audio, video, images, or music
+- If asked for any generative media output, refuse briefly and offer to answer baseball questions instead`
 
 // Helper to extract text from UI message parts
 function getTextFromParts(parts: Array<{ type: string; text?: string }>): string {
@@ -65,15 +62,9 @@ export async function POST(req: Request) {
       .reverse()
       .find((message) => message.role === "user")?.content ?? ""
 
-    if (isDisallowedMusicRequest(lastUserMessage)) {
+    if (isDisallowedMediaRequest(lastUserMessage)) {
       return new Response(
-        JSON.stringify({ error: MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE }),
-        { status: 403, headers: { "Content-Type": "application/json" } },
-      )
-    }
-    if (isDisallowedImageRequest(lastUserMessage)) {
-      return new Response(
-        JSON.stringify({ error: IMAGE_CREATION_BLOCK_RESPONSE }),
+        JSON.stringify({ error: MEDIA_GENERATION_BLOCK_RESPONSE }),
         { status: 403, headers: { "Content-Type": "application/json" } },
       )
     }

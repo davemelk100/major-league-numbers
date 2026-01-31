@@ -3,10 +3,8 @@ import { gateway } from "@ai-sdk/gateway"
 import { openai } from "@ai-sdk/openai"
 import { searchGbvSources, type GbvSourceDoc } from "@/lib/gbv-knowledge"
 import {
-  IMAGE_CREATION_BLOCK_RESPONSE,
-  isDisallowedImageRequest,
-  isDisallowedMusicRequest,
-  MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE,
+  MEDIA_GENERATION_BLOCK_RESPONSE,
+  isDisallowedMediaRequest,
 } from "@/lib/chat-guard"
 
 export const maxDuration = 30
@@ -38,9 +36,8 @@ When answering questions:
 - Mention related projects (Boston Spaceships, Circus Devils, solo work)
 - If unsure about specific details, say so rather than making them up
 - Avoid using emojis in your replies
-- Never help users compose music or share music
-- Never help users create images
-- If asked, refuse briefly and offer to answer GBV questions instead
+- Never generate, create, or produce any media content — no audio, video, images, or music
+- If asked for any generative media output, refuse briefly and offer to answer GBV questions instead
 
 You can help users explore:
 - Album recommendations based on their preferences
@@ -88,15 +85,9 @@ export async function POST(req: Request) {
       .reverse()
       .find((message) => message.role === "user")?.content ?? "";
 
-    if (isDisallowedMusicRequest(lastUserMessage)) {
+    if (isDisallowedMediaRequest(lastUserMessage)) {
       return new Response(
-        JSON.stringify({ error: MUSIC_COMPOSE_SHARE_BLOCK_RESPONSE }),
-        { status: 403, headers: { "Content-Type": "application/json" } },
-      )
-    }
-    if (isDisallowedImageRequest(lastUserMessage)) {
-      return new Response(
-        JSON.stringify({ error: IMAGE_CREATION_BLOCK_RESPONSE }),
+        JSON.stringify({ error: MEDIA_GENERATION_BLOCK_RESPONSE }),
         { status: 403, headers: { "Content-Type": "application/json" } },
       )
     }

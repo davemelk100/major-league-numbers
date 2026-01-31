@@ -11,6 +11,7 @@ import {
   AMREP_MEMBER_IMAGE_FALLBACKS,
   AMREP_MEMBER_IMAGE_SKIP,
 } from "@/lib/amrep-member-images";
+import { GBV_MEMBER_IMAGE_FALLBACKS } from "@/lib/gbv-member-images";
 import { MemberAvatar } from "@/components/music-site/member-avatar";
 import { MembersControls } from "@/components/music-site/members-controls";
 
@@ -51,11 +52,14 @@ export function GbvMembersContent() {
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         let nextMembers = data.members || [];
-        if (nextMembers.length <= 1) {
+        if (nextMembers.length <= 10) {
           const fallbackRes = await fetch("/api/gbv/discogs?type=artist");
           if (fallbackRes.ok) {
             const fallbackData = await fallbackRes.json();
-            if (Array.isArray(fallbackData?.members)) {
+            if (
+              Array.isArray(fallbackData?.members) &&
+              fallbackData.members.length > nextMembers.length
+            ) {
               nextMembers = fallbackData.members;
             }
           }
@@ -117,7 +121,7 @@ export function GbvMembersContent() {
                   fallbackIconSrc={site.placeholderIconSrc}
                   cacheKeyPrefix={site.id}
                   skipRemoteLookup={false}
-                  fallbackImages={isAmrep ? AMREP_MEMBER_IMAGE_FALLBACKS : undefined}
+                  fallbackImages={isAmrep ? AMREP_MEMBER_IMAGE_FALLBACKS : GBV_MEMBER_IMAGE_FALLBACKS}
                   skipImages={isAmrep ? AMREP_MEMBER_IMAGE_SKIP : undefined}
                   fit={isAmrep ? "contain" : "cover"}
                 />

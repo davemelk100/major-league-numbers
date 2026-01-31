@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Loader2, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
-import { getLocalMemberImage } from "@/lib/gbv-member-images";
+import { getLocalMemberImage, GBV_MEMBER_IMAGE_FALLBACKS } from "@/lib/gbv-member-images";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { getAmrepArtistById } from "@/lib/amrep-artists-data";
@@ -89,13 +89,14 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
     );
   }
   const localMemberImage = getLocalMemberImage(Number(memberId));
+  const nameKey = member?.name?.toLowerCase().trim() || "";
   const { resolvedImageUrl } = useMemberImage({
     siteId: site.id,
     memberName: member?.name,
     memberId,
     localImageUrl: localMemberImage,
     discogsImageUrl: null,
-    fallbackImageUrl: null,
+    fallbackImageUrl: GBV_MEMBER_IMAGE_FALLBACKS[nameKey] || null,
     skipRemoteLookup: false,
   });
 
