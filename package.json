@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "eslint .",
-    "start": "next start"
+    "start": "next start",
+    "ingest-knowledge": "node scripts/ingest-knowledge.mjs"
   },
   "dependencies": {
     "@ai-sdk/gateway": "^3.0.11",

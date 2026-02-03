@@ -1,4 +1,7 @@
 import { pollardSideProjects } from "@/lib/gbv-side-projects";
+import { gbvTriviaQuestions } from "@/lib/gbv-trivia-data";
+import { gbvRecordsOfTheDay } from "@/lib/gbv-records-data";
+import { gbvMembers } from "@/lib/gbv-members-data";
 
 export interface GbvSourceDoc {
   id: string;
@@ -25,7 +28,43 @@ const sideProjectDocs: GbvSourceDoc[] = pollardSideProjects.map((project) => {
   };
 });
 
-const sourceDocs: GbvSourceDoc[] = [...sideProjectDocs];
+const triviaDocs: GbvSourceDoc[] = gbvTriviaQuestions.map((q) => ({
+  id: `trivia-${q.id}`,
+  title: `GBV Trivia: ${q.category}`,
+  text: `Q: ${q.question} A: ${q.options[q.correctAnswer]}. ${q.explanation}`,
+  sourceLabel: "GBV trivia",
+}));
+
+const recordDocs: GbvSourceDoc[] = gbvRecordsOfTheDay.map((r, i) => ({
+  id: `record-${i}`,
+  title: r.title,
+  text: `Album: ${r.title} (${r.year}). ${r.highlight}`,
+  sourceLabel: "GBV records of the day",
+}));
+
+const memberDocs: GbvSourceDoc[] = gbvMembers.map((m) => ({
+  id: `member-${m.id}`,
+  title: m.name,
+  text: `GBV member: ${m.name}. Status: ${m.active ? "currently active" : "former member"}.`,
+  sourceLabel: "GBV members",
+}));
+
+let scrapedDocs: GbvSourceDoc[] = [];
+try {
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  const scraped = require("@/data/gbv-knowledge-scraped.json") as GbvSourceDoc[];
+  scrapedDocs = scraped;
+} catch {
+  // scraped data not yet generated — skip
+}
+
+const sourceDocs: GbvSourceDoc[] = [
+  ...sideProjectDocs,
+  ...triviaDocs,
+  ...recordDocs,
+  ...memberDocs,
+  ...scrapedDocs,
+];
 
 export function getGbvSourceDocs(): GbvSourceDoc[] {
   return sourceDocs;

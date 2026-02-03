@@ -1,6 +1,7 @@
-import { streamText, type CoreMessage } from "ai"
+import { streamText } from "ai"
 import { gateway } from "@ai-sdk/gateway"
 import { openai } from "@ai-sdk/openai"
+import { searchMlbSources, type MlbSourceDoc } from "@/lib/mlb-knowledge"
 import {
   MEDIA_GENERATION_BLOCK_RESPONSE,
   isDisallowedMediaRequest,
@@ -37,6 +38,18 @@ Safety requirements:
 - Never generate, create, or produce any media content — no audio, video, images, or music
 - If asked for any generative media output, refuse briefly and offer to answer baseball questions instead`
 
+function formatSourceContext(sources: MlbSourceDoc[]): string {
+  if (sources.length === 0) return "No sources available.";
+
+  return sources
+    .map((source) => {
+      const label = source.sourceLabel || "Source";
+      const url = source.sourceUrl ? ` (${source.sourceUrl})` : "";
+      return `- ${label}${url}\n${source.text}`;
+    })
+    .join("\n\n");
+}
+
 // Helper to extract text from UI message parts
 function getTextFromParts(parts: Array<{ type: string; text?: string }>): string {
   if (!parts || !Array.isArray(parts)) return ""
@@ -51,7 +64,7 @@ export async function POST(req: Request) {
     const { messages } = await req.json()
 
     // Convert UI messages to CoreMessage format (handle both parts and content formats)
-    const coreMessages: CoreMessage[] = messages.map(
+    const coreMessages: Array<{ role: "user" | "assistant"; content: string }> = messages.map(
       (msg: { role: string; content?: string; parts?: Array<{ type: string; text?: string }> }) => ({
         role: msg.role as "user" | "assistant",
         content: msg.content || getTextFromParts(msg.parts || []),
@@ -75,9 +88,12 @@ export async function POST(req: Request) {
       ? openai("gpt-4o-mini")
       : gateway("openai/gpt-4o-mini")
 
+    const sources = searchMlbSources(lastUserMessage, 6);
+    const sourceContext = formatSourceContext(sources);
+
     const result = streamText({
       model,
-      system: SYSTEM_PROMPT,
+      system: `${SYSTEM_PROMPT}\n\nSource context:\n${sourceContext}`,
       messages: coreMessages,
     })
 
