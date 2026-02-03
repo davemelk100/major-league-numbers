@@ -49,31 +49,44 @@
        setError(null);
 
        if (isAmrep) {
-         try {
-           const res = await fetch(`/api/amrep/discogs?type=release&id=${albumId}`);
-           if (res.ok) {
-             const data = await res.json();
-             if (isActive) {
-               setAlbum(data.release);
-               setIsLoading(false);
-             }
-             return;
-           }
-         } catch {
-           // fall back to local data
-         }
-
          const release = getAmrepReleaseById(Number(albumId));
-         if (isActive) {
-           if (release) {
-             setAlbum({
+         const baseAlbum: AmrepAlbumDetail | null = release
+           ? {
                id: release.id,
-              title: release.title,
+               title: release.title,
                year: release.year,
                thumb: "",
-               format: release.format,
+               format: release.format ?? undefined,
                artists: release.artist ? [{ name: release.artist }] : undefined,
+             }
+           : null;
+
+         // Search Discogs by catalog number to get tracklist
+         if (release?.catalogNo) {
+           try {
+             const params = new URLSearchParams({
+               type: "search-release",
+               catno: release.catalogNo,
+               ...(release.artist ? { artist: release.artist } : {}),
+               ...(release.title ? { title: release.title } : {}),
              });
+             const res = await fetch(`/api/amrep/discogs?${params}`);
+             if (res.ok) {
+               const data = await res.json();
+               if (isActive && data.release) {
+                 setAlbum({ ...baseAlbum, ...data.release, id: release.id });
+                 setIsLoading(false);
+                 return;
+               }
+             }
+           } catch {
+             // fall back to local data
+           }
+         }
+
+         if (isActive) {
+           if (baseAlbum) {
+             setAlbum(baseAlbum);
            } else {
              setError("Release not found");
              setAlbum(null);

@@ -71,6 +71,33 @@ function dedupeReleases(releases: any[]) {
   return unique;
 }
 
+function buildReleaseResponse(data: any, thumb: string | null) {
+  return {
+    id: data.id,
+    title: data.title,
+    year: data.year,
+    thumb,
+    format: Array.isArray(data.formats)
+      ? data.formats.map((format: { name?: string }) => format.name).filter(Boolean)
+      : undefined,
+    labels: Array.isArray(data.labels)
+      ? data.labels.map((label: { name?: string }) => ({ name: label.name }))
+      : undefined,
+    artists: Array.isArray(data.artists)
+      ? data.artists.map((artist: { name?: string }) => ({ name: artist.name }))
+      : undefined,
+    genres: Array.isArray(data.genres) ? data.genres : undefined,
+    styles: Array.isArray(data.styles) ? data.styles : undefined,
+    tracklist: Array.isArray(data.tracklist)
+      ? data.tracklist.map((track: any) => ({
+          position: track.position,
+          title: track.title,
+          duration: track.duration,
+        }))
+      : undefined,
+  };
+}
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type") || "releases";
@@ -119,30 +146,31 @@ export async function GET(request: Request) {
       }
 
       const data = await fetchFromDiscogs(`/releases/${id}`);
-      const release = {
-        id: data.id,
-        title: data.title,
-        year: data.year,
-        thumb: await normalizeThumb(data.thumb),
-        format: Array.isArray(data.formats)
-          ? data.formats.map((format: { name?: string }) => format.name).filter(Boolean)
-          : undefined,
-        labels: Array.isArray(data.labels)
-          ? data.labels.map((label: { name?: string }) => ({ name: label.name }))
-          : undefined,
-        artists: Array.isArray(data.artists)
-          ? data.artists.map((artist: { name?: string }) => ({ name: artist.name }))
-          : undefined,
-        genres: Array.isArray(data.genres) ? data.genres : undefined,
-        styles: Array.isArray(data.styles) ? data.styles : undefined,
-        tracklist: Array.isArray(data.tracklist)
-          ? data.tracklist.map((track: any) => ({
-              position: track.position,
-              title: track.title,
-              duration: track.duration,
-            }))
-          : undefined,
-      };
+      const release = buildReleaseResponse(data, await normalizeThumb(data.thumb));
+
+      return NextResponse.json({ release });
+    }
+
+    if (type === "search-release") {
+      const catno = searchParams.get("catno");
+      if (!catno) {
+        return NextResponse.json({ error: "Missing catno parameter" }, { status: 400 });
+      }
+
+      const artist = searchParams.get("artist") || "";
+      const title = searchParams.get("title") || "";
+      const query = [artist, title].filter(Boolean).join(" ");
+      const searchUrl = `/database/search?catno=${encodeURIComponent(catno)}&label=${encodeURIComponent(LABEL_NAME)}${query ? `&q=${encodeURIComponent(query)}` : ""}&type=release&per_page=5`;
+
+      const searchData = await fetchFromDiscogs(searchUrl);
+      const results = searchData?.results;
+      if (!Array.isArray(results) || results.length === 0) {
+        return NextResponse.json({ release: null });
+      }
+
+      const releaseId = results[0].id;
+      const data = await fetchFromDiscogs(`/releases/${releaseId}`);
+      const release = buildReleaseResponse(data, await normalizeThumb(data.thumb));
 
       return NextResponse.json({ release });
     }
