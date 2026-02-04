@@ -28,6 +28,9 @@ const ALLOWED_DOMAINS = [
   "lollipopmagazine.com",
   "www.rokkosadventures.at",
   "lastfm.freetls.fastly.net",
+  "i.ebayimg.com",
+  "i.ytimg.com",
+  "encrypted-tbn0.gstatic.com",
 ];
 
 function isAllowedDomain(url: string): boolean {

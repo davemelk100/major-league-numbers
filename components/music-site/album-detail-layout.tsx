@@ -23,9 +23,9 @@ export function AlbumDetailLayout({
   rightContent,
 }: AlbumDetailLayoutProps) {
   return (
-    <div className="container py-6">
+    <div className="container py-4">
       <Link href={backHref}>
-        <Button variant="ghost" className="mb-4">
+        <Button variant="ghost" className="mb-2">
           <ArrowLeft className="h-4 w-4 mr-2" /> Back to {backLabel}
         </Button>
       </Link>

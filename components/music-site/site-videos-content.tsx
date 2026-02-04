@@ -56,6 +56,11 @@ const videos: Video[] = [
     title: "Guided By Voices feat. Kim Deal - Love Hurts",
     description: "Cover of the Everly Brothers' 'Love Hurts' featuring Kim Deal.",
   },
+  {
+    id: "TtqizaMLMDQ",
+    title: "Guided By Voices - TtqizaMLMDQ",
+    description: "Guided By Voices video.",
+  },
 ];
 
 const amrepVideos: Video[] = [
