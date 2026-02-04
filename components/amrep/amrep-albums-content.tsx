@@ -63,6 +63,24 @@ export function GbvAlbumsContent() {
     return result;
   }, [albums, search, sortBy, releaseFilter]);
 
+  // Counts by type (unaffected by current filter, but respecting search)
+  const typeCounts = useMemo(() => {
+    let searchFiltered = albums;
+    if (search) {
+      const searchLower = search.toLowerCase();
+      searchFiltered = albums.filter((album) =>
+        album.title.toLowerCase().includes(searchLower),
+      );
+    }
+    const albumCount = searchFiltered.filter(
+      (album) => getReleaseType(album.format, album.releaseType) === "Album",
+    ).length;
+    const singleCount = searchFiltered.filter(
+      (album) => getReleaseType(album.format, album.releaseType) === "Single",
+    ).length;
+    return { all: searchFiltered.length, albums: albumCount, singles: singleCount };
+  }, [albums, search]);
+
   // Albums to display (limited by displayCount)
   const visibleAlbums = filteredAlbums.slice(0, displayCount);
   const hasMore = displayCount < filteredAlbums.length;
@@ -113,6 +131,7 @@ export function GbvAlbumsContent() {
         site={site}
         isAmrep={isAmrep}
         totalCount={filteredAlbums.length}
+        typeCounts={typeCounts}
         releaseFilter={releaseFilter}
         onReleaseFilterChange={setReleaseFilter}
         sortBy={sortBy}

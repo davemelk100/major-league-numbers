@@ -119,6 +119,30 @@ const nextConfig = {
         protocol: "https",
         hostname: "encrypted-tbn0.gstatic.com",
       },
+      {
+        protocol: "https",
+        hostname: "timebomb.co.jp",
+      },
+      {
+        protocol: "https",
+        hostname: "www.chokebore.net",
+      },
+      {
+        protocol: "https",
+        hostname: "metallipromo.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.metalmusicarchives.com",
+      },
+      {
+        protocol: "https",
+        hostname: "www.shoxop.com",
+      },
+      {
+        protocol: "https",
+        hostname: "themelvins.net",
+      },
     ],
     formats: ["image/avif", "image/webp"],
     minimumCacheTTL: 60 * 60 * 24, // 24 hours

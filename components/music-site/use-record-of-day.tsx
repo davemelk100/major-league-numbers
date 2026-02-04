@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { getDailyGbvRecord, type GbvRecordOfDay } from "@/lib/gbv-records-data";
 import { getDailyAmrepRecord, type AmrepRecordOfDay } from "@/lib/amrep-records-data";
 import { getLocalAlbumImage } from "@/lib/gbv-album-images";
+import { getAmrepAlbumImage } from "@/lib/amrep-album-images";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { amrepReleases } from "@/lib/amrep-releases-data";
 
@@ -47,7 +48,14 @@ export function useRecordOfDay() {
           release.title.toLowerCase() === daily.title.toLowerCase() &&
           release.year === daily.year,
       );
-      if (match?.id) setAlbumId(match.id);
+      if (match?.id) {
+        setAlbumId(match.id);
+        const localImage = getAmrepAlbumImage(match.id);
+        if (localImage) {
+          setCoverUrl(localImage);
+          return;
+        }
+      }
 
       async function fetchAmrepCover() {
         try {

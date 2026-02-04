@@ -31,7 +31,7 @@ export function SiteLayout({
       <div className="sm:ml-20 flex flex-col flex-1">
         <SiteHeader />
         <Suspense fallback={<PageLoader />}>
-          <main id="main-content" className="pb-16 sm:pb-0 flex-1" tabIndex={-1}>
+          <main id="main-content" className="pb-16 sm:pb-2 flex-1" tabIndex={-1}>
             {children}
           </main>
         </Suspense>

@@ -16,6 +16,7 @@
    site: MusicSiteConfig;
    isAmrep: boolean;
    totalCount: number;
+   typeCounts?: { all: number; albums: number; singles: number };
    releaseFilter: "all" | "albums" | "singles";
    onReleaseFilterChange: (value: "all" | "albums" | "singles") => void;
    sortBy: "year-asc" | "year-desc" | "title";
@@ -28,6 +29,7 @@
    site,
    isAmrep,
    totalCount,
+   typeCounts,
    releaseFilter,
    onReleaseFilterChange,
    sortBy,
@@ -58,13 +60,13 @@
          >
            <TabsList className="text-black">
              <TabsTrigger value="all" className="text-black">
-               All
+               All{typeCounts ? ` (${typeCounts.all})` : ""}
              </TabsTrigger>
              <TabsTrigger value="albums" className="text-black">
-               Albums
+               Albums{typeCounts ? ` (${typeCounts.albums})` : ""}
              </TabsTrigger>
              <TabsTrigger value="singles" className="text-black">
-               Singles
+               Singles{typeCounts ? ` (${typeCounts.singles})` : ""}
              </TabsTrigger>
            </TabsList>
          </Tabs>

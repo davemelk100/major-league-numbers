@@ -14,9 +14,11 @@ export function Footer() {
     { label: "Baseball-Reference", url: "https://www.baseball-reference.com/" },
     { label: "FanGraphs", url: "https://www.fangraphs.com/" },
     { label: "Retrosheet", url: "https://www.retrosheet.org/" },
+    { label: "Wikipedia", url: "https://en.wikipedia.org/" },
   ];
   const imageSources = [
     { label: "MLB", url: "https://www.mlb.com/" },
+    { label: "MLB Static", url: "https://www.mlbstatic.com/" },
     { label: "Baseball-Reference", url: "https://www.baseball-reference.com/" },
     { label: "FanGraphs", url: "https://www.fangraphs.com/" },
   ];

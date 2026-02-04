@@ -31,6 +31,12 @@ const ALLOWED_DOMAINS = [
   "i.ebayimg.com",
   "i.ytimg.com",
   "encrypted-tbn0.gstatic.com",
+  "timebomb.co.jp",
+  "www.chokebore.net",
+  "metallipromo.com",
+  "www.metalmusicarchives.com",
+  "www.shoxop.com",
+  "themelvins.net",
 ];
 
 function isAllowedDomain(url: string): boolean {
