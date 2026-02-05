@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { USPBLTeamContent } from "@/components/uspbl/uspbl-team-content";
-import { getUSPBLTeam, getUSPBLTeamRoster, getUSPBLStandings } from "@/lib/uspbl-api";
+import { getUSPBLTeam, getUSPBLTeamRoster, getUSPBLStandings, getTeamChampionshipCount, getTeamMLBAlumni, USPBL_CHAMPIONSHIPS } from "@/lib/uspbl-api";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -24,5 +24,18 @@ export default async function USPBLTeamPage({ params }: PageProps) {
     getUSPBLStandings(),
   ]);
   const teamStanding = standings.find((s) => s.teamSlug === id) || null;
-  return <USPBLTeamContent team={team || null} roster={roster} standing={teamStanding} />;
+  const championshipCount = getTeamChampionshipCount(id);
+  const championshipYears = USPBL_CHAMPIONSHIPS.filter((c) => c.championSlug === id).map((c) => c.year);
+  const mlbAlumni = getTeamMLBAlumni(id);
+
+  return (
+    <USPBLTeamContent
+      team={team || null}
+      roster={roster}
+      standing={teamStanding}
+      championshipCount={championshipCount}
+      championshipYears={championshipYears}
+      mlbAlumni={mlbAlumni}
+    />
+  );
 }

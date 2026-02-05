@@ -101,6 +101,89 @@ export const USPBL_TEAMS: USPBLTeam[] = [
   },
 ];
 
+// ── Championship History ────────────────────────────────────
+
+export interface USPBLChampionship {
+  year: number;
+  champion: string;
+  championSlug: string;
+  record: string;
+  opponent?: string;
+}
+
+export const USPBL_CHAMPIONSHIPS: USPBLChampionship[] = [
+  { year: 2025, champion: "Eastside Diamond Hoppers", championSlug: "eastside-diamond-hoppers", record: "", opponent: "Westside Woolly Mammoths" },
+  { year: 2024, champion: "Birmingham Bloomfield Beavers", championSlug: "birmingham-bloomfield-beavers", record: "17-27" },
+  { year: 2023, champion: "Utica Unicorns", championSlug: "utica-unicorns", record: "17-26" },
+  { year: 2022, champion: "Birmingham Bloomfield Beavers", championSlug: "birmingham-bloomfield-beavers", record: "22-22" },
+  { year: 2021, champion: "Utica Unicorns", championSlug: "utica-unicorns", record: "22-12" },
+  { year: 2020, champion: "Utica Unicorns", championSlug: "utica-unicorns", record: "22-13" },
+  { year: 2019, champion: "Utica Unicorns", championSlug: "utica-unicorns", record: "22-22" },
+  { year: 2018, champion: "Birmingham Bloomfield Beavers", championSlug: "birmingham-bloomfield-beavers", record: "26-21" },
+  { year: 2017, champion: "Birmingham Bloomfield Beavers", championSlug: "birmingham-bloomfield-beavers", record: "29-24" },
+  { year: 2016, champion: "Utica Unicorns", championSlug: "utica-unicorns", record: "22-27" },
+];
+
+// ── MLB Alumni ──────────────────────────────────────────────
+
+export interface USPBLMLBAlumni {
+  name: string;
+  uspblTeam: string;
+  uspblTeamSlug: string;
+  mlbOrganization: string;
+  yearSigned: number;
+  madeMLBRoster: boolean;
+  mlbDebut?: string;
+}
+
+export const USPBL_MLB_ALUMNI: USPBLMLBAlumni[] = [
+  // Players who reached MLB rosters
+  { name: "Dugan Darnell", uspblTeam: "Diamond Hoppers", uspblTeamSlug: "eastside-diamond-hoppers", mlbOrganization: "Colorado Rockies", yearSigned: 2025, madeMLBRoster: true },
+  { name: "Luis Contreras", uspblTeam: "Diamond Hoppers", uspblTeamSlug: "eastside-diamond-hoppers", mlbOrganization: "Houston Astros", yearSigned: 2024, madeMLBRoster: true },
+  { name: "Randy Wynne", uspblTeam: "Beavers", uspblTeamSlug: "birmingham-bloomfield-beavers", mlbOrganization: "Cincinnati Reds", yearSigned: 2023, madeMLBRoster: true },
+  { name: "Joey Wiemer", uspblTeam: "Beavers", uspblTeamSlug: "birmingham-bloomfield-beavers", mlbOrganization: "Milwaukee Brewers", yearSigned: 2023, madeMLBRoster: true },
+  { name: "Jared Koenig", uspblTeam: "Unicorns", uspblTeamSlug: "utica-unicorns", mlbOrganization: "Oakland Athletics", yearSigned: 2022, madeMLBRoster: true, mlbDebut: "2022" },
+  { name: "Logan Gillaspie", uspblTeam: "Diamond Hoppers", uspblTeamSlug: "eastside-diamond-hoppers", mlbOrganization: "Baltimore Orioles", yearSigned: 2022, madeMLBRoster: true, mlbDebut: "May 17, 2022" },
+  { name: "Randy Dobnak", uspblTeam: "Unicorns", uspblTeamSlug: "utica-unicorns", mlbOrganization: "Minnesota Twins", yearSigned: 2017, madeMLBRoster: true, mlbDebut: "August 9, 2019" },
+  // Players signed to minor league deals
+  { name: "Andrew Huffman", uspblTeam: "Beavers", uspblTeamSlug: "birmingham-bloomfield-beavers", mlbOrganization: "Minnesota Twins", yearSigned: 2024, madeMLBRoster: false },
+  { name: "Duncan Hewitt", uspblTeam: "Unicorns", uspblTeamSlug: "utica-unicorns", mlbOrganization: "Minnesota Twins", yearSigned: 2023, madeMLBRoster: false },
+  { name: "Jake Wosinski", uspblTeam: "Diamond Hoppers", uspblTeamSlug: "eastside-diamond-hoppers", mlbOrganization: "Minnesota Twins", yearSigned: 2023, madeMLBRoster: false },
+  { name: "Ricardo Velez", uspblTeam: "Mammoths", uspblTeamSlug: "westside-woolly-mammoths", mlbOrganization: "Minnesota Twins", yearSigned: 2021, madeMLBRoster: false },
+  { name: "Jackson Hicks", uspblTeam: "Beavers", uspblTeamSlug: "birmingham-bloomfield-beavers", mlbOrganization: "Minnesota Twins", yearSigned: 2021, madeMLBRoster: false },
+  { name: "Jordan Carr", uspblTeam: "Unicorns", uspblTeamSlug: "utica-unicorns", mlbOrganization: "Minnesota Twins", yearSigned: 2021, madeMLBRoster: false },
+  { name: "Malik Barrington", uspblTeam: "Diamond Hoppers", uspblTeamSlug: "eastside-diamond-hoppers", mlbOrganization: "New York Mets", yearSigned: 2021, madeMLBRoster: false },
+  { name: "Collin Ledbetter", uspblTeam: "Beavers", uspblTeamSlug: "birmingham-bloomfield-beavers", mlbOrganization: "San Francisco Giants", yearSigned: 2020, madeMLBRoster: false },
+  { name: "Noah Childress", uspblTeam: "Unicorns", uspblTeamSlug: "utica-unicorns", mlbOrganization: "Tampa Bay Rays", yearSigned: 2022, madeMLBRoster: false },
+  { name: "Ethan Wiskur", uspblTeam: "Beavers", uspblTeamSlug: "birmingham-bloomfield-beavers", mlbOrganization: "Oakland Athletics", yearSigned: 2019, madeMLBRoster: false },
+  { name: "Austin Athmann", uspblTeam: "Mammoths", uspblTeamSlug: "westside-woolly-mammoths", mlbOrganization: "Minnesota Twins", yearSigned: 2018, madeMLBRoster: false },
+  { name: "Cooper Johnson", uspblTeam: "Beavers", uspblTeamSlug: "birmingham-bloomfield-beavers", mlbOrganization: "Detroit Tigers", yearSigned: 2019, madeMLBRoster: false },
+  { name: "Thomas Mariani", uspblTeam: "Diamond Hoppers", uspblTeamSlug: "eastside-diamond-hoppers", mlbOrganization: "Chicago White Sox", yearSigned: 2016, madeMLBRoster: false },
+  { name: "Donnie Wegner", uspblTeam: "Unicorns", uspblTeamSlug: "utica-unicorns", mlbOrganization: "Oakland Athletics", yearSigned: 2017, madeMLBRoster: false },
+  { name: "Dan Ward", uspblTeam: "Beavers", uspblTeamSlug: "birmingham-bloomfield-beavers", mlbOrganization: "Minnesota Twins", yearSigned: 2017, madeMLBRoster: false },
+  { name: "Jimmy Latona", uspblTeam: "Diamond Hoppers", uspblTeamSlug: "eastside-diamond-hoppers", mlbOrganization: "Kansas City Royals", yearSigned: 2018, madeMLBRoster: false },
+];
+
+export function getUSPBLChampionships(): USPBLChampionship[] {
+  return USPBL_CHAMPIONSHIPS;
+}
+
+export function getUSPBLMLBAlumni(): USPBLMLBAlumni[] {
+  return USPBL_MLB_ALUMNI;
+}
+
+export function getUSPBLMLBRosterAlumni(): USPBLMLBAlumni[] {
+  return USPBL_MLB_ALUMNI.filter((a) => a.madeMLBRoster);
+}
+
+export function getTeamChampionshipCount(teamSlug: string): number {
+  return USPBL_CHAMPIONSHIPS.filter((c) => c.championSlug === teamSlug).length;
+}
+
+export function getTeamMLBAlumni(teamSlug: string): USPBLMLBAlumni[] {
+  return USPBL_MLB_ALUMNI.filter((a) => a.uspblTeamSlug === teamSlug);
+}
+
 // ── Helper: parse HTML tables ───────────────────────────────
 
 function parseTableRows(html: string): string[][] {
