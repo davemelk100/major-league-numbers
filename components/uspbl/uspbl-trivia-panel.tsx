@@ -102,11 +102,7 @@ function USPBLTriviaPanelContent() {
 
   const handleShare = async () => {
     const score = answeredQuestions.filter((a) => a.isCorrect).length;
-    const date = new Date().toLocaleDateString("en-US", {
-      month: "numeric",
-      day: "numeric",
-    });
-    const text = `I got ${score}/5 on today's (${date}) USPBL Numbers trivia!\n\nPlay here: https://majorleaguenumbers.com/uspbl`;
+    const text = `I got ${score}/5 on today's USPBL Numbers trivia!\n\nPlay here: https://majorleaguenumbers.com/uspbl`;
 
     if (navigator.share) {
       try {

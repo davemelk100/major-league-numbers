@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "USPBL Numbers",
     description: "Explore USPBL player rosters, team info, and league standings.",
-    images: [{ url: "/uspbl-logo.png", width: 200, height: 200, alt: "USPBL" }],
+    images: [{ url: "/uspbl-logo.png", width: 120, height: 78, alt: "USPBL" }],
     type: "website",
   },
   twitter: {
