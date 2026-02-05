@@ -8,7 +8,7 @@ import {
   Award,
 } from "lucide-react";
 
-export type SportsSiteId = "mlb" | "nhl" | "uspbl";
+export type SportsSiteId = "mlb" | "nhl" | "nfl" | "uspbl";
 
 export interface SportsNavItem {
   name: string;
@@ -125,6 +125,45 @@ const nhlSite: SportsSiteConfig = {
   ],
 };
 
+const nflSite: SportsSiteConfig = {
+  id: "nfl",
+  basePath: "/nfl",
+  title: "NFL Numbers",
+  logoSrc: "/nfl-logo.svg",
+  logoAlt: "NFL",
+  titleColorClass: "",
+  chatLabel: "ChatNFL",
+  chatPath: "/nfl/ask",
+  chatIconSrc: "/nfl-logo.svg",
+  searchLabel: "Search NFL",
+  navItems: [
+    { name: "ChatNFL", href: "/nfl/ask", image: "/nfl-logo.svg" },
+    { name: "Home", href: "/nfl", icon: Home },
+    { name: "Players", href: "/nfl/players", icon: Users },
+    { name: "Teams", href: "/nfl/teams", icon: Trophy },
+    { name: "Standings", href: "/nfl/standings", icon: BarChart3 },
+  ],
+  mobileHiddenNames: ["Home"],
+  dataSources: [
+    {
+      category: "Data",
+      items: [
+        { label: "ESPN API", url: "https://site.api.espn.com/" },
+        { label: "Pro-Football-Reference", url: "https://www.pro-football-reference.com/" },
+        { label: "NFL.com", url: "https://www.nfl.com/" },
+        { label: "Wikipedia", url: "https://en.wikipedia.org/" },
+      ],
+    },
+    {
+      category: "Images",
+      items: [
+        { label: "ESPN CDN", url: "https://a.espncdn.com/" },
+        { label: "NFL.com", url: "https://www.nfl.com/" },
+      ],
+    },
+  ],
+};
+
 const uspblSite: SportsSiteConfig = {
   id: "uspbl",
   basePath: "/uspbl",
@@ -158,6 +197,7 @@ const uspblSite: SportsSiteConfig = {
 const sportsSites: Record<SportsSiteId, SportsSiteConfig> = {
   mlb: mlbSite,
   nhl: nhlSite,
+  nfl: nflSite,
   uspbl: uspblSite,
 };
 
@@ -167,11 +207,12 @@ export function getSportsSiteById(id: SportsSiteId): SportsSiteConfig {
 
 export function getSportsSiteFromPathname(pathname: string): SportsSiteConfig {
   if (pathname.startsWith("/nhl")) return nhlSite;
+  if (pathname.startsWith("/nfl")) return nflSite;
   if (pathname.startsWith("/uspbl")) return uspblSite;
   if (pathname.startsWith("/mlb")) return mlbSite;
   return mlbSite;
 }
 
 export function isSportsSiteRoute(pathname: string): boolean {
-  return pathname.startsWith("/mlb") || pathname.startsWith("/nhl") || pathname.startsWith("/uspbl");
+  return pathname.startsWith("/mlb") || pathname.startsWith("/nhl") || pathname.startsWith("/nfl") || pathname.startsWith("/uspbl");
 }
