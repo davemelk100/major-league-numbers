@@ -8,7 +8,7 @@ import {
   Award,
 } from "lucide-react";
 
-export type SportsSiteId = "mlb" | "nhl" | "nfl" | "uspbl";
+export type SportsSiteId = "mlb" | "nhl" | "nfl" | "nba" | "uspbl";
 
 export interface SportsNavItem {
   name: string;
@@ -168,6 +168,47 @@ const nflSite: SportsSiteConfig = {
   ],
 };
 
+const nbaSite: SportsSiteConfig = {
+  id: "nba",
+  basePath: "/nba",
+  title: "NBA Numbers",
+  logoSrc: "/nba-logo.png",
+  logoAlt: "NBA",
+  titleColorClass: "",
+  chatLabel: "ChatNBA",
+  chatPath: "/nba/ask",
+  chatIconSrc: "/nba-logo.png",
+  searchLabel: "Search NBA",
+  navItems: [
+    { name: "ChatNBA", href: "/nba/ask", image: "/nba-logo.png" },
+    { name: "Home", href: "/nba", icon: Home },
+    { name: "Players", href: "/nba/players", icon: Users },
+    { name: "Teams", href: "/nba/teams", icon: Trophy },
+    { name: "Standings", href: "/nba/standings", icon: BarChart3 },
+    { name: "All Stars", href: "/nba/all-star", icon: Star },
+    { name: "HOF", href: "/nba/hof", icon: Award },
+  ],
+  mobileHiddenNames: ["All Stars", "HOF", "Home"],
+  dataSources: [
+    {
+      category: "Data",
+      items: [
+        { label: "ESPN API", url: "https://site.api.espn.com/" },
+        { label: "Basketball-Reference", url: "https://www.basketball-reference.com/" },
+        { label: "NBA.com", url: "https://www.nba.com/" },
+        { label: "Wikipedia", url: "https://en.wikipedia.org/" },
+      ],
+    },
+    {
+      category: "Images",
+      items: [
+        { label: "ESPN CDN", url: "https://a.espncdn.com/" },
+        { label: "NBA.com", url: "https://www.nba.com/" },
+      ],
+    },
+  ],
+};
+
 const uspblSite: SportsSiteConfig = {
   id: "uspbl",
   basePath: "/uspbl",
@@ -202,6 +243,7 @@ const sportsSites: Record<SportsSiteId, SportsSiteConfig> = {
   mlb: mlbSite,
   nhl: nhlSite,
   nfl: nflSite,
+  nba: nbaSite,
   uspbl: uspblSite,
 };
 
@@ -212,11 +254,12 @@ export function getSportsSiteById(id: SportsSiteId): SportsSiteConfig {
 export function getSportsSiteFromPathname(pathname: string): SportsSiteConfig {
   if (pathname.startsWith("/nhl")) return nhlSite;
   if (pathname.startsWith("/nfl")) return nflSite;
+  if (pathname.startsWith("/nba")) return nbaSite;
   if (pathname.startsWith("/uspbl")) return uspblSite;
   if (pathname.startsWith("/mlb")) return mlbSite;
   return mlbSite;
 }
 
 export function isSportsSiteRoute(pathname: string): boolean {
-  return pathname.startsWith("/mlb") || pathname.startsWith("/nhl") || pathname.startsWith("/nfl") || pathname.startsWith("/uspbl");
+  return pathname.startsWith("/mlb") || pathname.startsWith("/nhl") || pathname.startsWith("/nfl") || pathname.startsWith("/nba") || pathname.startsWith("/uspbl");
 }
