@@ -101,8 +101,10 @@ const nhlSite: SportsSiteConfig = {
     { name: "Players", href: "/nhl/players", icon: Users },
     { name: "Teams", href: "/nhl/teams", icon: Trophy },
     { name: "Standings", href: "/nhl/standings", icon: BarChart3 },
+    { name: "All Stars", href: "/nhl/all-star", icon: Star },
+    { name: "HOF", href: "/nhl/hof", icon: Award },
   ],
-  mobileHiddenNames: ["Home"],
+  mobileHiddenNames: ["All Stars", "HOF", "Home"],
   dataSources: [
     {
       category: "Data",
@@ -142,8 +144,10 @@ const nflSite: SportsSiteConfig = {
     { name: "Players", href: "/nfl/players", icon: Users },
     { name: "Teams", href: "/nfl/teams", icon: Trophy },
     { name: "Standings", href: "/nfl/standings", icon: BarChart3 },
+    { name: "All Stars", href: "/nfl/all-star", icon: Star },
+    { name: "HOF", href: "/nfl/hof", icon: Award },
   ],
-  mobileHiddenNames: ["Home"],
+  mobileHiddenNames: ["All Stars", "HOF", "Home"],
   dataSources: [
     {
       category: "Data",

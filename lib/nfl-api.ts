@@ -217,9 +217,21 @@ function getConferenceForDivision(division: string): string {
 }
 
 export async function getNFLStandings(season?: number): Promise<NFLDivisionStandings[]> {
-  const year = season || new Date().getFullYear();
-  const url = `https://site.api.espn.com/apis/v2/sports/football/nfl/standings?season=${year}`;
-  const data = await fetchJSON<any>(url, CACHE_TTL);
+  // NFL season spans August-February. If we're in Jan-July, use previous calendar year
+  const now = new Date();
+  const month = now.getMonth(); // 0-11
+  const currentYear = now.getFullYear();
+  const nflSeason = season || (month < 8 ? currentYear - 1 : currentYear);
+
+  const url = `https://site.api.espn.com/apis/v2/sports/football/nfl/standings?season=${nflSeason}`;
+
+  let data: any;
+  try {
+    data = await fetchJSON<any>(url, CACHE_TTL);
+  } catch (error) {
+    console.error("[NFL] Error fetching standings:", error);
+    return [];
+  }
 
   // Collect all entries from both conferences
   const allEntries: NFLStandingsEntry[] = [];

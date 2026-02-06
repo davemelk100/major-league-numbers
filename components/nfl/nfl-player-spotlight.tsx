@@ -50,7 +50,9 @@ function NFLPlayerSpotlightContent() {
     );
   }
 
-  const headshotUrl = getPlayerHeadshotUrl(player.id);
+  // Only use ESPN headshots for current players with hasHeadshot !== false
+  const showHeadshot = player.hasHeadshot !== false;
+  const headshotUrl = showHeadshot ? getPlayerHeadshotUrl(player.id) : null;
 
   return (
     <div className="w-full h-full bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
@@ -60,12 +62,9 @@ function NFLPlayerSpotlightContent() {
       <div className="flex gap-3 sm:gap-6 items-center">
         <div className="space-y-2 sm:space-y-3 flex-1 min-w-0">
           <div>
-            <Link
-              href={`/nfl/players/${player.id}`}
-              className="text-base sm:text-2xl font-bold hover:underline decoration-primary decoration-2 underline-offset-4 block"
-            >
+            <span className="text-base sm:text-2xl font-bold block">
               {player.name}
-            </Link>
+            </span>
             <p className="text-sm text-muted-foreground mt-1">
               {player.team} &middot; {player.position}
             </p>
@@ -73,20 +72,28 @@ function NFLPlayerSpotlightContent() {
           <p className="text-sm text-muted-foreground">{player.years}</p>
           <p className="text-sm text-muted-foreground">{player.fact}</p>
         </div>
-        <Link
-          href={`/nfl/players/${player.id}`}
-          className="shrink-0 group relative overflow-hidden rounded-xl"
-        >
-          <Image
-            src={headshotUrl}
-            alt={player.name}
-            width={168}
-            height={168}
-            className="rounded-xl transition-transform group-hover:scale-105 w-[70px] sm:w-[120px] md:w-[150px] lg:w-[168px] h-auto"
-            unoptimized
-            priority
-          />
-        </Link>
+        {headshotUrl ? (
+          <Link
+            href={`/nfl/players/${player.id}`}
+            className="shrink-0 group relative overflow-hidden rounded-xl"
+          >
+            <Image
+              src={headshotUrl}
+              alt={player.name}
+              width={168}
+              height={168}
+              className="rounded-xl transition-transform group-hover:scale-105 w-[70px] sm:w-[120px] md:w-[150px] lg:w-[168px] h-auto"
+              unoptimized
+              priority
+            />
+          </Link>
+        ) : (
+          <div className="shrink-0 w-[70px] sm:w-[120px] md:w-[150px] lg:w-[168px] h-[70px] sm:h-[120px] md:h-[150px] lg:h-[168px] bg-muted rounded-xl flex items-center justify-center">
+            <span className="text-3xl sm:text-5xl font-bold text-muted-foreground">
+              {player.position}
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

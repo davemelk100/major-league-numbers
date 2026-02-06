@@ -5,6 +5,8 @@ export interface NFLSpotlightPlayer {
   team: string;
   years: string;
   fact: string;
+  // If false, don't use ESPN headshot (historical players have wrong/recycled IDs)
+  hasHeadshot?: boolean;
 }
 
 export const nflSpotlightPlayers: NFLSpotlightPlayer[] = [
@@ -31,6 +33,7 @@ export const nflSpotlightPlayers: NFLSpotlightPlayer[] = [
     team: "San Francisco 49ers",
     years: "1985-2004",
     fact: "Holds virtually every major receiving record including 1,549 receptions, 22,895 yards, and 197 receiving touchdowns.",
+    hasHeadshot: false, // Historical player
   },
   {
     id: 2547,
@@ -39,6 +42,7 @@ export const nflSpotlightPlayers: NFLSpotlightPlayer[] = [
     team: "Chicago Bears",
     years: "1975-1987",
     fact: "Known as 'Sweetness,' he held the rushing record for nearly two decades. The Man of the Year award bears his name.",
+    hasHeadshot: false, // Historical player
   },
   {
     id: 2565,
@@ -47,6 +51,7 @@ export const nflSpotlightPlayers: NFLSpotlightPlayer[] = [
     team: "San Francisco 49ers",
     years: "1979-1994",
     fact: "Won four Super Bowls with a perfect 4-0 record and never threw an interception in Super Bowl play. Named 'Joe Cool.'",
+    hasHeadshot: false, // Historical player
   },
   {
     id: 2549,
@@ -55,6 +60,7 @@ export const nflSpotlightPlayers: NFLSpotlightPlayer[] = [
     team: "Cleveland Browns",
     years: "1957-1965",
     fact: "Led the NFL in rushing eight of his nine seasons and retired at his peak, averaging 5.2 yards per carry for his career.",
+    hasHeadshot: false, // Historical player
   },
   {
     id: 5529,
@@ -63,6 +69,7 @@ export const nflSpotlightPlayers: NFLSpotlightPlayer[] = [
     team: "Indianapolis Colts / Denver Broncos",
     years: "1998-2015",
     fact: "Five-time MVP and two-time Super Bowl champion who revolutionized the quarterback position with his pre-snap reads.",
+    hasHeadshot: false, // Historical player
   },
   {
     id: 2564,
@@ -71,6 +78,7 @@ export const nflSpotlightPlayers: NFLSpotlightPlayer[] = [
     team: "New York Giants",
     years: "1981-1993",
     fact: "Changed the way defense is played in the NFL. Won three Defensive Player of the Year awards and was the 1986 MVP.",
+    hasHeadshot: false, // Historical player
   },
   {
     id: 4040715,
@@ -127,6 +135,7 @@ export const nflSpotlightPlayers: NFLSpotlightPlayer[] = [
     team: "Detroit Lions",
     years: "1989-1998",
     fact: "One of the most elusive runners ever, he rushed for 15,269 yards and retired at 30, still in his prime.",
+    hasHeadshot: false, // Historical player
   },
   {
     id: 5536,
@@ -135,6 +144,7 @@ export const nflSpotlightPlayers: NFLSpotlightPlayer[] = [
     team: "Baltimore Ravens",
     years: "1996-2012",
     fact: "Two-time Defensive Player of the Year and Super Bowl XXXV MVP, considered one of the greatest linebackers ever.",
+    hasHeadshot: false, // Historical player
   },
   {
     id: 4241479,
