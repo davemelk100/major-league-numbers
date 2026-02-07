@@ -4,8 +4,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { amrepTimeline } from "@/lib/amrep-timeline-data";
+import { revTimeline } from "@/lib/rev-timeline-data";
 
-const timelineEvents = [
+const gbvTimelineEvents = [
   { year: 1983, event: "Band formed in Dayton, Ohio by Robert Pollard" },
   { year: 1986, event: "First release: Forever Since Breakfast EP" },
   { year: 1987, event: "Devil Between My Toes released" },
@@ -32,12 +33,25 @@ export function SiteTimelineContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";
-  const events = isAmrep
-    ? amrepTimeline.map((item) => ({
+  const isRev = site.id === "rev";
+
+  const getEvents = () => {
+    if (isAmrep) {
+      return amrepTimeline.map((item) => ({
         year: item.year,
         event: `${item.title} — ${item.description}`,
-      }))
-    : timelineEvents;
+      }));
+    }
+    if (isRev) {
+      return revTimeline.map((item) => ({
+        year: item.year,
+        event: `${item.title} — ${item.description}`,
+      }));
+    }
+    return gbvTimelineEvents;
+  };
+
+  const events = getEvents();
 
   return (
     <div className="container py-6">

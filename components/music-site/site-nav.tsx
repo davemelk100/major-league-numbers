@@ -31,6 +31,7 @@
   const [pendingHref, setPendingHref] = useState<string | null>(null);
    const site = getMusicSiteFromPathname(pathname);
    const isAmrep = site.id === "amrep";
+   const isRev = site.id === "rev";
   useEffect(() => {
     setPendingHref(null);
   }, [pathname]);
@@ -82,7 +83,7 @@
                      isChat ? "h-10 w-10" : "h-5 w-5",
                      "object-contain transition-transform duration-200 group-hover:scale-110",
                      isPending && "animate-spin [animation-duration:2s]",
-                     !isAmrep ? "brightness-0 invert" : ""
+                     !isAmrep && !isRev ? "brightness-0 invert" : ""
                    )}
                    priority={isChat}
                    loading={isChat ? "eager" : "lazy"}
@@ -97,7 +98,7 @@
                    />
                  )
                )}
-              <span className="flex items-center justify-center text-xs font-medium text-center leading-tight text-white transition-colors duration-200 group-hover:text-white/90">
+              <span className="flex items-center justify-center text-xs font-medium text-center leading-tight text-white">
                 {item.name}
               </span>
              </Link>
@@ -113,6 +114,7 @@
   const [pendingHref, setPendingHref] = useState<string | null>(null);
    const site = getMusicSiteFromPathname(pathname);
    const isAmrep = site.id === "amrep";
+   const isRev = site.id === "rev";
   useEffect(() => {
     setPendingHref(null);
   }, [pathname]);
@@ -169,7 +171,7 @@
                      "object-contain",
                      isChat ? "gbv-nav-icon" : "",
                      isPending && "animate-spin [animation-duration:2s]",
-                     !isAmrep ? "brightness-0 invert" : ""
+                     !isAmrep && !isRev ? "brightness-0 invert" : ""
                    )}
                  />
                ) : (

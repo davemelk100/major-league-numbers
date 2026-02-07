@@ -47,12 +47,12 @@ const musicSites = [
     logo: "/amrep-logo-foreground.svg",
     description: "Discography & catalog",
   },
-  // {
-  //   name: "Revelation Records",
-  //   href: "/rev",
-  //   logo: "/revelation-logo.png",
-  //   description: "Discography & catalog",
-  // },
+  {
+    name: "Revelation Records",
+    href: "/rev",
+    logo: "/rev-logo.png",
+    description: "Discography & catalog",
+  },
 ];
 
 function SiteCard({ site }: { site: { name: string; href: string; logo: string; description: string } }) {
@@ -91,7 +91,7 @@ export default function LandingPage() {
         </section>
         <section>
           <h2 className="text-center mb-6">Music</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {musicSites.map((site) => (
               <SiteCard key={site.href} site={site} />
             ))}

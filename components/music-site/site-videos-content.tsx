@@ -96,11 +96,35 @@ const amrepVideos: Video[] = [
   },
 ];
 
+const revVideos: Video[] = [
+  {
+    id: "blMvZmF_i0c",
+    title: "Revelation Records",
+    description: "Revelation Records video.",
+  },
+  {
+    id: "0nbdlQetym4",
+    title: "Revelation Records",
+    description: "Revelation Records video.",
+  },
+  {
+    id: "YNRkRs0y1CA",
+    title: "Revelation Records",
+    description: "Revelation Records video.",
+  },
+  {
+    id: "N600-iOqlvM",
+    title: "Revelation Records",
+    description: "Revelation Records video.",
+  },
+];
+
 export function SiteVideosContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";
-  const list = isAmrep ? amrepVideos : videos;
+  const isRev = site.id === "rev";
+  const list = isRev ? revVideos : isAmrep ? amrepVideos : videos;
 
   return (
     <div className="container py-6">

@@ -65,25 +65,63 @@ const amrepNotablePerformances = [
   "CMJ / Amphetamine Reptile Tour (1992) featuring multiple AmRep artists.",
 ];
 
+const revMilestones = [
+  {
+    label: "Founded",
+    detail: "Revelation Records founded in 1987 by Jordan Cooper and Ray Cappo in New Haven, Connecticut.",
+  },
+  {
+    label: "First Release",
+    detail: "Warzone - Lower East Side Crew (REV 1) released in 1987.",
+  },
+  {
+    label: "Landmark Release",
+    detail: "Gorilla Biscuits - Start Today (REV 12) became one of the most influential hardcore albums of all time.",
+  },
+  {
+    label: "Youth Crew Movement",
+    detail: "Revelation became the home of the straight edge youth crew movement with bands like Youth of Today, Judge, and Bold.",
+  },
+  {
+    label: "Crossover Success",
+    detail: "Quicksand and Texas Is the Reason helped bridge hardcore to alternative rock audiences in the 1990s.",
+  },
+];
+
+const revNotableAchievements = [
+  "Over 135 catalog releases spanning hardcore, punk, and post-hardcore.",
+  "Home to iconic bands: Youth of Today, Gorilla Biscuits, Judge, Bold, Chain of Strength.",
+  "Start Today by Gorilla Biscuits consistently ranked among greatest hardcore albums.",
+  "Judge's Bringin' It Down considered a hardcore classic.",
+  "Texas Is the Reason's Do You Know Who You Are? - landmark emo/post-hardcore release.",
+  "Quicksand's albums helped define post-hardcore sound of the 1990s.",
+  "Continued influence on modern hardcore with bands like Title Fight, Drain, and Turnstile alumni.",
+];
+
 export function SiteAwardsContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";
+  const isRev = site.id === "rev";
+
+  const isLabelSite = isAmrep || isRev;
+  const milestones = isRev ? revMilestones : amrepMilestones;
+  const achievements = isRev ? revNotableAchievements : amrepNotablePerformances;
 
   return (
     <div className="container py-6">
       <h1 className="font-league mb-6">
-        {isAmrep ? "Milestones & Recognition" : "Awards & Recognition"}
+        {isLabelSite ? "Milestones & Recognition" : "Awards & Recognition"}
       </h1>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="py-6">
           <CardHeader className="pb-6">
-            <h2>{isAmrep ? "Label Milestones" : "Critical Acclaim"}</h2>
+            <h2>{isLabelSite ? "Label Milestones" : "Critical Acclaim"}</h2>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {(isAmrep ? amrepMilestones : criticalAcclaim).map(
+              {(isLabelSite ? milestones : criticalAcclaim).map(
                 (item, index) => (
                   <div
                     key={index}
@@ -91,12 +129,12 @@ export function SiteAwardsContent() {
                   >
                     <div>
                       <p className="font-medium">
-                        {isAmrep ? item.label : item.publication}
+                        {isLabelSite ? item.label : item.publication}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {isAmrep ? item.detail : item.accolade}
+                        {isLabelSite ? item.detail : item.accolade}
                       </p>
-                      {!isAmrep && item.sourceUrl && (
+                      {!isLabelSite && item.sourceUrl && (
                         <a
                           href={item.sourceUrl}
                           target="_blank"
@@ -107,7 +145,7 @@ export function SiteAwardsContent() {
                         </a>
                       )}
                     </div>
-                    {!isAmrep && <Badge variant="outline">{item.year}</Badge>}
+                    {!isLabelSite && <Badge variant="outline">{item.year}</Badge>}
                   </div>
                 ),
               )}
@@ -118,12 +156,12 @@ export function SiteAwardsContent() {
         <Card className="py-6">
           <CardHeader className="pb-6">
             <h2>
-              {isAmrep ? "Notable Performances" : "Best-Of List Appearances"}
+              {isLabelSite ? "Notable Achievements" : "Best-Of List Appearances"}
             </h2>
           </CardHeader>
           <CardContent>
             <ul className="space-y-3">
-              {(isAmrep ? amrepNotablePerformances : listAppearances).map(
+              {(isLabelSite ? achievements : listAppearances).map(
                 (item, index) => (
                   <li key={index} className="text-sm">
                     {item}

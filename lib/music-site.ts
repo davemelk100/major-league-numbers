@@ -201,11 +201,11 @@ export const REVELATION_SITE: MusicSiteConfig = {
   chatLabel: "ChatREV",
   headerTitle: "Revelation By The Numbers",
   headerTextClass: "",
-  logoSrc: "/revelation-logo.png",
-  chatIconSrc: "/revelation-logo.png",
-  placeholderIconSrc: "/revelation-logo.png",
+  logoSrc: "/rev-logo.png",
+  chatIconSrc: "/rev-icon.svg",
+  placeholderIconSrc: "/rev-icon.svg",
   shellClass: "revelation-shell",
-  logoClassName: "h-12 w-auto sm:h-16 lg:h-20 lg:w-auto",
+  logoClassName: "h-10 w-auto sm:h-12 lg:h-14 lg:w-auto",
   navLabels: {
     discography: "Releases",
     members: "Bands",
@@ -244,9 +244,9 @@ export const REVELATION_SITE: MusicSiteConfig = {
       "label history",
     ],
     siteName: "Major League Numbers",
-    ogImage: "https://majorleaguenumbers.com/revelation-logo.png",
+    ogImage: "https://majorleaguenumbers.com/rev-logo.png",
     ogImageAlt: "Revelation Records",
-    twitterImage: "https://majorleaguenumbers.com/revelation-logo.png",
+    twitterImage: "https://majorleaguenumbers.com/rev-logo.png",
   },
 };
 
