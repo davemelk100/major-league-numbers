@@ -1,4 +1,7 @@
+import { amrepReleases, type AmrepRelease } from "./amrep-releases-data";
+
 export interface AmrepRecordOfDay {
+  id: number;
   title: string;
   artist: string;
   year: number;
@@ -6,270 +9,18 @@ export interface AmrepRecordOfDay {
   coverUrl?: string;
 }
 
-export const amrepRecordsOfTheDay: AmrepRecordOfDay[] = [
-  // Albums
-  {
-    title: "Strap It On",
-    artist: "Helmet",
-    year: 1990,
-    highlight: "A defining AmRep release that helped sustain the label.",
-    coverUrl: "https://upload.wikimedia.org/wikipedia/en/4/4a/Helmet_-_Strap_It_On.jpg",
-  },
-  {
-    title: "AmRep Motors (1995 Models)",
-    artist: "Various artists",
-    year: 1995,
-    highlight: "A snapshot of the label's mid‑90s roster.",
-  },
-  {
-    title: "AmRep Equipped 96/97",
-    artist: "Various Artists",
-    year: 1997,
-    highlight: "Compilation capturing the label's noise rock ecosystem.",
-    coverUrl:
-      "/api/gbv/image-proxy?url=https%3A%2F%2Fm.media-amazon.com%2Fimages%2FI%2F71SDTWoyKJL._UF1000%2C1000_QL80_.jpg",
-  },
-  {
-    title: "Motionless",
-    artist: "Chokebore",
-    year: 1993,
-    highlight: "Chokebore's moody debut on AmRep.",
-  },
-  {
-    title: "Palomino Pizza",
-    artist: "Cosmic Psychos",
-    year: 1993,
-    highlight: "Rowdy, bruising punk rock energy.",
-  },
-  {
-    title: "You're Feeling So Attractive",
-    artist: "Calvin Krime",
-    year: 1998,
-    highlight: "A fuzzed‑out slice of late‑90s AmRep noise rock.",
-  },
-  {
-    title: "Peacetika",
-    artist: "Cows",
-    year: 1991,
-    highlight: "Noise rock at its unhinged finest.",
-  },
-  {
-    title: "Ethereal Killer",
-    artist: "Hammerhead",
-    year: 1992,
-    highlight: "Hammerhead's crushing AmRep debut.",
-  },
-  {
-    title: "Scattered, Smothered & Covered",
-    artist: "Unsane",
-    year: 1995,
-    highlight: "Brutal noise rock from NYC's finest.",
-  },
-  {
-    title: "Ventriloquist",
-    artist: "Vertigo",
-    year: 1992,
-    highlight: "Dark, driving noise rock from Minneapolis.",
-  },
-  {
-    title: "Prick",
-    artist: "Melvins",
-    year: 1994,
-    highlight: "The Melvins' AmRep full-length debut — heavy, sludgy, and unrelenting.",
-  },
-  {
-    title: "Into the Vortex",
-    artist: "Hammerhead",
-    year: 1994,
-    highlight: "Hammerhead at their most ferocious.",
-  },
-  {
-    title: "Orphan's Tragedy",
-    artist: "Cows",
-    year: 1994,
-    highlight: "Peak Cows weirdness and aggression.",
-  },
-  // Singles
-  {
-    title: "Rubber Room",
-    artist: "Halo of Flies",
-    year: 1986,
-    highlight: "The very first AmRep single — Scale 2.",
-  },
-  {
-    title: "Snapping Black Roscoe Bottles",
-    artist: "Halo of Flies",
-    year: 1986,
-    highlight: "Early Halo of Flies on AmRep's Scale imprint.",
-  },
-  {
-    title: "Felch",
-    artist: "The Thrown Ups",
-    year: 1987,
-    highlight: "Raw, unhinged early AmRep chaos.",
-  },
-  {
-    title: "No Time",
-    artist: "Halo of Flies",
-    year: 1988,
-    highlight: "Halo of Flies delivering their signature noise.",
-  },
-  {
-    title: "Dope-Guns-'N-Fucking in the Streets Volume One",
-    artist: "Various artists",
-    year: 1988,
-    highlight: "The legendary AmRep compilation series begins.",
-  },
-  {
-    title: "\"Unsung\"",
-    artist: "Helmet",
-    year: 1991,
-    highlight: "One of the most iconic AmRep singles ever pressed.",
-  },
-  {
-    title: "\"U.V.\"/\"Peep\"",
-    artist: "Hammerhead",
-    year: 1991,
-    highlight: "Hammerhead's crushing debut 7\".",
-  },
-  {
-    title: "\"Load King\"",
-    artist: "Hammerhead",
-    year: 1992,
-    highlight: "Minneapolis noise rock at full throttle.",
-  },
-  {
-    title: "Death of a Fly",
-    artist: "Halo of Flies",
-    year: 1989,
-    highlight: "Tom Hazelmyer's own band pushing boundaries.",
-  },
-  {
-    title: "\"Bullethead\"/\"KCL\"",
-    artist: "Janitor Joe",
-    year: 1992,
-    highlight: "Janitor Joe's ferocious AmRep debut.",
-  },
-  {
-    title: "Mod Showdown!",
-    artist: "Mudhoney Versus Halo of Flies",
-    year: 1991,
-    highlight: "A dream matchup of noise rock heavyweights.",
-  },
-  {
-    title: "\"Euthanasia\"/\"Ambition\"",
-    artist: "Melvins",
-    year: 2016,
-    highlight: "Modern-era Melvins on AmRep wax.",
-  },
-  {
-    title: "\"Fix It\"/\"Wrung\"",
-    artist: "Unsane",
-    year: 2017,
-    highlight: "Unsane's relentless return to AmRep.",
-  },
-  {
-    title: "Stuck",
-    artist: "Helmet",
-    year: 2015,
-    highlight: "Helmet reunited on AmRep for a new 7\".",
-  },
-  {
-    title: "\"Slap Back\"",
-    artist: "Cows",
-    year: 1990,
-    highlight: "Cows at their most deranged on wax.",
-  },
-  {
-    title: "Fear and Pain",
-    artist: "God Bullies",
-    year: 1988,
-    highlight: "Early AmRep fury from the God Bullies.",
-  },
-  // Neurosis
-  {
-    title: "Through Silver in Blood",
-    artist: "Neurosis",
-    year: 1996,
-    highlight: "A landmark of heavy music — Neurosis at their most crushing and transcendent.",
-  },
-  {
-    title: "Souls at Zero",
-    artist: "Neurosis",
-    year: 1992,
-    highlight: "Neurosis's evolution from hardcore into something heavier and more expansive.",
-  },
-  {
-    title: "Enemy of the Sun",
-    artist: "Neurosis",
-    year: 1993,
-    highlight: "Dark, ritualistic post-metal before the genre had a name.",
-  },
-  // Shellac
-  {
-    title: "At Action Park",
-    artist: "Shellac",
-    year: 1994,
-    highlight: "Steve Albini's trio delivers angular, precise noise rock on their AmRep debut.",
-  },
-  {
-    title: "1000 Hurts",
-    artist: "Shellac",
-    year: 2000,
-    highlight: "Shellac's most celebrated album — tight, abrasive, and uncompromising.",
-  },
-  {
-    title: "Terraform",
-    artist: "Shellac",
-    year: 1998,
-    highlight: "Sparse, punishing post-punk from one of the most singular bands on AmRep.",
-  },
-  // Jesus Lizard
-  {
-    title: "Goat",
-    artist: "The Jesus Lizard",
-    year: 1991,
-    highlight: "A definitive noise rock album — David Yow and company at their most unhinged.",
-  },
-  {
-    title: "Liar",
-    artist: "The Jesus Lizard",
-    year: 1992,
-    highlight: "Relentless, swaggering noise rock from The Jesus Lizard's peak era.",
-  },
-  {
-    title: "Head",
-    artist: "The Jesus Lizard",
-    year: 1990,
-    highlight: "The Jesus Lizard's debut full-length — raw, ferocious, foundational.",
-  },
-  // Unsane
-  {
-    title: "Total Destruction",
-    artist: "Unsane",
-    year: 1993,
-    highlight: "NYC noise rock at its most savage — Unsane's relentless third album.",
-  },
-  // Melvins
-  {
-    title: "Bullhead",
-    artist: "Melvins",
-    year: 1991,
-    highlight: "Sludgy, monolithic Melvins — one of the heaviest records in the AmRep catalog.",
-  },
-  {
-    title: "Lysol",
-    artist: "Melvins",
-    year: 1992,
-    highlight: "A single continuous 31-minute dirge — the Melvins at their most extreme.",
-  },
-  {
-    title: "Stoner Witch",
-    artist: "Melvins",
-    year: 1994,
-    highlight: "The Melvins blend sludge, grunge, and pop hooks on this AmRep classic.",
-  },
-];
+// Convert a release to a record of the day
+function toRecordOfDay(release: AmrepRelease): AmrepRecordOfDay {
+  const catalogLabel = release.catalogNo ? `AmRep ${release.catalogNo}` : `#${release.id}`;
+  return {
+    id: release.id,
+    title: release.title,
+    artist: release.artist,
+    year: release.year ?? 0,
+    highlight: `${catalogLabel} — ${release.year ?? "Unknown"}`,
+    coverUrl: undefined, // Will be fetched via Discogs API
+  };
+}
 
 export function getDailyAmrepRecord(date = new Date()): AmrepRecordOfDay {
   const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -281,6 +32,6 @@ export function getDailyAmrepRecord(date = new Date()): AmrepRecordOfDay {
     hash = hash | 0;
   }
 
-  const index = Math.abs(hash) % amrepRecordsOfTheDay.length;
-  return amrepRecordsOfTheDay[index];
+  const index = Math.abs(hash) % amrepReleases.length;
+  return toRecordOfDay(amrepReleases[index]);
 }
