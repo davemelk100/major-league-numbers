@@ -26,7 +26,7 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className="z-50 w-full bg-transparent py-3 lg:pt-1 mb-1">
+    <header className="z-50 w-full bg-transparent py-3 lg:pt-1 mb-4 lg:mb-1">
       <div className="container flex items-center gap-3">
         <Link
           href={site.basePath}
@@ -38,7 +38,8 @@ export function SiteHeader() {
             width={140}
             height={140}
             className={cn(
-              site.logoClassName || "h-12 w-auto sm:h-16 lg:h-[173px] lg:w-[173px]",
+              site.logoClassName ||
+                "h-12 w-auto sm:h-16 lg:h-[173px] lg:w-[173px]",
               pathname === askPath && "hidden sm:block",
             )}
             priority
