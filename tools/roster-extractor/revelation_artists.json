@@ -1,0 +1,612 @@
+{
+  "seed_url": "https://en.wikipedia.org/wiki/Revelation_Records",
+  "extracted_at": "2026-02-07T04:33:09.518483+00:00",
+  "site_fingerprint": {
+    "content_container_hint": "main#content > div#bodyContent > div#mw-content-text > div.mw-content-ltr",
+    "heading_strategy": "h2_primary",
+    "list_pattern": "table",
+    "detected_sections": [
+      "History",
+      "Artists",
+      "Discography",
+      "References",
+      "External links"
+    ]
+  },
+  "targets": {
+    "context": "Artists",
+    "kind": "links",
+    "source_heading": "Artists",
+    "items": [
+      {
+        "name": "Youth of Today",
+        "href": "https://en.wikipedia.org/wiki/Youth_of_Today",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Warzone",
+        "href": "https://en.wikipedia.org/wiki/Warzone_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Sick of It All",
+        "href": "https://en.wikipedia.org/wiki/Sick_of_It_All",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Down To Nothing",
+        "href": "https://en.wikipedia.org/wiki/Down_To_Nothing",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Praise",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "CIV",
+        "href": "https://en.wikipedia.org/wiki/CIV_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Garrison",
+        "href": "https://en.wikipedia.org/wiki/Garrison_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Self Defense Family",
+        "href": "https://en.wikipedia.org/wiki/Self_Defense_Family",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Calling Hours",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Dag Nasty",
+        "href": "https://en.wikipedia.org/wiki/Dag_Nasty",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Himsa",
+        "href": "https://en.wikipedia.org/wiki/Himsa",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Quicksand",
+        "href": "https://en.wikipedia.org/wiki/Quicksand_(American_band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "New Found Glory",
+        "href": "https://en.wikipedia.org/wiki/New_Found_Glory",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Inside Out",
+        "href": "https://en.wikipedia.org/wiki/Inside_Out_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Side By Side",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Speedway",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Gameface",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Chain of Strength",
+        "href": "https://en.wikipedia.org/wiki/Chain_of_Strength",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Sinking Ships",
+        "href": "https://en.wikipedia.org/wiki/Sinking_Ships",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Fall Silent",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "In My Eyes",
+        "href": "https://en.wikipedia.org/wiki/In_My_Eyes_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Farside",
+        "href": "https://en.wikipedia.org/wiki/Farside",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Texas Is The Reason",
+        "href": "https://en.wikipedia.org/wiki/Texas_Is_The_Reason",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Shook Ones",
+        "href": "https://en.wikipedia.org/wiki/Shook_Ones_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Shelter",
+        "href": "https://en.wikipedia.org/wiki/Shelter_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Kill Holiday",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Sincebyman",
+        "href": "https://en.wikipedia.org/wiki/Sincebyman",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "On the Might of Princes",
+        "href": "https://en.wikipedia.org/wiki/On_the_Might_of_Princes",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "The Plot to Blow Up the Eiffel Tower",
+        "href": "https://en.wikipedia.org/wiki/The_Plot_to_Blow_Up_the_Eiffel_Tower",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Kiss It Goodbye",
+        "href": "https://en.wikipedia.org/wiki/Kiss_It_Goodbye",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Judge",
+        "href": "https://en.wikipedia.org/wiki/Judge_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Shai Hulud",
+        "href": "https://en.wikipedia.org/wiki/Shai_Hulud",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Paint It Black",
+        "href": "https://en.wikipedia.org/wiki/Paint_It_Black",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Dare",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "The Movielife",
+        "href": "https://en.wikipedia.org/wiki/The_Movielife",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Drain",
+        "href": "https://en.wikipedia.org/wiki/Drain_(punk_band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Curl Up and Die",
+        "href": "https://en.wikipedia.org/wiki/Curl_Up_and_Die",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Elliott",
+        "href": "https://en.wikipedia.org/wiki/Elliott_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "No For An Answer",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Morning Again",
+        "href": "https://en.wikipedia.org/wiki/Morning_Again",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Spaced",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Capital",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Living Hell",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Bold",
+        "href": "https://en.wikipedia.org/wiki/Bold_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Title Fight",
+        "href": "https://en.wikipedia.org/wiki/Title_Fight",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Violent Reaction",
+        "href": "https://en.wikipedia.org/wiki/Violent_Reaction",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Fell To Low",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "By A Thread",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "The Rival Mob",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "The Nerve Agents",
+        "href": "https://en.wikipedia.org/wiki/The_Nerve_Agents",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Ignite",
+        "href": "https://en.wikipedia.org/wiki/Ignite_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Big Laugh",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Sense Field",
+        "href": "https://en.wikipedia.org/wiki/Sense_Field",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Mouthpiece",
+        "href": "https://en.wikipedia.org/wiki/Mouthpiece_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Shades Apart",
+        "href": "https://en.wikipedia.org/wiki/Shades_Apart",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Planet On A Chain",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Be Well",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Primal Rite",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Battery",
+        "href": "https://en.wikipedia.org/wiki/Battery_(hardcore_punk_band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Gorilla Biscuits",
+        "href": "https://en.wikipedia.org/wiki/Gorilla_Biscuits",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Into Another",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "World Be Free",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Turning Point",
+        "href": "https://en.wikipedia.org/wiki/Turning_Point_(American_band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "End of a Year",
+        "href": "https://en.wikipedia.org/wiki/End_of_a_Year",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Forced Order",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Drowningman",
+        "href": "https://en.wikipedia.org/wiki/Drowningman",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      },
+      {
+        "name": "Supertouch",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": false
+        }
+      },
+      {
+        "name": "Where Fear and Weapons Meet",
+        "href": "https://en.wikipedia.org/wiki/Where_Fear_and_Weapons_Meet_(band)",
+        "context": {
+          "nearby_heading": "Artists",
+          "source_type": "list_item",
+          "has_link": true
+        }
+      }
+    ]
+  }
+}

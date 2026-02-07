@@ -33,8 +33,6 @@ export const AMREP_MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
     "/api/gbv/image-proxy?url=https%3A%2F%2Fsun-13.com%2Fwp-content%2Fuploads%2F2023%2F04%2Fbailterspace201812403.jpg",
   brainiac:
     "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0020101279_10.jpg",
-  "boss hog":
-    "/api/gbv/image-proxy?url=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F4%2F46%2FBoss_Hog.jpg",
   "strapping fieldhands":
     "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0024692884_10.jpg",
   supernova:
@@ -96,4 +94,15 @@ export const AMREP_MEMBER_IMAGE_SKIP: Record<string, true> = {
   "thrown ups": true,
   "the thrown ups": true,
   vertigo: true,
+  // Additional bands with broken/incorrect Wikipedia images
+  unsane: true,
+  "the u-men": true,
+  "the jesus lizard": true,
+  superchunk: true,
+  servotron: true,
+  "negative approach": true,
+  "nashville pussy": true,
+  helmet: true,
+  "gas huffer": true,
+  dwarves: true,
 };

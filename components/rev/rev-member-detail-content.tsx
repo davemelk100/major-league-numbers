@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
-import { getRevArtistById } from "@/lib/rev-artists-data";
+import { getRevArtistById, getRevArtistImageUrl } from "@/lib/rev-artists-data";
 import { getRevReleasesByArtist } from "@/lib/rev-discography-data";
 import Image from "next/image";
 
@@ -14,6 +14,7 @@ export function RevMemberDetailContent({ memberId }: { memberId: string }) {
   const site = getMusicSiteFromPathname(pathname);
   const artist = getRevArtistById(memberId);
   const releases = artist ? getRevReleasesByArtist(artist.name) : [];
+  const imageUrl = artist ? getRevArtistImageUrl(artist.id) : undefined;
 
   if (!artist) {
     return (
@@ -43,14 +44,22 @@ export function RevMemberDetailContent({ memberId }: { memberId: string }) {
       <div className="grid gap-8 lg:grid-cols-[1fr_1.5fr]">
         {/* Left: band image + info */}
         <div>
-          <div className="w-full aspect-square bg-muted/30 rounded-lg mb-4 flex items-center justify-center">
-            <Image
-              src="/rev-icon.svg"
-              alt={artist.name}
-              width={80}
-              height={80}
-              className="opacity-30"
-            />
+          <div className="w-full aspect-square bg-muted/30 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
+            {imageUrl ? (
+              <img
+                src={imageUrl}
+                alt={artist.name}
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <Image
+                src="/rev-icon.svg"
+                alt={artist.name}
+                width={80}
+                height={80}
+                className="opacity-30"
+              />
+            )}
           </div>
           <h1 className="font-league mb-2">{artist.name}</h1>
           {artist.yearsActive && (
@@ -59,9 +68,20 @@ export function RevMemberDetailContent({ memberId }: { memberId: string }) {
             </p>
           )}
           {artist.genre && (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground mb-2">
               Genre: {artist.genre}
             </p>
+          )}
+          {artist.wikipediaUrl && (
+            <a
+              href={artist.wikipediaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground hover:underline"
+            >
+              Wikipedia
+              <ExternalLink className="h-3 w-3" />
+            </a>
           )}
         </div>
 

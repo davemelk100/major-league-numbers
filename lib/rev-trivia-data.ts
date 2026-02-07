@@ -28,9 +28,9 @@ export const revTriviaQuestions: RevTriviaQuestion[] = [
   {
     id: 3,
     question: "What was the first release on Revelation Records?",
-    options: ["Youth of Today – Break Down the Walls", "Warzone – Don't Forget the Struggle Don't Forget the Streets", "Bold – Speak Out", "Gorilla Biscuits – S/T 7\""],
+    options: ["Youth of Today – Break Down the Walls", "Warzone – Lower East Side Crew 7\"", "Bold – Speak Out", "Gorilla Biscuits – S/T 7\""],
     correctAnswer: 1,
-    explanation: "Warzone's 'Don't Forget the Struggle Don't Forget the Streets' was Revelation's first release (REV 001).",
+    explanation: "Warzone's 'Lower East Side Crew' 7-inch EP was Revelation's first release (REV 001).",
     category: "history",
   },
   {
@@ -108,10 +108,10 @@ export const revTriviaQuestions: RevTriviaQuestion[] = [
   },
   {
     id: 13,
-    question: "Bold's 'Speak Out' was released on which format first?",
-    options: ["LP", "CD", "7-inch EP", "Cassette"],
-    correctAnswer: 2,
-    explanation: "Bold's 'Speak Out' was initially released as a 7-inch EP on Revelation Records.",
+    question: "Bold's 'Speak Out' was released on which format?",
+    options: ["12-inch LP", "CD only", "7-inch EP", "Cassette"],
+    correctAnswer: 0,
+    explanation: "Bold's 'Speak Out' was released as a 12-inch LP (REV 009) on Revelation Records in 1988.",
     category: "bands",
   },
   {
@@ -124,10 +124,10 @@ export const revTriviaQuestions: RevTriviaQuestion[] = [
   },
   {
     id: 15,
-    question: "Which band released 'Can't Close My Eyes' on Revelation?",
+    question: "Which band's 'Can't Close My Eyes' was later reissued by Revelation?",
     options: ["Youth of Today", "Gorilla Biscuits", "Warzone", "Chain of Strength"],
     correctAnswer: 0,
-    explanation: "Youth of Today released 'Can't Close My Eyes' on Revelation Records.",
+    explanation: "Youth of Today's 'Can't Close My Eyes' was originally released on Positive Force Records in 1985 and later reissued by Revelation.",
     category: "bands",
   },
   {
@@ -140,10 +140,10 @@ export const revTriviaQuestions: RevTriviaQuestion[] = [
   },
   {
     id: 17,
-    question: "Which Texas band released 'Balance' on Revelation?",
+    question: "Which NYC band with a state in their name released 'Do You Know Who You Are?' on Revelation?",
     options: ["At the Drive-In", "Refused", "Texas Is the Reason", "Mineral"],
     correctAnswer: 2,
-    explanation: "Texas Is the Reason, an influential emo/post-hardcore band, released 'Balance' EP on Revelation before their LP on the label as well.",
+    explanation: "Texas Is the Reason, an influential emo/post-hardcore band from New York City (not Texas), released their LP on Revelation.",
     category: "bands",
   },
   {
@@ -158,17 +158,17 @@ export const revTriviaQuestions: RevTriviaQuestion[] = [
   {
     id: 19,
     question: "What is the catalog number of Gorilla Biscuits' 'Start Today'?",
-    options: ["REV 001", "REV 010", "REV 014", "REV 020"],
+    options: ["REV 001", "REV 010", "REV 012", "REV 020"],
     correctAnswer: 2,
-    explanation: "Gorilla Biscuits' 'Start Today' is cataloged as REV 014.",
+    explanation: "Gorilla Biscuits' 'Start Today' is cataloged as REV 012.",
     category: "releases",
   },
   {
     id: 20,
-    question: "Which of these is a Youth of Today album on Revelation?",
+    question: "Which of these is a Youth of Today album released on Revelation?",
     options: ["We're Not in This Alone", "Break Down the Walls", "Out of Step", "Flex Your Head"],
-    correctAnswer: 1,
-    explanation: "'Break Down the Walls' is Youth of Today's album on Revelation Records.",
+    correctAnswer: 0,
+    explanation: "'We're Not in This Alone' was Youth of Today's album originally released on Revelation (REV 008). 'Break Down the Walls' was originally on Wishingwell Records.",
     category: "releases",
   },
   {
@@ -295,10 +295,10 @@ export const revTriviaQuestions: RevTriviaQuestion[] = [
   },
   {
     id: 36,
-    question: "Which Revelation band released 'Manners and Health'?",
+    question: "Which Revelation band released 'Ignaurus'?",
     options: ["Iceburn", "Sense Field", "Into Another", "Farside"],
     correctAnswer: 2,
-    explanation: "Into Another released 'Ignaurus' and other records on Revelation, featuring former members of NYHC bands.",
+    explanation: "Into Another released 'Ignaurus' (REV 035) and other records on Revelation, featuring former members of NYHC bands.",
     category: "facts",
   },
   {
@@ -319,10 +319,10 @@ export const revTriviaQuestions: RevTriviaQuestion[] = [
   },
   {
     id: 39,
-    question: "Which Revelation band had a song called 'New Direction'?",
+    question: "Which Revelation band had a song called 'Flame Still Burns'?",
     options: ["Gorilla Biscuits", "Youth of Today", "Bold", "Chain of Strength"],
     correctAnswer: 1,
-    explanation: "Youth of Today's 'New Direction' appeared on 'We're Not in This Alone' and reflected Ray Cappo's spiritual shift.",
+    explanation: "Youth of Today's 'Flame Still Burns' opened 'We're Not in This Alone' and became one of their most iconic songs.",
     category: "facts",
   },
   {

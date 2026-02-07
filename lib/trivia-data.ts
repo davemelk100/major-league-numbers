@@ -145,7 +145,7 @@ export const triviaQuestions: TriviaQuestion[] = [
     options: ["22 innings", "25 innings", "26 innings", "33 innings"],
     correctAnswer: 2,
     explanation:
-      "The Dodgers and Red Sox played 26 innings on October 27, 2018 (World Series).",
+      "The Boston Braves and Brooklyn Robins played 26 innings on May 1, 1920, ending in a 1-1 tie.",
     category: "history",
   },
   {
@@ -237,16 +237,16 @@ export const triviaQuestions: TriviaQuestion[] = [
   },
   {
     id: 23,
-    question: "Which brothers both won MVP awards?",
+    question: "Which DiMaggio brother won 3 MVP awards?",
     options: [
-      "Alou brothers",
-      "DiMaggio brothers",
-      "Aaron brothers",
-      "Molina brothers",
+      "Dom DiMaggio",
+      "Joe DiMaggio",
+      "Vince DiMaggio",
+      "None of them",
     ],
     correctAnswer: 1,
     explanation:
-      "Joe DiMaggio won 3 MVPs and his brother Dom was a 7-time All-Star (though Dom never won MVP, Joe did).",
+      "Joe DiMaggio won 3 MVP awards (1939, 1941, 1947) with the New York Yankees.",
     category: "players",
   },
   {
@@ -1004,7 +1004,7 @@ export const triviaQuestions: TriviaQuestion[] = [
   },
   {
     id: 88,
-    question: "Which team has never had a no-hitter thrown by their pitchers?",
+    question: "Which team waited longest to have their first no-hitter (until 2021)?",
     options: [
       "San Diego Padres",
       "New York Mets",
@@ -1013,7 +1013,7 @@ export const triviaQuestions: TriviaQuestion[] = [
     ],
     correctAnswer: 0,
     explanation:
-      "The San Diego Padres are the only franchise to have never had a pitcher throw a no-hitter.",
+      "The Padres waited 53 years for their first no-hitter until Joe Musgrove threw one on April 9, 2021.",
     category: "teams",
   },
   {
@@ -1741,11 +1741,11 @@ export const triviaQuestions: TriviaQuestion[] = [
   },
   {
     id: 152,
-    question: "Who was known as 'The Hit Dog'?",
+    question: "Who was known as 'The Big Hurt'?",
     options: ["Barry Bonds", "Ken Griffey Jr.", "Frank Thomas", "Mo Vaughn"],
     correctAnswer: 2,
     explanation:
-      "Frank Thomas earned this nickname for his powerful hitting and intimidating presence.",
+      "Frank Thomas earned this nickname for his powerful hitting and intimidating presence with the White Sox.",
     category: "players",
   },
   {
@@ -2765,9 +2765,9 @@ export const triviaQuestions: TriviaQuestion[] = [
       "Albert Pujols",
       "Carl Yastrzemski",
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
-      "Cal Ripken Jr. grounded into 350 double plays during his long career.",
+      "Albert Pujols grounded into 426 double plays during his career, the most in MLB history.",
     category: "records",
   },
   {
@@ -2817,9 +2817,9 @@ export const triviaQuestions: TriviaQuestion[] = [
       "Chipper Jones",
       "Adrian Beltre",
     ],
-    correctAnswer: 3,
+    correctAnswer: 0,
     explanation:
-      "Adrian Beltre hit 477 home runs as a third baseman, the most at that position.",
+      "Mike Schmidt hit 548 home runs, the most by a third baseman in MLB history.",
     category: "records",
   },
   {
@@ -3032,11 +3032,11 @@ export const triviaQuestions: TriviaQuestion[] = [
   },
   {
     id: 268,
-    question: "What year did expansion add four teams to MLB?",
+    question: "What year did the Arizona Diamondbacks and Tampa Bay Devil Rays join MLB?",
     options: ["1993", "1995", "1998", "2000"],
     correctAnswer: 2,
     explanation:
-      "The Arizona Diamondbacks and Tampa Bay Devil Rays joined MLB in 1998.",
+      "The Arizona Diamondbacks and Tampa Bay Devil Rays joined MLB in 1998 as expansion teams.",
     category: "history",
   },
   {
@@ -3773,16 +3773,16 @@ export const triviaQuestions: TriviaQuestion[] = [
   },
   {
     id: 332,
-    question: "Who was nicknamed 'The Flying Finn'?",
+    question: "Who was nicknamed 'Wahoo Sam'?",
     options: [
       "Sam Crawford",
-      "Vern Stephens",
-      "Bert Blyleven",
-      "Mike Hargrove",
+      "Sam Rice",
+      "Sam McDowell",
+      "Sammy Sosa",
     ],
     correctAnswer: 0,
     explanation:
-      "Sam Crawford, though not Finnish, was nicknamed 'The Flying Finn' for unclear historical reasons.",
+      "Sam Crawford was nicknamed 'Wahoo Sam' after his hometown of Wahoo, Nebraska.",
     category: "players",
   },
   {
@@ -3812,8 +3812,8 @@ export const triviaQuestions: TriviaQuestion[] = [
     id: 335,
     question: "Who has the most career balks?",
     options: ["Steve Carlton", "Dave Stewart", "Warren Spahn", "Bob Welch"],
-    correctAnswer: 1,
-    explanation: "Steve Carlton was called for 90 balks during his career.",
+    correctAnswer: 0,
+    explanation: "Steve Carlton was called for 90 balks during his career, the most in MLB history.",
     category: "records",
   },
   {
@@ -3831,11 +3831,11 @@ export const triviaQuestions: TriviaQuestion[] = [
   },
   {
     id: 337,
-    question: "Who was known as 'The Snake'?",
-    options: ["Randy Johnson", "Jake Peavy", "Roger Clemens", "Catfish Hunter"],
+    question: "Who was known as 'The Big Unit'?",
+    options: ["Randy Johnson", "Frank Thomas", "Roger Clemens", "David Ortiz"],
     correctAnswer: 0,
     explanation:
-      "Randy Johnson's intimidating 6'10\" frame and delivery earned him 'The Snake' nickname.",
+      "Randy Johnson earned 'The Big Unit' nickname for his imposing 6'10\" frame.",
     category: "players",
   },
   {
@@ -3943,7 +3943,7 @@ export const triviaQuestions: TriviaQuestion[] = [
     ],
     correctAnswer: 3,
     explanation:
-      "The Mariners, Padres, Brewers, Rangers, and Rays have never won a World Series.",
+      "The Mariners, Padres, Brewers, and Rays have never won a World Series.",
     category: "teams",
   },
   {

@@ -177,7 +177,7 @@ export const nflTriviaQuestions: NFLTriviaQuestion[] = [
     question: "What is the NFL record for most points scored in a single game by one team?",
     options: ["62", "66", "72", "73"],
     correctAnswer: 3,
-    explanation: "The Washington Redskins scored 72 points against the New York Giants on November 27, 1966.",
+    explanation: "The Chicago Bears scored 73 points against the Washington Redskins in the 1940 NFL Championship Game, winning 73-0.",
     category: "records",
   },
   {
@@ -281,8 +281,8 @@ export const nflTriviaQuestions: NFLTriviaQuestion[] = [
     id: 34,
     question: "Which coach has the most career wins in NFL history?",
     options: ["Don Shula", "George Halas", "Bill Belichick", "Tom Landry"],
-    correctAnswer: 2,
-    explanation: "Bill Belichick surpassed Don Shula's record of 347 wins to become the winningest head coach in NFL history.",
+    correctAnswer: 0,
+    explanation: "Don Shula holds the all-time record with 347 total wins (328 regular season, 19 playoff). Bill Belichick is second with 333 wins.",
     category: "history",
   },
   {

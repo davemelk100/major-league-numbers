@@ -100,8 +100,8 @@ export const uspblTriviaQuestions: USPBLTriviaQuestion[] = [
     id: 12,
     question: "Which team won the first USPBL championship in 2016?",
     options: ["Birmingham Bloomfield Beavers", "Eastside Diamond Hoppers", "Utica Unicorns", "Westside Woolly Mammoths"],
-    correctAnswer: 1,
-    explanation: "The Eastside Diamond Hoppers won the inaugural USPBL championship in 2016.",
+    correctAnswer: 2,
+    explanation: "The Utica Unicorns won the inaugural USPBL championship in 2016.",
     category: "history",
   },
   {

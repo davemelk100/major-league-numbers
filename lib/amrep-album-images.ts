@@ -185,9 +185,12 @@ const amrepAlbumImages: Record<number, string> = {
   183: "https://www.chokebore.net/images/discography/singles/nobody-throats-to-hit-this.jpg",
   184: "https://metallipromo.com/images/helmet/19891000.jpg",
   185: "https://www.metalmusicarchives.com/images/covers/today-is-the-day-i-bent-scared-come-on-down-and-get-saved(single)-20200228073900.jpg",
+  186: "https://i.discogs.com/BfsmyCcmZiuUZulBpbrK0BYEuS9KB4znZ9Ur4i90_0U/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE3NTY5/MzAtMTMzMDAwNDQ2/OS5qcGVn.jpeg",
+  187: "https://i.discogs.com/sUxqehgnVcOauKRE5dfk1TalIBJGco0Ojbo0cz98ph8/rs:fit/g:sm/q:90/h:600/w:586/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MTM2/NzYtMTI1MDA4Mjkw/Ny5qcGVn.jpeg",
   190: "https://i.discogs.com/LhcmzuLyZEwrUfqVNGUjPR0eEAzfITxFWX3j688LODY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4NjIx/MDQtMTYwOTAyMzgw/OS00NDMyLmpwZWc.jpeg",
   192: "https://i.discogs.com/6CoQVPNpV4Y5WY6MYByxqufvXDeCft3IvwUfYybxH9Y/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTczNzI4/MC0xNDU4MzgxOTg3/LTkwMTYuanBlZw.jpeg",
   199: "https://i.discogs.com/af_7QmcKzQZDYCsLw9v_d9w4RU39fBluQDzWgHOJeIY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg0ODI2/NC0xMTY1MjQyMTI1/LmpwZWc.jpeg",
+  228: "https://i.discogs.com/RK1nGEtwJa_PFz-hJ0US8XpysPwixnjqSCSsMWqYzmQ/rs:fit/g:sm/q:90/h:443/w:450/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzODI2/NTgtMTI4MjI0NzI3/MC5qcGVn.jpeg",
   252: "https://i.discogs.com/qfi0_syfCoD1ZG7nqpXNvKOEkOqKHsk3ZbPI7MxDClE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4ODQ1/MjI2LTE2OTk1Mjc2/NTEtNTA5NC5qcGVn.jpeg",
   253: "https://i.discogs.com/qfi0_syfCoD1ZG7nqpXNvKOEkOqKHsk3ZbPI7MxDClE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4ODQ1/MjI2LTE2OTk1Mjc2/NTEtNTA5NC5qcGVn.jpeg",
   254: "https://i.discogs.com/Dr4KToVFuHSAs5HnnvbAIQKWyYWtbBvxvSlcnblPJ00/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM0OTIx/MTgtMTMzMzA0OTg4/NC5qcGVn.jpeg",
@@ -197,6 +200,7 @@ const amrepAlbumImages: Record<number, string> = {
   260: "https://i.discogs.com/qfi0_syfCoD1ZG7nqpXNvKOEkOqKHsk3ZbPI7MxDClE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4ODQ1/MjI2LTE2OTk1Mjc2/NTEtNTA5NC5qcGVn.jpeg",
   261: "https://i.discogs.com/qfi0_syfCoD1ZG7nqpXNvKOEkOqKHsk3ZbPI7MxDClE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4ODQ1/MjI2LTE2OTk1Mjc2/NTEtNTA5NC5qcGVn.jpeg",
   262: "https://i.discogs.com/qfi0_syfCoD1ZG7nqpXNvKOEkOqKHsk3ZbPI7MxDClE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4ODQ1/MjI2LTE2OTk1Mjc2/NTEtNTA5NC5qcGVn.jpeg",
+  264: "https://i.discogs.com/5NLkdaIyYLz7zZXZI1CxnguKuvCQ-gmFHIybk12F1js/rs:fit/g:sm/q:90/h:600/w:599/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ3MDY3/OTYtMTM3MzY5MTIx/Ni00ODQyLmpwZWc.jpeg",
   263: "https://i.discogs.com/5O4muuYZjgHiK4Rl1CX8Wyb7EaRW_Yfot7DPSWkHrKk/rs:fit/g:sm/q:90/h:600/w:592/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMzMTky/NzUwLTE3NDAxMDQy/NjctNDgzMy5qcGVn.jpeg",
   267: "https://i.discogs.com/33YtNe062efciQH9Eq3CXsOVpEcGfOait5por03Hj8U/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU1NzQ2/MTMtMTM5Njk2MDM2/MC00NDcwLmpwZWc.jpeg",
   271: "https://themelvins.net/wiki/images/thumb/4/41/Melroxy.jpg/450px-Melroxy.jpg",
@@ -212,7 +216,7 @@ const amrepAlbumImages: Record<number, string> = {
   290: "https://i.discogs.com/tySe_CwJD8U2I5KITy2zYg7dWnAisB31k-nVtK0AC0Q/rs:fit/g:sm/q:90/h:597/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg5NDEy/OTEtMTQ3MTg5OTM0/MS01NTEwLmpwZWc.jpeg",
   291: "https://i.discogs.com/bEr8h6peBbjokMp4187LWLAcIobyGJD7_dbqh6Ka1xE/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk1MDYx/MzItMTQ4MTc1MzI2/NC0zODY5LmpwZWc.jpeg",
   292: "https://i.discogs.com/oqwiH0Bpn7muFTfMWI-kVnLVYGCp88FOb8C1Gy7rPbc/rs:fit/g:sm/q:90/h:600/w:585/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwNTMx/OTc5LTE0OTkzNTU5/OTEtNTIwOS5qcGVn.jpeg",
-  293: "https://upload.wikimedia.org/wikipedia/en/4/4a/Helmet_-_Strap_It_On.jpg",
+  293: "https://upload.wikimedia.org/wikipedia/en/e/eb/Helmet-StrapItOn.jpg",
 };
 
 /**

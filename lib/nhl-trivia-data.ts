@@ -78,8 +78,8 @@ export const nhlTriviaQuestions: NHLTriviaQuestion[] = [
     id: 9,
     question: "Who holds the NHL record for most career goals?",
     options: ["Gordie Howe", "Wayne Gretzky", "Jaromir Jagr", "Alex Ovechkin"],
-    correctAnswer: 1,
-    explanation: "Wayne Gretzky holds the record with 894 career goals, though Alex Ovechkin is closing in.",
+    correctAnswer: 3,
+    explanation: "Alex Ovechkin broke Wayne Gretzky's record of 894 goals in April 2025 and has since surpassed 900 career goals.",
     category: "players",
   },
   {
@@ -225,7 +225,7 @@ export const nhlTriviaQuestions: NHLTriviaQuestion[] = [
     question: "Who holds the record for most penalty minutes in a career?",
     options: ["Tie Domi", "Tiger Williams", "Bob Probert", "Marty McSorley"],
     correctAnswer: 1,
-    explanation: "Tiger Williams holds the career record with 3,966 penalty minutes.",
+    explanation: "Tiger Williams holds the career record with 3,971 penalty minutes.",
     category: "records",
   },
   {
@@ -295,10 +295,10 @@ export const nhlTriviaQuestions: NHLTriviaQuestion[] = [
   },
   {
     id: 36,
-    question: "Which team ended a 54-year Cup drought in 2019?",
+    question: "Which team ended a 52-year Cup drought in 2019?",
     options: ["Toronto Maple Leafs", "New York Rangers", "St. Louis Blues", "Chicago Blackhawks"],
     correctAnswer: 2,
-    explanation: "The St. Louis Blues won their first Stanley Cup in 2019, ending a 51-year wait since their founding.",
+    explanation: "The St. Louis Blues won their first Stanley Cup in 2019, ending a 52-year wait since their founding in 1967.",
     category: "stanley_cup",
   },
   {

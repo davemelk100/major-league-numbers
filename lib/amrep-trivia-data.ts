@@ -627,19 +627,19 @@ export const amrepTriviaQuestions: AmrepTriviaQuestion[] = [
   {
     id: 52,
     question:
-      "The Laughing Hyenas were from which city?",
-    options: ["Ann Arbor, Michigan", "Minneapolis, Minnesota", "Chicago, Illinois", "Madison, Wisconsin"],
-    correctAnswer: 0,
-    explanation: "The Laughing Hyenas were from Ann Arbor, Michigan.",
+      "Which AmRep band was originally from Syracuse, New York?",
+    options: ["Unsane", "Surgery", "Boss Hog", "Chokebore"],
+    correctAnswer: 1,
+    explanation: "Surgery was from Syracuse, New York.",
     category: "artists",
   },
   {
     id: 53,
-    question: "Who was a notable member of the Laughing Hyenas?",
-    options: ["Kevin Rutmanis", "Larissa Strickland", "Paul Sanders", "Steve Austin"],
+    question: "Which Minneapolis band was known for Shannon Selberg's theatrical stage presence?",
+    options: ["Hammerhead", "Cows", "Halo of Flies", "Janitor Joe"],
     correctAnswer: 1,
     explanation:
-      "Larissa Strickland was a notable member of the Laughing Hyenas.",
+      "Cows, featuring Shannon Selberg, were known for wild theatrical performances.",
     category: "artists",
   },
   {
@@ -776,11 +776,11 @@ export const amrepTriviaQuestions: AmrepTriviaQuestion[] = [
   },
   {
     id: 67,
-    question: "Which state were the Laughing Hyenas and God Bullies both from?",
+    question: "Which state were God Bullies from?",
     options: ["Minnesota", "Wisconsin", "Michigan", "Illinois"],
     correctAnswer: 2,
     explanation:
-      "Both the Laughing Hyenas (Ann Arbor) and God Bullies (Kalamazoo) were from Michigan.",
+      "God Bullies were from Kalamazoo, Michigan.",
     category: "artists",
   },
   {
@@ -831,11 +831,11 @@ export const amrepTriviaQuestions: AmrepTriviaQuestion[] = [
   },
   {
     id: 72,
-    question: "How many bands from the state of Michigan were on the AmRep roster?",
-    options: ["None", "One", "At least two", "More than ten"],
+    question: "Which Michigan city was God Bullies from?",
+    options: ["Ann Arbor", "Detroit", "Kalamazoo", "Grand Rapids"],
     correctAnswer: 2,
     explanation:
-      "At least two Michigan bands were on AmRep: the Laughing Hyenas from Ann Arbor and God Bullies from Kalamazoo.",
+      "God Bullies were from Kalamazoo, Michigan.",
     category: "artists",
   },
   {
@@ -879,11 +879,11 @@ export const amrepTriviaQuestions: AmrepTriviaQuestion[] = [
   // ── RELEASES (77–114) ───────────────────────────────────────────────
   {
     id: 77,
-    question: "Which of these Melvins albums was NOT released on Amphetamine Reptile?",
+    question: "Which Melvins album was released on Amphetamine Reptile?",
     options: ["Houdini", "Prick", "Stoner Witch", "Bullhead"],
-    correctAnswer: 0,
+    correctAnswer: 1,
     explanation:
-      "Houdini was released on Atlantic Records in 1993. Prick, Stoner Witch, and Bullhead were all released on Amphetamine Reptile.",
+      "Prick was released on Amphetamine Reptile in 1994. Houdini and Stoner Witch were on Atlantic, and Bullhead was on Boner Records.",
     category: "releases",
   },
   {
@@ -985,7 +985,7 @@ export const amrepTriviaQuestions: AmrepTriviaQuestion[] = [
   {
     id: 86,
     question:
-      "Which label originally released the Melvins' 'Ozma' before it was reissued on AmRep?",
+      "Which label originally released the Melvins' 'Ozma' before it was reissued?",
     options: [
       "Sub Pop",
       "Atlantic",
@@ -993,7 +993,7 @@ export const amrepTriviaQuestions: AmrepTriviaQuestion[] = [
       "Boner Records",
     ],
     correctAnswer: 3,
-    explanation: "The Melvins' 'Ozma' was originally released on Boner Records in 1989, and later reissued on Amphetamine Reptile (AMREP 054).",
+    explanation: "The Melvins' 'Ozma' was originally released on Boner Records in 1989.",
     category: "releases",
   },
   {
@@ -1276,16 +1276,16 @@ export const amrepTriviaQuestions: AmrepTriviaQuestion[] = [
   {
     id: 108,
     question:
-      "Laughing Hyenas' records on AmRep were characterized by what?",
+      "God Bullies' records on AmRep were characterized by what?",
     options: [
       "Smooth production and pop hooks",
-      "Raw, intense, and emotionally charged noise rock",
+      "Raw, intense, and aggressive noise rock",
       "Electronic beats",
       "Orchestral arrangements",
     ],
     correctAnswer: 1,
     explanation:
-      "The Laughing Hyenas from Ann Arbor played raw, intense, and emotionally charged noise rock.",
+      "God Bullies from Kalamazoo played raw, intense, and aggressive noise rock.",
     category: "releases",
   },
   {
@@ -1923,151 +1923,6 @@ export const amrepTriviaQuestions: AmrepTriviaQuestion[] = [
     category: "facts",
   },
 
-  // ── NEUROSIS / SHELLAC / JESUS LIZARD (153–168) ─────────────────────
-  {
-    id: 153,
-    question: "Which Neurosis album on AmRep is considered a landmark of heavy music?",
-    options: ["Pain of Mind", "Through Silver in Blood", "Word as Law", "Souls at Zero"],
-    correctAnswer: 1,
-    explanation:
-      "Neurosis's 'Through Silver in Blood' (1996, AMREP 074) is widely considered one of the most important heavy albums ever made.",
-    category: "releases",
-  },
-  {
-    id: 154,
-    question: "How many studio albums did Neurosis release on Amphetamine Reptile?",
-    options: ["Two", "Four", "Six", "Eight"],
-    correctAnswer: 2,
-    explanation:
-      "Neurosis released six albums on AmRep: Pain of Mind, Word as Law, Souls at Zero, Enemy of the Sun, Through Silver in Blood, and Times of Grace.",
-    category: "releases",
-  },
-  {
-    id: 155,
-    question: "Shellac's debut album 'At Action Park' was released on AmRep in what year?",
-    options: ["1991", "1994", "1997", "2000"],
-    correctAnswer: 1,
-    explanation:
-      "Shellac's 'At Action Park' (AMREP 076) was released in 1994. Shellac featured Steve Albini, Bob Weston, and Todd Trainer.",
-    category: "releases",
-  },
-  {
-    id: 156,
-    question: "Shellac frontman Steve Albini was also famous for what role in the music industry?",
-    options: ["Concert promoter", "Recording engineer", "Music journalist", "A&R executive"],
-    correctAnswer: 1,
-    explanation:
-      "Steve Albini was one of the most influential recording engineers in rock, working on albums by Nirvana, Pixies, PJ Harvey, and hundreds more.",
-    category: "bands",
-  },
-  {
-    id: 157,
-    question: "Which of these is a Shellac album released on Amphetamine Reptile?",
-    options: ["In Utero", "Terraform", "Surfer Rosa", "Songs About Fucking"],
-    correctAnswer: 1,
-    explanation:
-      "Shellac released 'Terraform' on AmRep in 1998 (AMREP 077). The other albums listed are by Nirvana, Pixies, and Big Black.",
-    category: "releases",
-  },
-  {
-    id: 158,
-    question: "The Jesus Lizard's album 'Goat' was released on AmRep. Who was the band's vocalist?",
-    options: ["David Yow", "Steve Albini", "David Wm. Sims", "Duane Denison"],
-    correctAnswer: 0,
-    explanation:
-      "David Yow was The Jesus Lizard's vocalist, known for his intense and unpredictable live performances.",
-    category: "bands",
-  },
-  {
-    id: 159,
-    question: "How many Jesus Lizard albums are in the AmRep catalog?",
-    options: ["Three", "Five", "Nine", "Twelve"],
-    correctAnswer: 2,
-    explanation:
-      "The Jesus Lizard has nine releases in the AmRep catalog (AMREP 044–052), including Head, Goat, Liar, Down, Shot, Lash, Blue, Bang, and Box.",
-    category: "releases",
-  },
-  {
-    id: 160,
-    question: "Which Jesus Lizard album on AmRep was originally produced by Steve Albini?",
-    options: ["Goat", "Shot", "Blue", "Box"],
-    correctAnswer: 0,
-    explanation:
-      "Steve Albini produced The Jesus Lizard's 'Goat' (1991), which is considered one of the definitive noise rock albums.",
-    category: "releases",
-  },
-  {
-    id: 161,
-    question: "Neurosis originated from which city?",
-    options: ["Minneapolis", "Chicago", "Oakland", "Seattle"],
-    correctAnswer: 2,
-    explanation:
-      "Neurosis formed in Oakland, California in 1985. Their six albums on AmRep helped define post-metal and heavy experimental music.",
-    category: "bands",
-  },
-  {
-    id: 162,
-    question: "Which Shellac album on AmRep shares its name with a number?",
-    options: ["At Action Park", "Terraform", "1000 Hurts", "Dude Incredible"],
-    correctAnswer: 2,
-    explanation:
-      "Shellac's '1000 Hurts' (AMREP 078) was released in 2000.",
-    category: "releases",
-  },
-  {
-    id: 163,
-    question: "Which of these bands had the most total releases in the AmRep catalog?",
-    options: ["Neurosis", "Shellac", "Melvins", "Helmet"],
-    correctAnswer: 2,
-    explanation:
-      "The Melvins have the most releases in the AmRep catalog, including full-lengths, singles, splits, live albums, and reissues spanning decades.",
-    category: "facts",
-  },
-  {
-    id: 164,
-    question: "Unsane released five albums on AmRep. Where was the band from?",
-    options: ["Minneapolis", "Chicago", "New York City", "Washington, D.C."],
-    correctAnswer: 2,
-    explanation:
-      "Unsane was from New York City and released five albums on AmRep (AMREP 061–065), known for their brutal, abrasive noise rock.",
-    category: "bands",
-  },
-  {
-    id: 165,
-    question: "Which Neurosis album on AmRep came first chronologically?",
-    options: ["Souls at Zero", "Pain of Mind", "Enemy of the Sun", "Word as Law"],
-    correctAnswer: 1,
-    explanation:
-      "Neurosis's debut 'Pain of Mind' (1987, AMREP 070) was their first album, rooted in hardcore punk before the band evolved into heavier territory.",
-    category: "releases",
-  },
-  {
-    id: 166,
-    question: "Shellac's final album on AmRep was released in what year?",
-    options: ["2007", "2010", "2014", "2018"],
-    correctAnswer: 2,
-    explanation:
-      "'Dude Incredible' (AMREP 080, 2014) was the last Shellac album released on Amphetamine Reptile.",
-    category: "releases",
-  },
-  {
-    id: 167,
-    question: "The Jesus Lizard's 'Box' (AMREP 052) was what type of release?",
-    options: ["Studio album", "Live album", "Box set compilation", "EP"],
-    correctAnswer: 2,
-    explanation:
-      "'Box' (2000) was a comprehensive box set collecting The Jesus Lizard's AmRep catalog.",
-    category: "releases",
-  },
-  {
-    id: 168,
-    question: "Which of these AmRep bands is most associated with the post-metal genre?",
-    options: ["Cows", "Neurosis", "Hammerhead", "Tar"],
-    correctAnswer: 1,
-    explanation:
-      "Neurosis is widely credited as a pioneering band in post-metal. Their AmRep albums traced the evolution from hardcore punk to epic, atmospheric heavy music.",
-    category: "bands",
-  },
 ];
 
 export function getDailyAmrepTriviaQuestions(
