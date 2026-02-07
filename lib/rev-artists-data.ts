@@ -22,6 +22,7 @@ export const revArtistImages: Record<string, string> = {
   "ignite": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/38/Ignite_%E2%80%93_Reload_Festival_2015_02.jpg/330px-Ignite_%E2%80%93_Reload_Festival_2015_02.jpg",
   "morning-again": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Morning_Again_at_Ieperfest_2022-1.jpg/330px-Morning_Again_at_Ieperfest_2022-1.jpg",
   "new-found-glory": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/NFG_SlamDunk_2019.jpg/330px-NFG_SlamDunk_2019.jpg",
+  "paint-it-black": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Paint_It_Black_in_performance_%282006%29.jpg/330px-Paint_It_Black_in_performance_%282006%29.jpg",
   "quicksand": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Quicksand_Rock_am_Ring_2014_%2848%29.JPG/330px-Quicksand_Rock_am_Ring_2014_%2848%29.JPG",
   "shades-apart": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Mark_Vecchiarelli_-_Shades_Apart.jpg/250px-Mark_Vecchiarelli_-_Shades_Apart.jpg",
   "shai-hulud": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Mattfox_shaihulud.jpg/250px-Mattfox_shaihulud.jpg",

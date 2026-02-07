@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { getPlayerHeadshotUrl, getTeamLogoUrl } from "@/lib/nba-api";
+import { NBATriviaPanel } from "@/components/nba/nba-trivia-panel";
+import { NBAPlayerSpotlight } from "@/components/nba/nba-player-spotlight";
 
 interface LeaderItem {
   label: string;
@@ -36,7 +38,13 @@ export function NBADashboardContent({ leaders, standings }: NBADashboardContentP
   const westStandings = standings.filter((s) => s.conference.toLowerCase().includes("west"));
 
   return (
-    <div className="container py-6 space-y-8">
+    <div className="container py-2 space-y-8">
+      {/* Daily Trivia + Player of the Day */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <NBATriviaPanel />
+        <NBAPlayerSpotlight />
+      </div>
+
       {/* Leaders Section */}
       <section>
         <div className="flex items-center justify-between mb-4">

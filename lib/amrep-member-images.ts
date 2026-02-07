@@ -30,7 +30,7 @@ export const AMREP_MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
   melvins:
     "/api/gbv/image-proxy?url=https%3A%2F%2Fchaoscontrol.com%2Fwp-content%2Fuploads%2F2000%2F11%2Fmelvins.jpg",
   "bailter space":
-    "/api/gbv/image-proxy?url=https%3A%2F%2Fsun-13.com%2Fwp-content%2Fuploads%2F2023%2F04%2Fbailterspace201812403.jpg",
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fi.discogs.com%2FcZCcF9JDAaQ1-7gnmMQZvssr129bLICp8EaaAB-6leI%2Frs%3Afit%2Fg%3Asm%2Fq%3A90%2Fh%3A560%2Fw%3A464%2FczM6Ly9kaXNjb2dz%2FLWRhdGFiYXNlLWlt%2FYWdlcy9BLTE5ODY2%2FOC0xNTI5NzUyOTc4%2FLTg5MTkuanBlZw.jpeg",
   brainiac:
     "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0020101279_10.jpg",
   "strapping fieldhands":

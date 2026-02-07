@@ -430,10 +430,10 @@ export const gbvTriviaQuestions: GbvTriviaQuestion[] = [
   },
   {
     id: 52,
-    question: "Which GBV album title contains the word 'Nuns'?",
-    options: ["La La Land", "Crystal Nuns Cathedral", "Welshpool Frillies", "Tremblers and Goggles by Rank"],
+    question: "Which GBV album was produced by Ric Ocasek of The Cars?",
+    options: ["Alien Lanes", "Do the Collapse", "Isolation Drills", "Universal Truths and Cycles"],
     correctAnswer: 1,
-    explanation: "Crystal Nuns Cathedral was released in 2022.",
+    explanation: "Do the Collapse (1999) was produced by Ric Ocasek and was GBV's major label debut on TVT Records.",
     category: "albums",
   },
   {

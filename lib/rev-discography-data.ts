@@ -30,18 +30,19 @@ export const revReleaseImages: Record<number, string> = {
   16: "https://i.discogs.com/79TaNCCih3QeHsnscmwLN0OIcZPv5fpg3cIjmP543cg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3ODY2/Ny0xMzE2MTgyMjY0/LmpwZWc.jpeg",
   17: "https://i.discogs.com/5LSYpEnXOeDNYXILk3TGwlehUwT91VrZy99X0BWkL9I/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM2MjY0/MjgzLTE3Njg4ODY1/MzktOTc2Ni5wbmc.jpeg",
   18: "https://i.discogs.com/zttv3hjMYogDN0cx2TcI-EqTE-2Wy2-EIx0lMhNZOjU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU2MTEz/NDItMTM5ODAzMTcw/OC04MjgwLmpwZWc.jpeg",
-  19: "https://i.discogs.com/2XQ8J7-DEZQVulGNzg8w5mUZBUGBNKfcoQbOmp6nmts/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTR4NjMy/NzMtMTM3NzgxNTkx/MC0zMDM1LmpwZWc.jpeg",
+  19: "https://i.discogs.com/XtRpkJUDjN61AWk5oncyLU0zsOx5F-gyTTb09Dk-vGE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4MDcy/OS0xMjk5MzQyOTUy/LmpwZWc.jpeg",
   20: "https://i.discogs.com/V3bTefcXx7D8DmXABQUXfNFddSU6Nqm4VnkjvXuCc04/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQyOTQx/MDQtMTUyMzY1NDI5/NC04NDUyLmpwZWc.jpeg",
   21: "https://i.discogs.com/Y6AyygDvUYt_nounLkHQQ91Wm9meG1HwOueSPHzI3rU/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUzNDQ3/MzYtMTYxNTU4MzEz/OS05OTcwLmpwZWc.jpeg",
   22: "https://i.discogs.com/MXJwFlQ7sSgAHvUsA0f7kVAvi5HJe-iZn4xxsPwIL_Y/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc0NjAy/NTAtMTUwNTAxOTc4/MC0yOTcwLmpwZWc.jpeg",
+  23: "https://i.discogs.com/pMfPdvz2NXbB8-WbPEG1w4yitzXjTxnmVlnwPR8Mfko/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4MDc0/MC0xMzQ2NDg4Mzcz/LTE4MzIuanBlZw.jpeg",
   24: "https://i.discogs.com/xHn0skcDYnRRxMapsMyrHElfwXJNYNAGjz0I3ir0mkI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg2ODUy/MzgtMTQ2NjU4NTE5/MC0xMjM3LmpwZWc.jpeg",
   25: "https://i.discogs.com/mN4rmykoEjAN9-vKdVZBR09oxKR1ENukk-TB1XobHJw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3Njg2/MjItMTMyMjA4Mjc3/OC5qcGVn.jpeg",
   26: "https://i.discogs.com/Az4zmSPwHJNmmKI-p6bM_nQunZaOoyLsKaMrzNCej5w/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzNzQ2/MzMtMTY0MjYwNzEx/Ni04Nzc5LmpwZWc.jpeg",
-  27: "https://i.discogs.com/wYsH_DOf7MYihUSCkxE21LWr-66KcoTCUmU40OuLkGI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTR2MDIz/MzktMTM2OTY0MTk0/NC00NDE4LmpwZWc.jpeg",
+  27: "https://i.discogs.com/q6p0agJSckkX_Mgnh-7CRAdpdGTHm2upRJpwOE73Yqg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExNTA5/NjUtMTQ3MjkzODYy/MC01MTk3LmpwZWc.jpeg",
   28: "https://i.discogs.com/Bxpo8_krfDyUdIx4d5vgkiOquyvaDPfiRxkcUYw5mpE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIxODc0/MjEtMTM3NzUwMTY0/MS05MzMyLmpwZWc.jpeg",
   29: "https://i.discogs.com/g9JeZ9_NK4NS-75P3BTyv7Z5FPJk9sJxH52JfvwAQH4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTY4OTgz/MzAtMTUyMzgyMTgz/NS0yMzM5LmpwZWc.jpeg",
   30: "https://i.discogs.com/gwe_QstDPWCUhT7oMBsvYZwK7K6Q-fPZaGUbCsVuPqY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE5OTI4/ODgtMTI1NzI4MjI1/OC5qcGVn.jpeg",
-  31: "https://i.discogs.com/5s-6gcJqVFCXfAHq578GQ9VKqO8jdl2KudS2VpnGgUE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTR4OTUx/NC0xMTIyMzI4NTY5/LmpwZw.jpeg",
+  31: "https://i.discogs.com/1zGnBA4MtTFQ7AZQiyYBTuanRy5lBdiv4zlZn7uEeFc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI1NDM4/OTAtMTQwNzM1MzI5/Ny00NjM2LmpwZWc.jpeg",
   32: "https://i.discogs.com/TluFEcH_ePIQimUf26PVAZNaj1JQg_z83QhZH8r-DWk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4NTkx/MS0xNTQyNjUzNTQ1/LTQ4MTYuanBlZw.jpeg",
   33: "https://i.discogs.com/WFleqoSzFoXc6OOgdt_4zIBVVgw4gPD8VzUJZGSC6e0/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE2NTk3/ODYtMTYyMDcwMTEx/Ny0xMjUyLmpwZWc.jpeg",
   34: "https://i.discogs.com/7UW2iS6rIaRpocuI9FNQg4H-dTtNCaRKRZ0lEWva20U/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc2NTE4/MDAtMTQ0NTk2OTAx/MC0yMzk4LmpwZWc.jpeg",
@@ -65,6 +66,7 @@ export const revReleaseImages: Record<number, string> = {
   52: "https://i.discogs.com/BmR3zkIUO-tHISOOVSiFtFyVQT7YTos0NPbJourkThw/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3ODM3/NDQtMTMwMDg2MDgy/My5qcGVn.jpeg",
   53: "https://i.discogs.com/7UW2iS6rIaRpocuI9FNQg4H-dTtNCaRKRZ0lEWva20U/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc2NTE4/MDAtMTQ0NTk2OTAx/MC0yMzk4LmpwZWc.jpeg",
   54: "https://i.discogs.com/boEocwz7yeSIkrSbhWg7eintF5lPM6PfgOQcO6qOs-s/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQyMjk4/Ni0xNDUxMjQ5MTA4/LTIxODkuanBlZw.jpeg",
+  55: "https://i.discogs.com/NBXMyMZCm1i03bywlIAtd1u0iJcwhHjO5r-e_OUzV7U/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4MDc3/OS0xMjY4NTY0ODcy/LmpwZWc.jpeg",
   56: "https://i.discogs.com/xf-irUXop2VThpICbn6ilksra-9_KrXwE4JY2uwRmbg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0NjQx/NzgtMTY3NjgzNDAx/Mi04Mjc2LmpwZWc.jpeg",
   57: "https://i.discogs.com/k3F5mZCN2yZ55BkuxINeNF6jSD3AWMYHJRi7-GxSe38/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIwOTYz/NTQtMTI2Mzc2NzI4/OS5qcGVn.jpeg",
   58: "https://i.discogs.com/WJfbkw0Y56uRsI5adiL_5ZIuoht0QJ-xwHSHheLnHW8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMDg2/NTktMTM1OTA0Mjc1/MC0zNzYyLmpwZWc.jpeg",
@@ -72,6 +74,7 @@ export const revReleaseImages: Record<number, string> = {
   60: "https://i.discogs.com/D1mI7N6NJ9cjQUzR93JxA_Y92kOtWkCFUVtxnXAEoFk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM4Mzg1/My0xMzA2NDIyOTIz/LmpwZWc.jpeg",
   61: "https://i.discogs.com/wbB-ms_mU0JT2hYt9bATjl80Ai_wf36wAI_bZ7iA7FE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxNDEy/MzYtMTQzMzAxMTE3/Ni00MzUzLmpwZWc.jpeg",
   62: "https://i.discogs.com/N_0Wnm0gwde8UT3bqGXfrPIoIo9tGNiPZHGbsBcbh1U/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ5ODQy/Ny0xNzQzODQ5NDg5/LTQ3NDIuanBlZw.jpeg",
+  63: "https://i.discogs.com/jZ3Z2TIkspA39pwKxaGxjBby2yia7V_7CNKOZrI8aCA/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQxMDE3/MzEtMTM1NTI2OTYx/Mi05ODQyLmpwZWc.jpeg",
   64: "https://i.discogs.com/9le4tCIb1waDGeGwSFA9Hxjus7foFXQlulJjd_oIFQI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3NjU5/OTQtMTMyNzYxMjA3/MC5qcGVn.jpeg",
   65: "https://i.discogs.com/w26fnZqdhQqk0vOl_6bn7sRBTZpqxxzexkJApzbC3OI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExNTIz/NzYtMTUyMzg3NjAz/MC05Mzg4LmpwZWc.jpeg",
   66: "https://i.discogs.com/1K-Ee1ifHTCyJSnBMOeewUWTyCgtZdSyjyPN4nKrBSk/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5ODY1/NzktMTMxMDUwMDg4/NS5qcGVn.jpeg",
@@ -128,6 +131,7 @@ export const revReleaseImages: Record<number, string> = {
   118: "https://i.discogs.com/JpRk5Csvrr2zhVqWm06vJFGjGXP1bqSC8VGxelkhWoc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTU0ODQz/NDYtMTM5NDU1ODc0/Ny0xODU3LmpwZWc.jpeg",
   119: "https://i.discogs.com/XPhKPRvxgk0kw0BSRjqFjb5eHSCJUOXZ8ZcxHljS75c/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQ2OTEy/Ni0xNDMzOTA2MjM1/LTkyNzcuanBlZw.jpeg",
   121: "https://i.discogs.com/zbvH3hmo7fU_RyiFsjSKJYEnujOExE0Si8BwMDDw8os/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI3MDM4/NjItMTI5NzI3MzI3/NC5qcGVn.jpeg",
+  122: "https://i.discogs.com/nb0h4lds9K9usZnqG2IKe85F2L3O-gA1VBfTTu2jjnc/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTg1MjA2/MC0xMjU0OTQwMjA0/LmpwZWc.jpeg",
   123: "https://i.discogs.com/MHdgXYc-n4hry5Z6BJjWJ4zS2Dp51Nhch165FJkHeRg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI2MDg3/NTktMTQ1MjMxNjgy/NC0yMjE1LmpwZWc.jpeg",
   124: "https://i.discogs.com/lo7JRlZxD5dHegeTsN5IXAGJ7QXIfIHDRrhu4kWQxZM/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SMzMxNDc1/OC0xMzI1MzY0NjY2/LmpwZWc.jpeg",
   127: "https://i.discogs.com/Z40K4s_hOCY69-HSbGwIv5kaxSJm0PzpOngNS2BICiI/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI1OTUx/NzMtMTI5MjI3MDQx/Ni5qcGVn.jpeg",
@@ -138,6 +142,7 @@ export const revReleaseImages: Record<number, string> = {
   133: "https://i.discogs.com/rC_4uoNeew-CpxN5b7knKr0m7ffqj2NruK5HpxJXsN4/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTQzNzk4/MTgtMTM2MzM0NjA2/My0yMzU1LmpwZWc.jpeg",
   134: "https://i.discogs.com/tl-qOPabY_ROAp3V5VkCAYYlYa73ku_IxVXu5_ELfh8/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI1NjU4/MzktMTI5MDc2MjIw/MC5qcGVn.jpeg",
   135: "https://i.discogs.com/k1mZXC-qVZV4DaiZJcBZGOOdcRKs75Emn4MOle3P_vg/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM3NDQ0/NTEtMTYyNzUzODIy/Mi05OTkxLmpwZWc.jpeg",
+  154: "https://i.discogs.com/ya_8WvBfox44kjOHPmNj9s2s6WvmoC0J2rGZIlLxzFY/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTUyNTAz/MDQtMTcyODQyMDQy/MC0zNjcyLmpwZWc.jpeg",
 };
 
 // Get image URL for a release
@@ -282,6 +287,7 @@ export const revDiscography: RevRelease[] = [
   { catalogNumber: 133, artist: "The Twilight Transmission", title: "The Dance of Destruction", year: 2005 },
   { catalogNumber: 134, artist: "Shook Ones", title: "Slaughter of the Insole", year: 2006 },
   { catalogNumber: 135, artist: "Gracer", title: "Voices Travel", year: 2006 },
+  { catalogNumber: 154, artist: "Title Fight", title: "Spring Songs", year: 2013 },
 ];
 
 // Get all releases
