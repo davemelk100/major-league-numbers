@@ -208,6 +208,7 @@ const amrepAlbumImages: Record<number, string> = {
   218: "https://themelvins.net/wiki/images/e/e0/Melam89.jpg",
   225: "https://i.discogs.com/8u3SpsQyohQD015lKOgk0QcYZRvq-zZW_R3METeG9nY/rs:fit/g:sm/q:90/h:432/w:432/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIyNzMx/OTUtMTI3MzcxNjU3/MC5naWY.jpeg",
   228: "https://i.discogs.com/RK1nGEtwJa_PFz-hJ0US8XpysPwixnjqSCSsMWqYzmQ/rs:fit/g:sm/q:90/h:443/w:450/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzODI2/NTgtMTI4MjI0NzI3/MC5qcGVn.jpeg",
+  229: "https://themelvins.net/wiki/images/a/ae/Melspitit.gif",
   252: "https://i.discogs.com/qfi0_syfCoD1ZG7nqpXNvKOEkOqKHsk3ZbPI7MxDClE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4ODQ1/MjI2LTE2OTk1Mjc2/NTEtNTA5NC5qcGVn.jpeg",
   253: "https://i.discogs.com/qfi0_syfCoD1ZG7nqpXNvKOEkOqKHsk3ZbPI7MxDClE/rs:fit/g:sm/q:40/h:150/w:150/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI4ODQ1/MjI2LTE2OTk1Mjc2/NTEtNTA5NC5qcGVn.jpeg",
   254: "https://i.discogs.com/Dr4KToVFuHSAs5HnnvbAIQKWyYWtbBvxvSlcnblPJ00/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM0OTIx/MTgtMTMzMzA0OTg4/NC5qcGVn.jpeg",
