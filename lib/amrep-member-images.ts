@@ -62,6 +62,8 @@ export const AMREP_MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
     "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2Far0%2Fece7b846cab5c525fc0eb7147fb86ed0.jpg",
   vertigo:
     "/api/gbv/image-proxy?url=https%3A%2F%2Fi.discogs.com%2FjTmauyEW5UcThw_RdMzp2edmusqGm1O-45bkFQG2d18%2Frs%3Afit%2Fg%3Asm%2Fq%3A90%2Fh%3A462%2Fw%3A600%2FczM6Ly9kaXNjb2dz%2FLWRhdGFiYXNlLWlt%2FYWdlcy9BLTI2NTQw%2FNS0xMzM1ODg1MDMw%2FLmpwZWc.jpeg",
+  "lifter puller":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fmedia.pitchfork.com%2Fphotos%2F5931953f56d46348c0b51652%2F16%3A9%2Fw_1280%2Cc_limit%2Ffe6ddb39.jpg",
 };
 
 export const AMREP_MEMBER_IMAGE_SKIP: Record<string, true> = {
@@ -105,5 +107,5 @@ export const AMREP_MEMBER_IMAGE_SKIP: Record<string, true> = {
   "the crows": true,
   "s.w.a.t.": true,
   lollipop: true,
-  gaylord: true,
+  "lifter puller": true,
 };

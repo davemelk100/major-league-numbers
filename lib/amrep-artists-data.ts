@@ -25,7 +25,6 @@ export const amrepArtists: AmrepArtist[] = [
   { id: 10, name: "feedtime" },
   { id: 51, name: "Freedom Fighters" },
   { id: 12, name: "Gaunt" },
-  { id: 52, name: "Gaylord" },
   { id: 53, name: "Gear Jammer" },
   { id: 54, name: "Gnomes of Zurich" },
   { id: 13, name: "God Bullies" },
