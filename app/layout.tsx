@@ -1,14 +1,12 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, League_Gothic, Lato } from "next/font/google";
+import { League_Gothic, Lato } from "next/font/google";
 import { LayoutWrapper } from "@/components/layout-wrapper";
 import { WebsiteJsonLd } from "@/components/json-ld";
 import { Toaster } from "@/components/ui/sonner";
 // import { Analytics } from "@vercel/analytics/react"
 import "@/styles/globals.css";
 
-const _geist = Geist({ subsets: ["latin"], display: "swap" });
-const _geistMono = Geist_Mono({ subsets: ["latin"], display: "swap" });
 const leagueGothic = League_Gothic({
   subsets: ["latin"],
   variable: "--font-league-gothic",
