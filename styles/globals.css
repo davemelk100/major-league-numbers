@@ -446,6 +446,128 @@
     color: #1a1a1a;
   }
 
+  .e6-shell {
+    background-color: #E8E0C8;
+    background-image: radial-gradient(1200px 900px at 15% -10%, rgba(191, 192, 149, 0.15), transparent 60%),
+      radial-gradient(1000px 700px at 85% 5%, rgba(216, 196, 152, 0.2), transparent 55%),
+      linear-gradient(135deg, rgba(232, 224, 200, 0.95), rgba(216, 196, 152, 0.4) 45%, rgba(232, 224, 200, 0.95));
+    background-attachment: fixed;
+    color: #331E10;
+  }
+
+  .e6-shell [data-slot="card"] {
+    background:
+      radial-gradient(140% 120% at 15% 0%, rgba(255, 255, 255, 0.7), transparent 60%),
+      radial-gradient(120% 100% at 85% 10%, rgba(191, 192, 149, 0.08), transparent 55%),
+      linear-gradient(135deg, rgba(245, 240, 228, 0.9), rgba(232, 224, 200, 0.7));
+    border: 1px solid #C0A878;
+    box-shadow:
+      0 18px 40px rgba(51, 30, 16, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    color: #331E10;
+  }
+
+  .e6-shell [data-slot="card"] * {
+    color: inherit;
+  }
+
+  .e6-shell .text-muted-foreground {
+    color: #8E7652;
+  }
+
+  .e6-shell .text-foreground {
+    color: #331E10;
+  }
+
+  .e6-shell [data-slot="badge"] {
+    color: #903C1F;
+    background-color: rgba(144, 60, 31, 0.1);
+    border-color: rgba(144, 60, 31, 0.25);
+  }
+
+  .e6-shell .text-primary,
+  .e6-shell .text-secondary-foreground,
+  .e6-shell .text-accent-foreground,
+  .e6-shell .text-destructive {
+    color: #331E10;
+  }
+
+  .e6-shell .gbv-nav-icon {
+    filter: none;
+  }
+
+  .e6-shell .gbv-rune-white {
+    filter: none;
+  }
+
+  .e6-shell [data-slot="select-trigger"][data-placeholder] {
+    color: #331E10;
+  }
+
+  .e6-shell [data-slot="select-trigger"][data-placeholder] [data-slot="select-value"] {
+    color: #331E10;
+  }
+
+  .e6-shell [data-slot="select-trigger"] svg {
+    color: #331E10;
+    opacity: 1;
+  }
+
+  .e6-shell .gbv-submit-button {
+    background-color: #903C1F;
+    color: #F5F0E4;
+  }
+
+  .e6-shell .gbv-submit-button:hover {
+    background-color: #6E2E18;
+  }
+
+  .e6-shell .gbv-search-button {
+    background-color: transparent;
+    color: #331E10;
+  }
+
+  .e6-shell .gbv-search-button:hover {
+    background-color: transparent;
+  }
+
+  .e6-shell .gbv-search-icon {
+    width: 28px;
+    height: 28px;
+  }
+
+  .e6-shell input,
+  .e6-shell textarea,
+  .e6-shell select,
+  .e6-shell [data-slot="input"] {
+    border: 1px solid #C0A878;
+    box-shadow: 0 0 0 1px rgba(192, 168, 120, 0.15);
+    color: #331E10;
+    background-color: rgba(245, 240, 228, 0.7);
+  }
+
+  .e6-shell input::placeholder,
+  .e6-shell textarea::placeholder,
+  .e6-shell [data-slot="input"]::placeholder {
+    color: #8E7652;
+  }
+
+  .e6-shell .prose a {
+    color: #AB8A56;
+    border-bottom: 1px solid currentColor;
+    text-decoration: none;
+  }
+
+  .e6-shell nav a,
+  .e6-shell nav a span,
+  .e6-shell nav svg,
+  .e6-shell nav button,
+  .e6-shell nav button span {
+    color: #331E10;
+  }
+
   .amrep-shell {
     background-color: #d7dbe0;
     background-image: radial-gradient(1200px 900px at 15% -10%, rgba(255, 255, 255, 0.75), transparent 60%),

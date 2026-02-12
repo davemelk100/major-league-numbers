@@ -42,6 +42,7 @@ const musicSites = [
   { name: "Guided by Voices", href: "/gbv", logo: "/gbv-mlb.svg" },
   { name: "Amphetamine Reptile", href: "/amrep", logo: "/amrep-logo-foreground.svg" },
   { name: "Revelation Records", href: "/rev", logo: "/rev-logo.png" },
+  { name: "Elephant 6", href: "/e6", logo: "/e6-logo.png" },
 ];
 
 export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "music" }) {
@@ -61,7 +62,7 @@ export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "m
           )}
         >
           <CubeIcon className="h-5 w-5 transition-transform duration-200 group-hover:scale-110" />
-          <span className="text-xs font-medium text-center leading-tight text-black dark:text-white">Sites</span>
+          <span className="text-xs font-medium text-center leading-tight">Sites</span>
         </button>
       </PopoverTrigger>
       <PopoverContent

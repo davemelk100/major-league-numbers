@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { pickDailyGbvRecord, getDailyGbvRecord, type GbvRecordOfDay } from "@/lib/gbv-records-data";
 import { getDailyAmrepRecord, type AmrepRecordOfDay } from "@/lib/amrep-records-data";
 import { getDailyRevRecord, type RevRecordOfDay } from "@/lib/rev-records-data";
+import { getDailyE6Record, type E6RecordOfDay } from "@/lib/e6-records-data";
 import { getLocalAlbumImage } from "@/lib/gbv-album-images";
 import { getAmrepAlbumImage } from "@/lib/amrep-album-images";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
@@ -14,7 +15,8 @@ export function useRecordOfDay() {
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";
   const isRev = site.id === "rev";
-  const [record, setRecord] = useState<GbvRecordOfDay | AmrepRecordOfDay | RevRecordOfDay | null>(null);
+  const isE6 = site.id === "e6";
+  const [record, setRecord] = useState<GbvRecordOfDay | AmrepRecordOfDay | RevRecordOfDay | E6RecordOfDay | null>(null);
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
   const [albumId, setAlbumId] = useState<number | null>(null);
 
@@ -108,6 +110,18 @@ export function useRecordOfDay() {
       return;
     }
 
+    if (isE6) {
+      const e6Daily = getDailyE6Record();
+      setRecord(e6Daily);
+      if (e6Daily.coverUrl) {
+        setCoverUrl(e6Daily.coverUrl);
+      }
+      if ("catalogNumber" in e6Daily) {
+        setAlbumId(e6Daily.catalogNumber);
+      }
+      return;
+    }
+
     // GBV - use static data immediately, then enhance with API data
     const gbvDaily = getDailyGbvRecord();
     setRecord(gbvDaily);
@@ -171,7 +185,7 @@ export function useRecordOfDay() {
     }
 
     enhanceWithApiData();
-  }, [isAmrep, isRev]);
+  }, [isAmrep, isRev, isE6]);
 
   const albumHref = albumId ? `${site.basePath}/albums/${albumId}` : null;
   const displayTitle =

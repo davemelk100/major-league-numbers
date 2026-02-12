@@ -24,7 +24,7 @@ export function SiteFooter() {
   return (
     <footer className="bg-transparent py-2 mt-auto pb-20 sm:pb-2">
       <div className="container">
-        <div className="flex flex-col gap-1 text-[10px] text-white md:text-[11px] text-center items-center">
+        <div className={`flex flex-col gap-1 text-[10px] md:text-[11px] text-center items-center ${site.id === "amrep" || site.id === "rev" || site.id === "e6" ? "text-black" : "text-white"}`}>
           {/* Sources: top row on mobile, inline on desktop */}
           {mounted && (
             <div className="sm:hidden">
@@ -59,7 +59,7 @@ export function SiteFooter() {
           )}
           <div className="flex items-center justify-center gap-2">
             {site.footerDisclaimer && (
-              <span className={site.id === "amrep" ? "text-black" : "text-white/70"}>
+              <span className={site.id === "amrep" || site.id === "rev" || site.id === "e6" ? "text-black/70" : "text-white/70"}>
                 {site.footerDisclaimer}
               </span>
             )}
@@ -96,11 +96,11 @@ export function SiteFooter() {
             )}
           </div>
           <div className="flex items-center justify-center gap-2">
-            <Link href="/" className={`hover:underline ${site.id === "amrep" ? "text-black/70" : "text-white/70"}`}>
+            <Link href="/" className={`hover:underline ${site.id === "amrep" || site.id === "rev" || site.id === "e6" ? "text-black/70" : "text-white/70"}`}>
               Main
             </Link>
           </div>
-          <span className={site.id === "amrep" ? "text-black/50" : "text-white/40"}>
+          <span className={site.id === "amrep" || site.id === "rev" || site.id === "e6" ? "text-black/50" : "text-white/40"}>
             No generative AI is allowed to produce, stream, alter, or replicate any audio, video, or graphics.
           </span>
         </div>

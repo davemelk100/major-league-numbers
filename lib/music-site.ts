@@ -193,6 +193,65 @@ export const AMREP_SITE: MusicSiteConfig = {
   },
 };
 
+export const E6_SITE: MusicSiteConfig = {
+  id: "e6",
+  name: "Elephant 6 By The Numbers",
+  shortName: "E6",
+  basePath: "/e6",
+  chatLabel: "ChatE6",
+  headerTitle: "Elephant 6 By The Numbers",
+  headerTextClass: "text-black",
+  logoSrc: "/e6-logo.png",
+  chatIconSrc: "/e6-logo.png",
+  placeholderIconSrc: "/e6-logo.png",
+  shellClass: "e6-shell",
+  logoClassName: "h-10 w-auto sm:h-12 lg:h-14 lg:w-auto",
+  navLabels: {
+    discography: "Releases",
+    members: "Artists",
+    sideProjects: "Related Labels",
+  },
+  footerDisclaimer:
+    "All Content, Rights, Copyrights, etc. are the property of the respective artists and labels. This is simply a fan site.",
+  sources: [
+    { label: "Discogs", url: "https://www.discogs.com/label/43843-Elephant-Six-Recording-Co" },
+    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Elephant_6" },
+    { label: "MusicBrainz", url: "https://musicbrainz.org/" },
+    { label: "Bandcamp", url: "https://bandcamp.com/" },
+    { label: "Orange Twin", url: "https://orangetwin.com/" },
+  ],
+  imageSources: [
+    { label: "Discogs", url: "https://www.discogs.com/" },
+    { label: "Wikipedia", url: "https://en.wikipedia.org/" },
+    { label: "Wikimedia Commons", url: "https://commons.wikimedia.org/" },
+    { label: "Bandcamp", url: "https://bandcamp.com/" },
+    { label: "Last.fm", url: "https://www.last.fm/" },
+  ],
+  searchPlaceholder: "Search E6...",
+  seo: {
+    title: "Elephant 6 Recording Company",
+    titleTemplate: "%s | Elephant 6 Recording Company",
+    description:
+      "Explore the Elephant 6 Recording Company: artists, releases, collective history, and milestones.",
+    keywords: [
+      "Elephant 6",
+      "E6",
+      "Neutral Milk Hotel",
+      "The Apples in Stereo",
+      "of Montreal",
+      "indie pop",
+      "lo-fi",
+      "psychedelic",
+      "Athens Georgia",
+      "collective",
+    ],
+    siteName: "Major League Numbers",
+    ogImage: "https://majorleaguenumbers.com/e6-logo.png",
+    ogImageAlt: "Elephant 6 Recording Company",
+    twitterImage: "https://majorleaguenumbers.com/e6-logo.png",
+  },
+};
+
 export const REVELATION_SITE: MusicSiteConfig = {
   id: "rev",
   name: "Revelation By The Numbers",
@@ -250,7 +309,7 @@ export const REVELATION_SITE: MusicSiteConfig = {
   },
 };
 
-export const MUSIC_SITES = [GBV_SITE, AMREP_SITE, REVELATION_SITE] as const;
+export const MUSIC_SITES = [GBV_SITE, AMREP_SITE, REVELATION_SITE, E6_SITE] as const;
 
 export type MusicSiteId = (typeof MUSIC_SITES)[number]["id"];
 
