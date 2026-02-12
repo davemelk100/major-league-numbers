@@ -16,6 +16,7 @@ export type RemoteImageProps = {
   height?: number;
   loading?: "lazy" | "eager";
   fallbackSrc?: string;
+  fallbackClassName?: string;
   localFallbackSrc?: string | null;
   fit?: "cover" | "contain";
   cacheKey?: string;
@@ -31,6 +32,7 @@ export function RemoteImage({
   height,
   loading = "lazy",
   fallbackSrc = "/chat-gbv-box.svg",
+  fallbackClassName,
   localFallbackSrc,
   fit = "cover",
   cacheKey,
@@ -154,8 +156,12 @@ export function RemoteImage({
       className={cn(
         "block",
         !loaded && "bg-muted animate-pulse",
-        effectiveFit === "cover" ? "object-cover" : "object-contain",
-        className
+        sourceState === "fallback" && fallbackClassName
+          ? fallbackClassName
+          : cn(
+              effectiveFit === "cover" ? "object-cover" : "object-contain",
+              className
+            )
       )}
     />
   );

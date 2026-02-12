@@ -452,7 +452,7 @@
       radial-gradient(1000px 700px at 85% 5%, rgba(216, 196, 152, 0.2), transparent 55%),
       linear-gradient(135deg, rgba(232, 224, 200, 0.95), rgba(216, 196, 152, 0.4) 45%, rgba(232, 224, 200, 0.95));
     background-attachment: fixed;
-    color: #331E10;
+    color: #000000;
   }
 
   .e6-shell [data-slot="card"] {
@@ -466,7 +466,7 @@
       inset 0 1px 0 rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(18px) saturate(140%);
     -webkit-backdrop-filter: blur(18px) saturate(140%);
-    color: #331E10;
+    color: #000000;
   }
 
   .e6-shell [data-slot="card"] * {
@@ -478,7 +478,7 @@
   }
 
   .e6-shell .text-foreground {
-    color: #331E10;
+    color: #000000;
   }
 
   .e6-shell [data-slot="badge"] {
@@ -491,7 +491,7 @@
   .e6-shell .text-secondary-foreground,
   .e6-shell .text-accent-foreground,
   .e6-shell .text-destructive {
-    color: #331E10;
+    color: #000000;
   }
 
   .e6-shell .gbv-nav-icon {
@@ -503,15 +503,15 @@
   }
 
   .e6-shell [data-slot="select-trigger"][data-placeholder] {
-    color: #331E10;
+    color: #000000;
   }
 
   .e6-shell [data-slot="select-trigger"][data-placeholder] [data-slot="select-value"] {
-    color: #331E10;
+    color: #000000;
   }
 
   .e6-shell [data-slot="select-trigger"] svg {
-    color: #331E10;
+    color: #000000;
     opacity: 1;
   }
 
@@ -526,7 +526,7 @@
 
   .e6-shell .gbv-search-button {
     background-color: transparent;
-    color: #331E10;
+    color: #000000;
   }
 
   .e6-shell .gbv-search-button:hover {
@@ -544,7 +544,7 @@
   .e6-shell [data-slot="input"] {
     border: 1px solid #C0A878;
     box-shadow: 0 0 0 1px rgba(192, 168, 120, 0.15);
-    color: #331E10;
+    color: #000000;
     background-color: rgba(245, 240, 228, 0.7);
   }
 
@@ -565,7 +565,7 @@
   .e6-shell nav svg,
   .e6-shell nav button,
   .e6-shell nav button span {
-    color: #331E10;
+    color: #000000;
   }
 
   .amrep-shell {

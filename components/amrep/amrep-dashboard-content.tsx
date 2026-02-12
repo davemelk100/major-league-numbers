@@ -12,6 +12,7 @@ import {
 } from "@/lib/amrep-member-images";
 import {
   DashboardDailyRow,
+  DashboardDescription,
   DashboardDiscographyGrid,
   DashboardMembersGrid,
   DashboardSectionHeader,
@@ -44,6 +45,8 @@ export function AmrepDashboardContent() {
 
   return (
     <div className="container py-2">
+      <DashboardDescription text={site.description} />
+
       {/* Daily Trivia + Record of the Day */}
       <DashboardDailyRow>
         <TriviaPanel />

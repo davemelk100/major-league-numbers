@@ -86,13 +86,13 @@ export function E6AlbumDetailContent({ albumId }: { albumId: string }) {
             className="w-full aspect-square rounded-lg object-contain"
           />
         ) : (
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
+          <div className="w-full aspect-square bg-muted/30 rounded-lg flex items-center justify-center overflow-hidden">
             <Image
               src="/e6-logo.png"
               alt={`${release.artist} - ${release.title}`}
-              width={96}
-              height={96}
-              className="opacity-30"
+              width={200}
+              height={200}
+              className="opacity-30 w-full h-auto p-4"
             />
           </div>
         )

@@ -114,7 +114,30 @@ export async function GET(request: Request) {
       }
 
       const lookup = await getLabelReleaseLookup();
-      const discogsId = lookup.get(cacheKey);
+      let discogsId = lookup.get(cacheKey);
+
+      // Fallback: search Discogs by artist + title when not found in label listing
+      if (!discogsId) {
+        try {
+          const q = encodeURIComponent(`${artist} ${title}`);
+          const searchData = await fetchFromDiscogs(
+            `/database/search?q=${q}&type=release&per_page=5`
+          );
+          const results = searchData?.results || [];
+          const match = results.find((r: any) => {
+            const rKey = normalizeKey(
+              (r.title || "").split(" - ")[0] || "",
+              (r.title || "").split(" - ").slice(1).join(" - ") || ""
+            );
+            return rKey === cacheKey;
+          }) || results[0];
+          if (match?.id) {
+            discogsId = match.id;
+          }
+        } catch {
+          // search fallback failed
+        }
+      }
 
       if (!discogsId) {
         return NextResponse.json({ release: null });

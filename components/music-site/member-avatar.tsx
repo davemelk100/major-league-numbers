@@ -21,6 +21,9 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
    fallbackImages?: Record<string, string>;
    skipImages?: Record<string, true>;
    fit?: "cover" | "contain";
+   placeholderSize?: number;
+   placeholderClassName?: string;
+   fallbackClassName?: string;
  };
 
  export function MemberAvatar({
@@ -33,6 +36,9 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
    fallbackImages,
    skipImages,
    fit = "cover",
+   placeholderSize = 24,
+   placeholderClassName = "w-1/2 h-1/2 gbv-nav-icon object-contain",
+   fallbackClassName,
  }: MemberAvatarProps) {
    const [hasError, setHasError] = useState(false);
    const [resolvedImageUrl, setResolvedImageUrl] = useState<string | null>(null);
@@ -129,9 +135,9 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
          <Image
            src={fallbackIconSrc}
            alt="Artist placeholder"
-           width={24}
-           height={24}
-           className="w-1/2 h-1/2 gbv-nav-icon object-contain"
+           width={placeholderSize}
+           height={placeholderSize}
+           className={placeholderClassName}
          />
        </div>
      );
@@ -145,6 +151,7 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
         width={400}
         height={400}
         fallbackSrc={fallbackIconSrc}
+        fallbackClassName={fallbackClassName}
         preferProxy={false}
         className={
           fit === "contain"

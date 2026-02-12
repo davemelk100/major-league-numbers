@@ -83,7 +83,7 @@ export function AlbumGrid<T extends AlbumGridItem>({
                        localFallbackSrc={getLocalFallbackImage?.(album)}
                      />
                    ) : (
-                     <div className="w-full aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center">
+                     <div className="w-full aspect-square rounded-lg mb-2 flex items-center justify-center">
                        <Image
                          src={site.placeholderIconSrc}
                          alt={`${site.shortName} logo`}

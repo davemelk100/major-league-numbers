@@ -1,11 +1,38 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { getAllE6Artists, getE6ArtistImageUrl } from "@/lib/e6-artists-data";
 import Link from "next/link";
 import Image from "next/image";
+
+function ArtistImage({ name, imageUrl }: { name: string; imageUrl?: string }) {
+  const [failed, setFailed] = useState(false);
+  const handleError = useCallback(() => setFailed(true), []);
+
+  if (!imageUrl || failed) {
+    return (
+      <Image
+        src="/e6-logo.png"
+        alt={name}
+        width={200}
+        height={200}
+        className="opacity-30 w-full h-auto p-4"
+      />
+    );
+  }
+
+  return (
+    <img
+      src={imageUrl}
+      alt={name}
+      className="w-full h-full object-cover"
+      loading="lazy"
+      onError={handleError}
+    />
+  );
+}
 
 export function E6MembersContent() {
   const artists = getAllE6Artists();
@@ -40,22 +67,7 @@ export function E6MembersContent() {
               <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3 text-center">
                   <div className="w-full aspect-square bg-muted/30 rounded-lg mb-2 flex items-center justify-center overflow-hidden">
-                    {imageUrl ? (
-                      <img
-                        src={imageUrl}
-                        alt={artist.name}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <Image
-                        src="/e6-logo.png"
-                        alt={artist.name}
-                        width={48}
-                        height={48}
-                        className="opacity-30"
-                      />
-                    )}
+                    <ArtistImage name={artist.name} imageUrl={imageUrl} />
                   </div>
                   <p className="text-sm font-medium">{artist.name}</p>
                 </CardContent>

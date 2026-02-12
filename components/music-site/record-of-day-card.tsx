@@ -98,12 +98,12 @@ export function RecordOfDayCard({
             ) : albumHref ? (
               <Link
                 href={albumHref}
-                className="w-full h-full bg-muted rounded-md flex items-center justify-center"
+                className="w-full h-full rounded-md flex items-center justify-center"
               >
                 {renderPlaceholder()}
               </Link>
             ) : (
-              <div className="w-full h-full bg-muted rounded-md flex items-center justify-center">
+              <div className="w-full h-full rounded-md flex items-center justify-center">
                 {renderPlaceholder()}
               </div>
             )}

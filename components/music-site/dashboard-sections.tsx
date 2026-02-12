@@ -35,7 +35,7 @@ type DashboardAlbum = {
 
 type MemberAvatarOptions = Pick<
   ComponentProps<typeof MemberAvatar>,
-  "fallbackImages" | "skipImages" | "fit" | "skipRemoteLookup"
+  "fallbackImages" | "skipImages" | "fit" | "skipRemoteLookup" | "placeholderSize" | "placeholderClassName" | "fallbackClassName"
 >;
 
 type DashboardDailyRowProps = {
@@ -68,6 +68,13 @@ type DashboardDiscographyGridProps<T extends DashboardAlbum> = {
   placeholderClassName?: string;
   placeholderSize?: number;
 };
+
+export function DashboardDescription({ text }: { text?: string }) {
+  if (!text) return null;
+  return (
+    <p className="text-sm text-muted-foreground mb-6">{text}</p>
+  );
+}
 
 export function DashboardDailyRow({ children }: DashboardDailyRowProps) {
   return <div className="mb-8 grid gap-4 md:grid-cols-2">{children}</div>;
@@ -150,7 +157,7 @@ export function DashboardDiscographyGrid<T extends DashboardAlbum>({
   const imageClassName = `w-full aspect-square rounded-lg object-${imageFit} mb-2`;
 
   const renderPlaceholder = () => (
-    <div className="w-full aspect-square bg-muted rounded-lg mb-2 flex items-center justify-center">
+    <div className="w-full aspect-square rounded-lg mb-2 flex items-center justify-center">
       {placeholderVariant === "img" ? (
         <img
           src={site.placeholderIconSrc}
@@ -194,7 +201,9 @@ export function DashboardDiscographyGrid<T extends DashboardAlbum>({
               ) : (
                 renderPlaceholder()
               )}
-              <h3 className="font-semibold text-base truncate">{album.title}</h3>
+              <h3 className="font-semibold text-base truncate">
+                {album.title}
+              </h3>
               <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <span>{album.year ?? "—"}</span>
                 <span className="border border-border rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide">

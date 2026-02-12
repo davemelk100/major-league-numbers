@@ -7,6 +7,7 @@ import { RecordOfDayCard } from "@/components/music-site/record-of-day-card";
 import { E6RemoteImage } from "@/components/e6/e6-remote-image";
 import {
   DashboardDailyRow,
+  DashboardDescription,
   DashboardDiscographyGrid,
   DashboardMembersGrid,
   DashboardSectionHeader,
@@ -57,6 +58,8 @@ export function E6DashboardContent() {
 
   return (
     <div className="container py-2">
+      <DashboardDescription text={site.description} />
+
       {/* Daily Trivia + Record of the Day */}
       <DashboardDailyRow>
         <TriviaPanel />
@@ -79,6 +82,11 @@ export function E6DashboardContent() {
           members={FEATURED_BANDS}
           site={site}
           linkBasePath={`${site.basePath}/members`}
+          memberAvatarProps={{
+            placeholderSize: 200,
+            placeholderClassName: "opacity-30 w-full h-auto p-4",
+            fallbackClassName: "opacity-30 w-full h-auto p-4",
+          }}
         />
       </div>
 

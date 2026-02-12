@@ -8,6 +8,7 @@ import { getReleaseType } from "@/lib/gbv-utils";
 import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
 import {
   DashboardDailyRow,
+  DashboardDescription,
   DashboardDiscographyGrid,
   DashboardMembersGrid,
   DashboardSectionHeader,
@@ -45,6 +46,8 @@ export function GbvDashboardContent() {
 
   return (
     <div className="container py-2">
+      <DashboardDescription text={site.description} />
+
       {/* Daily Trivia + Record of the Day */}
       <DashboardDailyRow>
         <TriviaPanel />

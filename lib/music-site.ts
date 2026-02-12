@@ -13,6 +13,7 @@ export interface MusicSiteConfig {
   placeholderIconSrc: string;
   shellClass: string;
   logoClassName?: string;
+  description?: string;
   navLabels: {
     discography: string;
     members: string;
@@ -46,6 +47,8 @@ export const GBV_SITE: MusicSiteConfig = {
   chatIconSrc: "/gbv-rune.svg",
   placeholderIconSrc: "/chat-gbv-box.svg",
   shellClass: "gbv-shell",
+  description:
+    "Guided by Voices is an American indie rock band from Dayton, Ohio, formed in 1983 by Robert Pollard. Known for their prolific output, lo-fi aesthetic, and short, melodic songs influenced by the British Invasion, GBV has released over 30 studio albums and become one of the most beloved and enduring bands in independent music.",
   navLabels: {
     discography: "Discography",
     members: "Members",
@@ -110,6 +113,8 @@ export const AMREP_SITE: MusicSiteConfig = {
   chatIconSrc: "/noise-bird.svg",
   placeholderIconSrc: "/noise-placeholder.svg",
   shellClass: "amrep-shell",
+  description:
+    "Amphetamine Reptile Records is an independent record label founded by Tom Hazelmyer in 1986. Based in Minneapolis, AmRep became synonymous with the noise rock movement of the late '80s and '90s, releasing foundational records by artists like the Melvins, Helmet, Halo of Flies, Cows, and Hammerhead, and helping define the sound of underground heavy music.",
   navLabels: {
     discography: "Releases",
     members: "Artists",
@@ -206,6 +211,8 @@ export const E6_SITE: MusicSiteConfig = {
   placeholderIconSrc: "/e6-logo.png",
   shellClass: "e6-shell",
   logoClassName: "h-10 w-auto sm:h-12 lg:h-14 lg:w-auto",
+  description:
+    "The Elephant 6 Recording Company is a collective of musicians formed in the early 1990s, centered in Athens, Georgia. Built around a shared love of lo-fi recording, psychedelic pop, and collaborative creativity, E6 produced some of the most acclaimed indie music of the era through artists like Neutral Milk Hotel, The Apples in Stereo, The Olivia Tremor Control, and of Montreal.",
   navLabels: {
     discography: "Releases",
     members: "Artists",
@@ -265,6 +272,8 @@ export const REVELATION_SITE: MusicSiteConfig = {
   placeholderIconSrc: "/rev-icon.svg",
   shellClass: "revelation-shell",
   logoClassName: "h-10 w-auto sm:h-12 lg:h-14 lg:w-auto",
+  description:
+    "Revelation Records is an independent record label founded by Jordan Cooper in 1987 in New Haven, Connecticut. A cornerstone of the American hardcore and punk scene, Revelation helped launch the careers of iconic bands like Youth of Today, Gorilla Biscuits, Bold, Chain of Strength, and Judge, and remains one of the most influential labels in hardcore music history.",
   navLabels: {
     discography: "Releases",
     members: "Bands",

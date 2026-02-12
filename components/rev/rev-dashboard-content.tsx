@@ -7,6 +7,7 @@ import { RecordOfDayCard } from "@/components/music-site/record-of-day-card";
 import { RevRemoteImage } from "@/components/rev/rev-remote-image";
 import {
   DashboardDailyRow,
+  DashboardDescription,
   DashboardDiscographyGrid,
   DashboardMembersGrid,
   DashboardSectionHeader,
@@ -57,6 +58,8 @@ export function RevDashboardContent() {
 
   return (
     <div className="container py-2">
+      <DashboardDescription text={site.description} />
+
       {/* Daily Trivia + Record of the Day */}
       <DashboardDailyRow>
         <TriviaPanel />
