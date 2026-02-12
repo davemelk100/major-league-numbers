@@ -80,11 +80,19 @@ async function getLabelReleaseLookup(): Promise<Map<string, number>> {
   return lookup;
 }
 
+function pickCoverImage(data: any): string | undefined {
+  const images = data.images;
+  if (!Array.isArray(images) || images.length === 0) return undefined;
+  const primary = images.find((img: any) => img.type === "primary");
+  return primary?.uri || images[0]?.uri;
+}
+
 function buildReleaseResponse(data: any) {
   return {
     id: data.id,
     title: data.title || "",
     year: data.year,
+    coverImage: pickCoverImage(data),
     tracklist: Array.isArray(data.tracklist)
       ? data.tracklist.map((track: any) => ({
           position: track.position,

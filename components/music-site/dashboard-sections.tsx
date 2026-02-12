@@ -35,7 +35,13 @@ type DashboardAlbum = {
 
 type MemberAvatarOptions = Pick<
   ComponentProps<typeof MemberAvatar>,
-  "fallbackImages" | "skipImages" | "fit" | "skipRemoteLookup" | "placeholderSize" | "placeholderClassName" | "fallbackClassName"
+  | "fallbackImages"
+  | "skipImages"
+  | "fit"
+  | "skipRemoteLookup"
+  | "placeholderSize"
+  | "placeholderClassName"
+  | "fallbackClassName"
 >;
 
 type DashboardDailyRowProps = {
@@ -71,9 +77,7 @@ type DashboardDiscographyGridProps<T extends DashboardAlbum> = {
 
 export function DashboardDescription({ text }: { text?: string }) {
   if (!text) return null;
-  return (
-    <p className="text-sm text-muted-foreground mb-6">{text}</p>
-  );
+  return <p className="text-sm mb-6">{text}</p>;
 }
 
 export function DashboardDailyRow({ children }: DashboardDailyRowProps) {

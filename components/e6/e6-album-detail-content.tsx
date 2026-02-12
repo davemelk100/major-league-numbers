@@ -19,13 +19,14 @@ export function E6AlbumDetailContent({ albumId }: { albumId: string }) {
   const imageUrl = release ? getE6ReleaseImageUrl(release.catalogNumber) : undefined;
 
   const [tracklist, setTracklist] = useState<Track[] | null>(null);
+  const [coverImage, setCoverImage] = useState<string | undefined>(undefined);
   const [isTracklistLoading, setIsTracklistLoading] = useState(false);
 
   useEffect(() => {
     if (!release) return;
     let isActive = true;
 
-    async function fetchTracklist() {
+    async function fetchDiscogsData() {
       setIsTracklistLoading(true);
       try {
         const params = new URLSearchParams({
@@ -36,18 +37,23 @@ export function E6AlbumDetailContent({ albumId }: { albumId: string }) {
         const res = await fetch(`/api/e6/discogs?${params}`);
         if (res.ok) {
           const data = await res.json();
-          if (isActive && data.release?.tracklist) {
-            setTracklist(data.release.tracklist);
+          if (isActive) {
+            if (data.release?.tracklist) {
+              setTracklist(data.release.tracklist);
+            }
+            if (data.release?.coverImage) {
+              setCoverImage(data.release.coverImage);
+            }
           }
         }
       } catch {
-        // tracklist unavailable
+        // data unavailable
       } finally {
         if (isActive) setIsTracklistLoading(false);
       }
     }
 
-    fetchTracklist();
+    fetchDiscogsData();
     return () => {
       isActive = false;
     };
@@ -74,16 +80,17 @@ export function E6AlbumDetailContent({ albumId }: { albumId: string }) {
     );
   }
 
+  const resolvedImage = imageUrl || coverImage;
+
   const leftContent = (
     <AlbumDetailLeft
       image={
-        imageUrl ? (
-          <Image
-            src={imageUrl}
+        resolvedImage ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={resolvedImage}
             alt={`${release.artist} - ${release.title}`}
-            width={300}
-            height={300}
-            className="w-full aspect-square rounded-lg object-contain"
+            className="w-full aspect-square rounded-lg object-cover"
           />
         ) : (
           <div className="w-full aspect-square bg-muted/30 rounded-lg flex items-center justify-center overflow-hidden">
