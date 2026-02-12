@@ -21,6 +21,11 @@ import {
   type RevTriviaQuestion,
 } from "@/lib/rev-trivia-data";
 import {
+  getDailyE6TriviaQuestions,
+  getE6TodayStorageKey,
+  type E6TriviaQuestion,
+} from "@/lib/e6-trivia-data";
+import {
   CheckCircle2,
   XCircle,
   ChevronLeft,
@@ -42,10 +47,11 @@ function TriviaPanelContent() {
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";
   const isRev = site.id === "rev";
+  const isE6 = site.id === "e6";
 
   const [quizDate, setQuizDate] = useState<Date | null>(null);
   const [dailyQuestions, setDailyQuestions] = useState<
-    Array<GbvTriviaQuestion | AmrepTriviaQuestion | RevTriviaQuestion>
+    Array<GbvTriviaQuestion | AmrepTriviaQuestion | RevTriviaQuestion | E6TriviaQuestion>
   >([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState<
@@ -54,35 +60,41 @@ function TriviaPanelContent() {
   const [isComplete, setIsComplete] = useState(false);
   const [showYesterday, setShowYesterday] = useState(false);
   const [yesterdayQuestions, setYesterdayQuestions] = useState<
-    Array<GbvTriviaQuestion | AmrepTriviaQuestion | RevTriviaQuestion>
+    Array<GbvTriviaQuestion | AmrepTriviaQuestion | RevTriviaQuestion | E6TriviaQuestion>
   >([]);
 
   useEffect(() => {
     const now = new Date();
     setQuizDate(now);
 
-    const questions = isRev
-      ? getDailyRevTriviaQuestions(now)
-      : isAmrep
-        ? getDailyAmrepTriviaQuestions(now)
-        : getDailyGbvTriviaQuestions(now);
+    const questions = isE6
+      ? getDailyE6TriviaQuestions(now)
+      : isRev
+        ? getDailyRevTriviaQuestions(now)
+        : isAmrep
+          ? getDailyAmrepTriviaQuestions(now)
+          : getDailyGbvTriviaQuestions(now);
     setDailyQuestions(questions);
 
     const yesterday = new Date(now);
     yesterday.setDate(yesterday.getDate() - 1);
     setYesterdayQuestions(
-      isRev
-        ? getDailyRevTriviaQuestions(yesterday)
-        : isAmrep
-          ? getDailyAmrepTriviaQuestions(yesterday)
-          : getDailyGbvTriviaQuestions(yesterday)
+      isE6
+        ? getDailyE6TriviaQuestions(yesterday)
+        : isRev
+          ? getDailyRevTriviaQuestions(yesterday)
+          : isAmrep
+            ? getDailyAmrepTriviaQuestions(yesterday)
+            : getDailyGbvTriviaQuestions(yesterday)
     );
 
-    const storageKey = isRev
-      ? getRevTodayStorageKey(now)
-      : isAmrep
-        ? getAmrepTodayStorageKey(now)
-        : getGbvTodayStorageKey(now);
+    const storageKey = isE6
+      ? getE6TodayStorageKey(now)
+      : isRev
+        ? getRevTodayStorageKey(now)
+        : isAmrep
+          ? getAmrepTodayStorageKey(now)
+          : getGbvTodayStorageKey(now);
     const stored = localStorage.getItem(storageKey);
     if (stored) {
       const parsed = JSON.parse(stored) as AnsweredQuestion[];
@@ -99,7 +111,7 @@ function TriviaPanelContent() {
         }
       }
     }
-  }, [isAmrep, isRev]);
+  }, [isAmrep, isRev, isE6]);
 
   const currentQuestion = showYesterday
     ? yesterdayQuestions[currentIndex]
@@ -126,11 +138,13 @@ function TriviaPanelContent() {
       setIsComplete(true);
     }
 
-    const storageKey = isRev
-      ? getRevTodayStorageKey(quizDate!)
-      : isAmrep
-        ? getAmrepTodayStorageKey(quizDate!)
-        : getGbvTodayStorageKey(quizDate!);
+    const storageKey = isE6
+      ? getE6TodayStorageKey(quizDate!)
+      : isRev
+        ? getRevTodayStorageKey(quizDate!)
+        : isAmrep
+          ? getAmrepTodayStorageKey(quizDate!)
+          : getGbvTodayStorageKey(quizDate!);
     localStorage.setItem(storageKey, JSON.stringify(updated));
   };
 
@@ -175,7 +189,7 @@ function TriviaPanelContent() {
 
   if (!currentQuestion) return null;
 
-  const isLight = isAmrep || isRev;
+  const isLight = isAmrep || isRev || isE6;
   const txt = isLight ? "text-black" : "text-white";
   const txtMuted = isLight ? "text-black/70" : "text-white/70";
   const border = isLight ? "border-black/20" : "border-white/20";

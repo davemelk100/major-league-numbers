@@ -4,6 +4,7 @@
  import { usePathname } from "next/navigation";
  import { getMusicSiteFromPathname } from "@/lib/music-site";
  import { getAmrepReleaseById } from "@/lib/amrep-releases-data";
+ import { getE6ReleaseByCatalogNumber } from "@/lib/e6-discography-data";
 
  export interface GbvAlbumDetail {
    id: number;
@@ -37,6 +38,7 @@
    const pathname = usePathname();
    const site = getMusicSiteFromPathname(pathname);
    const isAmrep = site.id === "amrep";
+   const isE6 = site.id === "e6";
    const [album, setAlbum] = useState<GbvAlbumDetail | AmrepAlbumDetail | null>(null);
    const [isLoading, setIsLoading] = useState(true);
    const [isTracklistLoading, setIsTracklistLoading] = useState(false);
@@ -48,6 +50,55 @@
      async function fetchAlbum() {
        setIsLoading(true);
        setError(null);
+
+       if (isE6) {
+         const release = getE6ReleaseByCatalogNumber(Number(albumId));
+         const baseAlbum: AmrepAlbumDetail | null = release
+           ? {
+               id: release.catalogNumber,
+               title: release.title,
+               year: release.year,
+               thumb: "",
+               artists: release.artist ? [{ name: release.artist }] : undefined,
+             }
+           : null;
+
+         if (isActive) {
+           if (baseAlbum) {
+             setAlbum(baseAlbum);
+             setIsLoading(false);
+           } else {
+             setError("Release not found");
+             setAlbum(null);
+             setIsLoading(false);
+             return;
+           }
+         }
+
+         // Fetch tracklist from Discogs
+         if (release?.artist || release?.title) {
+           setIsTracklistLoading(true);
+           try {
+             const params = new URLSearchParams({
+               type: "resolve",
+               ...(release.artist ? { artist: release.artist } : {}),
+               ...(release.title ? { title: release.title } : {}),
+             });
+             const res = await fetch(`/api/e6/discogs?${params}`);
+             if (res.ok) {
+               const data = await res.json();
+               if (isActive && data.release) {
+                 setAlbum((prev) => ({ ...prev, ...data.release, id: release.catalogNumber }));
+               }
+             }
+           } catch {
+             // tracklist unavailable
+           } finally {
+             if (isActive) setIsTracklistLoading(false);
+           }
+         }
+         return;
+       }
 
        if (isAmrep) {
          const release = getAmrepReleaseById(Number(albumId));
@@ -123,7 +174,7 @@
      return () => {
        isActive = false;
      };
-   }, [albumId, isAmrep]);
+   }, [albumId, isAmrep, isE6]);
 
    return { site, isAmrep, album, isLoading, isTracklistLoading, error };
  }

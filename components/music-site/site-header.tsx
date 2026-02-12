@@ -67,7 +67,7 @@ export function SiteHeader() {
                   <Search
                     className={cn(
                       "gbv-search-icon",
-                      site.id === "amrep" && "text-black",
+                      (site.id === "amrep" || site.id === "e6") && "text-black",
                     )}
                   />
                 </Button>
@@ -93,7 +93,7 @@ export function SiteHeader() {
               <Search
                 className={cn(
                   "gbv-search-icon",
-                  site.id === "amrep" && "text-black",
+                  (site.id === "amrep" || site.id === "e6") && "text-black",
                 )}
               />
             </Button>

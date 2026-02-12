@@ -5,6 +5,8 @@
  import { getMusicSiteFromPathname } from "@/lib/music-site";
  import { amrepArtists } from "@/lib/amrep-artists-data";
  import { amrepReleases } from "@/lib/amrep-releases-data";
+ import { e6Artists } from "@/lib/e6-artists-data";
+ import { e6Discography, getE6ReleaseImageUrl } from "@/lib/e6-discography-data";
 
  export interface SiteSearchAlbum {
    id: number;
@@ -27,6 +29,7 @@
    const pathname = usePathname();
    const site = getMusicSiteFromPathname(pathname);
    const isAmrep = site.id === "amrep";
+   const isE6 = site.id === "e6";
    const [albums, setAlbums] = useState<SiteSearchAlbum[]>([]);
    const [members, setMembers] = useState<SiteSearchMember[]>([]);
    const [isLoading, setIsLoading] = useState(true);
@@ -38,6 +41,30 @@
          if (isActive) {
            setAlbums([]);
            setMembers([]);
+           setIsLoading(false);
+         }
+         return;
+       }
+
+       if (isE6) {
+         // E6 - use static data
+         if (isActive) {
+           setAlbums(
+             e6Discography.map((release) => ({
+               id: release.catalogNumber,
+               title: `${release.artist} — ${release.title}`,
+               year: release.year,
+               thumb: getE6ReleaseImageUrl(release.catalogNumber) || "",
+             }))
+           );
+           setMembers(
+             e6Artists.map((artist, index) => ({
+               id: index,
+               name: artist.name,
+               active: false,
+               imageUrl: null,
+             }))
+           );
            setIsLoading(false);
          }
          return;
@@ -136,7 +163,7 @@
      return () => {
        isActive = false;
      };
-   }, [isAmrep, query]);
+   }, [isAmrep, isE6, query]);
 
    return {
      site,

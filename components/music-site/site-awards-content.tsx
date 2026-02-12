@@ -98,15 +98,49 @@ const revNotableAchievements = [
   "Continued influence on modern hardcore with bands like Title Fight, Drain, and Turnstile alumni.",
 ];
 
+const e6Milestones = [
+  {
+    label: "Founded",
+    detail: "Elephant 6 Recording Company founded in 1991 by Robert Schneider, Bill Doss, and Will Cullen Hart in Ruston, Louisiana.",
+  },
+  {
+    label: "Breakthrough Album",
+    detail: "Neutral Milk Hotel's In the Aeroplane Over the Sea (1998) became one of the most acclaimed indie rock albums of all time.",
+  },
+  {
+    label: "Critical Peak",
+    detail: "The late 1990s saw simultaneous classic releases from Olivia Tremor Control, Apples in Stereo, and of Montreal.",
+  },
+  {
+    label: "Cultural Impact",
+    detail: "The collective pioneered a lo-fi, psychedelic pop aesthetic that influenced countless indie bands in the 2000s.",
+  },
+  {
+    label: "Revival & Legacy",
+    detail: "Neutral Milk Hotel reunion tours (2013-2015) introduced the collective to a new generation of fans.",
+  },
+];
+
+const e6NotableAchievements = [
+  "In the Aeroplane Over the Sea consistently ranked among the greatest albums of the 1990s by Pitchfork, NME, and Rolling Stone.",
+  "Music from Big Pink-inspired communal recording approach influenced modern indie rock collectives.",
+  "The Olivia Tremor Control's Dusk at Cubist Castle praised as a masterpiece of psychedelic pop.",
+  "of Montreal became one of the most commercially successful acts to emerge from the collective.",
+  "Apples in Stereo's Fun Trick Noisemaker helped define the E6 sound of jangly, lo-fi pop.",
+  "Elf Power, Circulatory System, and Beulah extended the collective's reach through the 2000s.",
+  "Pet Sounds Studio in Denver served as a creative hub for numerous E6-adjacent recordings.",
+];
+
 export function SiteAwardsContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";
   const isRev = site.id === "rev";
+  const isE6 = site.id === "e6";
 
-  const isLabelSite = isAmrep || isRev;
-  const milestones = isRev ? revMilestones : amrepMilestones;
-  const achievements = isRev ? revNotableAchievements : amrepNotablePerformances;
+  const isLabelSite = isAmrep || isRev || isE6;
+  const milestones = isE6 ? e6Milestones : isRev ? revMilestones : amrepMilestones;
+  const achievements = isE6 ? e6NotableAchievements : isRev ? revNotableAchievements : amrepNotablePerformances;
 
   return (
     <div className="container py-6">

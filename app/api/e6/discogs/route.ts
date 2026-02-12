@@ -3,8 +3,8 @@ import { NextResponse } from "next/server";
 export const runtime = "nodejs";
 
 const DISCOGS_BASE_URL = "https://api.discogs.com";
-const USER_AGENT = "RevelationRecords/1.0";
-const REV_LABEL_ID = 245711;
+const USER_AGENT = "Elephant6RecordingCo/1.0";
+const E6_LABEL_ID = 43843;
 
 const releaseCache = new Map<string, { data: any; timestamp: number }>();
 const CACHE_TTL = 24 * 60 * 60 * 1000;
@@ -57,7 +57,7 @@ async function getLabelReleaseLookup(): Promise<Map<string, number>> {
   do {
     try {
       const data = await fetchFromDiscogs(
-        `/labels/${REV_LABEL_ID}/releases?page=${currentPage}&per_page=100&sort=year&sort_order=asc`
+        `/labels/${E6_LABEL_ID}/releases?page=${currentPage}&per_page=100&sort=year&sort_order=asc`
       );
       for (const r of data?.releases || []) {
         const key = normalizeKey(r.artist || "", r.title || "");
@@ -129,7 +129,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json({ error: "Invalid type parameter" }, { status: 400 });
   } catch (error) {
-    console.error("Rev Discogs API error:", error);
+    console.error("E6 Discogs API error:", error);
     return NextResponse.json(
       { error: "Failed to fetch data from Discogs" },
       { status: 500 }

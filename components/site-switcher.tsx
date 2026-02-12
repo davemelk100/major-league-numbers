@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { getMusicSiteFromPathname } from "@/lib/music-site";
 
 function CubeIcon({ className }: { className?: string }) {
   return (
@@ -42,12 +43,15 @@ const musicSites = [
   { name: "Guided by Voices", href: "/gbv", logo: "/gbv-mlb.svg" },
   { name: "Amphetamine Reptile", href: "/amrep", logo: "/amrep-logo-foreground.svg" },
   { name: "Revelation Records", href: "/rev", logo: "/rev-logo.png" },
+  { name: "Elephant 6", href: "/e6", logo: "/e6-logo.png" },
 ];
 
 export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "music" }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const isMusic = variant === "music";
+  const site = isMusic ? getMusicSiteFromPathname(pathname) : null;
+  const isLight = site?.id === "amrep" || site?.id === "rev" || site?.id === "e6";
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -56,7 +60,9 @@ export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "m
           className={cn(
             "group flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-all duration-200 w-full",
             isMusic
-              ? "text-white hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
+              ? isLight
+                ? "text-black hover:bg-black/10 hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.10)]"
+                : "text-white hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
               : "text-muted-foreground hover:text-foreground hover:bg-muted hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
           )}
         >

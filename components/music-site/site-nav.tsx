@@ -33,6 +33,8 @@
    const site = getMusicSiteFromPathname(pathname);
    const isAmrep = site.id === "amrep";
    const isRev = site.id === "rev";
+   const isE6 = site.id === "e6";
+   const isLight = isAmrep || isRev || isE6;
   useEffect(() => {
     setPendingHref(null);
   }, [pathname]);
@@ -69,10 +71,15 @@
                 }
               }}
                className={cn(
-                 "group flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-all duration-200 w-full text-white",
+                 "group flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-all duration-200 w-full",
+                 isLight ? "text-black" : "text-white",
                 showActive
-                   ? "bg-white/10 -translate-y-0.5 shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
-                   : "hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
+                   ? isLight
+                     ? "bg-black/10 -translate-y-0.5 shadow-[0_6px_14px_rgba(0,0,0,0.10)]"
+                     : "bg-white/10 -translate-y-0.5 shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
+                   : isLight
+                     ? "hover:bg-black/10 hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.10)]"
+                     : "hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
                )}
              >
                  {item.image ? (
@@ -85,7 +92,7 @@
                      isChat ? "h-10 w-10" : "h-5 w-5",
                      "object-contain transition-transform duration-200 group-hover:scale-110",
                      isPending && "animate-spin [animation-duration:2s]",
-                     !isAmrep && !isRev ? "brightness-0 invert" : ""
+                     !isLight ? "brightness-0 invert" : ""
                    )}
                    priority={isChat}
                    loading={isChat ? "eager" : "lazy"}
@@ -94,13 +101,17 @@
                  Icon && (
                    <Icon
                      className={cn(
-                       "h-5 w-5 text-white transition-transform duration-200 group-hover:scale-110",
+                       "h-5 w-5 transition-transform duration-200 group-hover:scale-110",
+                       isLight ? "text-black" : "text-white",
                        isPending && "animate-spin [animation-duration:2s]"
                      )}
                    />
                  )
                )}
-              <span className="flex items-center justify-center text-xs font-medium text-center leading-tight text-white">
+              <span className={cn(
+                "flex items-center justify-center text-xs font-medium text-center leading-tight",
+                isLight ? "text-black" : "text-white"
+              )}>
                 {item.name}
               </span>
              </Link>
@@ -117,6 +128,8 @@
    const site = getMusicSiteFromPathname(pathname);
    const isAmrep = site.id === "amrep";
    const isRev = site.id === "rev";
+   const isE6 = site.id === "e6";
+   const isLight = isAmrep || isRev || isE6;
   useEffect(() => {
     setPendingHref(null);
   }, [pathname]);
@@ -173,7 +186,7 @@
                      "object-contain",
                      isChat ? "gbv-nav-icon" : "",
                      isPending && "animate-spin [animation-duration:2s]",
-                     !isAmrep && !isRev ? "brightness-0 invert" : ""
+                     !isLight ? "brightness-0 invert" : ""
                    )}
                  />
                ) : (

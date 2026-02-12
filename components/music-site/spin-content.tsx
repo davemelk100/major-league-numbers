@@ -30,14 +30,17 @@ export function SpinContent() {
   const [speed, setSpeed] = useState<"33" | "45" | "78">("33");
 
   const isAmrep = site.id === "amrep";
+  const isE6 = site.id === "e6";
   const spinClass = `animate-vinyl-spin-${speed}${isSpinning ? "" : " vinyl-paused"}`;
 
-  const labelGradient = isAmrep
-    ? "from-amber-600 via-yellow-500 to-amber-700"
-    : "from-red-700 via-red-600 to-red-800";
-  const labelTextColor = isAmrep ? "text-black" : "text-white";
-  const labelSubTextColor = isAmrep ? "text-black/60" : "text-white/70";
-  const zoetropeColor = isAmrep ? "#d4a017" : "#ef4444";
+  const labelGradient = isE6
+    ? "from-green-700 via-green-600 to-green-800"
+    : isAmrep
+      ? "from-amber-600 via-yellow-500 to-amber-700"
+      : "from-red-700 via-red-600 to-red-800";
+  const labelTextColor = isAmrep || isE6 ? "text-black" : "text-white";
+  const labelSubTextColor = isAmrep || isE6 ? "text-black/60" : "text-white/70";
+  const zoetropeColor = isE6 ? "#4c8c48" : isAmrep ? "#d4a017" : "#ef4444";
 
   return (
     <div className="container py-6">

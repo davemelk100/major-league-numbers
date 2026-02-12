@@ -16,6 +16,7 @@ import { MemberAvatar } from "@/components/music-site/member-avatar";
 import { AlbumGrid } from "@/components/music-site/album-grid";
 import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
 import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
+import { E6RemoteImage } from "@/components/e6/e6-remote-image";
 
 export function SiteSearchContent() {
   const searchParams = useSearchParams();
@@ -42,7 +43,8 @@ export function SiteSearchContent() {
     return getLocalAlbumImage(album.id) || getProxiedImageUrl(raw);
   };
 
-  const RemoteImage = isAmrep ? AmrepRemoteImage : GbvRemoteImage;
+  const isE6 = site.id === "e6";
+  const RemoteImage = isE6 ? E6RemoteImage : isAmrep ? AmrepRemoteImage : GbvRemoteImage;
 
   if (!query) {
     return (

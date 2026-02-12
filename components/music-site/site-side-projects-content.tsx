@@ -6,26 +6,31 @@ import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { amrepImprints } from "@/lib/amrep-imprints-data";
 import { revSubLabels } from "@/lib/rev-sublabels-data";
+import { e6SubLabels } from "@/lib/e6-sublabels-data";
 
 export function SiteSideProjectsContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const isAmrep = site.id === "amrep";
   const isRev = site.id === "rev";
+  const isE6 = site.id === "e6";
 
   const getTitle = () => {
+    if (isE6) return "Related Labels & Projects";
     if (isAmrep) return "AmRep Imprints & Collections";
     if (isRev) return "Sub-Labels & Related Imprints";
     return "Robert Pollard Side Projects";
   };
 
   const getDescription = () => {
+    if (isE6) return "Labels and studios connected to the Elephant 6 Recording Company collective.";
     if (isAmrep) return "Highlights from AmRep's shop categories and related imprints.";
     if (isRev) return "Revelation Records sub-labels, distribution partners, and related imprints.";
     return "Discography highlights from Robert Pollard's key side projects.";
   };
 
   const getData = () => {
+    if (isE6) return e6SubLabels;
     if (isAmrep) return amrepImprints;
     if (isRev) return revSubLabels;
     return pollardSideProjects;
@@ -83,7 +88,7 @@ export function SiteSideProjectsContent() {
                   rel="noreferrer"
                   className="text-sm underline underline-offset-4"
                 >
-                  {isAmrep || isRev ? "Visit site" : "View discography"}
+                  {isAmrep || isRev || isE6 ? "Visit site" : "View discography"}
                 </a>
               ) : null}
             </CardContent>
