@@ -14,7 +14,7 @@ export const AMREP_MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
   feedtime:
     "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0004294904_10.jpg",
   guzzard:
-    "/api/gbv/image-proxy?url=https%3A%2F%2Fi.discogs.com%2Fi0KlQVkGitf6ESETMz2mya75cJp5gHp_wzDSRBs-xaE%2Frs%3Afit%2Fg%3Asm%2Fq%3A90%2Fh%3A581%2Fw%3A600%2FczM6Ly9kaXNjb2dz%2FLWRhdGFiYXNlLWltYWdlcy9BLTI3OTM3NC0xMjU2MTU0OTEwLmpwZWc.jpeg",
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2F300x300%2F5ce282e2919e193b88e312e421585152",
   gaunt:
     "/api/gbv/image-proxy?url=https%3A%2F%2Flollipopmagazine.com%2Fwp-content%2Fuploads%2F2017%2F12%2Fgauntphoto.jpg",
   "king snake roost":
@@ -31,6 +31,10 @@ export const AMREP_MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
     "/api/gbv/image-proxy?url=https%3A%2F%2Fchaoscontrol.com%2Fwp-content%2Fuploads%2F2000%2F11%2Fmelvins.jpg",
   "bailter space":
     "/api/gbv/image-proxy?url=https%3A%2F%2Fi.discogs.com%2FcZCcF9JDAaQ1-7gnmMQZvssr129bLICp8EaaAB-6leI%2Frs%3Afit%2Fg%3Asm%2Fq%3A90%2Fh%3A560%2Fw%3A464%2FczM6Ly9kaXNjb2dz%2FLWRhdGFiYXNlLWlt%2FYWdlcy9BLTE5ODY2%2FOC0xNTI5NzUyOTc4%2FLTg5MTkuanBlZw.jpeg",
+  "boss hog":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F0336%2F8929%2Ffiles%2FBH2016_Final__AngelZayas_large.jpg",
+  "casus belli":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fi.ebayimg.com%2Fimages%2Fg%2FDUUAAOSwrklVgOCl%2Fs-l400.jpg",
   brainiac:
     "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0020101279_10.jpg",
   "strapping fieldhands":
@@ -63,7 +67,53 @@ export const AMREP_MEMBER_IMAGE_FALLBACKS: Record<string, string> = {
   vertigo:
     "/api/gbv/image-proxy?url=https%3A%2F%2Fi.discogs.com%2FjTmauyEW5UcThw_RdMzp2edmusqGm1O-45bkFQG2d18%2Frs%3Afit%2Fg%3Asm%2Fq%3A90%2Fh%3A462%2Fw%3A600%2FczM6Ly9kaXNjb2dz%2FLWRhdGFiYXNlLWlt%2FYWdlcy9BLTI2NTQw%2FNS0xMzM1ODg1MDMw%2FLmpwZWc.jpeg",
   "lifter puller":
-    "/api/gbv/image-proxy?url=https%3A%2F%2Fmedia.pitchfork.com%2Fphotos%2F5931953f56d46348c0b51652%2F16%3A9%2Fw_1280%2Cc_limit%2Ffe6ddb39.jpg",
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fimages.squarespace-cdn.com%2Fcontent%2Fv1%2F600594e0259ef06ca93df13f%2F1612790498815-X2JINNUWCNXLO4E37DYF%2FLifter_Puller.jpg",
+  "bush pig":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2F770x0%2F5d471992bb649158f3608878d4a53e15.jpg",
+  "gear jammer":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fi.ebayimg.com%2Fimages%2Fg%2FZ4UAAOSwv0tVGxfj%2Fs-l400.jpg",
+  "freedom fighters":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fi.discogs.com%2FFcKufiDWCxTslzr60XWgSD10MFmU-gb6vT7TUuoQwh0%2Frs%3Afit%2Fg%3Asm%2Fq%3A90%2Fh%3A417%2Fw%3A600%2FczM6Ly9kaXNjb2dz%2FLWRhdGFiYXNlLWlt%2FYWdlcy9BLTEyMDcx%2FNzYtMTc1MTY0NDkx%2FNy0yMTA4LnBuZw.jpeg",
+  "the crows":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fi0.wp.com%2Fihrtn.net%2Fwp-content%2Fuploads%2F2008%2F07%2FCrows-Crows-Self-Titled-Album-Cover.jpeg",
+  "crystal fairy":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fi0.wp.com%2Fsmellslikeinfinitesadness.com%2Fwp-content%2Fuploads%2F2017%2F02%2Fcrystalfairydavidgoldman-1.jpg",
+  "gnomes of zurich":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fi.discogs.com%2FI3BJg_L2IZRkdQKnZ0UtKY1O14HrjXlKmoYP39lIm0w%2Frs%3Afit%2Fg%3Asm%2Fq%3A90%2Fh%3A399%2Fw%3A600%2FczM6Ly9kaXNjb2dz%2FLWRhdGFiYXNlLWlt%2FYWdlcy9BLTI5MTE2%2FMjktMTU0NTQxMDA1%2FMi0zOTY5LmpwZWc.jpeg",
+  "the hand":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0006443300_10.jpg",
+  "haze xxl":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fcloudfront-us-east-1.images.arcpublishing.com%2Fstartribunemedia%2FLY6CUNF3P6HGSMPF4ICKSP72N4.jpg",
+  hedonists:
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fbeautifulnoise.wordpress.com%2Fwp-content%2Fuploads%2F2008%2F08%2Fl_23b9fb6abf6e8184b9978e91f8db2ed1.jpg",
+  "hepa-titus":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0003609914_10.jpg",
+  lollipop:
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fi0.wp.com%2Fihrtn.net%2Fwp-content%2Fuploads%2F2008%2F08%2FLollipop-Band-Amphetamine-Reptile.gif",
+  "lonely moans":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2Far0%2Fafa1bc72fd4704da7923dd6c5a377199.jpg",
+  "love 666":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fi0.wp.com%2Fihrtn.net%2Fwp-content%2Fuploads%2F2008%2F08%2FLove-666-Band-Photo.jpg",
+  "mama tick":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Ff4.bcbits.com%2Fimg%2F0034689913_10.jpg",
+  "mog stunt team":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2Far0%2F5d3a833f6ed048dbac6ddad74c0aa0fc.jpg",
+  "mr.phylzzz":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fimages.squarespace-cdn.com%2Fcontent%2Fv1%2F627ebcebbded812eb230bc17%2Fc535fa08-d913-46fa-be38-146ae84888cf%2FPromo%2BPhoto%2BPhylzzz.jpg",
+  "party diktator":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2Far0%2F966a5134736c4806868a83a3c14debbf.jpg",
+  "the powers that be":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2Far0%2F26a06a4cdeec205d74abd9912581c92c.jpg",
+  "lydia lunch":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2Far0%2F21a38f681d3a475eb8725fe3ff8ed893",
+  "s.w.a.t.":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2F300x300%2F003fd52ddbf84032afdcce33db8f55e0",
+  seawhores:
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2Far0%2F9d780f8485cb4c4b9caf8a208b90ff57.jpg",
+  "silver salute":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Flastfm.freetls.fastly.net%2Fi%2Fu%2Far0%2Fb630c7ffb9f2a32c650a3b79add830c7.jpg",
+  "whopping big naughty":
+    "/api/gbv/image-proxy?url=https%3A%2F%2Fhalfacow.com.au%2Fwp-content%2Fuploads%2F2023%2F07%2Fwhoppers.jpg",
 };
 
 export const AMREP_MEMBER_IMAGE_SKIP: Record<string, true> = {
@@ -82,6 +132,7 @@ export const AMREP_MEMBER_IMAGE_SKIP: Record<string, true> = {
   "bailter space": true,
   brainiac: true,
   "boss hog": true,
+  "casus belli": true,
   "strapping fieldhands": true,
   supernova: true,
   surgery: true,
@@ -108,4 +159,25 @@ export const AMREP_MEMBER_IMAGE_SKIP: Record<string, true> = {
   "s.w.a.t.": true,
   lollipop: true,
   "lifter puller": true,
+  "crystal fairy": true,
+  "gnomes of zurich": true,
+  "the hand": true,
+  "haze xxl": true,
+  hedonists: true,
+  "hepa-titus": true,
+  "lonely moans": true,
+  "love 666": true,
+  "mama tick": true,
+  "mog stunt team": true,
+  "mr.phylzzz": true,
+  "party diktator": true,
+  "the powers that be": true,
+  seawhores: true,
+  "silver salute": true,
+  "whopping big naughty": true,
+  "bush pig": true,
+  "freedom fighters": true,
+  "gear jammer": true,
+
+  "lydia lunch": true,
 };

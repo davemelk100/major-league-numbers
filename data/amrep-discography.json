@@ -387,15 +387,6 @@
     "section": "US"
   },
   {
-    "id": 44,
-    "catalogNo": "044",
-    "artist": "Operation: Break Even",
-    "title": "Operation: Break Even",
-    "year": 1996,
-    "format": "CD",
-    "section": "US"
-  },
-  {
     "id": 45,
     "catalogNo": "045",
     "artist": "Urinals",
@@ -1260,15 +1251,6 @@
     "section": "Singles"
   },
   {
-    "id": 144,
-    "catalogNo": "15",
-    "artist": "Pogo the Clown",
-    "title": "Lederhosen",
-    "year": 1988,
-    "format": "7\"",
-    "section": "Singles"
-  },
-  {
     "id": 145,
     "catalogNo": "16",
     "artist": "Various artists",
@@ -1919,7 +1901,7 @@
   {
     "id": 217,
     "catalogNo": "88",
-    "artist": "\"Poison\"/\"Double Troubled\"",
+    "artist": "Melvins",
     "title": "\"Poison\"/\"Double Troubled\"",
     "year": 1997,
     "format": "7\"",

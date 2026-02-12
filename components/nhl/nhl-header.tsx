@@ -47,7 +47,7 @@ export function NHLHeader() {
                   className="h-12 w-12 p-0 lg:hidden"
                   aria-label="Search NHL"
                 >
-                  <Search className="h-6 w-6" />
+                  <Search className="h-7 w-7" />
                 </Button>
               </PopoverTrigger>
               <PopoverContent
@@ -65,7 +65,7 @@ export function NHLHeader() {
               className="h-12 w-12 p-0 lg:hidden"
               aria-label="Search NHL"
             >
-              <Search className="h-6 w-6" />
+              <Search className="h-7 w-7" />
             </Button>
           )}
           <div className="hidden lg:flex items-center gap-4">
