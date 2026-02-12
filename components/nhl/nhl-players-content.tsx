@@ -96,9 +96,9 @@ export function NHLPlayersContent({
                     />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold truncate">
+                    <p className="font-semibold truncate">
                       {player.firstName.default} {player.lastName.default}
-                    </h3>
+                    </p>
                     <p className="text-sm text-muted-foreground truncate">{player.teamAbbrev}</p>
                     <div className="flex items-center gap-2 mt-0.5">
                       <Badge variant="secondary">{player.position}</Badge>

@@ -18,7 +18,7 @@ export function SportsLeftNav() {
   }, [pathname]);
 
   return (
-    <nav className="fixed top-0 left-0 bottom-0 z-40 w-20 bg-background border-r border-border pt-4 hidden sm:flex flex-col">
+    <nav data-site={site.id} className="fixed top-0 left-0 bottom-0 z-40 w-20 bg-background border-r border-border pt-4 hidden sm:flex flex-col">
       <div className="flex flex-col items-center gap-2 px-2 py-2">
         <SiteSwitcher />
         {site.navItems.map((item) => {
@@ -42,7 +42,7 @@ export function SportsLeftNav() {
                 "group flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-all duration-200 w-full",
                 showActive
                   ? "text-primary bg-primary/10 -translate-y-0.5 shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
+                  : "text-muted-foreground hover:text-primary hover:bg-primary/10 hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
               )}
             >
               {item.image ? (

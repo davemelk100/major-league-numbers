@@ -27,7 +27,7 @@ export function PlayerCard({ player }: PlayerCardProps) {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="font-semibold truncate">{player.fullName}</h3>
+              <p className="font-semibold truncate">{player.fullName}</p>
               <p className="text-sm text-muted-foreground truncate">{player.currentTeam?.name || "Free Agent"}</p>
               <div className="flex items-center gap-2 mt-0.5">
                 {positionAbbreviation && positionAbbreviation !== "—" && (

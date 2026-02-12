@@ -68,7 +68,7 @@ export function USPBLPlayersContent({ players }: USPBLPlayersContentProps) {
                       </span>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold truncate">{player.name}</h3>
+                      <p className="font-semibold truncate">{player.name}</p>
                       <p className="text-sm text-muted-foreground truncate">
                         {player.teamName.split(" ").pop()}
                       </p>

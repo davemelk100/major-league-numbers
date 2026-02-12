@@ -673,6 +673,26 @@
   }
 }
 
+nav[data-site="mlb"] {
+  --primary: oklch(0.52 0.21 25);
+}
+
+nav[data-site="nfl"] {
+  --primary: oklch(0.30 0.10 260);
+}
+
+nav[data-site="nba"] {
+  --primary: oklch(0.37 0.14 260);
+}
+
+nav[data-site="nhl"] {
+  --primary: oklch(0.25 0 0);
+}
+
+nav[data-site="uspbl"] {
+  --primary: oklch(0.40 0.12 250);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
