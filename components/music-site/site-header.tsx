@@ -67,7 +67,7 @@ export function SiteHeader() {
               <PopoverTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="h-12 w-12 p-0 gbv-search-button lg:hidden"
+                  className="h-12 w-12 p-0 gbv-search-button xl:hidden"
                   aria-label={`Search ${site.shortName}`}
                 >
                   <Search
@@ -93,7 +93,7 @@ export function SiteHeader() {
           ) : (
             <Button
               variant="ghost"
-              className="h-12 w-12 p-0 gbv-search-button lg:hidden"
+              className="h-12 w-12 p-0 gbv-search-button xl:hidden"
               aria-label={`Search ${site.shortName}`}
             >
               <Search
@@ -104,7 +104,7 @@ export function SiteHeader() {
               />
             </Button>
           )}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden xl:flex items-center gap-4">
             {pathname !== askPath && (
               <Link
                 href={askPath}
@@ -129,7 +129,7 @@ export function SiteHeader() {
       </div>
 
       {pathname !== askPath && (
-        <div className="container mt-6 lg:hidden">
+        <div className="container mt-6 xl:hidden">
           <Link
             href={askPath}
             onClick={() => setChatPending(true)}

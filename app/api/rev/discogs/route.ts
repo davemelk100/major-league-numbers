@@ -4,7 +4,7 @@ export const runtime = "nodejs";
 
 const DISCOGS_BASE_URL = "https://api.discogs.com";
 const USER_AGENT = "RevelationRecords/1.0";
-const REV_LABEL_ID = 488;
+const REV_LABEL_ID = 245711;
 
 const releaseCache = new Map<string, { data: any; timestamp: number }>();
 const artistCache = new Map<string, { data: any; timestamp: number }>();
@@ -53,7 +53,7 @@ async function getLabelReleaseLookup(): Promise<Map<string, number>> {
   const lookup = new Map<string, number>();
   let currentPage = 1;
   let totalPages = 1;
-  const maxPages = 25;
+  const maxPages = 40;
 
   do {
     try {
@@ -123,7 +123,30 @@ export async function GET(request: Request) {
       }
 
       const lookup = await getLabelReleaseLookup();
-      const discogsId = lookup.get(cacheKey);
+      let discogsId = lookup.get(cacheKey);
+
+      // Fallback: search Discogs by artist + title when not found in label listing
+      if (!discogsId) {
+        try {
+          const q = encodeURIComponent(`${artist} ${title}`);
+          const searchData = await fetchFromDiscogs(
+            `/database/search?q=${q}&type=release&per_page=5`
+          );
+          const results = searchData?.results || [];
+          const match = results.find((r: any) => {
+            const rKey = normalizeKey(
+              (r.title || "").split(" - ")[0] || "",
+              (r.title || "").split(" - ").slice(1).join(" - ") || ""
+            );
+            return rKey === cacheKey;
+          }) || results[0];
+          if (match?.id) {
+            discogsId = match.id;
+          }
+        } catch {
+          // search fallback failed
+        }
+      }
 
       if (!discogsId) {
         return NextResponse.json({ release: null });

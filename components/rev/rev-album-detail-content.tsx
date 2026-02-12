@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
-import { getRevReleaseByCatalogNumber, getRevReleaseImageUrl } from "@/lib/rev-discography-data";
+import { getRevReleaseByCatalogNumber } from "@/lib/rev-discography-data";
+import { RevRemoteImage } from "@/components/rev/rev-remote-image";
 import { AlbumDetailLayout } from "@/components/music-site/album-detail-layout";
 import { AlbumDetailLeft } from "@/components/music-site/album-detail-left";
 import { AlbumDetailTracklist } from "@/components/music-site/album-detail-tracklist";
@@ -16,16 +16,16 @@ export function RevAlbumDetailContent({ albumId }: { albumId: string }) {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const release = getRevReleaseByCatalogNumber(parseInt(albumId, 10));
-  const imageUrl = release ? getRevReleaseImageUrl(release.catalogNumber) : undefined;
 
   const [tracklist, setTracklist] = useState<Track[] | null>(null);
+  const [coverImage, setCoverImage] = useState<string | null>(null);
   const [isTracklistLoading, setIsTracklistLoading] = useState(false);
 
   useEffect(() => {
     if (!release) return;
     let isActive = true;
 
-    async function fetchTracklist() {
+    async function fetchReleaseData() {
       setIsTracklistLoading(true);
       try {
         const params = new URLSearchParams({
@@ -36,18 +36,23 @@ export function RevAlbumDetailContent({ albumId }: { albumId: string }) {
         const res = await fetch(`/api/rev/discogs?${params}`);
         if (res.ok) {
           const data = await res.json();
-          if (isActive && data.release?.tracklist) {
-            setTracklist(data.release.tracklist);
+          if (isActive) {
+            if (data.release?.tracklist) {
+              setTracklist(data.release.tracklist);
+            }
+            if (data.release?.coverImage) {
+              setCoverImage(data.release.coverImage);
+            }
           }
         }
       } catch {
-        // tracklist unavailable
+        // data unavailable
       } finally {
         if (isActive) setIsTracklistLoading(false);
       }
     }
 
-    fetchTracklist();
+    fetchReleaseData();
     return () => {
       isActive = false;
     };
@@ -77,14 +82,18 @@ export function RevAlbumDetailContent({ albumId }: { albumId: string }) {
   const leftContent = (
     <AlbumDetailLeft
       image={
-        imageUrl ? (
-          <Image
-            src={imageUrl}
+        coverImage ? (
+          <RevRemoteImage
+            src={coverImage}
             alt={`${release.artist} - ${release.title}`}
             width={300}
             height={300}
             className="w-full aspect-square rounded-lg object-contain"
           />
+        ) : isTracklistLoading ? (
+          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
+            <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+          </div>
         ) : (
           <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
             <p className="text-muted-foreground text-sm">No cover art</p>

@@ -44,7 +44,7 @@ export function Header() {
               <PopoverTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="h-12 w-12 p-0 lg:hidden"
+                  className="h-12 w-12 p-0 xl:hidden"
                   aria-label="Search MLB"
                 >
                   <Search className="h-7 w-7" />
@@ -62,13 +62,13 @@ export function Header() {
           ) : (
             <Button
               variant="ghost"
-              className="h-12 w-12 p-0 lg:hidden"
+              className="h-12 w-12 p-0 xl:hidden"
               aria-label="Search MLB"
             >
               <Search className="h-7 w-7" />
             </Button>
           )}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden xl:flex items-center gap-4">
             {pathname !== "/ask" && (
               <Link
                 href="/ask"
@@ -93,7 +93,7 @@ export function Header() {
 
       {/* Mobile ChatMLB row */}
       {pathname !== "/ask" && (
-        <div className="container mt-6 lg:hidden">
+        <div className="container mt-6 xl:hidden">
           <Link
             href="/ask"
             className="flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] bg-[linear-gradient(180deg,_#d8e0e8_0%,_#b8c4d0_100%)] border-t border-t-[#e8eef4] border-l border-l-[#dce4ec] border-r border-r-[#a8b4c0] border-b-2 border-b-[#98a4b0] shadow-[0_2px_4px_rgba(0,0,0,0.1),_inset_0_1px_0_rgba(255,255,255,0.4)]"

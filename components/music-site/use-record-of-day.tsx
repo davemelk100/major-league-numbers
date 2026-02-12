@@ -22,15 +22,30 @@ export function useRecordOfDay() {
 
   useEffect(() => {
     if (isRev) {
-      // REV records - use discography data directly
       const revDaily = getDailyRevRecord();
       setRecord(revDaily);
-      if (revDaily.coverUrl) {
-        setCoverUrl(revDaily.coverUrl);
-      }
       if ("catalogNumber" in revDaily) {
         setAlbumId(revDaily.catalogNumber);
       }
+
+      async function fetchRevCover() {
+        try {
+          const params = new URLSearchParams({
+            type: "resolve",
+            artist: revDaily.artist,
+            title: revDaily.title,
+          });
+          const res = await fetch(`/api/rev/discogs?${params}`);
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data.release?.coverImage) {
+            setCoverUrl(data.release.coverImage);
+          }
+        } catch {
+          // ignore cover lookup errors
+        }
+      }
+      fetchRevCover();
       return;
     }
 
@@ -113,12 +128,28 @@ export function useRecordOfDay() {
     if (isE6) {
       const e6Daily = getDailyE6Record();
       setRecord(e6Daily);
-      if (e6Daily.coverUrl) {
-        setCoverUrl(e6Daily.coverUrl);
-      }
       if ("catalogNumber" in e6Daily) {
         setAlbumId(e6Daily.catalogNumber);
       }
+
+      async function fetchE6Cover() {
+        try {
+          const params = new URLSearchParams({
+            type: "resolve",
+            artist: e6Daily.artist,
+            title: e6Daily.title,
+          });
+          const res = await fetch(`/api/e6/discogs?${params}`);
+          if (!res.ok) return;
+          const data = await res.json();
+          if (data.release?.coverImage) {
+            setCoverUrl(data.release.coverImage);
+          }
+        } catch {
+          // ignore cover lookup errors
+        }
+      }
+      fetchE6Cover();
       return;
     }
 

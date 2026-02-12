@@ -57,7 +57,7 @@ export function SportsHeader() {
               <PopoverTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="h-12 w-12 p-0 lg:hidden"
+                  className="h-12 w-12 p-0 xl:hidden"
                   aria-label={site.searchLabel}
                 >
                   <Search className="h-7 w-7" />
@@ -75,13 +75,13 @@ export function SportsHeader() {
           ) : (
             <Button
               variant="ghost"
-              className="h-12 w-12 p-0 lg:hidden"
+              className="h-12 w-12 p-0 xl:hidden"
               aria-label={site.searchLabel}
             >
               <Search className="h-7 w-7" />
             </Button>
           )}
-          <div className="hidden lg:flex items-center gap-4">
+          <div className="hidden xl:flex items-center gap-4">
             {!isOnChatPage && (
               <Link
                 href={site.chatPath}
@@ -108,7 +108,7 @@ export function SportsHeader() {
       </div>
 
       {!isOnChatPage && (
-        <div className="container mt-6 lg:hidden">
+        <div className="container mt-6 xl:hidden">
           <Link
             href={site.chatPath}
             onClick={() => setChatPending(true)}

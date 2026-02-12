@@ -103,11 +103,11 @@ export const GBV_SITE: MusicSiteConfig = {
 
 export const AMREP_SITE: MusicSiteConfig = {
   id: "amrep",
-  name: "Noise By The Numbers",
+  name: "AmRep By The Numbers",
   shortName: "AmRep",
   basePath: "/amrep",
   chatLabel: "ChatREP",
-  headerTitle: "Noise By The Numbers",
+  headerTitle: "AmRep By The Numbers",
   headerTextClass: "text-black",
   logoSrc: "/amrep-logo-foreground.svg",
   chatIconSrc: "/noise-bird.svg",
@@ -135,13 +135,19 @@ export const AMREP_SITE: MusicSiteConfig = {
       label: "Hammerhead Discography",
       url: "https://en.wikipedia.org/wiki/Hammerhead_(band)",
     },
-    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Amphetamine_Reptile_Records" },
+    {
+      label: "Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Amphetamine_Reptile_Records",
+    },
     { label: "Shoxop", url: "https://www.shoxop.com/" },
     {
       label: "Shoxop Archive",
       url: "https://www.shoxop.com/collections/archive-sold-out-releases-over-the-years",
     },
-    { label: "Shoxop All Releases", url: "https://www.shoxop.com/collections/all" },
+    {
+      label: "Shoxop All Releases",
+      url: "https://www.shoxop.com/collections/all",
+    },
     { label: "Facebook", url: "https://www.facebook.com/amphetaminereptile/" },
   ],
   imageSources: [
@@ -171,7 +177,10 @@ export const AMREP_SITE: MusicSiteConfig = {
     { label: "eBay", url: "https://www.ebay.com/" },
     { label: "Timebomb Records", url: "https://timebomb.co.jp/" },
     { label: "Chokebore", url: "https://www.chokebore.net/" },
-    { label: "Metal Music Archives", url: "https://www.metalmusicarchives.com/" },
+    {
+      label: "Metal Music Archives",
+      url: "https://www.metalmusicarchives.com/",
+    },
     { label: "Metallipromo", url: "https://metallipromo.com/" },
     { label: "The Melvins Wiki", url: "https://themelvins.net/" },
     { label: "Shoxop", url: "https://www.shoxop.com/" },
@@ -221,7 +230,10 @@ export const E6_SITE: MusicSiteConfig = {
   footerDisclaimer:
     "All Content, Rights, Copyrights, etc. are the property of the respective artists and labels. This is simply a fan site.",
   sources: [
-    { label: "Discogs", url: "https://www.discogs.com/label/43843-Elephant-Six-Recording-Co" },
+    {
+      label: "Discogs",
+      url: "https://www.discogs.com/label/43843-Elephant-Six-Recording-Co",
+    },
     { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Elephant_6" },
     { label: "MusicBrainz", url: "https://musicbrainz.org/" },
     { label: "Bandcamp", url: "https://bandcamp.com/" },
@@ -282,9 +294,15 @@ export const REVELATION_SITE: MusicSiteConfig = {
   footerDisclaimer:
     "All Content, Rights, Copyrights, etc. are the property of Revelation Records. This is simply a fan site.",
   sources: [
-    { label: "Discogs", url: "https://www.discogs.com/label/910-Revelation-Records" },
+    {
+      label: "Discogs",
+      url: "https://www.discogs.com/label/910-Revelation-Records",
+    },
     { label: "RevHQ", url: "https://revhq.com/" },
-    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Revelation_Records" },
+    {
+      label: "Wikipedia",
+      url: "https://en.wikipedia.org/wiki/Revelation_Records",
+    },
     { label: "MusicBrainz", url: "https://musicbrainz.org/" },
     { label: "Bandcamp", url: "https://bandcamp.com/" },
   ],
@@ -318,7 +336,12 @@ export const REVELATION_SITE: MusicSiteConfig = {
   },
 };
 
-export const MUSIC_SITES = [GBV_SITE, AMREP_SITE, REVELATION_SITE, E6_SITE] as const;
+export const MUSIC_SITES = [
+  GBV_SITE,
+  AMREP_SITE,
+  REVELATION_SITE,
+  E6_SITE,
+] as const;
 
 export type MusicSiteId = (typeof MUSIC_SITES)[number]["id"];
 
@@ -333,7 +356,7 @@ export function getMusicSiteById(id: MusicSiteId): MusicSiteConfig {
 }
 
 export function getMusicSiteFromPathname(
-  pathname?: string | null
+  pathname?: string | null,
 ): MusicSiteConfig {
   if (!pathname) return GBV_SITE;
   const match = MUSIC_SITES.find((site) => pathname.startsWith(site.basePath));
