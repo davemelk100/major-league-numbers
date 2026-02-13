@@ -302,10 +302,10 @@ export const e6TriviaQuestions: E6TriviaQuestion[] = [
   },
   {
     id: 36,
-    question: "Which E6 band's name references a line from a children's TV show?",
+    question: "Which E6 band's name references a classic children's toy?",
     options: ["Elf Power", "Dressy Bessy", "The Gerbils", "Chocolate USA"],
     correctAnswer: 1,
-    explanation: "Dressy Bessy is named after a Hasbro doll and learning toy from the 1970s.",
+    explanation: "Dressy Bessy is named after a Playskool doll and learning toy from the 1970s.",
     category: "facts",
   },
   {

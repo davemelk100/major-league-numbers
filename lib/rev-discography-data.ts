@@ -159,7 +159,7 @@ export const revDiscography: RevRelease[] = [
   { catalogNumber: 5, artist: "Side By Side", title: "You're Only Young Once", year: 1988 },
   { catalogNumber: 6, artist: "No For an Answer", title: "You Laugh", year: 1988 },
   { catalogNumber: 7, artist: "Various Artists", title: "The Way It Is", year: 1988 },
-  { catalogNumber: 8, artist: "Youth of Today", title: "Break Down the Walls", year: 1986 },
+  { catalogNumber: 8, artist: "Youth of Today", title: "Break Down the Walls", year: 1988 },
   { catalogNumber: 9, artist: "Bold", title: "Speak Out", year: 1988 },
   { catalogNumber: 10, artist: "Chain of Strength", title: "The One Thing That Still Holds True", year: 1995 },
   { catalogNumber: 11, artist: "Bold", title: "Bold", year: 1989 },

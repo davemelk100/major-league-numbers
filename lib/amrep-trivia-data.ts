@@ -117,16 +117,16 @@ export const amrepTriviaQuestions: AmrepTriviaQuestion[] = [
   {
     id: 10,
     question:
-      "What prefix did Amphetamine Reptile often use for its catalog numbers?",
+      "How did Amphetamine Reptile organize its catalog numbering?",
     options: [
-      "Amp and Rep",
-      "Scale and Reptile",
-      "Noise and Fury",
-      "Dope and Guns",
+      "Alphabetically by artist name",
+      "Sequential numbers (001, 002, etc.)",
+      "By genre and subgenre",
+      "Random letter codes",
     ],
     correctAnswer: 1,
     explanation:
-      "AmRep catalog numbers often started with 'Scale' or 'Reptile.'",
+      "AmRep used a straightforward sequential numbering system for its catalog (001, 002, 003, etc.).",
     category: "history",
   },
   {
@@ -1015,16 +1015,16 @@ export const amrepTriviaQuestions: AmrepTriviaQuestion[] = [
   {
     id: 88,
     question:
-      "What catalog number prefix system did AmRep use for many of its releases?",
+      "What catalog numbering system did AmRep use for many of its releases?",
     options: [
-      "AM and REP",
-      "Scale and Reptile",
-      "DOPE and GUN",
-      "NOISE and ROCK",
+      "Letter-based codes like AM-001",
+      "Simple sequential numbers (001, 002, etc.)",
+      "Genre-based prefixes",
+      "Year-based numbering",
     ],
     correctAnswer: 1,
     explanation:
-      "AmRep catalog numbers often started with 'Scale' or 'Reptile.'",
+      "AmRep used a straightforward sequential numbering system for its catalog.",
     category: "releases",
   },
   {
@@ -1676,12 +1676,12 @@ export const amrepTriviaQuestions: AmrepTriviaQuestion[] = [
     options: [
       "It was founded in the 2000s",
       "It focused on electronic dance music",
-      "Its catalog numbers often began with 'Scale' or 'Reptile'",
+      "It used a sequential catalog numbering system",
       "It was based in London",
     ],
     correctAnswer: 2,
     explanation:
-      "AmRep's catalog numbers often started with 'Scale' or 'Reptile.'",
+      "AmRep was founded in 1986 and is best known for noise rock, punk, and heavy underground music.",
     category: "facts",
   },
   {

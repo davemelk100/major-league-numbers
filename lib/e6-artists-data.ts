@@ -76,7 +76,7 @@ export const e6Artists: E6Artist[] = [
   {
     id: "the-olivia-tremor-control",
     name: "The Olivia Tremor Control",
-    yearsActive: "1992–2000, 2005–2012",
+    yearsActive: "1992–2000, 2005–2024",
     wikipediaUrl: "https://en.wikipedia.org/wiki/The_Olivia_Tremor_Control",
   },
   {
@@ -288,7 +288,7 @@ export const e6Artists: E6Artist[] = [
   {
     id: "will-cullen-hart",
     name: "Will Cullen Hart",
-    yearsActive: "1989–present",
+    yearsActive: "1989–2024",
     wikipediaUrl: "https://en.wikipedia.org/wiki/Will_Cullen_Hart",
   },
   {

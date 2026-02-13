@@ -170,7 +170,7 @@ export const revTriviaQuestions: RevTriviaQuestion[] = [
     question: "Which of these is a Youth of Today album released on Revelation?",
     options: ["We're Not in This Alone", "Break Down the Walls", "Out of Step", "Flex Your Head"],
     correctAnswer: 0,
-    explanation: "'We're Not in This Alone' was Youth of Today's album originally released on Revelation (REV 008). 'Break Down the Walls' was originally on Wishingwell Records.",
+    explanation: "'We're Not in This Alone' was reissued on Revelation Records (REV 059) in 1997, originally released on Caroline Records. 'Break Down the Walls' was reissued as REV 008, originally on Wishingwell Records.",
     category: "releases",
   },
   {
@@ -284,7 +284,7 @@ export const revTriviaQuestions: RevTriviaQuestion[] = [
     question: "Which Revelation band featured members who later joined CIV?",
     options: ["Warzone", "Judge", "Gorilla Biscuits", "Bold"],
     correctAnswer: 2,
-    explanation: "Members of Gorilla Biscuits, including Civ Egan, went on to form CIV.",
+    explanation: "Members of Gorilla Biscuits, including Anthony \"Civ\" Civarelli, went on to form CIV.",
     category: "facts",
   },
   {

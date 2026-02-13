@@ -27,12 +27,12 @@ const REV_FACTS: Record<string, string> = {
   "the earth is flat": "Supertouch's debut, a more progressive take on New York hardcore.",
   "burn": "Burn's self-titled debut, a powerful post-Youth Crew hardcore release.",
   "rochambeau": "Farside's debut, bringing melodic California hardcore to the Revelation roster.",
-  "set your goals": "CIV's debut, featuring Gorilla Biscuits' Civ Egan; became a mid-'90s punk crossover hit.",
+  "set your goals": "CIV's debut, featuring Gorilla Biscuits' Anthony \"Civ\" Civarelli; became a mid-'90s punk crossover hit.",
   "manic compression": "Quicksand's second album, pushing further into post-hardcore territory.",
   "texas is the reason": "The sole EP from the influential emo/post-hardcore band, a cult classic.",
   "do you know who you are?": "Texas Is the Reason's only full-length, a touchstone of '90s emo.",
   "chung king can suck it": "Judge's earliest recordings, predating the band's official Rev catalog number.",
-  "the storm": "Judge's final release, capturing the raw energy of late-'80s NYHC.",
+  "the storm": "Judge's final release, capturing the raw energy of early-'90s NYHC.",
   "youth of today": "A self-titled collection featuring Youth of Today's earliest and most passionate recordings.",
 };
 

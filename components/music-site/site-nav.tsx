@@ -72,8 +72,8 @@
                className={cn(
                  "group flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-all duration-200 w-full text-white",
                 showActive
-                   ? "bg-white/10 -translate-y-0.5 shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
-                   : "hover:bg-white/10 hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
+                   ? "!text-black bg-white -translate-y-0.5 shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
+                   : "hover:!text-black hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
                )}
              >
                  {item.image ? (
@@ -86,7 +86,7 @@
                      isChat ? "h-10 w-10" : "h-5 w-5",
                      "object-contain transition-transform duration-200 group-hover:scale-110",
                      isPending && "animate-spin [animation-duration:2s]",
-                     !isAmrep && !isRev && !isE6 ? "brightness-0 invert" : ""
+                     !isAmrep && !isRev && !isE6 && !showActive ? "brightness-0 invert group-hover:brightness-100 group-hover:invert-0" : ""
                    )}
                    priority={isChat}
                    loading={isChat ? "eager" : "lazy"}
@@ -95,13 +95,14 @@
                  Icon && (
                    <Icon
                      className={cn(
-                       "h-5 w-5 text-white transition-transform duration-200 group-hover:scale-110",
+                       "h-5 w-5 transition-transform duration-200 group-hover:scale-110",
+                       showActive ? "text-black" : "text-white group-hover:text-black",
                        isPending && "animate-spin [animation-duration:2s]"
                      )}
                    />
                  )
                )}
-              <span className="flex items-center justify-center text-xs font-medium text-center leading-tight text-white">
+              <span className="flex items-center justify-center text-xs font-medium text-center leading-tight">
                 {item.name}
               </span>
              </Link>
@@ -160,8 +161,8 @@
                className={cn(
                  "flex flex-col items-center justify-center gap-0.5 px-1.5 py-1 rounded-md transition-colors min-w-[44px] text-black",
                 showActive
-                   ? "bg-black/10 ring-1 ring-black/30 shadow-[0_0_0_1px_rgba(0,0,0,0.15),_inset_0_0_0_1px_rgba(0,0,0,0.08)]"
-                   : "hover:bg-black/5"
+                   ? "text-black bg-white ring-1 ring-black/10 shadow-[0_2px_8px_rgba(0,0,0,0.15)]"
+                   : "hover:text-black hover:bg-white/80"
                )}
              >
                {item.image ? (

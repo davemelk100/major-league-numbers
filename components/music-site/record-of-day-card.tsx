@@ -74,7 +74,7 @@ export function RecordOfDayCard({
             <div className="text-xs text-muted-foreground">{record.year}</div>
             <p className="text-sm text-muted-foreground">{record.highlight}</p>
           </div>
-          <div className="relative h-[160px] lg:h-[200px]">
+          <div className="relative h-[220px] sm:h-[260px] lg:h-[300px]">
             {coverUrl ? (
               albumHref ? (
                 <Link href={albumHref} className="absolute inset-0">

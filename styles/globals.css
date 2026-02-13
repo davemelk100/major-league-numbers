@@ -446,10 +446,6 @@
     color: #1a1a1a;
   }
 
-  .revelation-shell nav a[aria-current="page"],
-  .revelation-shell nav a:hover {
-    background-color: rgba(0, 0, 0, 0.10);
-  }
 
   .e6-shell {
     background-color: #E8E0C8;
@@ -573,10 +569,6 @@
     color: #000000;
   }
 
-  .e6-shell nav a[aria-current="page"],
-  .e6-shell nav a:hover {
-    background-color: rgba(0, 0, 0, 0.10);
-  }
 
   .amrep-shell {
     background-color: #d7dbe0;
@@ -644,10 +636,6 @@
     color: #111827;
   }
 
-  .amrep-shell nav a[aria-current="page"],
-  .amrep-shell nav a:hover {
-    background-color: rgba(0, 0, 0, 0.10);
-  }
 
   .amrep-shell .gbv-submit-button {
     background-color: #111827;

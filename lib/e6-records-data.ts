@@ -10,7 +10,7 @@ export interface E6RecordOfDay {
 }
 
 const E6_FACTS: Record<string, string> = {
-  "in the aeroplane over the sea": "Consistently ranked among the greatest albums of the 1990s; has sold over 500,000 copies despite minimal promotion.",
+  "in the aeroplane over the sea": "Consistently ranked among the greatest albums of the 1990s; a cult classic that gained massive popularity through word of mouth.",
   "on avery island": "Neutral Milk Hotel's debut; recorded with Robert Schneider at Pet Sounds Studio in Denver.",
   "music from the unrealized film script: dusk at cubist castle": "A sprawling double album blending psychedelic pop with musique concrete tape experiments.",
   "dusk at cubist castle": "A sprawling double album blending psychedelic pop with musique concrete tape experiments.",

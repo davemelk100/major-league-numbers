@@ -24,8 +24,8 @@ export const e6Timeline: E6TimelineEvent[] = [
   },
   {
     year: 1995,
-    title: "Pet Sounds Studio",
-    description: "Robert Schneider establishes Pet Sounds Studio in Denver, Colorado. The Apples in Stereo release 'Fun Trick Noisemaker'.",
+    title: "Fun Trick Noisemaker",
+    description: "The Apples in Stereo release 'Fun Trick Noisemaker'. Robert Schneider begins recording at what will become Pet Sounds Studio in Denver, Colorado.",
   },
   {
     year: 1996,

@@ -13,7 +13,7 @@ export const e6SubLabels: E6SubLabel[] = [
     name: "Pet Sounds Studio",
     description:
       "Robert Schneider's home recording studio in Denver, Colorado, named after the Beach Boys album. Central to the E6 sound, where many key albums were recorded and produced.",
-    years: "1995–present",
+    years: "1997–present",
     highlights: [
       "Neutral Milk Hotel – In the Aeroplane Over the Sea",
       "The Apples in Stereo – Fun Trick Noisemaker",
@@ -48,7 +48,7 @@ export const e6SubLabels: E6SubLabel[] = [
   {
     name: "Kindercore Records",
     description:
-      "An Athens, Georgia-based independent label that released many E6-associated artists. Co-founded by Ryan Lewis, it was a key outlet for the Athens indie pop scene.",
+      "An Athens, Georgia-based independent label that released many E6-associated artists. Co-founded by Ryan Lewis and Daniel Geller, it was a key outlet for the Athens indie pop scene.",
     years: "1996–2005",
     highlights: [
       "of Montreal early releases",

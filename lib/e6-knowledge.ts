@@ -17,7 +17,7 @@ const hardcodedDocs: E6SourceDoc[] = [
     id: "e6-overview",
     title: "Elephant 6 Recording Company",
     text:
-      "The Elephant 6 Recording Company is an American musical collective founded in 1991 by Robert Schneider, Bill Doss, and Will Cullen Hart in Ruston, Louisiana. The collective is known for its psychedelic pop, lo-fi, and experimental music. Key bands include Neutral Milk Hotel, The Olivia Tremor Control, The Apples in Stereo, of Montreal, and Elf Power. The collective is centered in Athens, Georgia.",
+      "The Elephant 6 Recording Company is an American musical collective founded in 1991 by Robert Schneider, Jeff Mangum, Bill Doss, and Will Cullen Hart in Ruston, Louisiana. The collective is known for its psychedelic pop, lo-fi, and experimental music. Key bands include Neutral Milk Hotel, The Olivia Tremor Control, The Apples in Stereo, of Montreal, and Elf Power. The collective is centered in Athens, Georgia.",
     sourceLabel: "Wikipedia",
     sourceUrl: "https://en.wikipedia.org/wiki/Elephant_6_Recording_Company",
   },

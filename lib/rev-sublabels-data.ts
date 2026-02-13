@@ -47,7 +47,7 @@ export const revSubLabels: RevSubLabel[] = [
     name: "Equal Vision Records",
     description:
       "Founded by Ray Cappo (Youth of Today, Shelter) as a sister label. Initially worked closely with Revelation before becoming fully independent.",
-    years: "1990-present",
+    years: "1991-present",
     highlights: [
       "Originally distributed by Revelation",
       "Shelter early releases",
