@@ -90,7 +90,42 @@ const CUSTOM_URLS = {
     },
   ],
   amrep: [
-    // { url: "https://example.com/article", label: "Source name" },
+    {
+      url: "https://www.twintonedigital.com/amrep",
+      label: "Twin/Tone Digital — Amphetamine Reptile Records",
+    },
+    {
+      url: "https://www.forcedexposure.com/Labels/AMPHETAMINE.REPTILE.RECORDS.html",
+      label: "Forced Exposure — Amphetamine Reptile Records",
+    },
+    {
+      url: "https://echoesanddust.com/2022/11/tom-hazelmyer-from-amphetamine-reptile-records/",
+      label: "Echoes and Dust — Tom Hazelmyer from Amphetamine Reptile Records",
+    },
+    {
+      url: "http://www.wegotrecords.com/articles/amphetamine-reptile-records.php?i=1",
+      label: "We Got Records — Amphetamine Reptile Records",
+    },
+    {
+      url: "https://riffipedia.fandom.com/wiki/Amphetamine_Reptile_Records",
+      label: "Riffipedia — Amphetamine Reptile Records",
+    },
+    {
+      url: "https://magnetmagazine.com/2009/03/25/lost-classics-amphetamine-reptile-records/",
+      label: "Magnet Magazine — Lost Classics: Amphetamine Reptile Records",
+    },
+    {
+      url: "https://ihrtn.net/amrep-a-z-lollipop/",
+      label: "IHRTN — AmRep A-Z: Lollipop",
+    },
+    {
+      url: "https://punyhuman.substack.com/p/dope-guns-and-fucking-in-the-streets",
+      label: "Puny Human — Dope, Guns and Fucking in the Streets",
+    },
+    {
+      url: "https://ihrtn.net/amrep-a-z-hammerhead/",
+      label: "IHRTN — AmRep A-Z: Hammerhead",
+    },
   ],
   mlb: [
     // { url: "https://example.com/article", label: "Source name" },
