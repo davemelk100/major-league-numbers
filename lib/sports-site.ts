@@ -8,7 +8,7 @@ import {
   Award,
 } from "lucide-react";
 
-export type SportsSiteId = "mlb" | "nhl" | "nfl" | "nba" | "uspbl";
+export type SportsSiteId = "mlb" | "nhl" | "nfl" | "nba" | "uspbl" | "pga";
 
 export interface SportsNavItem {
   name: string;
@@ -239,12 +239,53 @@ const uspblSite: SportsSiteConfig = {
   ],
 };
 
+const pgaSite: SportsSiteConfig = {
+  id: "pga",
+  basePath: "/pga",
+  title: "PGA Numbers",
+  logoSrc: "https://upload.wikimedia.org/wikipedia/en/7/77/PGA_Tour_logo.svg",
+  logoAlt: "PGA",
+  titleColorClass: "",
+  chatLabel: "ChatPGA",
+  chatPath: "/pga/ask",
+  chatIconSrc: "https://upload.wikimedia.org/wikipedia/en/7/77/PGA_Tour_logo.svg",
+  searchLabel: "Search PGA",
+  navItems: [
+    { name: "ChatPGA", href: "/pga/ask", image: "https://upload.wikimedia.org/wikipedia/en/7/77/PGA_Tour_logo.svg" },
+    { name: "Home", href: "/pga", icon: Home },
+    { name: "Players", href: "/pga/players", icon: Users },
+    { name: "Tournaments", href: "/pga/tournaments", icon: Trophy },
+    { name: "Rankings", href: "/pga/rankings", icon: BarChart3 },
+    { name: "Majors", href: "/pga/majors", icon: Star },
+    { name: "HOF", href: "/pga/hof", icon: Award },
+  ],
+  mobileHiddenNames: ["Majors", "HOF", "Home"],
+  dataSources: [
+    {
+      category: "Data",
+      items: [
+        { label: "ESPN API", url: "https://site.api.espn.com/" },
+        { label: "PGA Tour", url: "https://www.pgatour.com/" },
+        { label: "Wikipedia", url: "https://en.wikipedia.org/" },
+      ],
+    },
+    {
+      category: "Images",
+      items: [
+        { label: "ESPN CDN", url: "https://a.espncdn.com/" },
+        { label: "Wikimedia", url: "https://upload.wikimedia.org/" },
+      ],
+    },
+  ],
+};
+
 const sportsSites: Record<SportsSiteId, SportsSiteConfig> = {
   mlb: mlbSite,
   nhl: nhlSite,
   nfl: nflSite,
   nba: nbaSite,
   uspbl: uspblSite,
+  pga: pgaSite,
 };
 
 export function getSportsSiteById(id: SportsSiteId): SportsSiteConfig {
@@ -256,10 +297,11 @@ export function getSportsSiteFromPathname(pathname: string): SportsSiteConfig {
   if (pathname.startsWith("/nfl")) return nflSite;
   if (pathname.startsWith("/nba")) return nbaSite;
   if (pathname.startsWith("/uspbl")) return uspblSite;
+  if (pathname.startsWith("/pga")) return pgaSite;
   if (pathname.startsWith("/mlb")) return mlbSite;
   return mlbSite;
 }
 
 export function isSportsSiteRoute(pathname: string): boolean {
-  return pathname.startsWith("/mlb") || pathname.startsWith("/nhl") || pathname.startsWith("/nfl") || pathname.startsWith("/nba") || pathname.startsWith("/uspbl");
+  return pathname.startsWith("/mlb") || pathname.startsWith("/nhl") || pathname.startsWith("/nfl") || pathname.startsWith("/nba") || pathname.startsWith("/uspbl") || pathname.startsWith("/pga");
 }

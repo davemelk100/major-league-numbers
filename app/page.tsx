@@ -32,6 +32,12 @@ const sportsSites = [
     logo: "/uspbl-logo.png",
     description: "USPBL teams, rosters & standings",
   },
+  {
+    name: "PGA Numbers",
+    href: "/pga",
+    logo: "https://upload.wikimedia.org/wikipedia/en/7/77/PGA_Tour_logo.svg",
+    description: "PGA player stats, tournaments & rankings",
+  },
 ];
 
 const musicSites = [
@@ -98,7 +104,7 @@ export default function LandingPage() {
       <div className="max-w-4xl w-full space-y-10">
         <section>
           <h2 className="text-center mb-6">Sports</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
             {sportsSites.map((site) => (
               <SiteCard key={site.href} site={site} />
             ))}

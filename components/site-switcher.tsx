@@ -37,6 +37,7 @@ const sportsSites = [
   { name: "NBA", href: "/nba", logo: "/nba-logo.svg" },
   { name: "NHL", href: "/nhl", logo: "/nhl-logo.svg" },
   { name: "USPBL", href: "/uspbl", logo: "/uspbl-logo.png" },
+  { name: "PGA", href: "/pga", logo: "https://upload.wikimedia.org/wikipedia/en/7/77/PGA_Tour_logo.svg" },
 ];
 
 const musicSites = [

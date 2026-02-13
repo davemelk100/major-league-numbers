@@ -13,6 +13,7 @@ const SPORTS_SITES = [
   { id: "nba", name: "NBA" },
   { id: "nhl", name: "NHL" },
   { id: "uspbl", name: "USPBL" },
+  { id: "pga", name: "PGA" },
 ];
 
 for (const site of MUSIC_SITES) {

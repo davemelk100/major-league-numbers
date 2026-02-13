@@ -19,6 +19,7 @@ const ROUTES = [
   { path: "/nba", label: "NBA home" },
   { path: "/nhl", label: "NHL home" },
   { path: "/uspbl", label: "USPBL home" },
+  { path: "/pga", label: "PGA home" },
 ];
 
 for (const route of ROUTES) {

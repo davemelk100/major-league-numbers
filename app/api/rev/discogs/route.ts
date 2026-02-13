@@ -42,6 +42,15 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+function addPageToLookup(lookup: Map<string, number>, data: any) {
+  for (const r of data?.releases || []) {
+    const key = normalizeKey(r.artist || "", r.title || "");
+    if (key && !lookup.has(key)) {
+      lookup.set(key, r.id);
+    }
+  }
+}
+
 async function getLabelReleaseLookup(): Promise<Map<string, number>> {
   if (
     labelReleaseLookup &&
@@ -51,28 +60,34 @@ async function getLabelReleaseLookup(): Promise<Map<string, number>> {
   }
 
   const lookup = new Map<string, number>();
-  let currentPage = 1;
-  let totalPages = 1;
   const maxPages = 40;
+  const BATCH_SIZE = 5;
 
-  do {
-    try {
-      const data = await fetchFromDiscogs(
-        `/labels/${REV_LABEL_ID}/releases?page=${currentPage}&per_page=100&sort=year&sort_order=asc`
+  try {
+    const firstPage = await fetchFromDiscogs(
+      `/labels/${REV_LABEL_ID}/releases?page=1&per_page=100&sort=year&sort_order=asc`
+    );
+    addPageToLookup(lookup, firstPage);
+    const totalPages = Math.min(firstPage?.pagination?.pages || 1, maxPages);
+
+    for (let batchStart = 2; batchStart <= totalPages; batchStart += BATCH_SIZE) {
+      const batchEnd = Math.min(batchStart + BATCH_SIZE - 1, totalPages);
+      const pages = Array.from({ length: batchEnd - batchStart + 1 }, (_, i) => batchStart + i);
+      const results = await Promise.all(
+        pages.map((p) =>
+          fetchFromDiscogs(
+            `/labels/${REV_LABEL_ID}/releases?page=${p}&per_page=100&sort=year&sort_order=asc`
+          ).catch(() => null)
+        )
       );
-      for (const r of data?.releases || []) {
-        const key = normalizeKey(r.artist || "", r.title || "");
-        if (key && !lookup.has(key)) {
-          lookup.set(key, r.id);
-        }
+      for (const data of results) {
+        if (data) addPageToLookup(lookup, data);
       }
-      totalPages = data?.pagination?.pages || 1;
-    } catch {
-      break;
+      if (batchEnd < totalPages) await sleep(300);
     }
-    currentPage++;
-    if (currentPage <= totalPages) await sleep(300);
-  } while (currentPage <= totalPages && currentPage <= maxPages);
+  } catch {
+    // keep what we have
+  }
 
   if (lookup.size > 0) {
     labelReleaseLookup = lookup;
@@ -111,6 +126,26 @@ export async function GET(request: Request) {
   const title = searchParams.get("title") || "";
 
   try {
+    if (type === "label-releases") {
+      const perPage = searchParams.get("per_page") || "100";
+      const page = searchParams.get("page") || "1";
+      const data = await fetchFromDiscogs(
+        `/labels/${REV_LABEL_ID}/releases?page=${page}&per_page=${perPage}&sort=year&sort_order=asc`
+      );
+      const releases = (data?.releases || []).map((r: any) => ({
+        id: r.id,
+        artist: r.artist?.replace(/\s*\(\d+\)$/, "") || "",
+        title: r.title || "",
+        year: r.year,
+        thumb: r.thumb || "",
+        format: r.format,
+      }));
+      return NextResponse.json({
+        releases,
+        pagination: data?.pagination,
+      });
+    }
+
     if (type === "resolve") {
       if (!artist && !title) {
         return NextResponse.json({ release: null });

@@ -93,7 +93,7 @@ export function AmrepDashboardContent() {
           href={`${site.basePath}/albums`}
         />
         <DashboardDiscographyGrid
-          albums={albumsToShow}
+          albums={albumsToShow.slice(0, 5)}
           site={site}
           linkBasePath={`${site.basePath}/albums`}
           getAlbumImage={getAlbumImage}

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { getAllRevReleases, getRevReleaseYears } from "@/lib/rev-discography-data";
+import { getAllRevReleases, getRevReleaseYears, getRevReleaseImageUrl } from "@/lib/rev-discography-data";
 import { RevRemoteImage } from "@/components/rev/rev-remote-image";
 import Link from "next/link";
 
@@ -14,30 +14,53 @@ export function RevAlbumsContent() {
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [coverImages, setCoverImages] = useState<Record<number, string>>({});
 
+  // Load static images immediately, then fetch additional covers in bulk from Discogs label endpoint
   useEffect(() => {
     let active = true;
-    async function fetchCovers() {
-      for (const r of releases) {
-        if (!active) break;
-        try {
-          const params = new URLSearchParams({
-            type: "resolve",
-            artist: r.artist,
-            title: r.title,
-          });
-          const res = await fetch(`/api/rev/discogs?${params}`);
-          if (!res.ok) continue;
-          const data = await res.json();
-          const url = data.release?.coverImage;
-          if (url && active) {
-            setCoverImages((prev) => ({ ...prev, [r.catalogNumber]: url }));
+
+    // Start with static images
+    const staticImages: Record<number, string> = {};
+    for (const r of releases) {
+      const url = getRevReleaseImageUrl(r.catalogNumber);
+      if (url) staticImages[r.catalogNumber] = url;
+    }
+    if (active) setCoverImages(staticImages);
+
+    // Fetch additional covers from Discogs label releases (bulk, not per-album)
+    async function fetchBulkCovers() {
+      try {
+        const res = await fetch("/api/rev/discogs?type=label-releases&per_page=100");
+        if (!res.ok || !active) return;
+        const data = await res.json();
+        const labelReleases = data.releases || [];
+
+        const newImages: Record<number, string> = {};
+        for (const lr of labelReleases) {
+          if (!lr.thumb) continue;
+          // Match by artist+title against our catalog
+          const lrArtist = (lr.artist || "").toLowerCase();
+          const lrTitle = (lr.title || "").toLowerCase();
+          for (const r of releases) {
+            if (staticImages[r.catalogNumber]) continue; // already have an image
+            if (newImages[r.catalogNumber]) continue;
+            if (
+              r.artist.toLowerCase() === lrArtist &&
+              r.title.toLowerCase() === lrTitle
+            ) {
+              newImages[r.catalogNumber] = lr.thumb;
+            }
           }
-        } catch {
-          // skip failed fetches
         }
+
+        if (active && Object.keys(newImages).length > 0) {
+          setCoverImages((prev) => ({ ...prev, ...newImages }));
+        }
+      } catch {
+        // bulk fetch failed, static images still work
       }
     }
-    fetchCovers();
+
+    fetchBulkCovers();
     return () => { active = false; };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

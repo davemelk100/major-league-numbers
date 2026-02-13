@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import { Badge } from "@/components/ui/badge";
 import { Loader2, ExternalLink } from "lucide-react";
 import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
 import { getLocalMemberImage } from "@/lib/gbv-member-images";
@@ -338,13 +337,9 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
       renderItem={(release) => (
         <div
           key={release.id}
-          className="flex items-center justify-between border-b border-border pb-2 last:border-0"
+          className="border-b border-border pb-2 last:border-0"
         >
-          <div>
-            <p className="font-semibold text-sm">{release.title}</p>
-            <p className="text-xs text-muted-foreground">{release.role}</p>
-          </div>
-          <Badge variant="outline">{release.year ?? "—"}</Badge>
+          <p className="font-semibold text-sm">{release.title}</p>
         </div>
       )}
     />
