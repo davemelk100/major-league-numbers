@@ -127,6 +127,64 @@ const CUSTOM_URLS = {
       label: "IHRTN — AmRep A-Z: Hammerhead",
     },
   ],
+  rev: [
+    {
+      url: "https://rateyourmusic.com/label/revelation_records/",
+      label: "Rate Your Music — Revelation Records",
+    },
+    {
+      url: "https://seekingthesimple.wordpress.com/vinyl/revelation-records/",
+      label: "Seeking the Simple — Revelation Records",
+    },
+    {
+      url: "https://www.tumblr.com/revelationrecords",
+      label: "Tumblr — Revelation Records",
+    },
+    {
+      url: "https://daily.bandcamp.com/label-profile/revelation-records-guide",
+      label: "Bandcamp Daily — Revelation Records Guide",
+    },
+    {
+      url: "https://dyingscene.com/label/revelation-records/",
+      label: "Dying Scene — Revelation Records",
+    },
+    {
+      url: "https://revhq.com/blogs/speak-up/jordan-cooper",
+      label: "RevHQ — Speak Up: Jordan Cooper",
+    },
+    {
+      url: "https://www.noecho.net/features/life-love-shirts-revelation-records-jordan-cooper",
+      label: "No Echo — Life, Love & Shirts: Revelation Records' Jordan Cooper",
+    },
+    {
+      url: "https://law.justia.com/cases/federal/appellate-courts/F3/111/138/630577/",
+      label: "Justia — Revelation Records v. Revelation Records (Federal Case)",
+    },
+    {
+      url: "https://revhq.com/blogs/speak-up/tagged/jordan-cooper",
+      label: "RevHQ — Speak Up: Jordan Cooper (Tagged Posts)",
+    },
+    {
+      url: "https://doublecrosswebzine.blogspot.com/2008/11/more-revelation-talk-with-jordan-cooper.html",
+      label: "Double Cross Webzine — More Revelation Talk with Jordan Cooper",
+    },
+    {
+      url: "https://hardcorepunk.wiki/category/80s-hardcore/revelation-records/",
+      label: "Hardcore Punk Wiki — Revelation Records",
+    },
+    {
+      url: "https://droidxrage.wordpress.com/tag/jordan-cooper/",
+      label: "Droid X Rage — Jordan Cooper",
+    },
+    {
+      url: "https://thehundreds.com/blogs/content/sound-fury-brief-history-revelation-records",
+      label: "The Hundreds — Sound & Fury: A Brief History of Revelation Records",
+    },
+    {
+      url: "https://grokipedia.com/page/Revelation_Records",
+      label: "Grokipedia — Revelation Records",
+    },
+  ],
   mlb: [
     // { url: "https://example.com/article", label: "Source name" },
   ],
@@ -474,6 +532,42 @@ async function ingestAmrep() {
   return docs;
 }
 
+// ── Revelation Records ingestion ────────────────────────────────────
+
+async function ingestRev() {
+  console.log("\n=== Ingesting Revelation Records knowledge ===");
+  const docs = [];
+
+  // Wikipedia
+  const wikiArticles = [
+    "Revelation_Records",
+  ];
+  for (const article of wikiArticles) {
+    console.log(`  Wikipedia: ${article}`);
+    const articleDocs = await ingestWikipediaArticle(article, "Wikipedia");
+    docs.push(...articleDocs);
+    await sleep(500);
+  }
+
+  // Discogs — Revelation Records label ID 661
+  console.log("  Discogs: Revelation Records label");
+  const discogsDocs = await ingestDiscogsLabel(
+    661,
+    "Revelation Records",
+    "Discogs",
+  );
+  docs.push(...discogsDocs);
+
+  // Custom URLs
+  if (CUSTOM_URLS.rev.length > 0) {
+    const customDocs = await ingestCustomUrls(CUSTOM_URLS.rev);
+    docs.push(...customDocs);
+  }
+
+  console.log(`  Total Rev docs: ${docs.length}`);
+  return docs;
+}
+
 // ── MLB ingestion ───────────────────────────────────────────────────
 
 async function ingestMlb() {
@@ -507,9 +601,10 @@ async function ingestMlb() {
 async function main() {
   await ensureDir(OUTPUT_DIR);
 
-  const [gbvDocs, amrepDocs, mlbDocs] = await Promise.all([
+  const [gbvDocs, amrepDocs, revDocs, mlbDocs] = await Promise.all([
     ingestGbv(),
     ingestAmrep(),
+    ingestRev(),
     ingestMlb(),
   ]);
 
@@ -523,6 +618,11 @@ async function main() {
       path: path.join(OUTPUT_DIR, "amrep-knowledge-scraped.json"),
       data: amrepDocs,
       label: "AmRep",
+    },
+    {
+      path: path.join(OUTPUT_DIR, "rev-knowledge-scraped.json"),
+      data: revDocs,
+      label: "Rev",
     },
     {
       path: path.join(OUTPUT_DIR, "mlb-knowledge-scraped.json"),
