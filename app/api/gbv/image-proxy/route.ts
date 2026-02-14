@@ -65,13 +65,19 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const origin = new URL(url).origin;
+    const parsed = new URL(url);
+    const isDiscogs = parsed.hostname.endsWith("discogs.com");
     const response = await fetch(url, {
       headers: {
-        "User-Agent": "MajorLeagueNumbers/1.0",
-        "Accept": "image/*,*/*;q=0.8",
-        "Referer": `${origin}/`,
-        "Origin": origin,
+        "User-Agent":
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Accept": "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+        ...(isDiscogs
+          ? { "Referer": "https://www.discogs.com/" }
+          : {
+              "Referer": `${parsed.origin}/`,
+              "Origin": parsed.origin,
+            }),
       },
     });
 

@@ -84,6 +84,29 @@ export function pickDailyGbvRecord(
   };
 }
 
+// Pick a daily single from GBV singles
+export function getDailyGbvSingle(date = new Date()): GbvRecordOfDay {
+  const singles = gbvAlbums.filter((a) => a.releaseType === "single");
+  const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}-single`;
+
+  let hash = 0;
+  for (let i = 0; i < dateString.length; i++) {
+    const char = dateString.charCodeAt(i);
+    hash = (hash << 5) - hash + char;
+    hash = hash | 0;
+  }
+
+  const index = Math.abs(hash) % singles.length;
+  const album = singles[index];
+
+  return {
+    id: album.id,
+    title: album.title,
+    year: album.year,
+    highlight: `Released in ${album.year}.`,
+  };
+}
+
 // Pick a daily record from static GBV discography data
 export function getDailyGbvRecord(date = new Date()): GbvRecordOfDay {
   const dateString = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;

@@ -20,6 +20,7 @@ export function GbvRemoteImage({
       fallbackSrc={fallbackSrc}
       fit={fit}
       className={cn("rounded-lg", className)}
+      fallbackClassName="object-contain rounded-lg opacity-20"
     />
   );
 }

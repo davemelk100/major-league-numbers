@@ -9,6 +9,7 @@ import { sgDiscography, sgReleaseImages } from "@/lib/sg-discography-data";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { AlbumsControls } from "@/components/music-site/albums-controls";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 const ITEMS_PER_PAGE = 30;
 
@@ -127,14 +128,7 @@ export function SgAlbumsContent() {
                       cacheKey={`sg-album-thumb:${album.id}`}
                     />
                   ) : (
-                    <div className="w-full aspect-square rounded-lg mb-2 flex items-center justify-center">
-                      <img
-                        src={site.placeholderIconSrc}
-                        alt={`${site.shortName} logo`}
-                        className="w-3/5 h-auto opacity-20 object-contain"
-                        loading="eager"
-                      />
-                    </div>
+                    <SitePlaceholderIcon site={site} />
                   )}
                   <h3 className="font-semibold text-base truncate">
                     {album.title}

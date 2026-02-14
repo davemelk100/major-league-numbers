@@ -34,6 +34,7 @@
    const isAmrep = site.id === "amrep";
    const isRev = site.id === "rev";
    const isE6 = site.id === "e6";
+   const isSg = site.id === "sg";
   useEffect(() => {
     setPendingHref(null);
   }, [pathname]);
@@ -86,7 +87,7 @@
                      isChat ? "h-10 w-10" : "h-5 w-5",
                      "object-contain transition-transform duration-200 group-hover:scale-110",
                      isPending && "animate-spin [animation-duration:2s]",
-                     !isAmrep && !isRev && !isE6 && !showActive ? "brightness-0 invert group-hover:brightness-100 group-hover:invert-0" : ""
+                     !isAmrep && !isRev && !isE6 && !isSg && !showActive ? "brightness-0 invert group-hover:brightness-100 group-hover:invert-0" : ""
                    )}
                    priority={isChat}
                    loading={isChat ? "eager" : "lazy"}
@@ -120,6 +121,7 @@
    const isAmrep = site.id === "amrep";
    const isRev = site.id === "rev";
    const isE6 = site.id === "e6";
+   const isSg = site.id === "sg";
   useEffect(() => {
     setPendingHref(null);
   }, [pathname]);
@@ -176,7 +178,7 @@
                      "object-contain",
                      isChat ? "gbv-nav-icon" : "",
                      isPending && "animate-spin [animation-duration:2s]",
-                     !isAmrep && !isRev && !isE6 ? "brightness-0 invert" : ""
+                     !isAmrep && !isRev && !isE6 && !isSg ? "brightness-0 invert" : ""
                    )}
                  />
                ) : (

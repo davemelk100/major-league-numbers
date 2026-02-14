@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { pickDailyGbvRecord, getDailyGbvRecord, type GbvRecordOfDay } from "@/lib/gbv-records-data";
+import { pickDailyGbvRecord, getDailyGbvRecord, getDailyGbvSingle, type GbvRecordOfDay } from "@/lib/gbv-records-data";
 import { getDailyAmrepRecord, type AmrepRecordOfDay } from "@/lib/amrep-records-data";
 import { getDailyRevRecord, type RevRecordOfDay } from "@/lib/rev-records-data";
 import { getDailyE6Record, type E6RecordOfDay } from "@/lib/e6-records-data";
@@ -246,4 +246,27 @@ export function useRecordOfDay() {
     albumHref,
     displayTitle,
   };
+}
+
+export function useSingleOfDay() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
+  const [record, setRecord] = useState<GbvRecordOfDay | null>(null);
+  const [coverUrl, setCoverUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    const single = getDailyGbvSingle();
+    setRecord(single);
+    if (single.id) {
+      const localImage = getLocalAlbumImage(single.id);
+      if (localImage) {
+        setCoverUrl(localImage);
+      }
+    }
+  }, []);
+
+  const albumHref = record?.id ? `${site.basePath}/albums/${record.id}` : null;
+  const displayTitle = record?.title ?? null;
+
+  return { site, record, coverUrl, albumHref, displayTitle };
 }

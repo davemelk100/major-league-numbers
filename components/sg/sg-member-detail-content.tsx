@@ -10,6 +10,7 @@ import { MemberDetailLayout } from "@/components/music-site/member-detail-layout
 import { MemberDetailLeft } from "@/components/music-site/member-detail-left";
 import { MemberDetailRight } from "@/components/music-site/member-detail-right";
 import Link from "next/link";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 export function SgMemberDetailContent({ memberId }: { memberId: string }) {
   const pathname = usePathname();
@@ -34,13 +35,7 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
         backHref={`${site.basePath}/members`}
         backLabel={site.navLabels.members}
         leftContent={
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
-            <img
-              src={site.placeholderIconSrc}
-              alt={`${site.shortName} logo`}
-              className="w-3/5 h-auto opacity-20 object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} />
         }
         rightTitle="Releases"
         rightContent={
@@ -64,13 +59,7 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
             preferProxy
           />
         ) : (
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
-            <img
-              src={site.placeholderIconSrc}
-              alt={`${site.shortName} logo`}
-              className="w-3/5 h-auto opacity-20 object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} />
         )
       }
       name={artist.name}

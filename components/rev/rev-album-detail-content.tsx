@@ -9,6 +9,7 @@ import { RevRemoteImage } from "@/components/rev/rev-remote-image";
 import { AlbumDetailLayout } from "@/components/music-site/album-detail-layout";
 import { AlbumDetailLeft } from "@/components/music-site/album-detail-left";
 import { AlbumDetailTracklist } from "@/components/music-site/album-detail-tracklist";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 type Track = { position: string; title: string; duration: string };
 
@@ -95,9 +96,7 @@ export function RevAlbumDetailContent({ albumId }: { albumId: string }) {
             <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
           </div>
         ) : (
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
-            <p className="text-muted-foreground text-sm">No cover art</p>
-          </div>
+          <SitePlaceholderIcon site={site} className="mb-4" />
         )
       }
       title={`${release.artist} — ${release.title}`}

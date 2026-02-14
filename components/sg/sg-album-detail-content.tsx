@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { AlbumDetailLayout } from "@/components/music-site/album-detail-layout";
 import { AlbumDetailLeft } from "@/components/music-site/album-detail-left";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 export function SgAlbumDetailContent({ albumId }: { albumId: string }) {
   const pathname = usePathname();
@@ -26,13 +27,7 @@ export function SgAlbumDetailContent({ albumId }: { albumId: string }) {
         backHref={`${site.basePath}/albums`}
         backLabel={site.navLabels.discography}
         leftContent={
-          <div className="w-full aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center">
-            <img
-              src={site.placeholderIconSrc}
-              alt={`${site.shortName} logo`}
-              className="w-3/5 h-auto opacity-20 object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} className="mb-4" />
         }
         rightTitle="Details"
         rightContent={
@@ -57,13 +52,7 @@ export function SgAlbumDetailContent({ albumId }: { albumId: string }) {
             cacheKey={`sg-album-thumb:${release.catalogNumber}`}
           />
         ) : (
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
-            <img
-              src={site.placeholderIconSrc}
-              alt={`${site.shortName} logo`}
-              className="w-3/5 h-auto opacity-20 object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} className="mb-4" />
         )
       }
       title={displayTitle}

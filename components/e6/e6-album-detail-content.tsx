@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
@@ -9,6 +8,7 @@ import { getE6ReleaseByCatalogNumber, getE6ReleaseImageUrl } from "@/lib/e6-disc
 import { AlbumDetailLayout } from "@/components/music-site/album-detail-layout";
 import { AlbumDetailLeft } from "@/components/music-site/album-detail-left";
 import { AlbumDetailTracklist } from "@/components/music-site/album-detail-tracklist";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 type Track = { position: string; title: string; duration: string };
 
@@ -93,15 +93,7 @@ export function E6AlbumDetailContent({ albumId }: { albumId: string }) {
             className="w-full aspect-square rounded-lg object-cover"
           />
         ) : (
-          <div className="w-full aspect-square bg-muted/30 rounded-lg flex items-center justify-center overflow-hidden">
-            <Image
-              src="/e6-logo.png"
-              alt={`${release.artist} - ${release.title}`}
-              width={200}
-              height={200}
-              className="opacity-30 w-full h-auto p-4"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} className="mb-4" />
         )
       }
       title={`${release.artist} — ${release.title}`}

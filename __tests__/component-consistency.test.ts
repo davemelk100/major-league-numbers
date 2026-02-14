@@ -9,8 +9,6 @@ const SHARED_COMPONENTS = [
   "TriviaPanel",
   "RecordOfDayCard",
   "DashboardDailyRow",
-  "DashboardDiscographyGrid",
-  "DashboardMembersGrid",
 ] as const;
 
 describe("Component consistency", () => {

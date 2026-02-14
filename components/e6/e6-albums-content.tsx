@@ -5,12 +5,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { getAllE6Releases, getE6ReleaseYears, getE6ReleaseImageUrl } from "@/lib/e6-discography-data";
 import Link from "next/link";
-import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname, type MusicSiteConfig } from "@/lib/music-site";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 // In-memory cache shared across all AlbumCover instances
 const coverCache = new Map<string, string | null>();
 
-function AlbumCover({ artist, title, catalogNumber }: { artist: string; title: string; catalogNumber: number }) {
+function AlbumCover({ artist, title, catalogNumber, site }: { artist: string; title: string; catalogNumber: number; site: MusicSiteConfig }) {
   const staticUrl = getE6ReleaseImageUrl(catalogNumber);
   const [coverUrl, setCoverUrl] = useState<string | null>(staticUrl || null);
   const [failed, setFailed] = useState(false);
@@ -75,19 +77,15 @@ function AlbumCover({ artist, title, catalogNumber }: { artist: string; title: s
   }
 
   return (
-    <div ref={ref} className="w-full aspect-square bg-muted/30 rounded-lg mb-2 flex items-center justify-center overflow-hidden">
-      <Image
-        src="/e6-logo.png"
-        alt={alt}
-        width={200}
-        height={200}
-        className="opacity-30 w-full h-auto p-4"
-      />
+    <div ref={ref}>
+      <SitePlaceholderIcon site={site} />
     </div>
   );
 }
 
 export function E6AlbumsContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
   const releases = getAllE6Releases();
   const years = getE6ReleaseYears();
   const [search, setSearch] = useState("");
@@ -140,6 +138,7 @@ export function E6AlbumsContent() {
                   artist={release.artist}
                   title={release.title}
                   catalogNumber={release.catalogNumber}
+                  site={site}
                 />
                 <p className="text-sm font-medium truncate">{release.title}</p>
                 <p className="text-xs text-muted-foreground truncate">{release.artist}</p>

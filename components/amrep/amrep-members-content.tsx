@@ -14,6 +14,7 @@ import {
 } from "@/lib/amrep-member-images";
 import { MemberAvatar } from "@/components/music-site/member-avatar";
 import { MembersControls } from "@/components/music-site/members-controls";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 interface Member {
   id: number;
@@ -121,6 +122,7 @@ export function GbvMembersContent() {
                   fallbackImages={AMREP_MEMBER_IMAGE_FALLBACKS}
                   skipImages={AMREP_MEMBER_IMAGE_SKIP}
                   fit="contain"
+                  renderPlaceholder={() => <SitePlaceholderIcon site={site} />}
                 />
                 <h3 className="font-semibold text-sm">{member.name}</h3>
               </CardContent>

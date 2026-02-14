@@ -50,7 +50,7 @@ export const GBV_SITE: MusicSiteConfig = {
   description:
     "Guided by Voices is an American indie rock band from Dayton, Ohio, formed in 1983 by Robert Pollard. Known for their prolific output, lo-fi aesthetic, and short, melodic songs influenced by the British Invasion, GBV has released over 30 studio albums and become one of the most beloved and enduring bands in independent music.",
   navLabels: {
-    discography: "Discography",
+    discography: "Releases",
     members: "Members",
     sideProjects: "Side Projects",
   },
@@ -113,6 +113,7 @@ export const AMREP_SITE: MusicSiteConfig = {
   chatIconSrc: "/noise-bird.svg",
   placeholderIconSrc: "/noise-placeholder.svg",
   shellClass: "amrep-shell",
+  logoClassName: "h-auto w-[15%]",
   description:
     "Amphetamine Reptile Records is an independent record label founded by Tom Hazelmyer in 1986. Based in Minneapolis, AmRep became synonymous with the noise rock movement of the late '80s and '90s, releasing foundational records by artists like the Melvins, Helmet, Halo of Flies, Cows, and Hammerhead, and helping define the sound of underground heavy music.",
   navLabels: {

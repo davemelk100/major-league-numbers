@@ -1,13 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { getAllRevReleases, getRevReleaseYears, getRevReleaseImageUrl } from "@/lib/rev-discography-data";
 import { RevRemoteImage } from "@/components/rev/rev-remote-image";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
+import { getMusicSiteFromPathname } from "@/lib/music-site";
 import Link from "next/link";
 
 export function RevAlbumsContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
   const releases = getAllRevReleases();
   const years = getRevReleaseYears();
   const [search, setSearch] = useState("");
@@ -109,8 +114,8 @@ export function RevAlbumsContent() {
             <Link key={release.catalogNumber} href={`/rev/albums/${release.catalogNumber}`}>
               <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3">
-                  <div className="w-full aspect-square bg-muted/30 rounded-lg mb-2 flex items-center justify-center overflow-hidden">
-                    {imageUrl ? (
+                  {imageUrl ? (
+                    <div className="w-full aspect-square bg-muted/30 rounded-lg mb-2 flex items-center justify-center overflow-hidden">
                       <RevRemoteImage
                         src={imageUrl}
                         alt={`${release.artist} - ${release.title}`}
@@ -118,12 +123,10 @@ export function RevAlbumsContent() {
                         height={200}
                         className="w-full h-full object-cover"
                       />
-                    ) : (
-                      <span className="text-2xl font-bold text-muted-foreground/50">
-                        REV {release.catalogNumber}
-                      </span>
-                    )}
-                  </div>
+                    </div>
+                  ) : (
+                    <SitePlaceholderIcon site={site} />
+                  )}
                   <p className="text-sm font-medium truncate">{release.title}</p>
                   <p className="text-xs text-muted-foreground truncate">{release.artist}</p>
                   <p className="text-xs text-muted-foreground">{release.year}</p>

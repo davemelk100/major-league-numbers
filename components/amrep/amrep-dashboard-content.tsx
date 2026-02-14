@@ -4,30 +4,27 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 import { TriviaPanel } from "@/components/music-site/trivia-panel";
 import { RecordOfDayCard } from "@/components/music-site/record-of-day-card";
-import { getReleaseType } from "@/lib/gbv-utils";
+import { ArtistOfDayCard } from "@/components/music-site/artist-of-day-card";
 import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
-import {
-  AMREP_MEMBER_IMAGE_FALLBACKS,
-  AMREP_MEMBER_IMAGE_SKIP,
-} from "@/lib/amrep-member-images";
 import {
   DashboardDailyRow,
   DashboardDescription,
-  DashboardDiscographyGrid,
-  DashboardMembersGrid,
-  DashboardSectionHeader,
 } from "@/components/music-site/dashboard-sections";
 import { useDashboardData } from "@/components/music-site/use-dashboard-data";
+import { amrepArtists } from "@/lib/amrep-artists-data";
+import { AMREP_ARTIST_IMAGES } from "@/lib/amrep-member-images";
+
+const amrepArtistsWithImages = amrepArtists.map((a) => ({
+  id: a.id,
+  name: a.name,
+  imageUrl: AMREP_ARTIST_IMAGES[a.id],
+}));
 
 export function AmrepDashboardContent() {
   const {
     site,
-    isAmrep,
     isLoading,
     error,
-    membersToShow,
-    albumsToShow,
-    getAlbumImage,
   } = useDashboardData();
 
   if (isLoading) {
@@ -47,14 +44,18 @@ export function AmrepDashboardContent() {
     <div className="container py-2">
       <DashboardDescription text={site.description} />
 
-      {/* Daily Trivia + Record of the Day */}
-      <DashboardDailyRow>
+      <DashboardDailyRow columns={3}>
         <TriviaPanel />
         <RecordOfDayCard
           RemoteImage={AmrepRemoteImage}
           imageFit="contain"
           placeholderVariant="img"
           placeholderClassName="w-full h-auto opacity-30 p-4"
+        />
+        <ArtistOfDayCard
+          artists={amrepArtistsWithImages}
+          site={site}
+          RemoteImage={AmrepRemoteImage}
         />
       </DashboardDailyRow>
 
@@ -64,51 +65,6 @@ export function AmrepDashboardContent() {
           <CardContent className="p-4 text-destructive">{error}</CardContent>
         </Card>
       )}
-
-      {/* Band Members */}
-      <div className="mb-8">
-        <DashboardSectionHeader
-          title={isAmrep ? "Featured Artists" : "Current Members"}
-          href={`${site.basePath}/members`}
-        />
-        <DashboardMembersGrid
-          members={membersToShow}
-          site={site}
-          linkBasePath={`${site.basePath}/members`}
-          memberAvatarProps={{
-            fallbackImages: AMREP_MEMBER_IMAGE_FALLBACKS,
-            skipImages: AMREP_MEMBER_IMAGE_SKIP,
-            fit: "contain",
-            placeholderSize: 200,
-            placeholderClassName: "opacity-30 w-full h-auto p-4",
-            fallbackClassName: "opacity-30 w-full h-auto p-4",
-          }}
-        />
-      </div>
-
-      {/* Discography */}
-      <div className="mb-8">
-        <DashboardSectionHeader
-          title="Featured Releases"
-          href={`${site.basePath}/albums`}
-        />
-        <DashboardDiscographyGrid
-          albums={albumsToShow.slice(0, 5)}
-          site={site}
-          linkBasePath={`${site.basePath}/albums`}
-          getAlbumImage={getAlbumImage}
-          getReleaseTypeLabel={(album) =>
-            getReleaseType(album.format, album.releaseType)
-          }
-          RemoteImage={AmrepRemoteImage}
-          cacheKeyPrefix="gbv-album-thumb"
-          imageFit="contain"
-          placeholderVariant="img"
-          placeholderClassName="w-full h-auto opacity-30 p-4"
-          placeholderSize={200}
-        />
-      </div>
-
     </div>
   );
 }

@@ -20,6 +20,7 @@ export function E6RemoteImage({
       fallbackSrc={fallbackSrc}
       fit={fit}
       className={cn("rounded-lg", className)}
+      fallbackClassName="object-contain rounded-lg opacity-20"
       invalidCacheValues={["/chat-gbv-box.svg", "/noise-bird.svg", "/revelation-logo.png", "/e6-logo.png"]}
     />
   );

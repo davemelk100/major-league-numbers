@@ -14,6 +14,7 @@ import {
 import { AlbumDetailLayout } from "@/components/music-site/album-detail-layout";
 import { AlbumDetailTracklist } from "@/components/music-site/album-detail-tracklist";
 import { AlbumDetailLeft } from "@/components/music-site/album-detail-left";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
   const { site, isAmrep, album, isLoading, isTracklistLoading, error } = useSiteAlbumDetail(albumId);
@@ -55,13 +56,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
         backHref={`${site.basePath}/albums`}
         backLabel={site.navLabels.discography}
         leftContent={
-          <div className="w-full aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center">
-            <img
-              src={site.placeholderIconSrc}
-              alt={`${site.shortName} logo`}
-              className="w-auto h-auto max-w-1/2 max-h-1/2 gbv-nav-icon object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} className="mb-4" />
         }
         rightTitle="Tracklist"
         rightContent={
@@ -92,13 +87,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
             localFallbackSrc={localFallbackImage}
           />
         ) : (
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
-            <img
-              src={site.placeholderIconSrc}
-              alt={`${site.shortName} logo`}
-              className="w-auto h-auto max-w-1/2 max-h-1/2 gbv-nav-icon object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} className="mb-4" />
         )
       }
       title={displayTitle}

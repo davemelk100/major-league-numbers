@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { Loader2, ExternalLink } from "lucide-react";
-import Image from "next/image";
 import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 import { getLocalMemberImage, GBV_MEMBER_IMAGE_FALLBACKS } from "@/lib/gbv-member-images";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
@@ -55,15 +55,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
         backHref={`${site.basePath}/members`}
         backLabel={site.navLabels.members}
         leftContent={
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
-            <Image
-              src={site.placeholderIconSrc}
-              alt={`${site.shortName} logo`}
-              width={48}
-              height={48}
-              className="w-1/2 h-1/2 gbv-nav-icon object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} className="mb-4" />
         }
         rightTitle="About"
         rightContent={
@@ -154,15 +146,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
         backHref={`${site.basePath}/members`}
         backLabel={site.navLabels.members}
         leftContent={
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
-            <Image
-              src="/chat-gbv-box.svg"
-              alt="GBV rune"
-              width={48}
-              height={48}
-              className="w-1/2 h-1/2 gbv-nav-icon object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} className="mb-4" />
         }
         rightTitle="Discography"
         rightContent={
@@ -194,15 +178,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
             preferProxy
           />
         ) : (
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
-            <Image
-              src="/chat-gbv-box.svg"
-              alt="GBV rune"
-              width={48}
-              height={48}
-              className="w-1/2 h-1/2 gbv-nav-icon object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} className="mb-4" />
         )
       }
       name={member.name}

@@ -2,8 +2,8 @@
 
 import { useMemo } from "react";
 import { Loader2 } from "lucide-react";
-import Image from "next/image";
 import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 import { getLocalAlbumImage } from "@/lib/gbv-album-images";
 import {
   useSiteAlbumDetail,
@@ -46,15 +46,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
         backHref={`${site.basePath}/albums`}
         backLabel={site.navLabels.discography}
         leftContent={
-          <div className="w-full aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center">
-            <Image
-              src="/chat-gbv-box.svg"
-              alt="GBV rune"
-              width={48}
-              height={48}
-              className="w-1/2 h-1/2 gbv-nav-icon object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} className="mb-4" />
         }
         rightTitle="Tracklist"
         rightContent={
@@ -83,15 +75,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
             preferProxy
           />
         ) : (
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
-            <Image
-              src="/chat-gbv-box.svg"
-              alt="GBV rune"
-              width={48}
-              height={48}
-              className="w-1/2 h-1/2 gbv-nav-icon object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} className="mb-4" />
         )
       }
       title={detail.title}

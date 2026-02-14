@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { getRevArtistById, getRevArtistImageUrl } from "@/lib/rev-artists-data";
 import { getRevReleasesByArtist } from "@/lib/rev-discography-data";
-import Image from "next/image";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 export function RevMemberDetailContent({ memberId }: { memberId: string }) {
   const pathname = usePathname();
@@ -44,23 +44,17 @@ export function RevMemberDetailContent({ memberId }: { memberId: string }) {
       <div className="grid gap-8 lg:grid-cols-[1fr_1.5fr]">
         {/* Left: band image + info */}
         <div>
-          <div className="w-full aspect-square bg-muted/30 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-            {imageUrl ? (
+          {imageUrl ? (
+            <div className="w-full aspect-square bg-muted/30 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
               <img
                 src={imageUrl}
                 alt={artist.name}
                 className="w-full h-full object-cover"
               />
-            ) : (
-              <Image
-                src="/rev-icon.svg"
-                alt={artist.name}
-                width={80}
-                height={80}
-                className="opacity-30"
-              />
-            )}
-          </div>
+            </div>
+          ) : (
+            <SitePlaceholderIcon site={site} className="mb-4" />
+          )}
           <h1 className="font-league mb-2">{artist.name}</h1>
           {artist.yearsActive && (
             <p className="text-sm text-muted-foreground mb-2">

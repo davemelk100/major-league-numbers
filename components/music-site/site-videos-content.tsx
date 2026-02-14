@@ -159,6 +159,89 @@ const revVideos: Video[] = [
   },
 ];
 
+const sgVideos: Video[] = [
+  {
+    id: "QiIL1VtjE48",
+    title: "Dazzling Killmen - Medicine Me",
+    description: "7\" single produced by Steve Albini (Skin Graft Records, 1993).",
+  },
+  {
+    id: "dOr_L5BebS0",
+    title: "U.S. Maple - Stuck",
+    description: "From the debut 7\" on Skin Graft Records (1995).",
+  },
+  {
+    id: "SZSSlEMCYWg",
+    title: "The Flying Luttenbachers - Kkring Number One",
+    description: "Brutal prog from Weasel Walter's The Flying Luttenbachers.",
+  },
+{
+    id: "OcTz5Qep7EM",
+    title: "Ruins - Live",
+    description: "Tatsuya Yoshida's legendary Japanese duo Ruins, live performance.",
+  },
+  {
+    id: "nUcvrpZxnj0",
+    title: "Koenjihyakkei",
+    description: "Zeuhl-inspired Japanese ensemble led by Tatsuya Yoshida.",
+  },
+  {
+    id: "lonGP3Q67mI",
+    title: "Yowie - Throckmorton (Live)",
+    description: "From Taking Umbrage (Skin Graft Records, 2025).",
+  },
+  {
+    id: "SJxd_Lu8VPA",
+    title: "Yowie - Live Microfiche",
+    description: "St. Louis math rock trio Yowie, live performance.",
+  },
+  {
+    id: "YeeIQX8ElB0",
+    title: "Arab On Radar - My Mind Is a Muffler (Live)",
+    description: "Providence noise rock on Skin Graft Records.",
+  },
+  {
+    id: "bBZsan0t3os",
+    title: "Space Streakings - Karaoke",
+    description: "Japanese noise/industrial from Space Streakings.",
+  },
+  {
+    id: "Mzebcwy_ae0",
+    title: "Space Streakings - Super Mini-Car",
+    description: "Japanese noise/industrial from Space Streakings.",
+  },
+  {
+    id: "odHOjDgKEqw",
+    title: "Lake of Dracula - Live at Fireside Bowl (1996)",
+    description: "Skin Graft supergroup live at Chicago's Fireside Bowl.",
+  },
+  {
+    id: "NuBYg2icNy4",
+    title: "Cheer-Accident - Live (2008)",
+    description: "Chicago avant-prog stalwarts Cheer-Accident, live.",
+  },
+  {
+    id: "FuXnVdtlEsw",
+    title: "Lovely Little Girls",
+    description: "Nine-piece art-prog band from Chicago on Skin Graft Records.",
+  },
+{
+    id: "_lxCm2-BoDg",
+    title: "The Chinese Stars - Girls Of Las Vegas (Live)",
+    description: "Post-Arab On Radar project on Skin Graft Records.",
+  },
+  {
+    id: "xqTo2XSGqog",
+    title: "AIDS Wolf - Spit Tastes Like Metal",
+    description: "Official video from Montreal's AIDS Wolf.",
+  },
+  {
+    id: "_NB01w9HFfw",
+    title: "Made In Mexico - International Zombie (Live)",
+    description: "Austin noise trio on Skin Graft Records.",
+  },
+];
+
 const e6Videos: Video[] = [
   {
     id: "W6H8WcTPnWM",
@@ -217,6 +300,7 @@ function getVideosForSite(siteId: string) {
     case "amrep": return amrepVideos;
     case "e6": return e6Videos;
     case "rev": return revVideos;
+    case "sg": return sgVideos;
     default: return videos;
   }
 }

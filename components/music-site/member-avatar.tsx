@@ -5,6 +5,7 @@ import Image from "next/image";
 import { RemoteImage } from "@/components/music-site/remote-image";
 import { getLocalMemberImage } from "@/lib/gbv-member-images";
 import { getProxiedImageUrl, normalizeImageUrl } from "@/lib/image-utils";
+import { cn } from "@/lib/utils";
 
 const SITE_LOOKUP_CONTEXT: Record<string, string> = {
   gbv: "Guided By Voices",
@@ -25,7 +26,10 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
    fit?: "cover" | "contain";
    placeholderSize?: number;
    placeholderClassName?: string;
+   placeholderVariant?: "next-image" | "img";
+   placeholderWrapperClassName?: string;
    fallbackClassName?: string;
+   renderPlaceholder?: () => React.ReactNode;
  };
 
  export function MemberAvatar({
@@ -40,7 +44,10 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
    fit = "cover",
    placeholderSize = 24,
    placeholderClassName = "w-1/2 h-1/2 gbv-nav-icon object-contain",
+   placeholderVariant = "next-image",
+   placeholderWrapperClassName,
    fallbackClassName,
+   renderPlaceholder,
  }: MemberAvatarProps) {
    const [hasError, setHasError] = useState(false);
    const [resolvedImageUrl, setResolvedImageUrl] = useState<string | null>(null);
@@ -148,15 +155,26 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
    ]);
 
    if (!resolvedImageUrl || hasError) {
+    if (renderPlaceholder) {
+      return <>{renderPlaceholder()}</>;
+    }
     return (
-      <div className="w-full aspect-square rounded-lg mb-2 mx-auto flex items-center justify-center">
-         <Image
-           src={fallbackIconSrc}
-           alt="Artist placeholder"
-           width={placeholderSize}
-           height={placeholderSize}
-           className={placeholderClassName}
-         />
+      <div className={cn("w-full aspect-square rounded-lg mb-2 mx-auto flex items-center justify-center", placeholderWrapperClassName)}>
+         {placeholderVariant === "img" ? (
+           <img
+             src={fallbackIconSrc}
+             alt="Artist placeholder"
+             className={placeholderClassName}
+           />
+         ) : (
+           <Image
+             src={fallbackIconSrc}
+             alt="Artist placeholder"
+             width={placeholderSize}
+             height={placeholderSize}
+             className={placeholderClassName}
+           />
+         )}
        </div>
      );
    }

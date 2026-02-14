@@ -1,11 +1,11 @@
  "use client";
 
  import Link from "next/link";
- import Image from "next/image";
  import type { ComponentType } from "react";
  import { ShoppingCart } from "lucide-react";
  import { Card, CardContent } from "@/components/ui/card";
  import type { MusicSiteConfig } from "@/lib/music-site";
+ import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 export type AlbumGridItem = {
    id: number;
@@ -83,15 +83,7 @@ export function AlbumGrid<T extends AlbumGridItem>({
                        localFallbackSrc={getLocalFallbackImage?.(album)}
                      />
                    ) : (
-                     <div className="w-full aspect-square rounded-lg mb-2 flex items-center justify-center">
-                       <Image
-                         src={site.placeholderIconSrc}
-                         alt={`${site.shortName} logo`}
-                         width={24}
-                         height={24}
-                         className="w-1/2 h-1/2 gbv-nav-icon object-contain"
-                       />
-                     </div>
+                     <SitePlaceholderIcon site={site} />
                    )}
                    <h3 className="font-semibold text-base truncate">{album.title}</h3>
                    <div className="flex items-center justify-between text-xs text-muted-foreground">

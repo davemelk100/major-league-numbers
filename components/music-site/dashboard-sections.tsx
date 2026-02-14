@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import type { MusicSiteConfig } from "@/lib/music-site";
 import { MemberAvatar } from "@/components/music-site/member-avatar";
+import { cn } from "@/lib/utils";
 
 type RemoteImageProps = {
   src: string;
@@ -41,11 +42,15 @@ type MemberAvatarOptions = Pick<
   | "skipRemoteLookup"
   | "placeholderSize"
   | "placeholderClassName"
+  | "placeholderVariant"
+  | "placeholderWrapperClassName"
   | "fallbackClassName"
+  | "renderPlaceholder"
 >;
 
 type DashboardDailyRowProps = {
   children: ReactNode;
+  columns?: 2 | 3;
 };
 
 type DashboardSectionHeaderProps = {
@@ -72,7 +77,9 @@ type DashboardDiscographyGridProps<T extends DashboardAlbum> = {
   imageFit?: "cover" | "contain";
   placeholderVariant?: "next-image" | "img";
   placeholderClassName?: string;
+  placeholderWrapperClassName?: string;
   placeholderSize?: number;
+  renderPlaceholder?: () => ReactNode;
 };
 
 export function DashboardDescription({ text }: { text?: string }) {
@@ -80,8 +87,14 @@ export function DashboardDescription({ text }: { text?: string }) {
   return <p className="text-sm mb-6">{text}</p>;
 }
 
-export function DashboardDailyRow({ children }: DashboardDailyRowProps) {
-  return <div className="mb-8 grid gap-4 md:grid-cols-2">{children}</div>;
+export function DashboardDailyRow({ children, columns = 2 }: DashboardDailyRowProps) {
+  return (
+    <div
+      className={`mb-8 grid gap-4 ${columns === 3 ? "md:grid-cols-3" : "md:grid-cols-2"}`}
+    >
+      {children}
+    </div>
+  );
 }
 
 export function DashboardSectionHeader({
@@ -156,12 +169,14 @@ export function DashboardDiscographyGrid<T extends DashboardAlbum>({
   imageFit = "cover",
   placeholderVariant = "next-image",
   placeholderClassName = "w-1/2 h-1/2 gbv-nav-icon object-contain",
+  placeholderWrapperClassName,
   placeholderSize = 24,
+  renderPlaceholder: renderPlaceholderProp,
 }: DashboardDiscographyGridProps<T>) {
   const imageClassName = `w-full aspect-square rounded-lg object-${imageFit} mb-2`;
 
-  const renderPlaceholder = () => (
-    <div className="w-full aspect-square rounded-lg mb-2 flex items-center justify-center">
+  const renderPlaceholder = renderPlaceholderProp ?? (() => (
+    <div className={cn("w-full aspect-square rounded-lg mb-2 flex items-center justify-center", placeholderWrapperClassName)}>
       {placeholderVariant === "img" ? (
         <img
           src={site.placeholderIconSrc}
@@ -180,7 +195,7 @@ export function DashboardDiscographyGrid<T extends DashboardAlbum>({
         />
       )}
     </div>
-  );
+  ));
 
   return (
     <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">

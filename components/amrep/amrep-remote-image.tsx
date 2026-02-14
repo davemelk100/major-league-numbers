@@ -23,6 +23,7 @@ export function AmrepRemoteImage({
       localFallbackSrc={localFallbackSrc}
       fit={fit}
       className={cn("rounded-lg", className)}
+      fallbackClassName="object-contain rounded-lg opacity-20"
       invalidCacheValues={["/chat-gbv-box.svg", "/noise-bird.svg"]}
     />
   );

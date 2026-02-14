@@ -15,6 +15,7 @@ import {
 import { useMemberImage } from "@/components/music-site/use-member-image";
 import { MemberDetailLayout } from "@/components/music-site/member-detail-layout";
 import { MemberDetailLeft } from "@/components/music-site/member-detail-left";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 import { MemberDetailRight } from "@/components/music-site/member-detail-right";
 
 interface Release {
@@ -260,13 +261,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
         backHref={`${site.basePath}/members`}
         backLabel={site.navLabels.members}
         leftContent={
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
-            <img
-              src={site.placeholderIconSrc}
-              alt={`${site.shortName} logo`}
-              className="w-auto h-auto max-w-1/2 max-h-1/2 gbv-nav-icon object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} />
         }
         rightTitle="Releases"
         rightContent={
@@ -301,13 +296,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
             preferProxy
           />
         ) : (
-          <div className="w-full aspect-square bg-muted rounded-lg flex items-center justify-center">
-            <img
-              src={site.placeholderIconSrc}
-              alt={`${site.shortName} logo`}
-              className="w-auto h-auto max-w-1/2 max-h-1/2 gbv-nav-icon object-contain"
-            />
-          </div>
+          <SitePlaceholderIcon site={site} />
         )
       }
       name={member.name}

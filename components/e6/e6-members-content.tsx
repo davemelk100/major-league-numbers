@@ -5,12 +5,14 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { getAllE6Artists, getE6ArtistImageUrl } from "@/lib/e6-artists-data";
 import Link from "next/link";
-import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname, type MusicSiteConfig } from "@/lib/music-site";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 // In-memory cache shared across all ArtistImage instances
 const artistImageCache = new Map<string, string | null>();
 
-function ArtistImage({ name, staticUrl }: { name: string; staticUrl?: string }) {
+function ArtistImage({ name, staticUrl, site }: { name: string; staticUrl?: string; site: MusicSiteConfig }) {
   const [imageUrl, setImageUrl] = useState<string | null>(staticUrl || null);
   const [failed, setFailed] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -72,19 +74,15 @@ function ArtistImage({ name, staticUrl }: { name: string; staticUrl?: string }) 
   }
 
   return (
-    <div ref={ref} className="w-full aspect-square bg-muted/30 rounded-lg mb-2 flex items-center justify-center overflow-hidden">
-      <Image
-        src="/e6-logo.png"
-        alt={name}
-        width={200}
-        height={200}
-        className="opacity-30 w-full h-auto p-4"
-      />
+    <div ref={ref}>
+      <SitePlaceholderIcon site={site} />
     </div>
   );
 }
 
 export function E6MembersContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
   const artists = getAllE6Artists();
   const [search, setSearch] = useState("");
 
@@ -116,7 +114,7 @@ export function E6MembersContent() {
             <Link key={artist.id} href={`/e6/members/${artist.id}`}>
               <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3 text-center">
-                  <ArtistImage name={artist.name} staticUrl={staticUrl} />
+                  <ArtistImage name={artist.name} staticUrl={staticUrl} site={site} />
                   <p className="text-sm font-medium">{artist.name}</p>
                 </CardContent>
               </Card>

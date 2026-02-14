@@ -1,13 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { getAllRevArtists, getRevArtistImageUrl } from "@/lib/rev-artists-data";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
+import { getMusicSiteFromPathname } from "@/lib/music-site";
 import Link from "next/link";
-import Image from "next/image";
 
 export function RevMembersContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
   const artists = getAllRevArtists();
   const [search, setSearch] = useState("");
 
@@ -39,24 +43,18 @@ export function RevMembersContent() {
             <Link key={artist.id} href={`/rev/members/${artist.id}`}>
               <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3 text-center">
-                  <div className="w-full aspect-square bg-muted/30 rounded-lg mb-2 flex items-center justify-center overflow-hidden">
-                    {imageUrl ? (
+                  {imageUrl ? (
+                    <div className="w-full aspect-square bg-muted/30 rounded-lg mb-2 flex items-center justify-center overflow-hidden">
                       <img
                         src={imageUrl}
                         alt={artist.name}
                         className="w-full h-full object-cover"
                         loading="lazy"
                       />
-                    ) : (
-                      <Image
-                        src="/rev-icon.svg"
-                        alt={artist.name}
-                        width={48}
-                        height={48}
-                        className="opacity-30"
-                      />
-                    )}
-                  </div>
+                    </div>
+                  ) : (
+                    <SitePlaceholderIcon site={site} />
+                  )}
                   <p className="text-sm font-medium">{artist.name}</p>
                 </CardContent>
               </Card>

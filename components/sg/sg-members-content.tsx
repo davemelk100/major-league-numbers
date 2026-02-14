@@ -5,7 +5,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { sgArtists, sgArtistImages } from "@/lib/sg-artists-data";
-import { MemberAvatar } from "@/components/music-site/member-avatar";
+import { SgRemoteImage } from "@/components/sg/sg-remote-image";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 export function SgMembersContent() {
   const pathname = usePathname();
@@ -28,17 +29,18 @@ export function SgMembersContent() {
           <Link key={member.id} href={`${site.basePath}/members/${member.id}`}>
             <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
               <CardContent className="p-3 text-center">
-                <MemberAvatar
-                  name={member.name}
-                  imageUrl={member.imageUrl}
-                  fallbackIconSrc={site.placeholderIconSrc}
-                  cacheKeyPrefix={site.id}
-                  skipRemoteLookup={false}
-                  fit="contain"
-                  placeholderSize={200}
-                  placeholderClassName="w-3/5 h-auto opacity-20 object-contain"
-                  fallbackClassName="w-3/5 h-auto opacity-20 object-contain"
-                />
+                {member.imageUrl ? (
+                  <SgRemoteImage
+                    src={member.imageUrl}
+                    alt={member.name}
+                    width={200}
+                    height={200}
+                    className="w-full aspect-square rounded-lg object-contain mb-2"
+                    cacheKey={`sg-member-thumb:${member.id}`}
+                  />
+                ) : (
+                  <SitePlaceholderIcon site={site} />
+                )}
                 <h3 className="font-semibold text-sm">{member.name}</h3>
               </CardContent>
             </Card>
