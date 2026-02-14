@@ -3,12 +3,10 @@
 import { useState, useEffect, Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import { getDailyPGAPlayer, type PGASpotlightPlayer } from "@/lib/pga-player-spotlight-data";
-import { getPlayerHeadshotUrl } from "@/lib/pga-api";
-import { PGAPlayerHeadshot } from "@/components/pga/pga-player-headshot";
 import Link from "next/link";
 
 const STORAGE_KEY = "pgaDailyPlayer";
-const CACHE_VERSION = 3;
+const CACHE_VERSION = 4;
 
 function getTodayKey(): string {
   const today = new Date();
@@ -51,9 +49,6 @@ function PGAPlayerSpotlightContent() {
     );
   }
 
-  const showHeadshot = player.hasHeadshot !== false;
-  const headshotUrl = showHeadshot ? getPlayerHeadshotUrl(player.id) : null;
-
   return (
     <div className="w-full h-full bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
       <div className="flex items-center gap-2">
@@ -71,13 +66,13 @@ function PGAPlayerSpotlightContent() {
         </div>
         <Link
           href={`/pga/players/${player.id}`}
-          className="group flex justify-center"
+          className="group relative overflow-hidden rounded-xl flex justify-center"
         >
-          <PGAPlayerHeadshot
-            src={headshotUrl || ""}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={player.imageUrl}
             alt={player.name}
-            size={250}
-            className="rounded-xl transition-transform group-hover:scale-105"
+            className="rounded-xl transition-transform group-hover:scale-105 w-[200px] sm:w-[250px] lg:w-[300px] h-auto"
           />
         </Link>
       </div>

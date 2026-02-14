@@ -7,7 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const STORAGE_KEY = "nhlDailyPlayer";
-const CACHE_VERSION = 2; // bump to invalidate stale cached data
+const CACHE_VERSION = 3; // bump to invalidate stale cached data
 
 function getTodayKey(): string {
   const today = new Date();
@@ -50,9 +50,6 @@ function NHLPlayerSpotlightContent() {
     );
   }
 
-  // NHL headshot URL - use assets.nhle.com/mugs format
-  const headshotUrl = `https://assets.nhle.com/mugs/nhl/latest/${player.id}.png`;
-
   return (
     <div className="w-full h-full bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
       <div className="flex items-center gap-2">
@@ -76,7 +73,7 @@ function NHLPlayerSpotlightContent() {
           className="group relative overflow-hidden rounded-xl flex justify-center"
         >
           <Image
-            src={headshotUrl}
+            src={player.imageUrl}
             alt={player.name}
             width={275}
             height={275}

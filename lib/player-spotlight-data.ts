@@ -7,6 +7,7 @@ export interface SpotlightPlayer {
   position: string;
   team: string;
   years: string;
+  imageUrl: string;
   bats?: string;
   throws?: string;
   birthplace?: string;
@@ -29,6 +30,10 @@ export interface SpotlightPlayer {
     inningsPitched?: string;
   };
   highlights?: string[];
+}
+
+function mlbHeadshot(id: number): string {
+  return `https://img.mlbstatic.com/mlb-photos/image/upload/d_people:generic:headshot:67:current.png/w_426,q_auto:best/v1/people/${id}/headshot/67/current`;
 }
 
 // Internal type for curated players list (includes legacy fact field)
@@ -314,7 +319,7 @@ export const spotlightPlayers: CuratedPlayer[] = [
 // Convert a curated player to SpotlightPlayer format
 function curatedToSpotlight(curated: CuratedPlayer): SpotlightPlayer {
   const { fact, ...rest } = curated;
-  return rest;
+  return { ...rest, imageUrl: rest.imageUrl || mlbHeadshot(rest.id) };
 }
 
 // Check if a player has a real photo (not the generic silhouette)
@@ -484,6 +489,7 @@ export async function getDailyPlayer(): Promise<SpotlightPlayer> {
       position: player.primaryPosition?.abbreviation || player.primaryPosition?.name || "Unknown",
       team: player.currentTeam?.name || "MLB",
       years: curatedPlayer?.years || `${randomSeason}`,
+      imageUrl: mlbHeadshot(player.id),
       bats: player.batSide?.description,
       throws: player.pitchHand?.description,
       birthplace: player.birthCity && player.birthCountry

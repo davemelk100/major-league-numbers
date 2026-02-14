@@ -5,8 +5,10 @@ export interface NHLSpotlightPlayer {
   team: string;
   years: string;
   fact: string;
-  headshot?: string;
+  imageUrl: string;
 }
+
+const nhlImg = (id: number) => `https://assets.nhle.com/mugs/nhl/latest/${id}.png`;
 
 export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
   {
@@ -16,6 +18,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Pittsburgh Penguins",
     years: "2005-present",
     fact: "Won three Stanley Cups and two Conn Smythe Trophies, establishing himself as the best player of his generation.",
+    imageUrl: nhlImg(8471675),
   },
   {
     id: 8471214,
@@ -24,6 +27,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Washington Capitals",
     years: "2005-present",
     fact: "The greatest goal scorer of his era, chasing Wayne Gretzky's all-time goals record of 894.",
+    imageUrl: nhlImg(8471214),
   },
   {
     id: 8478402,
@@ -32,6 +36,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Edmonton Oilers",
     years: "2015-present",
     fact: "Won the Art Ross Trophy five times before turning 28, widely considered the fastest skater in NHL history.",
+    imageUrl: nhlImg(8478402),
   },
   {
     id: 8477492,
@@ -40,6 +45,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Colorado Avalanche",
     years: "2013-present",
     fact: "Won the 2022 Stanley Cup and Conn Smythe Trophy, capping a dominant postseason run.",
+    imageUrl: nhlImg(8477492),
   },
   {
     id: 8477934,
@@ -48,6 +54,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Edmonton Oilers",
     years: "2014-present",
     fact: "First German-born player to win the Hart Trophy and Art Ross Trophy in the same season (2019-20).",
+    imageUrl: nhlImg(8477934),
   },
   {
     id: 8479318,
@@ -56,6 +63,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Toronto Maple Leafs",
     years: "2016-present",
     fact: "Scored four goals in his NHL debut, the first player in the modern era to accomplish this feat.",
+    imageUrl: nhlImg(8479318),
   },
   {
     id: 8480069,
@@ -64,6 +72,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Colorado Avalanche",
     years: "2019-present",
     fact: "Won the Norris Trophy as the NHL's best defenseman in just his second full season.",
+    imageUrl: nhlImg(8480069),
   },
   {
     id: 8476453,
@@ -72,6 +81,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Tampa Bay Lightning",
     years: "2013-present",
     fact: "Recorded 128 points in 2018-19, the most in a single season since 1995-96.",
+    imageUrl: nhlImg(8476453),
   },
   {
     id: 8474141,
@@ -80,6 +90,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Chicago Blackhawks",
     years: "2007-present",
     fact: "Won three Stanley Cups with Chicago and the Conn Smythe Trophy in 2013.",
+    imageUrl: nhlImg(8474141),
   },
   {
     id: 8471679,
@@ -88,6 +99,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Montreal Canadiens",
     years: "2007-2023",
     fact: "Won the Hart Trophy and Vezina Trophy in the same season (2014-15), a rare feat for a goaltender.",
+    imageUrl: nhlImg(8471679),
   },
   {
     id: 8474578,
@@ -96,6 +108,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Multiple teams",
     years: "2009-present",
     fact: "Won the Norris Trophy twice with Ottawa, one of the most dynamic offensive defensemen of his generation.",
+    imageUrl: nhlImg(8474578),
   },
   {
     id: 8468685,
@@ -104,6 +117,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "New York Rangers",
     years: "2005-2020",
     fact: "Known as 'The King,' he won the Vezina Trophy in 2012 and made 887 career appearances.",
+    imageUrl: nhlImg(8468685),
   },
   {
     id: 8466138,
@@ -112,6 +126,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Multiple teams",
     years: "1997-2022",
     fact: "Won the Hart Trophy and Art Ross Trophy in 2005-06 and recorded over 1,500 career points.",
+    imageUrl: nhlImg(8466138),
   },
   {
     id: 8465009,
@@ -120,6 +135,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Multiple teams",
     years: "1997-2023",
     fact: "At 6'9\", he was the tallest player in NHL history and captained the Bruins to the 2011 Stanley Cup.",
+    imageUrl: nhlImg(8465009),
   },
   {
     id: 8476883,
@@ -128,6 +144,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Tampa Bay Lightning",
     years: "2014-present",
     fact: "Won back-to-back Stanley Cups in 2020 and 2021, earning the Conn Smythe Trophy in 2021.",
+    imageUrl: nhlImg(8476883),
   },
   {
     id: 8477956,
@@ -136,6 +153,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Boston Bruins",
     years: "2014-present",
     fact: "Scored 61 goals in 2022-23, the most by a Bruin since Phil Esposito.",
+    imageUrl: nhlImg(8477956),
   },
   {
     id: 8481559,
@@ -144,6 +162,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "New Jersey Devils",
     years: "2019-present",
     fact: "Selected 1st overall in 2019, he became one of the youngest players to lead the Devils in scoring.",
+    imageUrl: nhlImg(8481559),
   },
   {
     id: 8480012,
@@ -152,6 +171,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Vancouver Canucks",
     years: "2018-present",
     fact: "Won the Calder Trophy as rookie of the year in 2018-19 with an electrifying skill set.",
+    imageUrl: nhlImg(8480012),
   },
   {
     id: 8476460,
@@ -160,6 +180,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Winnipeg Jets",
     years: "2011-present",
     fact: "Set an NHL record with 14 goals in his first 15 career playoff games.",
+    imageUrl: nhlImg(8476460),
   },
   {
     id: 8477493,
@@ -168,6 +189,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Florida Panthers",
     years: "2013-present",
     fact: "Won the Selke Trophy as the NHL's best defensive forward and captained the Panthers to the 2024 Cup.",
+    imageUrl: nhlImg(8477493),
   },
   {
     id: 8478864,
@@ -176,6 +198,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Minnesota Wild",
     years: "2020-present",
     fact: "Won the Calder Trophy unanimously in 2020-21, the first Wild player to win a major NHL award.",
+    imageUrl: nhlImg(8478864),
   },
   {
     id: 8477500,
@@ -184,6 +207,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "New York Islanders",
     years: "2014-present",
     fact: "Scored 31 goals in just 36 games with the Islanders after a mid-season trade in 2022-23.",
+    imageUrl: nhlImg(8477500),
   },
   {
     id: 8481542,
@@ -192,6 +216,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Detroit Red Wings",
     years: "2021-present",
     fact: "Won the Calder Trophy in 2021-22, the first Red Wing to win the award since Roger Crozier in 1965.",
+    imageUrl: nhlImg(8481542),
   },
   {
     id: 8478483,
@@ -200,6 +225,7 @@ export const nhlSpotlightPlayers: NHLSpotlightPlayer[] = [
     team: "Toronto Maple Leafs",
     years: "2016-present",
     fact: "Set a Maple Leafs record with a 23-game point streak in 2022-23.",
+    imageUrl: nhlImg(8478483),
   },
 ];
 

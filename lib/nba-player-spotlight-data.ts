@@ -5,8 +5,10 @@ export interface NBASpotlightPlayer {
   team: string;
   years: string;
   fact: string;
-  hasHeadshot?: boolean;
+  imageUrl: string;
 }
+
+const espn = (id: number) => `https://a.espncdn.com/i/headshots/nba/players/full/${id}.png`;
 
 export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
   {
@@ -16,7 +18,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Chicago Bulls",
     years: "1984-2003",
     fact: "Six-time NBA champion, five-time MVP, and ten-time scoring champion. Widely considered the greatest basketball player of all time.",
-    hasHeadshot: false,
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/a/ae/Michael_Jordan_in_2014.jpg",
   },
   {
     id: 1966,
@@ -25,6 +27,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Los Angeles Lakers",
     years: "2003-present",
     fact: "The NBA's all-time leading scorer with four championships and four MVP awards across three different franchises.",
+    imageUrl: espn(1966),
   },
   {
     id: 3112335,
@@ -33,6 +36,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Denver Nuggets",
     years: "2015-present",
     fact: "Three-time MVP and 2023 NBA champion. Drafted 41st overall, the lowest pick to win MVP in NBA history.",
+    imageUrl: espn(3112335),
   },
   {
     id: 2334,
@@ -41,7 +45,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Los Angeles Lakers",
     years: "1979-1991, 1996",
     fact: "Won the NBA Finals MVP as a rookie, playing center in Game 6 of the 1980 Finals. Five-time champion and three-time MVP.",
-    hasHeadshot: false,
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Magic_Johnson_at_SXSW_2022_%2851958828669%29_%28cropped%29.jpg/500px-Magic_Johnson_at_SXSW_2022_%2851958828669%29_%28cropped%29.jpg",
   },
   {
     id: 2335,
@@ -50,7 +54,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Boston Celtics",
     years: "1979-1992",
     fact: "Won three consecutive MVP awards (1984-86), the only non-center to accomplish this at the time. Three-time champion.",
-    hasHeadshot: false,
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/b/bb/Larrybird.jpg",
   },
   {
     id: 3975,
@@ -59,6 +63,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Golden State Warriors",
     years: "2009-present",
     fact: "Revolutionized basketball with his three-point shooting. NBA's all-time leader in three-pointers made with four championships.",
+    imageUrl: espn(3975),
   },
   {
     id: 3032977,
@@ -67,6 +72,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Milwaukee Bucks",
     years: "2013-present",
     fact: "The 'Greek Freak' won back-to-back MVPs and led the Bucks to the 2021 championship with a 50-point Finals closeout game.",
+    imageUrl: espn(3032977),
   },
   {
     id: 215,
@@ -75,7 +81,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "San Antonio Spurs",
     years: "1997-2016",
     fact: "Won five championships in three decades. Named to 15 All-NBA teams and is widely considered the greatest power forward ever.",
-    hasHeadshot: false,
+    imageUrl: espn(215),
   },
   {
     id: 4145,
@@ -84,7 +90,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Milwaukee Bucks / Los Angeles Lakers",
     years: "1969-1989",
     fact: "Six-time MVP and six-time champion. His skyhook was virtually unblockable and he held the scoring record for 39 years.",
-    hasHeadshot: false,
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Kareem_Abdul-Jabbar_May_2014.jpg/500px-Kareem_Abdul-Jabbar_May_2014.jpg",
   },
   {
     id: 110,
@@ -93,7 +99,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Los Angeles Lakers",
     years: "1996-2016",
     fact: "Won five championships and scored 81 points in a single game, the second-highest total in NBA history. Known as the 'Black Mamba.'",
-    hasHeadshot: false,
+    imageUrl: espn(110),
   },
   {
     id: 3202,
@@ -102,6 +108,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Phoenix Suns",
     years: "2007-present",
     fact: "Four-time scoring champion and two-time Finals MVP. One of the most skilled scorers in NBA history at 6'10\".",
+    imageUrl: espn(3202),
   },
   {
     id: 609,
@@ -110,7 +117,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Dallas Mavericks",
     years: "1998-2019",
     fact: "Revolutionized the power forward position with his shooting. Led the Mavericks to the 2011 championship and won Finals MVP.",
-    hasHeadshot: false,
+    imageUrl: espn(609),
   },
   {
     id: 366,
@@ -119,7 +126,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Philadelphia 76ers",
     years: "1996-2010",
     fact: "The 2001 MVP who stood just 6'0\" and led the 76ers to the Finals. Four-time scoring champion known as 'The Answer.'",
-    hasHeadshot: false,
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Allen_Iverson_headshot.jpg/500px-Allen_Iverson_headshot.jpg",
   },
   {
     id: 3945274,
@@ -128,6 +135,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Los Angeles Lakers",
     years: "2018-present",
     fact: "EuroLeague MVP at age 19 before being drafted. Became the youngest player to average a triple-double for a season.",
+    imageUrl: espn(3945274),
   },
   {
     id: 614,
@@ -136,7 +144,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Los Angeles Lakers",
     years: "1992-2011",
     fact: "One of the most dominant players ever, winning three consecutive Finals MVPs (2000-02). Combined size and athleticism like no other center.",
-    hasHeadshot: false,
+    imageUrl: espn(614),
   },
   {
     id: 6450,
@@ -145,6 +153,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Los Angeles Clippers",
     years: "2011-present",
     fact: "Two-time Finals MVP with two different teams (Spurs 2014, Raptors 2019). Known for his elite defense and clutch scoring.",
+    imageUrl: espn(6450),
   },
   {
     id: 4065648,
@@ -153,6 +162,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Boston Celtics",
     years: "2017-present",
     fact: "Led the Celtics to the 2024 NBA championship and won Finals MVP, cementing his status among the league's elite.",
+    imageUrl: espn(4065648),
   },
   {
     id: 4594268,
@@ -161,6 +171,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Minnesota Timberwolves",
     years: "2020-present",
     fact: "The #1 overall pick in 2020 who has become one of the most exciting and athletic scorers in the NBA.",
+    imageUrl: espn(4594268),
   },
   {
     id: 3059318,
@@ -169,6 +180,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Philadelphia 76ers",
     years: "2016-present",
     fact: "The 2023 MVP who came to the US from Cameroon at age 16. Missed his first two seasons with injuries before becoming dominant.",
+    imageUrl: espn(3059318),
   },
   {
     id: 619,
@@ -177,7 +189,7 @@ export const nbaSpotlightPlayers: NBASpotlightPlayer[] = [
     team: "Houston Rockets",
     years: "1984-2002",
     fact: "Won back-to-back championships (1994-95) while Michael Jordan was retired. Holds the all-time blocks record with 3,830.",
-    hasHeadshot: false,
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/84/Nigerian_President_Buhari_Stands_With_Secretary_Kerry%2C_U.S._Delegation_After_They_Attended_His_Inauguration_Ceremony_%28cropped%29.jpg/500px-Nigerian_President_Buhari_Stands_With_Secretary_Kerry%2C_U.S._Delegation_After_They_Attended_His_Inauguration_Ceremony_%28cropped%29.jpg",
   },
 ];
 

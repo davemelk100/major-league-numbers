@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 
 const sportsSites = [
   {
-    name: "MLB Numbers",
+    name: "Major League Numbers",
     href: "/mlb",
     logo: "https://www.mlbstatic.com/team-logos/league-on-dark/1.svg",
     description: "MLB player stats, rosters & standings",
@@ -124,10 +124,10 @@ export default function LandingPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-4 py-12">
       <h1
-        className="text-3xl font-bold mb-10 normal-case"
-        style={{ fontFamily: "var(--font-lato), sans-serif" }}
+        className="text-5xl font-bold mb-10 uppercase tracking-widest"
+        style={{ fontFamily: "var(--font-league-gothic), sans-serif" }}
       >
-        MLB Numbers
+        Major League Numbers
       </h1>
       <div className="max-w-4xl w-full space-y-10">
         <section>

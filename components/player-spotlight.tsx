@@ -6,7 +6,6 @@ import {
   getDailyPlayer,
   type SpotlightPlayer,
 } from "@/lib/player-spotlight-data";
-import { getPlayerHeadshotUrl } from "@/lib/mlb-api";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -188,7 +187,7 @@ export function PlayerSpotlight() {
           className="group relative overflow-hidden rounded-xl flex justify-center"
         >
           <Image
-            src={getPlayerHeadshotUrl(player.id, "large")}
+            src={player.imageUrl}
             alt={player.name}
             width={275}
             height={275}

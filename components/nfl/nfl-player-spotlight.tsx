@@ -3,12 +3,11 @@
 import { useState, useEffect, Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import { getDailyNFLPlayer, type NFLSpotlightPlayer } from "@/lib/nfl-player-spotlight-data";
-import { getPlayerHeadshotUrl } from "@/lib/nfl-api";
 import Image from "next/image";
 import Link from "next/link";
 
 const STORAGE_KEY = "nflDailyPlayer";
-const CACHE_VERSION = 2; // bump to invalidate stale cached data
+const CACHE_VERSION = 3; // bump to invalidate stale cached data
 
 function getTodayKey(): string {
   const today = new Date();
@@ -51,10 +50,6 @@ function NFLPlayerSpotlightContent() {
     );
   }
 
-  // Only use ESPN headshots for current players with hasHeadshot !== false
-  const showHeadshot = player.hasHeadshot !== false;
-  const headshotUrl = showHeadshot ? getPlayerHeadshotUrl(player.id) : null;
-
   return (
     <div className="w-full h-full bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
       <div className="flex items-center gap-2">
@@ -70,28 +65,20 @@ function NFLPlayerSpotlightContent() {
           </div>
           <p className="text-sm text-muted-foreground">{player.fact}</p>
         </div>
-        {headshotUrl ? (
-          <Link
-            href={`/nfl/players/${player.id}`}
-            className="group relative overflow-hidden rounded-xl flex justify-center"
-          >
-            <Image
-              src={headshotUrl}
-              alt={player.name}
-              width={275}
-              height={275}
-              className="rounded-xl transition-transform group-hover:scale-105 w-[200px] sm:w-[250px] lg:w-[300px] h-auto"
-              unoptimized
-              priority
-            />
-          </Link>
-        ) : (
-          <div className="w-[200px] sm:w-[250px] lg:w-[300px] h-[200px] sm:h-[250px] lg:h-[300px] bg-muted rounded-xl flex items-center justify-center mx-auto">
-            <span className="text-3xl sm:text-5xl font-bold text-muted-foreground">
-              {player.position}
-            </span>
-          </div>
-        )}
+        <Link
+          href={`/nfl/players/${player.id}`}
+          className="group relative overflow-hidden rounded-xl flex justify-center"
+        >
+          <Image
+            src={player.imageUrl}
+            alt={player.name}
+            width={275}
+            height={275}
+            className="rounded-xl transition-transform group-hover:scale-105 w-[200px] sm:w-[250px] lg:w-[300px] h-auto"
+            unoptimized
+            priority
+          />
+        </Link>
       </div>
     </div>
   );
