@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SportsSiteLayout } from "@/components/sports-site/sports-layout";
-import { UpdatesBanner } from "@/components/updates-banner";
+
 
 export const metadata: Metadata = {
   title: {
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 
 export default function USPBLLayout({ children }: { children: React.ReactNode }) {
   return (
-    <SportsSiteLayout banner={<UpdatesBanner />}>
+    <SportsSiteLayout>
       {children}
     </SportsSiteLayout>
   );
