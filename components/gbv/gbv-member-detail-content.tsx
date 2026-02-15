@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Loader2, ExternalLink } from "lucide-react";
 import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
 import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
@@ -213,13 +214,14 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
         emptyLabel="No discography found"
         containerClassName="grid gap-3 sm:grid-cols-2"
         renderItem={(release) => (
-          <div
+          <Link
             key={`${release.id}-${release.title}-${release.year ?? "unknown"}`}
-            className="flex items-center justify-between rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-sm text-white"
+            href={`${site.basePath}/albums/${release.id}`}
+            className="flex items-center justify-between rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-sm text-white hover:bg-white/20 transition-colors"
           >
             <span className="font-semibold">{release.title}</span>
             <span className="text-xs text-white/70">{release.year ?? "—"}</span>
-          </div>
+          </Link>
         )}
       />
     );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
+import Link from "next/link";
 import { Loader2, ExternalLink } from "lucide-react";
 import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
 import { getLocalMemberImage } from "@/lib/gbv-member-images";
@@ -20,6 +21,7 @@ import { MemberDetailRight } from "@/components/music-site/member-detail-right";
 
 interface Release {
   id: number;
+  localId?: number;
   title: string;
   year?: number | null;
   thumb: string;
@@ -116,6 +118,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
             })
             .map((release) => ({
               id: release.id,
+              localId: release.id,
               title: release.artist ? `${release.artist} — ${release.title}` : release.title,
               year: release.year,
               thumb: "",
@@ -140,16 +143,23 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
               )
             );
 
-            const apiMapped = apiMatches.map((release: any) => ({
-              id: release.id,
-              title: release.artist ? `${release.artist} — ${release.title}` : release.title,
-              year: release.year,
-              thumb: release.thumb || "",
-              type: "release",
-              role: Array.isArray(release.format)
-                ? release.format.join(", ")
-                : release.format || "Release",
-            }));
+            const apiMapped = apiMatches.map((release: any) => {
+              const apiKey = normalizeArtistName(`${release.artist || ""}${release.title || ""}`);
+              const localMatch = localMatches.find(
+                (l) => normalizeArtistName(l.title.replace(" — ", "")) === apiKey
+              );
+              return {
+                id: release.id,
+                localId: localMatch?.localId,
+                title: release.artist ? `${release.artist} — ${release.title}` : release.title,
+                year: release.year,
+                thumb: release.thumb || "",
+                type: "release",
+                role: Array.isArray(release.format)
+                  ? release.format.join(", ")
+                  : release.format || "Release",
+              };
+            });
 
             // Add any local releases not found in API results
             const extras = localMatches.filter((local) => {
@@ -171,6 +181,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
             })
             .map((release) => ({
               id: release.id,
+              localId: release.id,
               title: release.artist ? `${release.artist} — ${release.title}` : release.title,
               year: release.year,
               thumb: "",
@@ -323,14 +334,24 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
       emptyLabel="No releases found."
       emptyClassName="text-sm"
       containerClassName="grid gap-2"
-      renderItem={(release) => (
-        <div
-          key={release.id}
-          className="border-b border-border pb-2 last:border-0"
-        >
-          <p className="font-semibold text-sm">{release.title}</p>
-        </div>
-      )}
+      renderItem={(release) =>
+        release.localId ? (
+          <Link
+            key={release.id}
+            href={`${site.basePath}/albums/${release.localId}`}
+            className="block border-b border-border pb-2 last:border-0 hover:bg-muted/50 rounded px-2 py-1 transition-colors"
+          >
+            <p className="font-semibold text-sm">{release.title}</p>
+          </Link>
+        ) : (
+          <div
+            key={release.id}
+            className="border-b border-border pb-2 last:border-0"
+          >
+            <p className="font-semibold text-sm">{release.title}</p>
+          </div>
+        )
+      }
     />
   );
 

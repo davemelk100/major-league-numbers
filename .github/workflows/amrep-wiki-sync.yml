@@ -1,0 +1,56 @@
+name: AmRep Wikipedia Sync
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - run: node scripts/sync-amrep-wiki.mjs
+
+      - name: Create PR if discography changed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if git diff --quiet data/amrep-discography.json; then
+            echo "No discography changes detected."
+            exit 0
+          fi
+
+          BRANCH="amrep-wiki-sync-$(date +%Y%m%d)"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add data/amrep-discography.json data/amrep-wiki-revision.json
+          git commit -m "Update AmRep discography from Wikipedia"
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --title "Update AmRep discography from Wikipedia" \
+            --body "$(cat <<'EOF'
+          ## Summary
+          - Automated sync detected changes on the [AmRep Wikipedia discography](https://en.wikipedia.org/wiki/Amphetamine_Reptile_Records_discography)
+          - Review the diff for new, changed, or removed releases
+
+          ## Test plan
+          - [ ] Review changes in `data/amrep-discography.json`
+          - [ ] Verify catalog numbers and release data are correct
+          - [ ] Run `npm run dev` and check the AmRep pages
+          EOF
+          )"

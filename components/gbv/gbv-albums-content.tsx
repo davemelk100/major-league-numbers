@@ -14,7 +14,6 @@ const ITEMS_PER_PAGE = 30;
 
 export function GbvAlbumsContent() {
   const { site, isAmrep, albums, isLoading } = useSiteAlbumsData();
-  const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<"year-asc" | "year-desc" | "title">(
     "year-asc",
   );
@@ -26,19 +25,11 @@ export function GbvAlbumsContent() {
   // Reset display count when filters change
   useEffect(() => {
     setDisplayCount(ITEMS_PER_PAGE);
-  }, [search, sortBy, releaseFilter]);
+  }, [sortBy, releaseFilter]);
 
   // Memoized filtered and sorted albums
   const filteredAlbums = useMemo(() => {
     let result = [...albums];
-
-    // Filter by search
-    if (search) {
-      const searchLower = search.toLowerCase();
-      result = result.filter((album) =>
-        album.title.toLowerCase().includes(searchLower),
-      );
-    }
 
     // Filter by release type
     if (releaseFilter === "albums") {
@@ -65,7 +56,7 @@ export function GbvAlbumsContent() {
     }
 
     return result;
-  }, [albums, search, sortBy, releaseFilter]);
+  }, [albums, sortBy, releaseFilter]);
 
   // Albums to display (limited by displayCount)
   const visibleAlbums = filteredAlbums.slice(0, displayCount);
@@ -121,8 +112,6 @@ export function GbvAlbumsContent() {
         onReleaseFilterChange={setReleaseFilter}
         sortBy={sortBy}
         onSortByChange={setSortBy}
-        search={search}
-        onSearchChange={setSearch}
       />
 
       <AlbumGrid
@@ -150,7 +139,6 @@ export function GbvAlbumsContent() {
                 ? "singles"
                 : "releases"}{" "}
           found
-          {search && <> matching &quot;{search}&quot;</>}
         </div>
       )}
     </div>

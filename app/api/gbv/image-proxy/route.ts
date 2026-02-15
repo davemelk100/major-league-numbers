@@ -35,6 +35,7 @@ const ALLOWED_DOMAINS = [
   "www.chokebore.net",
   "metallipromo.com",
   "www.metalmusicarchives.com",
+  "www.metal-archives.com",
   "www.shoxop.com",
   "themelvins.net",
 ];

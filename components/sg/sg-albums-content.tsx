@@ -20,7 +20,6 @@ function getSgReleaseType(format?: string): "Album" | "Single" {
 export function SgAlbumsContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
-  const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<"year-asc" | "year-desc" | "title">(
     "year-asc",
   );
@@ -31,7 +30,7 @@ export function SgAlbumsContent() {
 
   useEffect(() => {
     setDisplayCount(ITEMS_PER_PAGE);
-  }, [search, sortBy, releaseFilter]);
+  }, [sortBy, releaseFilter]);
 
   const albums = useMemo(() => {
     return sgDiscography.map((release) => ({
@@ -44,13 +43,6 @@ export function SgAlbumsContent() {
 
   const filteredAlbums = useMemo(() => {
     let result = [...albums];
-
-    if (search) {
-      const searchLower = search.toLowerCase();
-      result = result.filter((album) =>
-        album.title.toLowerCase().includes(searchLower),
-      );
-    }
 
     if (releaseFilter === "albums") {
       result = result.filter((album) => getSgReleaseType(album.format) === "Album");
@@ -67,24 +59,17 @@ export function SgAlbumsContent() {
     }
 
     return result;
-  }, [albums, search, sortBy, releaseFilter]);
+  }, [albums, sortBy, releaseFilter]);
 
   const typeCounts = useMemo(() => {
-    let searchFiltered = albums;
-    if (search) {
-      const searchLower = search.toLowerCase();
-      searchFiltered = albums.filter((album) =>
-        album.title.toLowerCase().includes(searchLower),
-      );
-    }
-    const albumCount = searchFiltered.filter(
+    const albumCount = albums.filter(
       (album) => getSgReleaseType(album.format) === "Album",
     ).length;
-    const singleCount = searchFiltered.filter(
+    const singleCount = albums.filter(
       (album) => getSgReleaseType(album.format) === "Single",
     ).length;
-    return { all: searchFiltered.length, albums: albumCount, eps: 0, singles: singleCount };
-  }, [albums, search]);
+    return { all: albums.length, albums: albumCount, eps: 0, singles: singleCount };
+  }, [albums]);
 
   const visibleAlbums = filteredAlbums.slice(0, displayCount);
   const hasMore = displayCount < filteredAlbums.length;
@@ -121,8 +106,6 @@ export function SgAlbumsContent() {
         onReleaseFilterChange={setReleaseFilter}
         sortBy={sortBy}
         onSortByChange={setSortBy}
-        search={search}
-        onSearchChange={setSearch}
       />
 
       <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">

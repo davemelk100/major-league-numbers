@@ -2,7 +2,7 @@
  * AmRep release artwork
  */
 
-const amrepAlbumImages: Record<number, string> = {
+export const amrepAlbumImages: Record<number, string> = {
   1: "https://upload.wikimedia.org/wikipedia/en/4/4c/Cows_Peacetika.JPG",
   2: "https://m.media-amazon.com/images/I/51IkTkF4k3L.jpg",
   3: "https://upload.wikimedia.org/wikipedia/en/4/40/Helios_Creed_-_Lactating_Purple.jpg",
@@ -28,7 +28,7 @@ const amrepAlbumImages: Record<number, string> = {
   23: "https://i.discogs.com/D3Aa7g047kiEfiT_7dUVhyQApt3K7deg0JOhDZxrDjM/rs:fit/g:sm/q:90/h:600/w:598/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTc4MjY5/NC0xMjUyNjAxOTQ3/LmpwZWc.jpeg",
   24: "https://upload.wikimedia.org/wikipedia/en/b/bf/Hammerhead_-_Evil_Twin.jpeg",
   25: "https://i.discogs.com/6pM86jKWRC4G85bxGS1bhGsaYZsUO-35IYkBBHPsK_E/rs:fit/g:sm/q:90/h:432/w:432/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk1Mjk0/My0xMTc2NzY1ODcz/LmdpZg.jpeg",
-  26: "https://upload.wikimedia.org/wikipedia/en/0/07/Hammerhead_-_Into_the_Vortex.jpg",
+  26: "https://i.discogs.com/AhCHq8O7zH1Ir0riNvfqn7dbz9Kf1uEkAyuAH0b9sFs/rs:fit/g:sm/q:90/h:595/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgwMTAw/OC0xMTYzNDQyNTYz/LmpwZWc.jpeg",
   27: "https://i.discogs.com/E4E5ZFMPzIIpXX26CXtVOICOIVhMTxJEg98Oecd7F5A/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE4ODgx/MDUtMTQwNDY1MDA3/OC00NDk3LmpwZWc.jpeg",
   28: "https://upload.wikimedia.org/wikipedia/en/a/a5/Cows_Orphans_Tragedy.JPG",
   29: "https://i.discogs.com/2n5oGcP4Mp1yBOGvxoAvuMJ4MIZCXt9gp7Ncdz0YGFk/rs:fit/g:sm/q:90/h:597/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTgxODY4/Ny0xNzU1ODYwNDE5/LTQ4MjEuanBlZw.jpeg",
@@ -273,6 +273,28 @@ const amrepAlbumImages: Record<number, string> = {
   291: "https://i.discogs.com/bEr8h6peBbjokMp4187LWLAcIobyGJD7_dbqh6Ka1xE/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTk1MDYx/MzItMTQ4MTc1MzI2/NC0zODY5LmpwZWc.jpeg",
   292: "https://i.discogs.com/oqwiH0Bpn7muFTfMWI-kVnLVYGCp88FOb8C1Gy7rPbc/rs:fit/g:sm/q:90/h:600/w:585/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTEwNTMx/OTc5LTE0OTkzNTU5/OTEtNTIwOS5qcGVn.jpeg",
   293: "https://upload.wikimedia.org/wikipedia/en/e/eb/Helmet-StrapItOn.jpg",
+  223: "https://i.discogs.com/JEjFFxofoequIBqthuGA64PNkes6W453y2K98rI4J1M/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MTM2/OTktMTI1NzA2ODY2/MC5qcGVn.jpeg",
+  230: "https://i.discogs.com/Ty93yhaQ8Cs4DZqcCADj14HASdxeLWHrNxy3W2X3B3Y/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMjA4/MzMtMTE5MzY3NTgy/MS5qcGVn.jpeg",
+  231: "https://i.discogs.com/8MY66mofwxLBT-VIFhD2-lc_Qjp8kue5dPlqLJzMgQY/rs:fit/g:sm/q:90/h:462/w:450/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTIzNjI1/NzctMTMyNzkzMDE0/Ny5qcGVn.jpeg",
+  234: "https://i.discogs.com/ugZtA2v2cH2LYMbptbaQuxklWDmoUn7TXGVuAytLKqU/rs:fit/g:sm/q:90/h:500/w:507/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI0NzE1/NDYtMTQ1MDg3OTg2/Ni01MjA5LmpwZWc.jpeg",
+  235: "https://i.discogs.com/ugZtA2v2cH2LYMbptbaQuxklWDmoUn7TXGVuAytLKqU/rs:fit/g:sm/q:90/h:500/w:507/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI0NzE1/NDYtMTQ1MDg3OTg2/Ni01MjA5LmpwZWc.jpeg",
+  236: "https://i.discogs.com/tUfDaP-s7XTMliK1KuB3Pt_7P8gGfPuHu8YEdL0A0h4/rs:fit/g:sm/q:90/h:474/w:477/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTMxODUy/ODgtMTMxOTU2NzIy/NC5qcGVn.jpeg",
+  237: "https://i.discogs.com/lmrtvNcBH7S-_fWh0naZX0RoE5GCEuhFeJiFIGLBul4/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI0OTkw/NDQtMTMyNjUzNzA2/Ni5qcGVn.jpeg",
+  240: "https://i.discogs.com/M903JVp9JiHozWJwKGVziawVJqbL3MGtRjgcDPsqDqI/rs:fit/g:sm/q:90/h:600/w:595/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MDcz/MzctMTQwMTExNDIy/NC04ODM2LmpwZWc.jpeg",
+  241: "https://i.discogs.com/OlJjWUUOMrFR1TFBCpbOxN_X6WAEBa51INTbeqOYsSA/rs:fit/g:sm/q:90/h:600/w:589/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTE0MDcz/NDAtMTI0NzE4MzE5/Mi5qcGVn.jpeg",
+  245: "https://i.discogs.com/yIN6OPlexhAxAiVkeM6Ln8zaKOkG2QtYe9pKbDl-hb4/rs:fit/g:sm/q:90/h:600/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI0MzMx/MzUtMTI4NjAyMTc4/NC5qcGVn.jpeg",
+  247: "https://i.discogs.com/0Ob82wEbdfu_3NkbpRH0CROKmi2xipzArDOZP8I362A/rs:fit/g:sm/q:90/h:450/w:450/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI0MzMx/NjItMTI4NjAxNjUw/My5qcGVn.jpeg",
+  249: "https://i.discogs.com/Y_XHhY-V5jnkZyQGKy6RDw55msAMyGi9_0j7EnZwu8A/rs:fit/g:sm/q:90/h:400/w:400/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTI5MzQ0/OTMtMTMwODAwMzEx/Ny5qcGVn.jpeg",
+  254: "https://i.discogs.com/PHPCiu1alrFJSosxdVn9CH7t3yOt6X8hnjf5qQtIi7E/rs:fit/g:sm/q:90/h:600/w:595/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTM0OTI2/MjctMTUzNzQyMzk4/MC00Mjg4LmpwZWc.jpeg",
+  268: "https://i.discogs.com/8tYr15Z-j6_xgmThb529jTMCq5VLrDHetrJYZAn1ZRo/rs:fit/g:sm/q:90/h:591/w:600/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMzM0/ODM5LTE1MTU1Mjg3/ODEtNzI4MS5qcGVn.jpeg",
+  211: "https://www.metal-archives.com/images/6/0/7/0/60708.jpg",
+  212: "https://www.themelvins.net/wiki/images/3/34/Melam83.jpg",
+  213: "https://www.themelvins.net/wiki/images/b/b3/Melam84.jpg",
+  214: "https://www.themelvins.net/wiki/images/7/7d/Melam85.jpg",
+  215: "https://themelvins.net/wiki/images/a/a3/Melam86.jpg",
+  219: "https://i.discogs.com/JyqMZ9l_s-0lB8GAh3IucDKhtslC_bbGkVskt9OTq1k/rs:fit/g:sm/q:90/h:432/w:432/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMjkz/MjYtMTE5NDQwMjM4/MC5qcGVn.jpeg",
+  220: "https://i.discogs.com/v2-GyN14GCbFyArh_VQjvP0RaH8aImX7RVdzPD7fbwg/rs:fit/g:sm/q:90/h:432/w:432/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMjkz/MjgtMTE5NDQwMjQ5/OC5qcGVn.jpeg",
+  221: "https://i.discogs.com/c3z02EUhLWUMV2rmLVcNQL1AQqCdZS_rhIRPIFho7jc/rs:fit/g:sm/q:40/h:300/w:300/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9SLTExMjkz/MTMtMTE5NDQwMTA2/MS5qcGVn.jpeg",
 };
 
 /**

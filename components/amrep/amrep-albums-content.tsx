@@ -14,7 +14,6 @@ const ITEMS_PER_PAGE = 30;
 
 export function GbvAlbumsContent() {
   const { site, isAmrep, albums, isLoading } = useSiteAlbumsData();
-  const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<"year-asc" | "year-desc" | "title">(
     "year-asc",
   );
@@ -26,19 +25,11 @@ export function GbvAlbumsContent() {
   // Reset display count when filters change
   useEffect(() => {
     setDisplayCount(ITEMS_PER_PAGE);
-  }, [search, sortBy, releaseFilter]);
+  }, [sortBy, releaseFilter]);
 
   // Memoized filtered and sorted albums
   const filteredAlbums = useMemo(() => {
     let result = [...albums];
-
-    // Filter by search
-    if (search) {
-      const searchLower = search.toLowerCase();
-      result = result.filter((album) =>
-        album.title.toLowerCase().includes(searchLower),
-      );
-    }
 
     // Filter by release type
     if (releaseFilter === "albums") {
@@ -65,28 +56,20 @@ export function GbvAlbumsContent() {
     }
 
     return result;
-  }, [albums, search, sortBy, releaseFilter]);
+  }, [albums, sortBy, releaseFilter]);
 
-  // Counts by type (unaffected by current filter, but respecting search)
   const typeCounts = useMemo(() => {
-    let searchFiltered = albums;
-    if (search) {
-      const searchLower = search.toLowerCase();
-      searchFiltered = albums.filter((album) =>
-        album.title.toLowerCase().includes(searchLower),
-      );
-    }
-    const albumCount = searchFiltered.filter(
+    const albumCount = albums.filter(
       (album) => getReleaseType(album.format, album.releaseType) === "Album",
     ).length;
-    const epCount = searchFiltered.filter(
+    const epCount = albums.filter(
       (album) => getReleaseType(album.format, album.releaseType) === "EP",
     ).length;
-    const singleCount = searchFiltered.filter(
+    const singleCount = albums.filter(
       (album) => getReleaseType(album.format, album.releaseType) === "Single",
     ).length;
-    return { all: searchFiltered.length, albums: albumCount, eps: epCount, singles: singleCount };
-  }, [albums, search]);
+    return { all: albums.length, albums: albumCount, eps: epCount, singles: singleCount };
+  }, [albums]);
 
   // Albums to display (limited by displayCount)
   const visibleAlbums = filteredAlbums.slice(0, displayCount);
@@ -148,8 +131,6 @@ export function GbvAlbumsContent() {
         onReleaseFilterChange={setReleaseFilter}
         sortBy={sortBy}
         onSortByChange={setSortBy}
-        search={search}
-        onSearchChange={setSearch}
       />
 
       <AlbumGrid

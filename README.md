@@ -1,6 +1,6 @@
 # Major League Numbers
 
-Sports stats and music encyclopedias — MLB, NHL, NFL, NBA, USPBL, GBV, AmRep, and Revelation Records.
+Sports stats and music encyclopedias — MLB, NHL, NFL, NBA, PGA, USPBL, GBV, AmRep, Revelation Records, Elephant 6, and Skin Graft Records.
 
 **Live site:** https://majorleaguenumbers.com/
 
@@ -14,6 +14,7 @@ npm run dev
 The dev server runs at `http://localhost:3000`.
 
 ## Scripts
+
 
 | Command | Description |
 |---------|-------------|

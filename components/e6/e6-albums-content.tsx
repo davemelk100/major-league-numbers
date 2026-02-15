@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import { getAllE6Releases, getE6ReleaseYears, getE6ReleaseImageUrl } from "@/lib/e6-discography-data";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -89,52 +87,16 @@ export function E6AlbumsContent() {
   const site = getMusicSiteFromPathname(pathname);
   const releases = getAllE6Releases();
   const years = getE6ReleaseYears();
-  const [search, setSearch] = useState("");
-  const [searchOpen, setSearchOpen] = useState(false);
-  const searchWrapperRef = useRef<HTMLDivElement>(null);
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
 
   const filteredReleases = releases.filter((release) => {
-    const matchesSearch =
-      search === "" ||
-      release.title.toLowerCase().includes(search.toLowerCase()) ||
-      release.artist.toLowerCase().includes(search.toLowerCase());
-    const matchesYear = selectedYear === null || release.year === selectedYear;
-    return matchesSearch && matchesYear;
+    return selectedYear === null || release.year === selectedYear;
   });
 
   return (
     <div className="container py-6">
       <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
         <h1 className="font-league shrink-0">Releases</h1>
-        {searchOpen || search.length > 0 ? (
-          <div ref={searchWrapperRef} className="relative flex-1 min-w-0 sm:max-w-xs">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search releases or artists..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onBlur={() => {
-                if (search.length === 0) setSearchOpen(false);
-              }}
-              className="pl-9"
-            />
-          </div>
-        ) : (
-          <button
-            type="button"
-            onClick={() => {
-              setSearchOpen(true);
-              requestAnimationFrame(() => {
-                searchWrapperRef.current?.querySelector("input")?.focus();
-              });
-            }}
-            className="shrink-0 h-10 w-10 flex items-center justify-center rounded-md border border-input hover:bg-muted/50 transition-colors"
-            aria-label="Search"
-          >
-            <Search className="h-4 w-4 text-muted-foreground" />
-          </button>
-        )}
         <select
           value={selectedYear ?? ""}
           onChange={(e) => setSelectedYear(e.target.value ? Number(e.target.value) : null)}
