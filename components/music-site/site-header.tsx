@@ -67,7 +67,7 @@ export function SiteHeader() {
               <PopoverTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="h-12 w-12 p-0 gbv-search-button xl:hidden"
+                  className="h-12 w-12 p-0 gbv-search-button"
                   aria-label={`Search ${site.shortName}`}
                 >
                   <Search
@@ -93,7 +93,7 @@ export function SiteHeader() {
           ) : (
             <Button
               variant="ghost"
-              className="h-12 w-12 p-0 gbv-search-button xl:hidden"
+              className="h-12 w-12 p-0 gbv-search-button"
               aria-label={`Search ${site.shortName}`}
             >
               <Search
@@ -121,9 +121,6 @@ export function SiteHeader() {
                 <span className="text-md text-black">{site.chatLabel}</span>
               </Link>
             )}
-            <div className="w-72">
-              <SiteSearch />
-            </div>
           </div>
         </div>
       </div>

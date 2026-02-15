@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
-import { Loader2 } from "lucide-react";
+import { Loader2, Search } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { SgRemoteImage } from "@/components/sg/sg-remote-image";
@@ -17,6 +17,8 @@ export function SgAlbumsContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const [search, setSearch] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchWrapperRef = useRef<HTMLDivElement>(null);
   const [sortBy, setSortBy] = useState<"year-asc" | "year-desc" | "title">(
     "year-asc",
   );
@@ -86,22 +88,44 @@ export function SgAlbumsContent() {
 
   return (
     <div className="container py-6">
-      <div className="mb-6">
-        <h1 className="font-league">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
+        <h1 className="font-league shrink-0">
           {filteredAlbums.length} {site.navLabels.discography}
         </h1>
-        <div className="flex flex-wrap items-center gap-3 mt-3">
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder={site.searchPlaceholder || "Search releases..."}
-            className="h-9 px-3 rounded-md border border-input bg-background text-sm flex-1 min-w-[200px]"
-          />
+        <div className="flex items-center gap-3 flex-1 min-w-0">
+          {searchOpen || search.length > 0 ? (
+            <div ref={searchWrapperRef} className="relative flex-1 min-w-0 max-w-xs">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onBlur={() => {
+                  if (search.length === 0) setSearchOpen(false);
+                }}
+                placeholder={site.searchPlaceholder || "Search releases..."}
+                className="h-9 pl-9 pr-3 rounded-md border border-input bg-background text-sm w-full"
+              />
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                setSearchOpen(true);
+                requestAnimationFrame(() => {
+                  searchWrapperRef.current?.querySelector("input")?.focus();
+                });
+              }}
+              className="shrink-0 h-9 w-9 flex items-center justify-center rounded-md border border-input hover:bg-muted/50 transition-colors"
+              aria-label="Search"
+            >
+              <Search className="h-4 w-4 text-muted-foreground" />
+            </button>
+          )}
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-            className="h-9 px-3 rounded-md border border-input bg-background text-sm"
+            className="h-9 px-3 rounded-md border border-input bg-background text-sm shrink-0"
           >
             <option value="year-asc">Year (oldest)</option>
             <option value="year-desc">Year (newest)</option>

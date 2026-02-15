@@ -39,6 +39,9 @@ export function SgDashboardContent() {
           artists={sgArtistsWithImages}
           site={site}
           RemoteImage={SgRemoteImage}
+          imageFit="contain"
+          placeholderVariant="img"
+          placeholderClassName="h-auto w-auto object-contain"
         />
       </DashboardDailyRow>
     </div>
