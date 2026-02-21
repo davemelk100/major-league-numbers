@@ -57,13 +57,13 @@ export const pgaSpotlightPlayers: PGASpotlightPlayer[] = [
     imageUrl: espn(3470),
   },
   {
-    id: 1225,
+    id: 308,
     name: "Phil Mickelson",
     position: "Golf",
     team: "USA",
     years: "1992-present",
     fact: "Won six major championships including three Masters titles. Known as 'Lefty' despite being right-handed in everything but golf.",
-    imageUrl: espn(1225),
+    imageUrl: espn(308),
   },
   {
     id: 5765,
