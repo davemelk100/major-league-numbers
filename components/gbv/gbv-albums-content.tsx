@@ -2,8 +2,9 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { Loader2 } from "lucide-react";
-import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
-import { getLocalAlbumImage } from "@/lib/gbv-album-images";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { GBV_SITE } from "@/lib/music-site";
+import { getLocalAlbumImage } from "@/lib/gbv-release-images";
 import { getReleaseType, getProxiedImageUrl } from "@/lib/gbv-utils";
 import { useSiteAlbumsData } from "@/components/music-site/use-site-albums-data";
 import { AlbumGrid } from "@/components/music-site/album-grid";
@@ -119,7 +120,7 @@ export function GbvAlbumsContent() {
         site={site}
         getAlbumImage={getAlbumImage}
         getReleaseTypeLabel={(album) => getReleaseType(album.format, album.releaseType)}
-        RemoteImage={GbvRemoteImage}
+        RemoteImage={SiteRemoteImage}
         linkBasePath={`${site.basePath}/${site.albumsSlug}`}
         cacheKeyPrefix="gbv-album-thumb"
         imageFit={isAmrep ? "contain" : "cover"}

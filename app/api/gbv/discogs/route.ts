@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { cacheRemoteImage } from "@/lib/gbv-image-cache";
+import { cacheRemoteImage } from "@/lib/image-cache";
 import { gbvMembers } from "@/lib/gbv-members-data";
 
 export const runtime = "nodejs";
@@ -48,7 +48,7 @@ async function pickDiscogsImage(
   if (!url) return null;
   const httpsUrl = url.replace(/^http:/, "https:");
   const cached = await cacheRemoteImage(httpsUrl, "discogs-member");
-  return cached || `/api/gbv/image-proxy?url=${encodeURIComponent(httpsUrl)}`;
+  return cached || `/api/images/proxy?url=${encodeURIComponent(httpsUrl)}`;
 }
 
 async function fetchFromDiscogs(endpoint: string) {
@@ -76,7 +76,7 @@ async function fetchCommonsImage(
   name: string
 ): Promise<string | null> {
   const res = await fetch(
-    `${origin}/api/gbv/commons-image?name=${encodeURIComponent(name)}`,
+    `${origin}/api/images/commons?name=${encodeURIComponent(name)}`,
     { headers: { "User-Agent": USER_AGENT } }
   );
   if (!res.ok) return null;

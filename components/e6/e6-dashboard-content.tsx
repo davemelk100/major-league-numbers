@@ -1,11 +1,11 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { getMusicSiteFromPathname } from "@/lib/music-site";
+import { getMusicSiteFromPathname, E6_SITE } from "@/lib/music-site";
 import { TriviaPanel } from "@/components/music-site/trivia-panel";
 import { RecordOfDayCard } from "@/components/music-site/record-of-day-card";
 import { ArtistOfDayCard } from "@/components/music-site/artist-of-day-card";
-import { E6RemoteImage } from "@/components/e6/e6-remote-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
 import {
   DashboardDailyRow,
   DashboardDescription,
@@ -31,7 +31,8 @@ export function E6DashboardContent() {
       <DashboardDailyRow columns={3}>
         <TriviaPanel />
         <RecordOfDayCard
-          RemoteImage={E6RemoteImage}
+          site={site}
+          RemoteImage={SiteRemoteImage}
           imageFit="contain"
           placeholderVariant="next-image"
           placeholderClassName="w-full h-auto opacity-30 p-4"
@@ -40,7 +41,7 @@ export function E6DashboardContent() {
         <ArtistOfDayCard
           artists={e6ArtistItems}
           site={site}
-          RemoteImage={E6RemoteImage}
+          RemoteImage={SiteRemoteImage}
         />
       </DashboardDailyRow>
     </div>

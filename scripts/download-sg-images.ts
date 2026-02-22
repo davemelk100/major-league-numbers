@@ -3,7 +3,7 @@
  *
  * Part A: Band photos from skingraftrecords.com photo galleries
  * Part B: Release cover art from MusicBrainz/Cover Art Archive + Discogs fallback
- * Part C: Generate lib/sg-local-images.ts mapping file
+ * Part C: Generate lib/sg-images.ts mapping file
  *
  * Usage: npx tsx scripts/download-sg-images.ts
  */
@@ -27,7 +27,7 @@ const MB_RATE_LIMIT_MS = 1100;
 
 const ARTISTS_DIR = path.join(process.cwd(), "public", "images", "sg", "artists");
 const ALBUMS_DIR = path.join(process.cwd(), "public", "images", "sg", "albums");
-const OUTPUT_FILE = path.join(process.cwd(), "lib", "sg-local-images.ts");
+const OUTPUT_FILE = path.join(process.cwd(), "lib", "sg-images.ts");
 
 // Artist ID → photo gallery directory name on skingraftrecords.com
 // Note: some dirs use slightly different names than expected
@@ -646,7 +646,7 @@ function generateMappingFile(
   artistImages: Record<string, string>,
   releaseImages: Record<number, string>,
 ): void {
-  console.log("\n=== Part C: Generate lib/sg-local-images.ts ===\n");
+  console.log("\n=== Part C: Generate lib/sg-images.ts ===\n");
 
   const artistEntries = Object.entries(artistImages)
     .sort(([a], [b]) => a.localeCompare(b))

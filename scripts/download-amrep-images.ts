@@ -11,11 +11,11 @@ import http from "http";
 // Read and parse the album images file
 const ALBUM_IMAGES_PATH = path.join(
   process.cwd(),
-  "lib/amrep-album-images.ts"
+  "lib/amrep-release-images.ts"
 );
 const MEMBER_IMAGES_PATH = path.join(
   process.cwd(),
-  "lib/amrep-member-images.ts"
+  "lib/amrep-artist-images.ts"
 );
 
 const ALBUMS_OUTPUT_DIR = path.join(
@@ -127,8 +127,8 @@ function parseMemberImages(): Map<string, string> {
     let url = match[2];
 
     // Decode proxy URLs
-    if (url.startsWith("/api/gbv/image-proxy?url=")) {
-      const encoded = url.replace("/api/gbv/image-proxy?url=", "");
+    if (url.startsWith("/api/images/proxy?url=")) {
+      const encoded = url.replace("/api/images/proxy?url=", "");
       url = decodeURIComponent(encoded);
     }
 

@@ -2,7 +2,7 @@ import { promises as fs } from "fs";
 import path from "path";
 import crypto from "crypto";
 
-const CACHE_DIR = path.join(process.cwd(), "public", "gbv-cache");
+const CACHE_DIR = path.join(process.cwd(), "public", "image-cache");
 
 async function ensureCacheDir() {
   await fs.mkdir(CACHE_DIR, { recursive: true });
@@ -12,7 +12,7 @@ async function findCachedFile(prefix: string): Promise<string | null> {
   try {
     const files = await fs.readdir(CACHE_DIR);
     const match = files.find((file) => file.startsWith(`${prefix}.`));
-    return match ? `/gbv-cache/${match}` : null;
+    return match ? `/image-cache/${match}` : null;
   } catch {
     return null;
   }
@@ -54,7 +54,7 @@ export async function cacheRemoteImage(
 
     await fs.writeFile(filePath, buffer);
 
-    return `/gbv-cache/${filename}`;
+    return `/image-cache/${filename}`;
   } catch {
     return null;
   }

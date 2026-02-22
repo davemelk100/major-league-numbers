@@ -2,29 +2,32 @@
 
 import { cn } from "@/lib/utils";
 import { RemoteImage, type RemoteImageProps } from "@/components/music-site/remote-image";
+import type { MusicSiteConfig } from "@/lib/music-site";
 
-type AmrepRemoteImageProps = Omit<RemoteImageProps, "fallbackSrc" | "fit"> & {
+type SiteRemoteImageProps = Omit<RemoteImageProps, "fallbackSrc" | "fit"> & {
+  site: MusicSiteConfig;
   fallbackSrc?: string;
   localFallbackSrc?: string | null;
   fit?: "cover" | "contain";
 };
 
-export function AmrepRemoteImage({
-  fallbackSrc = "/noise-bird.svg",
+export function SiteRemoteImage({
+  site,
+  fallbackSrc,
   localFallbackSrc,
-  fit = "contain",
+  fit,
   className,
   ...props
-}: AmrepRemoteImageProps) {
+}: SiteRemoteImageProps) {
   return (
     <RemoteImage
       {...props}
-      fallbackSrc={fallbackSrc}
+      fallbackSrc={fallbackSrc ?? site.images.fallbackIcon}
       localFallbackSrc={localFallbackSrc}
-      fit={fit}
+      fit={fit ?? site.images.fit}
       className={cn("rounded-lg", className)}
       fallbackClassName="object-contain rounded-lg opacity-20"
-      invalidCacheValues={["/chat-gbv-box.svg", "/noise-bird.svg"]}
+      invalidCacheValues={site.images.invalidCacheValues}
     />
   );
 }

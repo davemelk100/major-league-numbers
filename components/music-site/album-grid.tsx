@@ -16,6 +16,7 @@ export type AlbumGridItem = {
  };
 
  type RemoteImageProps = {
+   site: MusicSiteConfig;
    src: string;
    alt: string;
    width: number;
@@ -72,6 +73,7 @@ export function AlbumGrid<T extends AlbumGridItem>({
                  <CardContent className={`p-3${purchaseUrl ? " pb-10" : ""}`}>
                    {getAlbumImage(album) ? (
                      <RemoteImage
+                       site={site}
                        src={getAlbumImage(album) as string}
                        alt={album.title}
                        width={200}

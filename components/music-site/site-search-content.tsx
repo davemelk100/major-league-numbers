@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 import { getProxiedImageUrl, getReleaseType } from "@/lib/gbv-utils";
-import { getLocalAlbumImage } from "@/lib/gbv-album-images";
+import { getLocalAlbumImage } from "@/lib/gbv-release-images";
 import {
   useSiteSearchData,
   type SiteSearchAlbum,
@@ -14,8 +14,8 @@ import {
 } from "@/components/music-site/use-site-search-data";
 import { MemberAvatar } from "@/components/music-site/member-avatar";
 import { AlbumGrid } from "@/components/music-site/album-grid";
-import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
-import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { GBV_SITE } from "@/lib/music-site";
 
 export function SiteSearchContent() {
   const searchParams = useSearchParams();
@@ -42,7 +42,7 @@ export function SiteSearchContent() {
     return getLocalAlbumImage(album.id) || getProxiedImageUrl(raw);
   };
 
-  const RemoteImage = isAmrep ? AmrepRemoteImage : GbvRemoteImage;
+  const RemoteImage = SiteRemoteImage;
 
   if (!query) {
     return (
@@ -106,9 +106,7 @@ export function SiteSearchContent() {
                       name={member.name}
                       imageUrl={member.imageUrl}
                       memberId={member.id}
-                      fallbackIconSrc={site.placeholderIconSrc}
-                      cacheKeyPrefix={site.id}
-                      fit={isAmrep ? "contain" : "cover"}
+                      site={site}
                     />
                     <h3 className="font-semibold text-sm">{member.name}</h3>
                   </CardContent>

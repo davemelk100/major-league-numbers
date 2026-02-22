@@ -10,8 +10,8 @@ import { amrepArtists } from "@/lib/amrep-artists-data";
 import {
   AMREP_MEMBER_IMAGE_FALLBACKS,
   AMREP_MEMBER_IMAGE_SKIP,
-} from "@/lib/amrep-member-images";
-import { GBV_MEMBER_IMAGE_FALLBACKS } from "@/lib/gbv-member-images";
+} from "@/lib/amrep-artist-images";
+import { GBV_MEMBER_IMAGE_FALLBACKS } from "@/lib/gbv-artist-images";
 import { MemberAvatar } from "@/components/music-site/member-avatar";
 import { MembersControls } from "@/components/music-site/members-controls";
 import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
@@ -130,12 +130,10 @@ export function GbvMembersContent() {
                   name={member.name}
                   imageUrl={member.imageUrl}
                   memberId={member.id}
-                  fallbackIconSrc={site.placeholderIconSrc}
-                  cacheKeyPrefix={site.id}
+                  site={site}
                   skipRemoteLookup={false}
                   fallbackImages={isAmrep ? AMREP_MEMBER_IMAGE_FALLBACKS : GBV_MEMBER_IMAGE_FALLBACKS}
                   skipImages={isAmrep ? AMREP_MEMBER_IMAGE_SKIP : undefined}
-                  fit={isAmrep ? "contain" : "cover"}
                   renderPlaceholder={() => <SitePlaceholderIcon site={site} />}
                 />
                 <h3 className="font-semibold text-sm">{member.name}</h3>

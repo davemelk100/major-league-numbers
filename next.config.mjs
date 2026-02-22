@@ -18,10 +18,10 @@ const nextConfig = {
         pathname: "/**",
       },
       {
-        pathname: "/api/gbv/image-proxy",
+        pathname: "/api/images/proxy",
       },
       {
-        pathname: "/gbv-cache/**",
+        pathname: "/image-cache/**",
       },
       {
         pathname: "/gbv-members/**",
@@ -204,7 +204,7 @@ const nextConfig = {
         ],
       },
       {
-        source: "/api/gbv/cover-art",
+        source: "/api/images/cover-art",
         headers: [
           {
             key: "Cache-Control",
@@ -213,7 +213,7 @@ const nextConfig = {
         ],
       },
       {
-        source: "/api/gbv/commons-image",
+        source: "/api/images/commons",
         headers: [
           {
             key: "Cache-Control",
@@ -222,7 +222,7 @@ const nextConfig = {
         ],
       },
       {
-        source: "/api/gbv/image-proxy",
+        source: "/api/images/proxy",
         headers: [
           {
             key: "Cache-Control",

@@ -2,9 +2,10 @@
 
 import { useMemo } from "react";
 import { Loader2 } from "lucide-react";
-import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { GBV_SITE } from "@/lib/music-site";
 import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
-import { getLocalAlbumImage } from "@/lib/gbv-album-images";
+import { getLocalAlbumImage } from "@/lib/gbv-release-images";
 import {
   useSiteAlbumDetail,
   type GbvAlbumDetail,
@@ -64,7 +65,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
     <AlbumDetailLeft
       image={
         displayImage ? (
-          <GbvRemoteImage
+          <SiteRemoteImage site={GBV_SITE}
             src={displayImage}
             alt={detail.title}
             width={500}

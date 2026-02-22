@@ -3,9 +3,10 @@
 import { useMemo } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, ExternalLink } from "lucide-react";
-import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
-import { getLocalAlbumImage } from "@/lib/gbv-album-images";
-import { getAmrepAlbumImage, getLocalAmrepAlbumImage } from "@/lib/amrep-album-images";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { AMREP_SITE } from "@/lib/music-site";
+import { getLocalAlbumImage } from "@/lib/gbv-release-images";
+import { getAmrepAlbumImage, getLocalAmrepAlbumImage } from "@/lib/amrep-release-images";
 import { getProxiedImageUrl, getReleaseType } from "@/lib/gbv-utils";
 import {
   useSiteAlbumDetail,
@@ -76,7 +77,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
     <AlbumDetailLeft
       image={
         albumImage ? (
-          <AmrepRemoteImage
+          <SiteRemoteImage site={AMREP_SITE}
             src={albumImage}
             alt={detail.title}
             width={300}

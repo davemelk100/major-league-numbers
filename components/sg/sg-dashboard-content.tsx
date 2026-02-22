@@ -30,6 +30,7 @@ export function SgDashboardContent() {
       <DashboardDailyRow columns={3}>
         <TriviaPanel />
         <RecordOfDayCard
+          site={site}
           RemoteImage={SgRemoteImage}
           imageFit="contain"
         />

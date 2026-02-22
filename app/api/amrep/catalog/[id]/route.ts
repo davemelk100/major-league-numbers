@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAmrepReleaseById } from "@/lib/amrep-releases-data";
-import { getAmrepAlbumImage } from "@/lib/amrep-album-images";
+import { getAmrepAlbumImage } from "@/lib/amrep-release-images";
 
 const HEADERS = {
   "Access-Control-Allow-Origin": "*",

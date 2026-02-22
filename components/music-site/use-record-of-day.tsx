@@ -7,8 +7,8 @@ import { getDailyAmrepRecord, type AmrepRecordOfDay } from "@/lib/amrep-records-
 import { getDailyRevRecord, type RevRecordOfDay } from "@/lib/rev-records-data";
 import { getDailyE6Record, type E6RecordOfDay } from "@/lib/e6-records-data";
 import { getDailySgRecord, type SgRecordOfDay } from "@/lib/sg-records-data";
-import { getLocalAlbumImage } from "@/lib/gbv-album-images";
-import { getAmrepAlbumImage } from "@/lib/amrep-album-images";
+import { getLocalAlbumImage } from "@/lib/gbv-release-images";
+import { getAmrepAlbumImage } from "@/lib/amrep-release-images";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 
 export function useRecordOfDay() {

@@ -3,9 +3,11 @@
 import type { ComponentType } from "react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
+import type { MusicSiteConfig } from "@/lib/music-site";
 import { useRecordOfDay, useSingleOfDay } from "@/components/music-site/use-record-of-day";
 
 type RemoteImageProps = {
+  site: MusicSiteConfig;
   src: string;
   alt: string;
   className?: string;
@@ -14,6 +16,7 @@ type RemoteImageProps = {
 };
 
 type RecordOfDayCardProps = {
+  site: MusicSiteConfig;
   RemoteImage: ComponentType<RemoteImageProps>;
   imageFit?: "cover" | "contain";
   placeholderVariant?: "next-image" | "img";
@@ -23,6 +26,7 @@ type RecordOfDayCardProps = {
 };
 
 export function RecordOfDayCard({
+  site,
   RemoteImage,
   imageFit = "contain",
 }: RecordOfDayCardProps) {
@@ -52,6 +56,7 @@ export function RecordOfDayCard({
               albumHref ? (
                 <Link href={albumHref} className="absolute inset-0">
                   <RemoteImage
+                    site={site}
                     src={coverUrl}
                     alt={`${record.title} cover`}
                     className={`rounded-md object-${imageFit} w-full h-full`}
@@ -61,6 +66,7 @@ export function RecordOfDayCard({
                 </Link>
               ) : (
                 <RemoteImage
+                  site={site}
                   src={coverUrl}
                   alt={`${record.title} cover`}
                   className={`rounded-md object-${imageFit} w-full h-full`}
@@ -88,6 +94,7 @@ export function RecordOfDayCard({
 }
 
 export function SingleOfDayCard({
+  site,
   RemoteImage,
   imageFit = "contain",
 }: RecordOfDayCardProps) {
@@ -117,6 +124,7 @@ export function SingleOfDayCard({
               albumHref ? (
                 <Link href={albumHref} className="absolute inset-0">
                   <RemoteImage
+                    site={site}
                     src={coverUrl}
                     alt={`${record.title} cover`}
                     className={`rounded-md object-${imageFit} w-full h-full`}
@@ -126,6 +134,7 @@ export function SingleOfDayCard({
                 </Link>
               ) : (
                 <RemoteImage
+                  site={site}
                   src={coverUrl}
                   alt={`${record.title} cover`}
                   className={`rounded-md object-${imageFit} w-full h-full`}

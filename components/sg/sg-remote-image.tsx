@@ -2,15 +2,19 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { RemoteImage, type RemoteImageProps } from "@/components/music-site/remote-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { SKINGRAFT_SITE, type MusicSiteConfig } from "@/lib/music-site";
+import type { RemoteImageProps } from "@/components/music-site/remote-image";
 
 type SgRemoteImageProps = Omit<RemoteImageProps, "fallbackSrc" | "fit" | "onAllFailed"> & {
+  site?: MusicSiteConfig;
   fallbackSrc?: string;
   localFallbackSrc?: string | null;
   fit?: "cover" | "contain";
 };
 
 export function SgRemoteImage({
+  site: _site,
   fallbackSrc = "",
   localFallbackSrc,
   fit = "contain",
@@ -29,15 +33,14 @@ export function SgRemoteImage({
   }
 
   return (
-    <RemoteImage
+    <SiteRemoteImage
       {...props}
+      site={SKINGRAFT_SITE}
       alt={alt}
       fallbackSrc={fallbackSrc}
       localFallbackSrc={localFallbackSrc}
       fit={fit}
-      className={cn("rounded-lg", className)}
-      fallbackClassName="object-contain rounded-lg opacity-20 max-w-full max-h-full"
-      invalidCacheValues={["/chat-gbv-box.svg", "/sg-logo.png"]}
+      className={className}
       onAllFailed={() => setFailed(true)}
     />
   );

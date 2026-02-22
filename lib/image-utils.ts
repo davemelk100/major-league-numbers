@@ -12,5 +12,5 @@ export function getProxiedImageUrl(url?: string | null): string | null {
   const normalized = normalizeImageUrl(url);
   if (!normalized) return null;
   if (isLocalImageUrl(normalized)) return normalized;
-  return `/api/gbv/image-proxy?url=${encodeURIComponent(normalized)}`;
+  return `/api/images/proxy?url=${encodeURIComponent(normalized)}`;
 }

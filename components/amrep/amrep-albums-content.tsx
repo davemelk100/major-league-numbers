@@ -2,9 +2,10 @@
 
 import { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { Loader2 } from "lucide-react";
-import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
-import { getLocalAlbumImage } from "@/lib/gbv-album-images";
-import { getAmrepAlbumImage, getLocalAmrepAlbumImage } from "@/lib/amrep-album-images";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { AMREP_SITE } from "@/lib/music-site";
+import { getLocalAlbumImage } from "@/lib/gbv-release-images";
+import { getAmrepAlbumImage, getLocalAmrepAlbumImage } from "@/lib/amrep-release-images";
 import { getReleaseType, getProxiedImageUrl } from "@/lib/gbv-utils";
 import { useSiteAlbumsData } from "@/components/music-site/use-site-albums-data";
 import { AlbumGrid } from "@/components/music-site/album-grid";
@@ -139,7 +140,7 @@ export function GbvAlbumsContent() {
         getAlbumImage={getAlbumImage}
         getLocalFallbackImage={getLocalFallbackImage}
         getReleaseTypeLabel={(album) => getReleaseType(album.format, album.releaseType)}
-        RemoteImage={AmrepRemoteImage}
+        RemoteImage={SiteRemoteImage}
         linkBasePath={`${site.basePath}/${site.albumsSlug}`}
         cacheKeyPrefix="gbv-album-thumb"
         imageFit={isAmrep ? "contain" : "cover"}

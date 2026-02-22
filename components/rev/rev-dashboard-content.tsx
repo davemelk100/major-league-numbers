@@ -1,11 +1,11 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { getMusicSiteFromPathname } from "@/lib/music-site";
+import { getMusicSiteFromPathname, REVELATION_SITE } from "@/lib/music-site";
 import { TriviaPanel } from "@/components/music-site/trivia-panel";
 import { RecordOfDayCard } from "@/components/music-site/record-of-day-card";
 import { ArtistOfDayCard } from "@/components/music-site/artist-of-day-card";
-import { RevRemoteImage } from "@/components/rev/rev-remote-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
 import {
   DashboardDailyRow,
   DashboardDescription,
@@ -29,7 +29,8 @@ export function RevDashboardContent() {
       <DashboardDailyRow columns={3}>
         <TriviaPanel />
         <RecordOfDayCard
-          RemoteImage={RevRemoteImage}
+          site={site}
+          RemoteImage={SiteRemoteImage}
           imageFit="contain"
           placeholderVariant="next-image"
           placeholderClassName="w-1/2 h-1/2 object-contain"
@@ -38,7 +39,7 @@ export function RevDashboardContent() {
         <ArtistOfDayCard
           artists={revArtistsWithImages}
           site={site}
-          RemoteImage={RevRemoteImage}
+          RemoteImage={SiteRemoteImage}
         />
       </DashboardDailyRow>
     </div>

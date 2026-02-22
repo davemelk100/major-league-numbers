@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { localAlbumImages } from "@/lib/gbv-album-images";
+import { localAlbumImages } from "@/lib/gbv-release-images";
 import { gbvAlbums } from "@/lib/gbv-discography-data";
 import { revReleaseImages } from "@/lib/rev-discography-data";
 import { revDiscography } from "@/lib/rev-discography-data";

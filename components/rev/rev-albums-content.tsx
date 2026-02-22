@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { getAllRevReleases, getRevReleaseYears, getRevReleaseImageUrl } from "@/lib/rev-discography-data";
-import { RevRemoteImage } from "@/components/rev/rev-remote-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
 import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
-import { getMusicSiteFromPathname } from "@/lib/music-site";
+import { getMusicSiteFromPathname, REVELATION_SITE } from "@/lib/music-site";
 import Link from "next/link";
 
 export function RevAlbumsContent() {
@@ -102,7 +102,7 @@ export function RevAlbumsContent() {
                 <CardContent className="p-3">
                   {imageUrl ? (
                     <div className="w-full aspect-square bg-muted/30 rounded-lg mb-2 flex items-center justify-center overflow-hidden">
-                      <RevRemoteImage
+                      <SiteRemoteImage site={REVELATION_SITE}
                         src={imageUrl}
                         alt={`${release.artist} - ${release.title}`}
                         width={200}

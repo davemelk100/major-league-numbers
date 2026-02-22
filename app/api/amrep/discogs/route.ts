@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { cacheRemoteImage } from "@/lib/gbv-image-cache";
+import { cacheRemoteImage } from "@/lib/image-cache";
 
 export const runtime = "nodejs";
 
@@ -36,7 +36,7 @@ async function normalizeThumb(url?: string | null) {
   if (!url) return null;
   const httpsUrl = url.replace(/^http:/, "https:");
   const cached = await cacheRemoteImage(httpsUrl, "discogs-amrep");
-  return cached || `/api/gbv/image-proxy?url=${encodeURIComponent(httpsUrl)}`;
+  return cached || `/api/images/proxy?url=${encodeURIComponent(httpsUrl)}`;
 }
 
 function normalizeKey(artist: string, title: string): string {

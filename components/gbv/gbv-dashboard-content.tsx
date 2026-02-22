@@ -4,7 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 import { TriviaPanel } from "@/components/music-site/trivia-panel";
 import { RecordOfDayCard, SingleOfDayCard } from "@/components/music-site/record-of-day-card";
-import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { GBV_SITE } from "@/lib/music-site";
 import {
   DashboardDailyRow,
   DashboardDescription,
@@ -39,14 +40,16 @@ export function GbvDashboardContent() {
       <DashboardDailyRow columns={3}>
         <TriviaPanel />
         <RecordOfDayCard
-          RemoteImage={GbvRemoteImage}
+          site={site}
+          RemoteImage={SiteRemoteImage}
           imageFit="contain"
           placeholderVariant="next-image"
           placeholderClassName="w-1/2 h-1/2 gbv-nav-icon object-contain"
           placeholderSize={32}
         />
         <SingleOfDayCard
-          RemoteImage={GbvRemoteImage}
+          site={site}
+          RemoteImage={SiteRemoteImage}
           imageFit="contain"
           placeholderVariant="next-image"
           placeholderClassName="w-1/2 h-1/2 gbv-nav-icon object-contain"

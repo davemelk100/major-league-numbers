@@ -5,14 +5,15 @@ import { Loader2 } from "lucide-react";
 import { TriviaPanel } from "@/components/music-site/trivia-panel";
 import { RecordOfDayCard } from "@/components/music-site/record-of-day-card";
 import { ArtistOfDayCard } from "@/components/music-site/artist-of-day-card";
-import { AmrepRemoteImage } from "@/components/amrep/amrep-remote-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { AMREP_SITE } from "@/lib/music-site";
 import {
   DashboardDailyRow,
   DashboardDescription,
 } from "@/components/music-site/dashboard-sections";
 import { useDashboardData } from "@/components/music-site/use-dashboard-data";
 import { amrepArtists } from "@/lib/amrep-artists-data";
-import { AMREP_ARTIST_IMAGES } from "@/lib/amrep-member-images";
+import { AMREP_ARTIST_IMAGES } from "@/lib/amrep-artist-images";
 
 const amrepArtistsWithImages = amrepArtists.map((a) => ({
   id: a.id,
@@ -47,7 +48,8 @@ export function AmrepDashboardContent() {
       <DashboardDailyRow columns={3}>
         <TriviaPanel />
         <RecordOfDayCard
-          RemoteImage={AmrepRemoteImage}
+          site={site}
+          RemoteImage={SiteRemoteImage}
           imageFit="contain"
           placeholderVariant="img"
           placeholderClassName="w-full h-auto opacity-30 p-4"
@@ -55,7 +57,7 @@ export function AmrepDashboardContent() {
         <ArtistOfDayCard
           artists={amrepArtistsWithImages}
           site={site}
-          RemoteImage={AmrepRemoteImage}
+          RemoteImage={SiteRemoteImage}
         />
       </DashboardDailyRow>
 

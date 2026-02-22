@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Loader2, ExternalLink } from "lucide-react";
-import { GbvRemoteImage } from "@/components/gbv/gbv-remote-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
 import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
-import { getLocalMemberImage, GBV_MEMBER_IMAGE_FALLBACKS } from "@/lib/gbv-member-images";
+import { getLocalMemberImage, GBV_MEMBER_IMAGE_FALLBACKS } from "@/lib/gbv-artist-images";
 import { usePathname } from "next/navigation";
-import { getMusicSiteFromPathname } from "@/lib/music-site";
+import { getMusicSiteFromPathname, GBV_SITE } from "@/lib/music-site";
 import { getAmrepArtistById } from "@/lib/amrep-artists-data";
 import { useMemberImage } from "@/components/music-site/use-member-image";
 import { MemberDetailLayout } from "@/components/music-site/member-detail-layout";
@@ -85,6 +85,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
   const nameKey = member?.name?.toLowerCase().trim() || "";
   const { resolvedImageUrl } = useMemberImage({
     siteId: site.id,
+    site,
     memberName: member?.name,
     memberId,
     localImageUrl: localMemberImage,
@@ -169,7 +170,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
     <MemberDetailLeft
       image={
         resolvedImageUrl ? (
-          <GbvRemoteImage
+          <SiteRemoteImage site={GBV_SITE}
             src={resolvedImageUrl}
             alt={member.name}
             width={300}

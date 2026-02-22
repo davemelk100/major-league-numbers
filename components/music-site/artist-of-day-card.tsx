@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import type { MusicSiteConfig } from "@/lib/music-site";
 
 type RemoteImageProps = {
+  site: MusicSiteConfig;
   src: string;
   alt: string;
   className?: string;
@@ -64,6 +65,7 @@ export function ArtistOfDayCard({
             {coverUrl ? (
               <Link href={albumHref} className="absolute inset-0 flex items-center justify-center">
                 <RemoteImage
+                  site={site}
                   src={coverUrl}
                   alt={`${displayTitle} cover`}
                   className={`rounded-md object-${imageFit} w-full h-full`}

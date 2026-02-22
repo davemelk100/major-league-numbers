@@ -2,14 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { getProxiedImageUrl } from "@/lib/image-utils";
-
-const SITE_LOOKUP_CONTEXT: Record<string, string> = {
-  gbv: "Guided By Voices",
-  amrep: "Amphetamine Reptile Records",
-};
+import type { MusicSiteConfig } from "@/lib/music-site";
 
  type UseMemberImageOptions = {
    siteId: string;
+   site?: MusicSiteConfig;
    memberName?: string | null;
    memberId?: string | number;
    localImageUrl?: string | null;
@@ -20,6 +17,7 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
 
  export function useMemberImage({
    siteId,
+   site,
    memberName,
    memberId,
    localImageUrl,
@@ -27,6 +25,9 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
    fallbackImageUrl,
    skipRemoteLookup,
  }: UseMemberImageOptions) {
+   const lookupStrategy = site?.images.lookupStrategy ?? "wikimedia";
+   const lookupContext = site?.images.lookupContext;
+
    const [resolvedImageUrl, setResolvedImageUrl] = useState<string | null>(null);
    const [lookupAttempted, setLookupAttempted] = useState(false);
   const normalizedName = memberName?.toLowerCase().trim() || "";
@@ -41,8 +42,6 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
 
    useEffect(() => {
      if (!memberName) return;
-
-    const lookupContext = SITE_LOOKUP_CONTEXT[siteId];
 
     if (proxiedLocalImageUrl) {
       setResolvedImageUrl(proxiedLocalImageUrl);
@@ -76,17 +75,31 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
      }
 
      let isActive = true;
-     const fetchCommonsImage = async () => {
+     const fetchImage = async () => {
        try {
-        const query = new URLSearchParams({ name: memberName });
-        if (lookupContext) {
-          query.set("context", lookupContext);
+        let imageUrl: string | null = null;
+
+        if (lookupStrategy === "discogs") {
+          const q = new URLSearchParams({ type: "artist", name: memberName });
+          const res = await fetch(`/api/${siteId}/discogs?${q.toString()}`);
+          if (!res.ok) return;
+          const data = await res.json();
+          imageUrl = data?.artist?.imageUrl || null;
+        } else {
+          const query = new URLSearchParams({ name: memberName });
+          if (lookupContext) {
+            query.set("context", lookupContext);
+          }
+          const res = await fetch(`/api/images/commons?${query.toString()}`);
+          if (!res.ok) return;
+          const data = await res.json();
+          imageUrl = typeof data?.imageUrl === "string" && data.imageUrl.length > 0
+            ? data.imageUrl
+            : null;
         }
-        const res = await fetch(`/api/gbv/commons-image?${query.toString()}`);
-         if (!res.ok) return;
-         const data = await res.json();
-        if (isActive && typeof data?.imageUrl === "string") {
-          const proxiedUrl = getProxiedImageUrl(data.imageUrl);
+
+        if (isActive && imageUrl) {
+          const proxiedUrl = getProxiedImageUrl(imageUrl);
           if (proxiedUrl) {
             setResolvedImageUrl(proxiedUrl);
           }
@@ -107,7 +120,7 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
        }
      };
 
-     fetchCommonsImage();
+     fetchImage();
      return () => {
        isActive = false;
      };
@@ -116,6 +129,8 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
     proxiedFallbackImageUrl,
     proxiedLocalImageUrl,
      lookupAttempted,
+     lookupContext,
+     lookupStrategy,
      memberName,
      normalizedName,
      siteId,

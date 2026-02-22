@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { cacheRemoteImage } from "@/lib/gbv-image-cache";
+import { cacheRemoteImage } from "@/lib/image-cache";
 
 export const runtime = "nodejs";
 

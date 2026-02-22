@@ -2,7 +2,7 @@
 // Source: Discogs (label #33275), verified against skingraftrecords.com
 // Catalog numbers are official GR### numbers
 
-import { getSgLocalReleaseImage } from "./sg-local-images";
+import { getSgLocalReleaseImage } from "./sg-images";
 
 export interface SgRelease {
   catalogNumber: number;

@@ -24,6 +24,13 @@ export interface MusicSiteConfig {
   imageSources: Array<{ label: string; url: string }>;
   membersSlug: string;
   albumsSlug: string;
+  images: {
+    fallbackIcon: string;
+    fit: "cover" | "contain";
+    lookupStrategy: "wikimedia" | "discogs";
+    lookupContext?: string;
+    invalidCacheValues: string[];
+  };
   searchPlaceholder: string;
   seo: {
     title: string;
@@ -83,6 +90,13 @@ export const GBV_SITE: MusicSiteConfig = {
     { label: "Wikimedia Commons", url: "https://commons.wikimedia.org/" },
     { label: "Archive.org", url: "https://archive.org/" },
   ],
+  images: {
+    fallbackIcon: "/chat-gbv-box.svg",
+    fit: "cover",
+    lookupStrategy: "wikimedia",
+    lookupContext: "Guided By Voices",
+    invalidCacheValues: ["/chat-gbv-box.svg"],
+  },
   searchPlaceholder: "Search GBV...",
   seo: {
     title: "Guided By Data",
@@ -193,6 +207,13 @@ export const AMREP_SITE: MusicSiteConfig = {
     { label: "The Melvins Wiki", url: "https://themelvins.net/" },
     { label: "Shoxop", url: "https://www.shoxop.com/" },
   ],
+  images: {
+    fallbackIcon: "/noise-bird.svg",
+    fit: "contain",
+    lookupStrategy: "wikimedia",
+    lookupContext: "Amphetamine Reptile Records",
+    invalidCacheValues: ["/noise-bird.svg"],
+  },
   searchPlaceholder: "Search AmRep...",
   seo: {
     title: "Amphetamine Reptile Records",
@@ -256,6 +277,12 @@ export const E6_SITE: MusicSiteConfig = {
     { label: "Bandcamp", url: "https://bandcamp.com/" },
     { label: "Last.fm", url: "https://www.last.fm/" },
   ],
+  images: {
+    fallbackIcon: "/e6-logo.png",
+    fit: "contain",
+    lookupStrategy: "discogs",
+    invalidCacheValues: ["/e6-logo.png"],
+  },
   searchPlaceholder: "Search E6...",
   seo: {
     title: "Elephant 6 Recording Company",
@@ -325,6 +352,12 @@ export const REVELATION_SITE: MusicSiteConfig = {
     { label: "Wikimedia Commons", url: "https://commons.wikimedia.org/" },
     { label: "Bandcamp", url: "https://bandcamp.com/" },
   ],
+  images: {
+    fallbackIcon: "/rev-icon.svg",
+    fit: "contain",
+    lookupStrategy: "discogs",
+    invalidCacheValues: ["/rev-icon.svg"],
+  },
   searchPlaceholder: "Search Rev...",
   seo: {
     title: "Revelation Records",
@@ -392,6 +425,13 @@ export const SKINGRAFT_SITE: MusicSiteConfig = {
     { label: "Wikimedia Commons", url: "https://commons.wikimedia.org/" },
     { label: "Bandcamp", url: "https://bandcamp.com/" },
   ],
+  images: {
+    fallbackIcon: "/sg-logo.png",
+    fit: "contain",
+    lookupStrategy: "wikimedia",
+    lookupContext: "Skin Graft Records",
+    invalidCacheValues: ["/sg-logo.png"],
+  },
   searchPlaceholder: "Search Skin Graft...",
   seo: {
     title: "Skin Graft Records",

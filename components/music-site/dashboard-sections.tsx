@@ -144,8 +144,7 @@ export function DashboardMembersGrid({
                 name={member.name}
                 imageUrl={member.imageUrl}
                 memberId={typeof member.id === "number" ? member.id : undefined}
-                fallbackIconSrc={site.placeholderIconSrc}
-                cacheKeyPrefix={site.id}
+                site={site}
                 {...memberAvatarProps}
               />
               <h3 className="font-semibold text-sm">{member.name}</h3>

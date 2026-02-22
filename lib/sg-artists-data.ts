@@ -1,6 +1,6 @@
 // Skin Graft Records Artists
 
-import { getSgLocalArtistImage } from "./sg-local-images";
+import { getSgLocalArtistImage } from "./sg-images";
 
 export interface SgArtist {
   id: string;

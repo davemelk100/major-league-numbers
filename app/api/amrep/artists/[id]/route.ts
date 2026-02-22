@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAmrepArtistById } from "@/lib/amrep-artists-data";
 import { amrepReleases } from "@/lib/amrep-releases-data";
-import { getAmrepAlbumImage } from "@/lib/amrep-album-images";
-import { AMREP_ARTIST_IMAGES } from "@/lib/amrep-member-images";
+import { getAmrepAlbumImage } from "@/lib/amrep-release-images";
+import { AMREP_ARTIST_IMAGES } from "@/lib/amrep-artist-images";
 
 const HEADERS = {
   "Access-Control-Allow-Origin": "*",

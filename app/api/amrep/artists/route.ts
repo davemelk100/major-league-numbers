@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { amrepArtists } from "@/lib/amrep-artists-data";
-import { AMREP_ARTIST_IMAGES } from "@/lib/amrep-member-images";
+import { AMREP_ARTIST_IMAGES } from "@/lib/amrep-artist-images";
 
 const HEADERS = {
   "Access-Control-Allow-Origin": "*",

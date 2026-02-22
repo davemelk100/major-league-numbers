@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import { getMusicSiteFromPathname } from "@/lib/music-site";
+import { getMusicSiteFromPathname, REVELATION_SITE } from "@/lib/music-site";
 import { getRevReleaseByCatalogNumber } from "@/lib/rev-discography-data";
-import { RevRemoteImage } from "@/components/rev/rev-remote-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
 import { AlbumDetailLayout } from "@/components/music-site/album-detail-layout";
 import { AlbumDetailLeft } from "@/components/music-site/album-detail-left";
 import { AlbumDetailTracklist } from "@/components/music-site/album-detail-tracklist";
@@ -84,7 +84,7 @@ export function RevAlbumDetailContent({ albumId }: { albumId: string }) {
     <AlbumDetailLeft
       image={
         coverImage ? (
-          <RevRemoteImage
+          <SiteRemoteImage site={REVELATION_SITE}
             src={coverImage}
             alt={`${release.artist} - ${release.title}`}
             width={300}

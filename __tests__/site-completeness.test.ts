@@ -6,6 +6,7 @@ import {
   REQUIRED_ROUTES,
   REQUIRED_COMPONENTS,
   REQUIRED_CONFIG_FIELDS,
+  REQUIRED_IMAGE_CONFIG_FIELDS,
   MEMBERS_ROUTE_SLUGS,
   ALBUMS_ROUTE_SLUGS,
 } from "@/lib/schemas/site-registry";
@@ -58,6 +59,14 @@ describe("Site completeness", () => {
           expect(site).toHaveProperty(field);
           const value = site[field as keyof typeof site];
           expect(value, `Config field "${field}" is empty`).toBeTruthy();
+        });
+      }
+
+      for (const field of REQUIRED_IMAGE_CONFIG_FIELDS) {
+        it(`images config has required field: ${field}`, () => {
+          expect(site.images).toHaveProperty(field);
+          const value = site.images[field as keyof typeof site.images];
+          expect(value, `Image config field "${field}" is empty`).toBeTruthy();
         });
       }
     });

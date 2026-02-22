@@ -3,23 +3,18 @@
  import { useEffect, useState } from "react";
 import Image from "next/image";
 import { RemoteImage } from "@/components/music-site/remote-image";
-import { getLocalMemberImage } from "@/lib/gbv-member-images";
 import { getProxiedImageUrl, normalizeImageUrl } from "@/lib/image-utils";
 import { cn } from "@/lib/utils";
-
-const SITE_LOOKUP_CONTEXT: Record<string, string> = {
-  gbv: "Guided By Voices",
-  amrep: "Amphetamine Reptile Records",
-  e6: "Elephant 6 Recording Company",
-  sg: "Skin Graft Records",
-};
+import type { MusicSiteConfig } from "@/lib/music-site";
 
  type MemberAvatarProps = {
    name: string;
    imageUrl?: string | null;
    memberId?: number;
-   fallbackIconSrc: string;
-   cacheKeyPrefix: string;
+   localImageUrl?: string | null;
+   site?: MusicSiteConfig;
+   fallbackIconSrc?: string;
+   cacheKeyPrefix?: string;
    skipRemoteLookup?: boolean;
    fallbackImages?: Record<string, string>;
    skipImages?: Record<string, true>;
@@ -36,12 +31,14 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
    name,
    imageUrl,
    memberId,
+   localImageUrl,
+   site,
    fallbackIconSrc,
    cacheKeyPrefix,
    skipRemoteLookup,
    fallbackImages,
    skipImages,
-   fit = "cover",
+   fit,
    placeholderSize = 24,
    placeholderClassName = "w-1/2 h-1/2 gbv-nav-icon object-contain",
    placeholderVariant = "next-image",
@@ -49,11 +46,16 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
    fallbackClassName,
    renderPlaceholder,
  }: MemberAvatarProps) {
+   const effectiveFallbackIcon = fallbackIconSrc ?? site?.images.fallbackIcon ?? "/chat-gbv-box.svg";
+   const effectiveCacheKeyPrefix = cacheKeyPrefix ?? site?.id ?? "gbv";
+   const effectiveFit = fit ?? site?.images.fit ?? "cover";
+   const lookupStrategy = site?.images.lookupStrategy ?? "wikimedia";
+   const lookupContext = site?.images.lookupContext;
+
    const [hasError, setHasError] = useState(false);
    const [resolvedImageUrl, setResolvedImageUrl] = useState<string | null>(null);
    const [lookupAttempted, setLookupAttempted] = useState(false);
   const normalizedImageUrl = normalizeImageUrl(imageUrl);
-   const localImageUrl = getLocalMemberImage(memberId);
    const nameKey = name.toLowerCase();
   const fallbackImageUrl = getProxiedImageUrl(fallbackImages?.[nameKey] || null);
    const shouldSkipLookup = skipRemoteLookup || Boolean(skipImages?.[nameKey]);
@@ -77,7 +79,7 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
 
      if (shouldSkipLookup || lookupAttempted) return;
 
-     const cacheKey = `${cacheKeyPrefix}-member-image:${nameKey}`;
+     const cacheKey = `${effectiveCacheKeyPrefix}-member-image:${nameKey}`;
      try {
         const cached = localStorage.getItem(cacheKey);
         if (cached) {
@@ -91,34 +93,32 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
      }
 
      let isActive = true;
-    const lookupContext = SITE_LOOKUP_CONTEXT[cacheKeyPrefix];
-    const useDiscogsLookup = cacheKeyPrefix === "e6" || cacheKeyPrefix === "rev";
 
     async function fetchImage() {
        try {
-        let imageUrl: string | null = null;
+        let fetchedImageUrl: string | null = null;
 
-        if (useDiscogsLookup) {
+        if (lookupStrategy === "discogs") {
           const q = new URLSearchParams({ type: "artist", name });
-          const res = await fetch(`/api/${cacheKeyPrefix}/discogs?${q.toString()}`);
+          const res = await fetch(`/api/${effectiveCacheKeyPrefix}/discogs?${q.toString()}`);
           if (!res.ok) return;
           const data = await res.json();
-          imageUrl = data?.artist?.imageUrl || null;
+          fetchedImageUrl = data?.artist?.imageUrl || null;
         } else {
           const query = new URLSearchParams({ name });
           if (lookupContext) {
             query.set("context", lookupContext);
           }
-          const res = await fetch(`/api/gbv/commons-image?${query.toString()}`);
+          const res = await fetch(`/api/images/commons?${query.toString()}`);
           if (!res.ok) return;
           const data = await res.json();
-          imageUrl = typeof data?.imageUrl === "string" && data.imageUrl.length > 0
+          fetchedImageUrl = typeof data?.imageUrl === "string" && data.imageUrl.length > 0
             ? data.imageUrl
             : null;
         }
 
-        if (imageUrl) {
-          const proxiedUrl = getProxiedImageUrl(imageUrl);
+        if (fetchedImageUrl) {
+          const proxiedUrl = getProxiedImageUrl(fetchedImageUrl);
           if (!proxiedUrl) return;
            if (isActive) {
             setResolvedImageUrl(proxiedUrl);
@@ -143,11 +143,13 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
        isActive = false;
      };
    }, [
-     cacheKeyPrefix,
+     effectiveCacheKeyPrefix,
      fallbackImageUrl,
      hasError,
      localImageUrl,
      lookupAttempted,
+     lookupContext,
+     lookupStrategy,
      name,
      nameKey,
      normalizedImageUrl,
@@ -162,13 +164,13 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
       <div className={cn("w-full aspect-square rounded-lg mb-2 mx-auto flex items-center justify-center", placeholderWrapperClassName)}>
          {placeholderVariant === "img" ? (
            <img
-             src={fallbackIconSrc}
+             src={effectiveFallbackIcon}
              alt="Artist placeholder"
              className={placeholderClassName}
            />
          ) : (
            <Image
-             src={fallbackIconSrc}
+             src={effectiveFallbackIcon}
              alt="Artist placeholder"
              width={placeholderSize}
              height={placeholderSize}
@@ -186,11 +188,11 @@ const SITE_LOOKUP_CONTEXT: Record<string, string> = {
          alt={`${name} photo`}
         width={400}
         height={400}
-        fallbackSrc={fallbackIconSrc}
+        fallbackSrc={effectiveFallbackIcon}
         fallbackClassName={fallbackClassName}
         preferProxy={false}
         className={
-          fit === "contain"
+          effectiveFit === "contain"
             ? "rounded-lg object-contain w-full h-full"
             : "rounded-lg object-cover w-full h-full"
         }

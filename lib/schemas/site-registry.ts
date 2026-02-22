@@ -49,4 +49,13 @@ export const REQUIRED_CONFIG_FIELDS = [
   "searchPlaceholder",
   "logoSrc",
   "placeholderIconSrc",
+  "images",
+] as const;
+
+/** Required image config fields checked at test time */
+export const REQUIRED_IMAGE_CONFIG_FIELDS = [
+  "fallbackIcon",
+  "fit",
+  "lookupStrategy",
+  "invalidCacheValues",
 ] as const;
