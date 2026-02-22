@@ -17,7 +17,7 @@ const DISCOGS_TOKEN = process.env.DISCOGS_USER_TOKEN || process.env.DISCOGS_TOKE
 const SG_LABEL_IDS = [33275];
 const DISCOGS_BASE = "https://api.discogs.com";
 const USER_AGENT = "SkinGraft/1.0";
-const RATE_LIMIT_MS = 1200;
+const RATE_LIMIT_MS = 5000;
 
 // MusicBrainz / Cover Art Archive
 const MUSICBRAINZ_BASE = "https://musicbrainz.org/ws/2";
@@ -69,8 +69,9 @@ const discogsArtistIds: Record<string, number> = {
   "storm-and-stress": 193149,
 };
 
-// Import discography from the canonical data source
+// Import discography and artists from canonical data sources
 import { sgDiscography as sgDiscographyData } from "../lib/sg-discography-data";
+import { sgArtists } from "../lib/sg-artists-data";
 
 // Re-export for use in this script
 const sgDiscography = sgDiscographyData;
@@ -217,6 +218,75 @@ async function downloadBandPhotos(): Promise<Record<string, string>> {
 
     if (!found) {
       console.log(`  [miss] ${artistId} — no image found`);
+    }
+  }
+
+  // Now check all artists from the roster that aren't in the gallery map
+  const galleryArtistIds = new Set(Object.keys(artistGalleryMap));
+  const remainingArtists = sgArtists.filter((a) => !galleryArtistIds.has(a.id));
+
+  for (const artist of remainingArtists) {
+    const outPath = path.join(ARTISTS_DIR, `${artist.id}.jpg`);
+    if (fs.existsSync(outPath)) {
+      console.log(`  [skip] ${artist.id} — already exists`);
+      results[artist.id] = `/images/sg/artists/${artist.id}.jpg`;
+      continue;
+    }
+
+    let found = false;
+
+    // Try Discogs artist search
+    if (!found) {
+      try {
+        console.log(`  [search] ${artist.id} — searching Discogs for "${artist.name}"...`);
+        const searchData = await fetchDiscogs(
+          `/database/search?q=${encodeURIComponent(artist.name)}&type=artist&per_page=5`
+        );
+        await sleep(RATE_LIMIT_MS);
+
+        if (searchData?.results?.length > 0) {
+          // Find best match — prefer exact name match
+          const match = searchData.results.find(
+            (r: any) => r.title?.toLowerCase() === artist.name.toLowerCase()
+          ) || searchData.results[0];
+
+          if (match?.cover_image && !match.cover_image.includes("spacer.gif")) {
+            const buf = await fetchUrl(match.cover_image.replace(/^http:/, "https:"));
+            if (buf.length > 1000) {
+              fs.writeFileSync(outPath, buf);
+              results[artist.id] = `/images/sg/artists/${artist.id}.jpg`;
+              console.log(`  [ok]   ${artist.id} — [discogs-search] (${(buf.length / 1024).toFixed(0)} KB)`);
+              found = true;
+            }
+          }
+
+          // If cover_image didn't work, try fetching the artist page for images
+          if (!found && match?.id) {
+            try {
+              const artistData = await fetchDiscogs(`/artists/${match.id}`);
+              await sleep(RATE_LIMIT_MS);
+              const imageUrl = artistData?.images?.[0]?.uri || artistData?.images?.[0]?.uri150;
+              if (imageUrl) {
+                const buf = await fetchUrl(imageUrl.replace(/^http:/, "https:"));
+                if (buf.length > 1000) {
+                  fs.writeFileSync(outPath, buf);
+                  results[artist.id] = `/images/sg/artists/${artist.id}.jpg`;
+                  console.log(`  [ok]   ${artist.id} — [discogs-artist] (${(buf.length / 1024).toFixed(0)} KB)`);
+                  found = true;
+                }
+              }
+            } catch {
+              // Artist detail fetch failed, continue
+            }
+          }
+        }
+      } catch (err: any) {
+        console.log(`  [fail] ${artist.id} — Discogs search: ${err.message}`);
+      }
+    }
+
+    if (!found) {
+      console.log(`  [miss] ${artist.id} — no image found`);
     }
   }
 
