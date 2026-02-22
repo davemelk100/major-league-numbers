@@ -1,7 +1,7 @@
 import type React from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { MusicSiteConfig } from "@/lib/music-site";
 import { ArrowLeft } from "lucide-react";
 
@@ -38,8 +38,12 @@ export function AlbumDetailLayout({
         </div>
 
         <div className="lg:col-span-2">
-          <h2 className="capitalize text-[36px] leading-tight mb-4">{rightTitle}</h2>
-          {rightContent}
+          <Card>
+            <CardHeader>
+              <CardTitle>{rightTitle}</CardTitle>
+            </CardHeader>
+            <CardContent>{rightContent}</CardContent>
+          </Card>
         </div>
       </div>
     </div>

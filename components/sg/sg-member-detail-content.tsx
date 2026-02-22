@@ -101,12 +101,12 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
       items={releases}
       emptyLabel="No releases found on Skin Graft."
       emptyClassName="text-sm"
-      containerClassName="grid gap-2"
+      containerClassName="grid gap-1"
       renderItem={(release) => (
         <Link
           key={release.catalogNumber}
           href={`${site.basePath}/albums/${release.catalogNumber}`}
-          className="block border-b border-border pb-2 last:border-0 hover:bg-muted/80 rounded px-2 py-1 transition-colors"
+          className="block border-b border-border pb-3 last:border-0 hover:bg-muted/80 rounded px-3 py-2.5 transition-colors"
         >
           <p className="font-semibold text-sm">{release.title}</p>
           <p className="text-xs text-muted-foreground">

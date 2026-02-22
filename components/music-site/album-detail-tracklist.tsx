@@ -23,7 +23,7 @@ export function AlbumDetailTracklist({
       {tracks.map((track, idx) => (
         <div
           key={`${track.title}-${idx}`}
-          className="flex items-baseline gap-3 py-0.5"
+          className="flex items-baseline gap-3 py-1.5"
         >
           <span className="text-sm text-muted-foreground w-6 text-right shrink-0">
             {track.position || idx + 1}

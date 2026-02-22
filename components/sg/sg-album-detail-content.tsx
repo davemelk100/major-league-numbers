@@ -74,10 +74,10 @@ export function SgAlbumDetailContent({ albumId }: { albumId: string }) {
   );
 
   const rightContent = (
-    <div className="space-y-3">
-      <div className="border-b border-border pb-2">
-        <p className="font-semibold text-sm">{release.title}</p>
-        <p className="text-xs text-muted-foreground">
+    <div className="space-y-4">
+      <div className="border-b border-border pb-3">
+        <p className="font-semibold">{release.title}</p>
+        <p className="text-sm text-muted-foreground mt-1">
           {release.artist} · {release.year}
           {release.format ? ` · ${release.format}` : ""}
         </p>
