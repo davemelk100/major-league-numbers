@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { getPlayerHeadshotUrl, getTeamLogoUrl } from "@/lib/nba-api";
 import { NBATriviaPanel } from "@/components/nba/nba-trivia-panel";
+import { NBAJerseyPanel } from "@/components/nba/nba-jersey-panel";
 import { NBAPlayerSpotlight } from "@/components/nba/nba-player-spotlight";
 
 interface LeaderItem {
@@ -39,9 +40,10 @@ export function NBADashboardContent({ leaders, standings }: NBADashboardContentP
 
   return (
     <div className="container py-2 space-y-8">
-      {/* Daily Trivia + Player of the Day */}
+      {/* Daily Trivia + Player of the Day + Jersey Numbers */}
       <div className="grid gap-6 lg:grid-cols-2">
         <NBATriviaPanel />
+        <NBAJerseyPanel />
         <NBAPlayerSpotlight />
       </div>
 
