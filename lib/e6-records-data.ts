@@ -1,4 +1,5 @@
-import { getAllE6Releases, getE6ReleaseImageUrl, type E6Release } from "./e6-discography-data";
+import { getAllE6Releases, type E6Release } from "./e6-discography-data";
+import { getLocalAlbumImage } from "./e6-release-images";
 
 export interface E6RecordOfDay {
   catalogNumber: number;
@@ -39,7 +40,7 @@ function toRecordOfDay(release: E6Release): E6RecordOfDay {
     title: release.title,
     year: release.year,
     highlight: getE6Fact(release.artist, release.title) || `E6 catalog #${release.catalogNumber}, released in ${release.year}.`,
-    coverUrl: getE6ReleaseImageUrl(release.catalogNumber),
+    coverUrl: getLocalAlbumImage(release.catalogNumber) ?? undefined,
   };
 }
 

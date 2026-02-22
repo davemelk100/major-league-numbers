@@ -3,8 +3,10 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Loader2 } from "lucide-react";
-import { getMusicSiteFromPathname } from "@/lib/music-site";
-import { getE6ReleaseByCatalogNumber, getE6ReleaseImageUrl } from "@/lib/e6-discography-data";
+import { getMusicSiteFromPathname, E6_SITE } from "@/lib/music-site";
+import { getE6ReleaseByCatalogNumber } from "@/lib/e6-discography-data";
+import { getLocalAlbumImage } from "@/lib/e6-release-images";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
 import { AlbumDetailLayout } from "@/components/music-site/album-detail-layout";
 import { AlbumDetailLeft } from "@/components/music-site/album-detail-left";
 import { AlbumDetailTracklist } from "@/components/music-site/album-detail-tracklist";
@@ -16,7 +18,7 @@ export function E6AlbumDetailContent({ albumId }: { albumId: string }) {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const release = getE6ReleaseByCatalogNumber(parseInt(albumId, 10));
-  const imageUrl = release ? getE6ReleaseImageUrl(release.catalogNumber) : undefined;
+  const localImage = release ? getLocalAlbumImage(release.catalogNumber) : null;
 
   const [tracklist, setTracklist] = useState<Track[] | null>(null);
   const [coverImage, setCoverImage] = useState<string | undefined>(undefined);
@@ -80,17 +82,21 @@ export function E6AlbumDetailContent({ albumId }: { albumId: string }) {
     );
   }
 
-  const resolvedImage = imageUrl || coverImage;
+  const resolvedImage = localImage || coverImage;
 
   const leftContent = (
     <AlbumDetailLeft
       image={
         resolvedImage ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <SiteRemoteImage
+            site={E6_SITE}
             src={resolvedImage}
             alt={`${release.artist} - ${release.title}`}
-            className="w-full aspect-square rounded-lg object-cover"
+            width={300}
+            height={300}
+            className="w-full aspect-square rounded-lg object-contain"
+            cacheKey={`e6-album-thumb:${release.catalogNumber}`}
+            preferProxy={false}
           />
         ) : (
           <SitePlaceholderIcon site={site} className="mb-4" />

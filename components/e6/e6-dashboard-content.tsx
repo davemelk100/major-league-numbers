@@ -10,12 +10,13 @@ import {
   DashboardDailyRow,
   DashboardDescription,
 } from "@/components/music-site/dashboard-sections";
-import { e6Artists, e6ArtistImages } from "@/lib/e6-artists-data";
+import { e6Artists } from "@/lib/e6-artists-data";
+import { localMemberImages } from "@/lib/e6-artist-images";
 
 const e6ArtistItems = e6Artists.map((a) => ({
   id: a.id,
   name: a.name,
-  imageUrl: e6ArtistImages[a.id],
+  imageUrl: localMemberImages[a.id],
   genre: a.genre,
 }));
 

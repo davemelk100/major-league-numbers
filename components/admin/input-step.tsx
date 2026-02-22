@@ -1,0 +1,328 @@
+"use client";
+
+import { useState, useCallback } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2, Upload, X } from "lucide-react";
+
+interface InputStepProps {
+  onGenerated: (data: unknown, logoPaths: string[]) => void;
+}
+
+function toSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+export function InputStep({ onGenerated }: InputStepProps) {
+  const [siteType, setSiteType] = useState<"music" | "sports">("music");
+  const [siteName, setSiteName] = useState("");
+  const [siteId, setSiteId] = useState("");
+  const [siteIdEdited, setSiteIdEdited] = useState(false);
+  const [content, setContent] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
+  const [logoUrl1, setLogoUrl1] = useState("");
+  const [logoUrl2, setLogoUrl2] = useState("");
+  const [logoFile1, setLogoFile1] = useState<File | null>(null);
+  const [logoFile2, setLogoFile2] = useState<File | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleNameChange = useCallback(
+    (value: string) => {
+      setSiteName(value);
+      if (!siteIdEdited) {
+        setSiteId(toSlug(value));
+      }
+    },
+    [siteIdEdited],
+  );
+
+  const handleFileDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      const dropped = Array.from(e.dataTransfer.files);
+      setFiles((prev) => [...prev, ...dropped]);
+    },
+    [],
+  );
+
+  const removeFile = useCallback((index: number) => {
+    setFiles((prev) => prev.filter((_, i) => i !== index));
+  }, []);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!siteName || !siteId) {
+      setError("Site name and ID are required");
+      return;
+    }
+
+    setIsLoading(true);
+    setError("");
+
+    try {
+      const passcode = "6231839";
+      let logoPaths: string[] = [];
+      let extractedText = "";
+
+      // Upload files if any
+      const hasUploads =
+        logoFile1 || logoFile2 || logoUrl1 || logoUrl2 || files.length > 0;
+      if (hasUploads) {
+        const formData = new FormData();
+        formData.append("siteId", siteId);
+        if (logoFile1) formData.append("logos", logoFile1);
+        if (logoFile2) formData.append("logos", logoFile2);
+        if (logoUrl1) formData.append("logoUrls", logoUrl1);
+        if (logoUrl2) formData.append("logoUrls", logoUrl2);
+        for (const file of files) {
+          formData.append("files", file);
+        }
+
+        const uploadRes = await fetch("/api/admin/upload", {
+          method: "POST",
+          headers: { "x-admin-passcode": passcode },
+          body: formData,
+        });
+
+        if (!uploadRes.ok) {
+          const err = await uploadRes.json();
+          throw new Error(err.error || "Upload failed");
+        }
+
+        const uploadData = await uploadRes.json();
+        logoPaths = uploadData.logoPaths;
+        extractedText = uploadData.extractedText;
+      }
+
+      // Generate site data
+      const generateRes = await fetch("/api/admin/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-passcode": passcode,
+        },
+        body: JSON.stringify({
+          siteType,
+          siteId,
+          siteName,
+          content,
+          extractedText,
+          logoPaths,
+        }),
+      });
+
+      if (!generateRes.ok) {
+        const err = await generateRes.json();
+        throw new Error(err.error || "Generation failed");
+      }
+
+      const data = await generateRes.json();
+      onGenerated(data, logoPaths);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  }
+
+  return (
+    <Card className="max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle>New Site</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Site Type */}
+          <div className="space-y-2">
+            <Label>Site Type</Label>
+            <div className="flex gap-4">
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="siteType"
+                  value="music"
+                  checked={siteType === "music"}
+                  onChange={() => setSiteType("music")}
+                />
+                Music
+              </label>
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="siteType"
+                  value="sports"
+                  checked={siteType === "sports"}
+                  onChange={() => setSiteType("sports")}
+                />
+                Sports
+              </label>
+            </div>
+          </div>
+
+          {/* Site Name */}
+          <div className="space-y-2">
+            <Label htmlFor="siteName">Site Name</Label>
+            <Input
+              id="siteName"
+              placeholder="e.g. Dischord Records"
+              value={siteName}
+              onChange={(e) => handleNameChange(e.target.value)}
+            />
+          </div>
+
+          {/* Site ID */}
+          <div className="space-y-2">
+            <Label htmlFor="siteId">Site ID (slug)</Label>
+            <Input
+              id="siteId"
+              placeholder="e.g. dischord"
+              value={siteId}
+              onChange={(e) => {
+                setSiteId(e.target.value);
+                setSiteIdEdited(true);
+              }}
+            />
+          </div>
+
+          {/* Content */}
+          <div className="space-y-2">
+            <Label htmlFor="content">Content</Label>
+            <Textarea
+              id="content"
+              placeholder="Paste URLs, raw text, any info about the site..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              rows={8}
+            />
+          </div>
+
+          {/* File Uploads */}
+          <div className="space-y-2">
+            <Label>File Uploads</Label>
+            <div
+              className="border-2 border-dashed rounded-lg p-6 text-center text-muted-foreground cursor-pointer hover:border-primary/50 transition-colors"
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={handleFileDrop}
+              onClick={() => {
+                const input = document.createElement("input");
+                input.type = "file";
+                input.multiple = true;
+                input.accept = ".pdf,.txt,.md,.png,.jpg,.jpeg,.webp,.svg";
+                input.onchange = (e) => {
+                  const target = e.target as HTMLInputElement;
+                  if (target.files) {
+                    setFiles((prev) => [...prev, ...Array.from(target.files!)]);
+                  }
+                };
+                input.click();
+              }}
+            >
+              <Upload className="h-6 w-6 mx-auto mb-2" />
+              <p className="text-sm">Drop files here or click to browse</p>
+              <p className="text-xs mt-1">PDFs, images, text files</p>
+            </div>
+            {files.length > 0 && (
+              <ul className="text-sm space-y-1 mt-2">
+                {files.map((f, i) => (
+                  <li key={i} className="flex items-center gap-2">
+                    <span className="truncate flex-1">{f.name}</span>
+                    <button
+                      type="button"
+                      onClick={() => removeFile(i)}
+                      className="text-muted-foreground hover:text-destructive"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* Logo Inputs */}
+          <div className="space-y-4">
+            <Label>Logo (primary)</Label>
+            <div className="flex gap-2">
+              <Input
+                placeholder="Logo URL"
+                value={logoUrl1}
+                onChange={(e) => setLogoUrl1(e.target.value)}
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const input = document.createElement("input");
+                  input.type = "file";
+                  input.accept = "image/*";
+                  input.onchange = (e) => {
+                    const target = e.target as HTMLInputElement;
+                    if (target.files?.[0]) setLogoFile1(target.files[0]);
+                  };
+                  input.click();
+                }}
+              >
+                Upload
+              </Button>
+            </div>
+            {logoFile1 && (
+              <p className="text-xs text-muted-foreground">{logoFile1.name}</p>
+            )}
+
+            <Label>Logo (alt)</Label>
+            <div className="flex gap-2">
+              <Input
+                placeholder="Alt logo URL (optional)"
+                value={logoUrl2}
+                onChange={(e) => setLogoUrl2(e.target.value)}
+                className="flex-1"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  const input = document.createElement("input");
+                  input.type = "file";
+                  input.accept = "image/*";
+                  input.onchange = (e) => {
+                    const target = e.target as HTMLInputElement;
+                    if (target.files?.[0]) setLogoFile2(target.files[0]);
+                  };
+                  input.click();
+                }}
+              >
+                Upload
+              </Button>
+            </div>
+            {logoFile2 && (
+              <p className="text-xs text-muted-foreground">{logoFile2.name}</p>
+            )}
+          </div>
+
+          {error && <p className="text-sm text-destructive">{error}</p>}
+
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                Generating...
+              </>
+            ) : (
+              "Generate Site Data"
+            )}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
+  );
+}

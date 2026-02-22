@@ -1,139 +1,133 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { getMusicSiteFromPathname, type MusicSiteConfig } from "@/lib/music-site";
-import { getE6ArtistById, getE6ArtistImageUrl } from "@/lib/e6-artists-data";
+import { getMusicSiteFromPathname, E6_SITE } from "@/lib/music-site";
+import { getE6ArtistById } from "@/lib/e6-artists-data";
 import { getE6ReleasesByArtist } from "@/lib/e6-discography-data";
+import { getLocalMemberImage, E6_MEMBER_IMAGE_FALLBACKS, E6_MEMBER_IMAGE_SKIP } from "@/lib/e6-artist-images";
+import { useMemberImage } from "@/components/music-site/use-member-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { MemberDetailLayout } from "@/components/music-site/member-detail-layout";
+import { MemberDetailLeft } from "@/components/music-site/member-detail-left";
+import { MemberDetailRight } from "@/components/music-site/member-detail-right";
 import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
-
-function DetailArtistImage({ name, staticUrl, site }: { name: string; staticUrl?: string; site: MusicSiteConfig }) {
-  const [imageUrl, setImageUrl] = useState<string | null>(staticUrl || null);
-  const [failed, setFailed] = useState(false);
-  const handleError = useCallback(() => setFailed(true), []);
-
-  useEffect(() => {
-    if (staticUrl) return;
-
-    const params = new URLSearchParams({ type: "artist", name });
-    fetch(`/api/e6/discogs?${params}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.artist?.imageUrl) {
-          setImageUrl(data.artist.imageUrl);
-        }
-      })
-      .catch(() => {});
-  }, [name, staticUrl]);
-
-  if (imageUrl && !failed) {
-    return (
-      <div className="w-full aspect-square bg-muted/30 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={imageUrl}
-          alt={name}
-          className="w-full h-full object-cover"
-          onError={handleError}
-        />
-      </div>
-    );
-  }
-
-  return <SitePlaceholderIcon site={site} className="mb-4" />;
-}
 
 export function E6MemberDetailContent({ memberId }: { memberId: string }) {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const artist = getE6ArtistById(memberId);
   const releases = artist ? getE6ReleasesByArtist(artist.name) : [];
-  const imageUrl = artist ? getE6ArtistImageUrl(artist.id) : undefined;
+  const localImage = getLocalMemberImage(memberId);
+
+  const nameKey = artist?.name?.toLowerCase() ?? "";
+  const fallbackImageUrl = E6_MEMBER_IMAGE_FALLBACKS[nameKey] || null;
+  const skipRemoteLookup = E6_MEMBER_IMAGE_SKIP[nameKey] || false;
+
+  const { resolvedImageUrl } = useMemberImage({
+    siteId: site.id,
+    site,
+    memberName: artist?.name,
+    memberId,
+    localImageUrl: localImage,
+    fallbackImageUrl,
+    skipRemoteLookup,
+  });
 
   if (!artist) {
     return (
-      <div className="container py-6">
-        <Link
-          href={`${site.basePath}/${site.membersSlug}`}
-          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:underline mb-6"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          {site.navLabels.members}
-        </Link>
-        <p className="text-muted-foreground">Artist not found.</p>
-      </div>
+      <MemberDetailLayout
+        site={site}
+        backHref={`${site.basePath}/${site.membersSlug}`}
+        backLabel={site.navLabels.members}
+        leftContent={<SitePlaceholderIcon site={site} />}
+        rightTitle="Releases"
+        rightContent={
+          <p className="text-sm text-muted-foreground">Artist not found.</p>
+        }
+      />
     );
   }
 
+  const leftContent = (
+    <MemberDetailLeft
+      image={
+        resolvedImageUrl ? (
+          <SiteRemoteImage
+            site={E6_SITE}
+            src={resolvedImageUrl}
+            alt={artist.name}
+            width={300}
+            height={300}
+            className="w-full aspect-square object-contain"
+            fallbackSrc={site.placeholderIconSrc}
+            cacheKey={`${site.id}-member-image:${nameKey}`}
+            preferProxy
+          />
+        ) : (
+          <SitePlaceholderIcon site={site} />
+        )
+      }
+      name={artist.name}
+    >
+      {artist.yearsActive && (
+        <p className="text-sm text-muted-foreground mb-2">
+          Active: {artist.yearsActive}
+        </p>
+      )}
+      {artist.genre && (
+        <p className="text-sm text-muted-foreground mb-2">
+          Genre: {artist.genre}
+        </p>
+      )}
+      {artist.wikipediaUrl && (
+        <a
+          href={artist.wikipediaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground hover:underline"
+        >
+          Wikipedia
+          <ExternalLink className="h-3 w-3" />
+        </a>
+      )}
+    </MemberDetailLeft>
+  );
+
+  const rightContent = (
+    <MemberDetailRight
+      items={releases}
+      emptyLabel="No releases found in catalog."
+      emptyClassName="text-sm"
+      containerClassName="space-y-2"
+      renderItem={(release) => (
+        <Link
+          key={release.catalogNumber}
+          href={`${site.basePath}/${site.albumsSlug}/${release.catalogNumber}`}
+          className="flex items-center justify-between border-b border-border pb-2 last:border-0 hover:bg-muted/80 -mx-2 px-2 py-1 rounded transition-colors"
+        >
+          <div>
+            <p className="font-semibold text-sm">{release.title}</p>
+            <p className="text-xs text-muted-foreground">
+              E6 {release.catalogNumber}
+            </p>
+          </div>
+          <Badge variant="outline">{release.year}</Badge>
+        </Link>
+      )}
+    />
+  );
+
   return (
-    <div className="container py-6">
-      <Link
-        href={`${site.basePath}/${site.membersSlug}`}
-        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:underline mb-6"
-      >
-        <ArrowLeft className="h-4 w-4" />
-        {site.navLabels.members}
-      </Link>
-
-      <div className="grid gap-8 lg:grid-cols-[1fr_1.5fr]">
-        {/* Left: artist image + info */}
-        <div>
-          <DetailArtistImage name={artist.name} staticUrl={imageUrl} site={site} />
-          <h1 className="font-league mb-2">{artist.name}</h1>
-          {artist.yearsActive && (
-            <p className="text-sm text-muted-foreground mb-2">
-              Active: {artist.yearsActive}
-            </p>
-          )}
-          {artist.genre && (
-            <p className="text-sm text-muted-foreground mb-2">
-              Genre: {artist.genre}
-            </p>
-          )}
-          {artist.wikipediaUrl && (
-            <a
-              href={artist.wikipediaUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground hover:underline"
-            >
-              Wikipedia
-              <ExternalLink className="h-3 w-3" />
-            </a>
-          )}
-        </div>
-
-        {/* Right: discography */}
-        <div>
-          <h2 className="mb-4">Releases on E6 ({releases.length})</h2>
-          {releases.length > 0 ? (
-            <div className="space-y-2">
-              {releases.map((release) => (
-                <Link
-                  key={release.catalogNumber}
-                  href={`${site.basePath}/${site.albumsSlug}/${release.catalogNumber}`}
-                  className="flex items-center justify-between border-b border-border pb-2 last:border-0 hover:bg-muted/80 -mx-2 px-2 py-1 rounded transition-colors"
-                >
-                  <div>
-                    <p className="font-semibold text-sm">{release.title}</p>
-                    <p className="text-xs text-muted-foreground">
-                      E6 {release.catalogNumber}
-                    </p>
-                  </div>
-                  <Badge variant="outline">{release.year}</Badge>
-                </Link>
-              ))}
-            </div>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              No releases found in catalog.
-            </p>
-          )}
-        </div>
-      </div>
-    </div>
+    <MemberDetailLayout
+      site={site}
+      backHref={`${site.basePath}/${site.membersSlug}`}
+      backLabel={site.navLabels.members}
+      leftContent={leftContent}
+      rightTitle={`Releases on E6 (${releases.length})`}
+      rightContent={rightContent}
+    />
   );
 }
