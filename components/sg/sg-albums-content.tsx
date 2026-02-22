@@ -111,7 +111,7 @@ export function SgAlbumsContent() {
         {visibleAlbums.map((album, index) => {
           const imageUrl = getSgReleaseImageUrl(album.id) ?? null;
           return (
-            <Link key={album.id} href={`${site.basePath}/albums/${album.id}`}>
+            <Link key={album.id} href={`${site.basePath}/${site.albumsSlug}/${album.id}`}>
               <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3">
                   {imageUrl ? (

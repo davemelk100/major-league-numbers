@@ -20,7 +20,7 @@ export function RevMemberDetailContent({ memberId }: { memberId: string }) {
     return (
       <div className="container py-6">
         <Link
-          href={`${site.basePath}/members`}
+          href={`${site.basePath}/${site.membersSlug}`}
           className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:underline mb-6"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -34,7 +34,7 @@ export function RevMemberDetailContent({ memberId }: { memberId: string }) {
   return (
     <div className="container py-6">
       <Link
-        href={`${site.basePath}/members`}
+        href={`${site.basePath}/${site.membersSlug}`}
         className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:underline mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -87,7 +87,7 @@ export function RevMemberDetailContent({ memberId }: { memberId: string }) {
               {releases.map((release) => (
                 <Link
                   key={release.catalogNumber}
-                  href={`${site.basePath}/albums/${release.catalogNumber}`}
+                  href={`${site.basePath}/${site.albumsSlug}/${release.catalogNumber}`}
                   className="flex items-center justify-between border-b border-border pb-2 last:border-0 hover:bg-muted/80 -mx-2 px-2 py-1 rounded transition-colors"
                 >
                   <div>

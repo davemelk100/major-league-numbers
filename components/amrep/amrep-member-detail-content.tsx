@@ -269,7 +269,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
     return (
       <MemberDetailLayout
         site={site}
-        backHref={`${site.basePath}/members`}
+        backHref={`${site.basePath}/${site.membersSlug}`}
         backLabel={site.navLabels.members}
         leftContent={
           <SitePlaceholderIcon site={site} />
@@ -338,7 +338,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
         release.localId ? (
           <Link
             key={release.id}
-            href={`${site.basePath}/albums/${release.localId}`}
+            href={`${site.basePath}/${site.albumsSlug}/${release.localId}`}
             className="block border-b border-border pb-2 last:border-0 hover:bg-muted/80 rounded px-2 py-1 transition-colors"
           >
             <p className="font-semibold text-sm">{release.title}</p>
@@ -358,7 +358,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
   return (
     <MemberDetailLayout
       site={site}
-      backHref={`${site.basePath}/members`}
+      backHref={`${site.basePath}/${site.membersSlug}`}
       backLabel={site.navLabels.members}
       leftContent={leftContent}
       rightTitle="Releases"

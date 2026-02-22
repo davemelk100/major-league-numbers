@@ -63,7 +63,7 @@ export function RevAlbumDetailContent({ albumId }: { albumId: string }) {
     return (
       <AlbumDetailLayout
         site={site}
-        backHref={`${site.basePath}/albums`}
+        backHref={`${site.basePath}/${site.albumsSlug}`}
         backLabel={site.navLabels.discography}
         leftContent={
           <div className="w-full aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center">
@@ -127,7 +127,7 @@ export function RevAlbumDetailContent({ albumId }: { albumId: string }) {
   return (
     <AlbumDetailLayout
       site={site}
-      backHref={`${site.basePath}/albums`}
+      backHref={`${site.basePath}/${site.albumsSlug}`}
       backLabel={site.navLabels.discography}
       leftContent={leftContent}
       rightTitle="Tracklist"

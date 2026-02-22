@@ -53,7 +53,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
     return (
       <MemberDetailLayout
         site={site}
-        backHref={`${site.basePath}/members`}
+        backHref={`${site.basePath}/${site.membersSlug}`}
         backLabel={site.navLabels.members}
         leftContent={
           <SitePlaceholderIcon site={site} className="mb-4" />
@@ -144,7 +144,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
     return (
       <MemberDetailLayout
         site={site}
-        backHref={`${site.basePath}/members`}
+        backHref={`${site.basePath}/${site.membersSlug}`}
         backLabel={site.navLabels.members}
         leftContent={
           <SitePlaceholderIcon site={site} className="mb-4" />
@@ -216,7 +216,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
         renderItem={(release) => (
           <Link
             key={`${release.id}-${release.title}-${release.year ?? "unknown"}`}
-            href={`${site.basePath}/albums/${release.id}`}
+            href={`${site.basePath}/${site.albumsSlug}/${release.id}`}
             className="flex items-center justify-between rounded-lg border border-white/20 bg-white/10 px-4 py-3 text-sm text-white hover:bg-white/20 transition-colors"
           >
             <span className="font-semibold">{release.title}</span>
@@ -229,7 +229,7 @@ export function GbvMemberDetailContent({ memberId }: { memberId: string }) {
   return (
     <MemberDetailLayout
       site={site}
-      backHref={`${site.basePath}/members`}
+      backHref={`${site.basePath}/${site.membersSlug}`}
       backLabel={site.navLabels.members}
       leftContent={leftContent}
       rightTitle="Discography"

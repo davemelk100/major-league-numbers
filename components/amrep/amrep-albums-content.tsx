@@ -140,7 +140,7 @@ export function GbvAlbumsContent() {
         getLocalFallbackImage={getLocalFallbackImage}
         getReleaseTypeLabel={(album) => getReleaseType(album.format, album.releaseType)}
         RemoteImage={AmrepRemoteImage}
-        linkBasePath={`${site.basePath}/albums`}
+        linkBasePath={`${site.basePath}/${site.albumsSlug}`}
         cacheKeyPrefix="gbv-album-thumb"
         imageFit={isAmrep ? "contain" : "cover"}
         preferProxy={!isAmrep}

@@ -6,6 +6,8 @@ import {
   REQUIRED_ROUTES,
   REQUIRED_COMPONENTS,
   REQUIRED_CONFIG_FIELDS,
+  MEMBERS_ROUTE_SLUGS,
+  ALBUMS_ROUTE_SLUGS,
 } from "@/lib/schemas/site-registry";
 
 const ROOT = path.resolve(__dirname, "..");
@@ -19,6 +21,24 @@ describe("Site completeness", () => {
           expect(fs.existsSync(filePath), `Missing route: app/${site.id}/${route}`).toBe(true);
         });
       }
+
+      it(`has albums/releases route`, () => {
+        const slug = ALBUMS_ROUTE_SLUGS[site.id] || "albums";
+        const filePath = path.join(ROOT, "app", site.id, slug, "page.tsx");
+        expect(fs.existsSync(filePath), `Missing route: app/${site.id}/${slug}/page.tsx`).toBe(true);
+      });
+
+      it(`has albums/releases detail route`, () => {
+        const slug = ALBUMS_ROUTE_SLUGS[site.id] || "albums";
+        const filePath = path.join(ROOT, "app", site.id, slug, "[id]", "page.tsx");
+        expect(fs.existsSync(filePath), `Missing route: app/${site.id}/${slug}/[id]/page.tsx`).toBe(true);
+      });
+
+      it(`has members/artists route`, () => {
+        const slug = MEMBERS_ROUTE_SLUGS[site.id] || "members";
+        const filePath = path.join(ROOT, "app", site.id, slug, "page.tsx");
+        expect(fs.existsSync(filePath), `Missing route: app/${site.id}/${slug}/page.tsx`).toBe(true);
+      });
 
       for (const component of REQUIRED_COMPONENTS) {
         const resolved = component.replace(/\{siteId\}/g, site.id);

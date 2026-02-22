@@ -35,7 +35,7 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
     return (
       <MemberDetailLayout
         site={site}
-        backHref={`${site.basePath}/members`}
+        backHref={`${site.basePath}/${site.membersSlug}`}
         backLabel={site.navLabels.members}
         leftContent={
           <div className="w-full aspect-square rounded-lg bg-muted flex items-center justify-center p-4">
@@ -105,7 +105,7 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
       renderItem={(release) => (
         <Link
           key={release.catalogNumber}
-          href={`${site.basePath}/albums/${release.catalogNumber}`}
+          href={`${site.basePath}/${site.albumsSlug}/${release.catalogNumber}`}
           className="block border-b border-border pb-3 last:border-0 hover:bg-muted/80 rounded px-3 py-2.5 transition-colors"
         >
           <p className="font-semibold text-sm">{release.title}</p>
@@ -122,7 +122,7 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
   return (
     <MemberDetailLayout
       site={site}
-      backHref={`${site.basePath}/members`}
+      backHref={`${site.basePath}/${site.membersSlug}`}
       backLabel={site.navLabels.members}
       leftContent={leftContent}
       rightTitle="Releases"

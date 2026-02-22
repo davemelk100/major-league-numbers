@@ -98,7 +98,7 @@ export function SiteSearchContent() {
             {filteredMembers.map((member: SiteSearchMember) => (
               <Link
                 key={member.id}
-                href={`${site.basePath}/members/${member.id}`}
+                href={`${site.basePath}/${site.membersSlug}/${member.id}`}
               >
                 <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                   <CardContent className="p-3 text-center">
@@ -133,7 +133,7 @@ export function SiteSearchContent() {
               getReleaseType(album.format, album.releaseType)
             }
             RemoteImage={RemoteImage}
-            linkBasePath={`${site.basePath}/albums`}
+            linkBasePath={`${site.basePath}/${site.albumsSlug}`}
             cacheKeyPrefix={`${site.id}-search-album`}
             imageFit={isAmrep ? "contain" : "cover"}
           />

@@ -22,6 +22,8 @@ export interface MusicSiteConfig {
   footerDisclaimer?: string;
   sources: Array<{ label: string; url: string }>;
   imageSources: Array<{ label: string; url: string }>;
+  membersSlug: string;
+  albumsSlug: string;
   searchPlaceholder: string;
   seo: {
     title: string;
@@ -55,6 +57,8 @@ export const GBV_SITE: MusicSiteConfig = {
     members: "Members",
     sideProjects: "Side Projects",
   },
+  membersSlug: "members",
+  albumsSlug: "albums",
   footerDisclaimer:
     "All Content, Rights, Copyrights, etc. are the property of Robert Pollard unless otherwise noted. This is simply a fan site.",
   sources: [
@@ -122,6 +126,8 @@ export const AMREP_SITE: MusicSiteConfig = {
     members: "Artists",
     sideProjects: "Imprints",
   },
+  membersSlug: "artists",
+  albumsSlug: "releases",
   footerDisclaimer:
     "All Content, Rights, Copyrights, etc. are the property of Tom Hazelmyer and AmRep records. This is simply a fan site.",
   sources: [
@@ -229,6 +235,8 @@ export const E6_SITE: MusicSiteConfig = {
     members: "Artists",
     sideProjects: "Related Labels",
   },
+  membersSlug: "artists",
+  albumsSlug: "releases",
   footerDisclaimer:
     "All Content, Rights, Copyrights, etc. are the property of the respective artists and labels. This is simply a fan site.",
   sources: [
@@ -293,6 +301,8 @@ export const REVELATION_SITE: MusicSiteConfig = {
     members: "Bands",
     sideProjects: "Sub-Labels",
   },
+  membersSlug: "artists",
+  albumsSlug: "releases",
   footerDisclaimer:
     "All Content, Rights, Copyrights, etc. are the property of Revelation Records. This is simply a fan site.",
   sources: [
@@ -358,6 +368,8 @@ export const SKINGRAFT_SITE: MusicSiteConfig = {
     members: "Artists",
     sideProjects: "Imprints",
   },
+  membersSlug: "artists",
+  albumsSlug: "releases",
   footerDisclaimer:
     "All Content, Rights, Copyrights, etc. are the property of Skin Graft Records and the respective artists. This is simply a fan site.",
   sources: [

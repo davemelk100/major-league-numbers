@@ -237,7 +237,7 @@ export function useRecordOfDay() {
     enhanceWithApiData();
   }, [isAmrep, isRev, isE6, isSg]);
 
-  const albumHref = albumId ? `${site.basePath}/albums/${albumId}` : null;
+  const albumHref = albumId ? `${site.basePath}/${site.albumsSlug}/${albumId}` : null;
   const displayTitle =
     record && "artist" in record && record.artist
       ? `${record.artist} — ${record.title}`
@@ -270,7 +270,7 @@ export function useSingleOfDay() {
     }
   }, []);
 
-  const albumHref = record?.id ? `${site.basePath}/albums/${record.id}` : null;
+  const albumHref = record?.id ? `${site.basePath}/${site.albumsSlug}/${record.id}` : null;
   const displayTitle = record?.title ?? null;
 
   return { site, record, coverUrl, albumHref, displayTitle };

@@ -111,7 +111,7 @@ export function E6MembersContent() {
         {filteredArtists.map((artist) => {
           const staticUrl = getE6ArtistImageUrl(artist.id);
           return (
-            <Link key={artist.id} href={`/e6/members/${artist.id}`}>
+            <Link key={artist.id} href={`${site.basePath}/${site.membersSlug}/${artist.id}`}>
               <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3 text-center">
                   <ArtistImage name={artist.name} staticUrl={staticUrl} site={site} />

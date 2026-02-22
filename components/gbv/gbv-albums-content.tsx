@@ -120,7 +120,7 @@ export function GbvAlbumsContent() {
         getAlbumImage={getAlbumImage}
         getReleaseTypeLabel={(album) => getReleaseType(album.format, album.releaseType)}
         RemoteImage={GbvRemoteImage}
-        linkBasePath={`${site.basePath}/albums`}
+        linkBasePath={`${site.basePath}/${site.albumsSlug}`}
         cacheKeyPrefix="gbv-album-thumb"
         imageFit={isAmrep ? "contain" : "cover"}
         getPurchaseUrl={isAmrep ? undefined : (album) => getRockathonUrl(album.title)}

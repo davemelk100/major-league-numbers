@@ -109,7 +109,7 @@ export function GbvMembersContent() {
 
       <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {filteredMembers.map((member) => (
-          <Link key={member.id} href={`${site.basePath}/members/${member.id}`}>
+          <Link key={member.id} href={`${site.basePath}/${site.membersSlug}/${member.id}`}>
             <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
               <CardContent className="p-3 text-center">
                 <MemberAvatar

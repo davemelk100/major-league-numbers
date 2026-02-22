@@ -40,7 +40,7 @@ export function RevMembersContent() {
         {filteredArtists.map((artist) => {
           const imageUrl = getRevArtistImageUrl(artist.id);
           return (
-            <Link key={artist.id} href={`/rev/members/${artist.id}`}>
+            <Link key={artist.id} href={`${site.basePath}/${site.membersSlug}/${artist.id}`}>
               <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3 text-center">
                   {imageUrl ? (

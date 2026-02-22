@@ -97,7 +97,7 @@ export function RevAlbumsContent() {
         {filteredReleases.map((release) => {
           const imageUrl = coverImages[release.catalogNumber];
           return (
-            <Link key={release.catalogNumber} href={`/rev/albums/${release.catalogNumber}`}>
+            <Link key={release.catalogNumber} href={`${site.basePath}/${site.albumsSlug}/${release.catalogNumber}`}>
               <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3">
                   {imageUrl ? (

@@ -23,7 +23,7 @@ export function SgAlbumDetailContent({ albumId }: { albumId: string }) {
     return (
       <AlbumDetailLayout
         site={site}
-        backHref={`${site.basePath}/albums`}
+        backHref={`${site.basePath}/${site.albumsSlug}`}
         backLabel={site.navLabels.discography}
         leftContent={
           <div className="w-full aspect-square rounded-lg bg-muted flex items-center justify-center mb-4 p-4">
@@ -91,7 +91,7 @@ export function SgAlbumDetailContent({ albumId }: { albumId: string }) {
   return (
     <AlbumDetailLayout
       site={site}
-      backHref={`${site.basePath}/albums`}
+      backHref={`${site.basePath}/${site.albumsSlug}`}
       backLabel={site.navLabels.discography}
       leftContent={leftContent}
       rightTitle="Details"

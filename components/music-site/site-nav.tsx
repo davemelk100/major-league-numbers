@@ -42,8 +42,8 @@
    const navigation: NavItem[] = [
      { name: site.chatLabel, href: `${site.basePath}/ask`, image: site.chatIconSrc },
      { name: "Home", href: site.basePath, icon: Home },
-     { name: site.navLabels.discography, href: `${site.basePath}/albums`, icon: Disc3 },
-     { name: site.navLabels.members, href: `${site.basePath}/members`, icon: Users },
+     { name: site.navLabels.discography, href: `${site.basePath}/${site.albumsSlug}`, icon: Disc3 },
+     { name: site.navLabels.members, href: `${site.basePath}/${site.membersSlug}`, icon: Users },
      { name: "Videos", href: `${site.basePath}/videos`, icon: Video },
      { name: site.navLabels.sideProjects, href: `${site.basePath}/side-projects`, icon: Star, mobileHidden: true },
      { name: "Timeline", href: `${site.basePath}/timeline`, icon: Calendar, mobileHidden: true },
@@ -130,8 +130,8 @@
    const navigation: NavItem[] = [
      { name: site.chatLabel, href: `${site.basePath}/ask`, image: site.chatIconSrc },
      { name: "Home", href: site.basePath, icon: Home },
-     { name: site.navLabels.discography, href: `${site.basePath}/albums`, icon: Disc3 },
-     { name: site.navLabels.members, href: `${site.basePath}/members`, icon: Users },
+     { name: site.navLabels.discography, href: `${site.basePath}/${site.albumsSlug}`, icon: Disc3 },
+     { name: site.navLabels.members, href: `${site.basePath}/${site.membersSlug}`, icon: Users },
      { name: "Videos", href: `${site.basePath}/videos`, icon: Video },
      { name: site.navLabels.sideProjects, href: `${site.basePath}/side-projects`, icon: Star, mobileHidden: true },
      { name: "Timeline", href: `${site.basePath}/timeline`, icon: Calendar, mobileHidden: true },

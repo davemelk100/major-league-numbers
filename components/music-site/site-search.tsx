@@ -175,7 +175,7 @@
        opts.push({
          type: "member",
          id: `member-${member.id}`,
-         href: `${site.basePath}/members/${member.id}`,
+         href: `${site.basePath}/${site.membersSlug}/${member.id}`,
          label: member.name,
        });
      });
@@ -184,7 +184,7 @@
        opts.push({
          type: "album",
          id: `album-${album.id}`,
-         href: `${site.basePath}/albums/${album.id}`,
+         href: `${site.basePath}/${site.albumsSlug}/${album.id}`,
          label: album.title,
           sublabel: album.year ? String(album.year) : "—",
        });
@@ -327,7 +327,7 @@
                          aria-selected={isActive}
                          onClick={() => {
                            handleResultClick();
-                           router.push(`${site.basePath}/members/${member.id}`);
+                           router.push(`${site.basePath}/${site.membersSlug}/${member.id}`);
                          }}
                          onMouseEnter={() => setActiveIndex(optionIndex)}
                          className={`flex items-center gap-2 px-3 py-2 text-sm text-gray-900 cursor-pointer ${
@@ -357,7 +357,7 @@
                          aria-selected={isActive}
                          onClick={() => {
                            handleResultClick();
-                           router.push(`${site.basePath}/albums/${album.id}`);
+                           router.push(`${site.basePath}/${site.albumsSlug}/${album.id}`);
                          }}
                          onMouseEnter={() => setActiveIndex(optionIndex)}
                          className={`flex items-center gap-2 px-3 py-2 text-sm text-gray-900 cursor-pointer ${

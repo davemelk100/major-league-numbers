@@ -6,11 +6,32 @@
 /** Route page files every site must provide (relative to app/{siteId}/) */
 export const REQUIRED_ROUTES = [
   "page.tsx",
-  "albums/page.tsx",
-  "albums/[id]/page.tsx",
-  "members/page.tsx",
   "search/page.tsx",
 ] as const;
+
+/**
+ * Members/artists route — uses "members" for GBV, "artists" for all other sites.
+ * Checked separately since the slug varies per site.
+ */
+export const MEMBERS_ROUTE_SLUGS: Record<string, string> = {
+  gbv: "members",
+  sg: "artists",
+  amrep: "artists",
+  rev: "artists",
+  e6: "artists",
+};
+
+/**
+ * Albums/releases route — uses "albums" for GBV, "releases" for label sites.
+ * Checked separately since the slug varies per site.
+ */
+export const ALBUMS_ROUTE_SLUGS: Record<string, string> = {
+  gbv: "albums",
+  sg: "releases",
+  amrep: "releases",
+  rev: "releases",
+  e6: "releases",
+};
 
 /** Component files every site must provide (relative to components/{siteId}/) */
 export const REQUIRED_COMPONENTS = [

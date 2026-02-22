@@ -43,7 +43,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
     return (
       <AlbumDetailLayout
         site={site}
-        backHref={`${site.basePath}/albums`}
+        backHref={`${site.basePath}/${site.albumsSlug}`}
         backLabel={site.navLabels.discography}
         leftContent={
           <SitePlaceholderIcon site={site} className="mb-4" />
@@ -133,7 +133,7 @@ export function GbvAlbumDetailContent({ albumId }: { albumId: string }) {
   return (
     <AlbumDetailLayout
       site={site}
-      backHref={`${site.basePath}/albums`}
+      backHref={`${site.basePath}/${site.albumsSlug}`}
       backLabel={site.navLabels.discography}
       leftContent={leftContent}
       rightTitle={`Tracklist (${detail.tracklist?.length || 0} tracks)`}

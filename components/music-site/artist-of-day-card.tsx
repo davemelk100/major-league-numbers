@@ -44,7 +44,7 @@ export function ArtistOfDayCard({
   const index = daysSinceEpoch % artistsWithImages.length;
   const artist = artistsWithImages[index];
   const coverUrl = artist.imageUrl || null;
-  const albumHref = `${site.basePath}/members/${artist.id}`;
+  const albumHref = `${site.basePath}/${site.membersSlug}/${artist.id}`;
   const displayTitle = artist.name;
 
   return (
