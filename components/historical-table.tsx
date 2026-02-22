@@ -142,17 +142,17 @@ export function HistoricalTable({ data }: HistoricalTableProps) {
           <Table>
             <TableHeader className="sticky top-0 bg-card z-10">
               <TableRow>
-                <TableHead className="cursor-pointer hover:bg-muted/50" onClick={() => handleSort("season")}>
+                <TableHead className="cursor-pointer hover:bg-muted/80" onClick={() => handleSort("season")}>
                   Year <SortIcon columnKey="season" />
                 </TableHead>
-                <TableHead className="cursor-pointer hover:bg-muted/50 text-right" onClick={() => handleSort("wins")}>
+                <TableHead className="cursor-pointer hover:bg-muted/80 text-right" onClick={() => handleSort("wins")}>
                   W <SortIcon columnKey="wins" />
                 </TableHead>
-                <TableHead className="cursor-pointer hover:bg-muted/50 text-right" onClick={() => handleSort("losses")}>
+                <TableHead className="cursor-pointer hover:bg-muted/80 text-right" onClick={() => handleSort("losses")}>
                   L <SortIcon columnKey="losses" />
                 </TableHead>
                 <TableHead
-                  className="cursor-pointer hover:bg-muted/50 text-right"
+                  className="cursor-pointer hover:bg-muted/80 text-right"
                   onClick={() => handleSort("winningPercentage")}
                 >
                   PCT <SortIcon columnKey="winningPercentage" />
@@ -160,7 +160,7 @@ export function HistoricalTable({ data }: HistoricalTableProps) {
                 <TableHead className="text-right hidden sm:table-cell">RS</TableHead>
                 <TableHead className="text-right hidden sm:table-cell">RA</TableHead>
                 <TableHead
-                  className="cursor-pointer hover:bg-muted/50 text-right"
+                  className="cursor-pointer hover:bg-muted/80 text-right"
                   onClick={() => handleSort("runDifferential")}
                 >
                   Diff <SortIcon columnKey="runDifferential" />

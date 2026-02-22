@@ -26,7 +26,7 @@ export function RosterTable({ players, title }: RosterTableProps) {
           </TableHeader>
           <TableBody>
             {players.map((player) => (
-              <TableRow key={player.id} className="hover:bg-muted/30">
+              <TableRow key={player.id} className="hover:bg-muted/50">
                 <TableCell className="font-mono text-muted-foreground">{player.primaryNumber || "-"}</TableCell>
                 <TableCell>
                   <Link

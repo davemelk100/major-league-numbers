@@ -138,7 +138,7 @@ export function DashboardMembersGrid({
     <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
       {members.map((member, index) => {
         const card = (
-          <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+          <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
             <CardContent className="p-3 text-center">
               <MemberAvatar
                 name={member.name}
@@ -215,7 +215,7 @@ export function DashboardDiscographyGrid<T extends DashboardAlbum>({
       {albums.map((album, index) => {
         const albumImage = getAlbumImage(album);
         const card = (
-          <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+          <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
             <CardContent className="p-3">
               {albumImage ? (
                 <RemoteImage

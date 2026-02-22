@@ -59,7 +59,7 @@ export function NHLAskContent() {
             <button
               key={prompt}
               onClick={() => setInput(prompt)}
-              className="text-left text-sm p-3 rounded-lg border hover:bg-muted/50 transition-colors text-muted-foreground"
+              className="text-left text-sm p-3 rounded-lg border hover:bg-muted/80 transition-colors text-muted-foreground"
             >
               {prompt}
             </button>

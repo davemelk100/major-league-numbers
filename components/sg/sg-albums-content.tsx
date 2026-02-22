@@ -113,7 +113,7 @@ export function SgAlbumsContent() {
           const imageUrl = sgReleaseImages[album.id] ?? null;
           return (
             <Link key={album.id} href={`${site.basePath}/albums/${album.id}`}>
-              <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+              <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3">
                   {imageUrl ? (
                     <SgRemoteImage

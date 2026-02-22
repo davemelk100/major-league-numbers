@@ -67,7 +67,7 @@ export function NBASearchContent() {
               <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
                 {results.teams.map((team) => (
                   <Link key={team.id} href={`/nba/teams/${team.id}`}>
-                    <Card className="hover:bg-muted/50 transition-colors">
+                    <Card className="hover:bg-muted/80 transition-colors">
                       <CardContent className="p-3 flex items-center gap-3">
                         <Image
                           src={team.logoUrl || getTeamLogoUrl(team.abbreviation)}
@@ -91,7 +91,7 @@ export function NBASearchContent() {
               <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                 {results.players.map((player) => (
                   <Link key={player.id} href={`/nba/players/${player.id}`}>
-                    <Card className="hover:bg-muted/50 transition-colors">
+                    <Card className="hover:bg-muted/80 transition-colors">
                       <CardContent className="p-3 flex items-center gap-3">
                         <Image
                           src={player.headshot || getPlayerHeadshotUrl(player.id)}

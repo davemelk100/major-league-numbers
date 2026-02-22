@@ -115,7 +115,7 @@ export function E6MemberDetailContent({ memberId }: { memberId: string }) {
                 <Link
                   key={release.catalogNumber}
                   href={`${site.basePath}/albums/${release.catalogNumber}`}
-                  className="flex items-center justify-between border-b border-border pb-2 last:border-0 hover:bg-muted/50 -mx-2 px-2 py-1 rounded transition-colors"
+                  className="flex items-center justify-between border-b border-border pb-2 last:border-0 hover:bg-muted/80 -mx-2 px-2 py-1 rounded transition-colors"
                 >
                   <div>
                     <p className="font-semibold text-sm">{release.title}</p>

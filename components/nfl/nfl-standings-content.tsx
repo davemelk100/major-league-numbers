@@ -44,7 +44,7 @@ export function NFLStandingsContent({ standings }: NFLStandingsContentProps) {
             className={`px-4 py-2 text-sm rounded-lg border transition-colors ${
               activeConference === tab.key
                 ? "bg-primary text-primary-foreground"
-                : "hover:bg-muted/50 text-muted-foreground"
+                : "hover:bg-muted/80 text-muted-foreground"
             }`}
           >
             {tab.label}

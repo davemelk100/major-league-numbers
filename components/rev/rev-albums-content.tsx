@@ -98,7 +98,7 @@ export function RevAlbumsContent() {
           const imageUrl = coverImages[release.catalogNumber];
           return (
             <Link key={release.catalogNumber} href={`/rev/albums/${release.catalogNumber}`}>
-              <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+              <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3">
                   {imageUrl ? (
                     <div className="w-full aspect-square bg-muted/30 rounded-lg mb-2 flex items-center justify-center overflow-hidden">

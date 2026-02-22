@@ -82,7 +82,7 @@ export function USPBLDashboardContent({ standings, teams, championships, mlbAlum
         <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
           {teams.map((team) => (
             <Link key={team.slug} href={`/uspbl/teams/${team.slug}`}>
-              <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+              <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                 <CardContent className="p-4 text-center">
                   {team.logoUrl.startsWith("http") ? (
                     <Image

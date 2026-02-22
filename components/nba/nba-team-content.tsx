@@ -63,7 +63,7 @@ export function NBATeamContent({ team, roster }: NBATeamContentProps) {
           <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
             {group.players.map((p) => (
               <Link key={p.id} href={`/nba/players/${p.id}`}>
-                <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+                <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                   <CardContent className="p-3 flex items-center gap-3">
                     <Image
                       src={p.headshot || getPlayerHeadshotUrl(p.id)}

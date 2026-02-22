@@ -25,7 +25,7 @@ function RosterGrid({ players }: { players: AwardWinner[] }) {
             key={`${player.playerId}-${player.id}`}
             href={`/mlb/players/${player.playerId}`}
           >
-            <Card className="hover:bg-secondary/50 transition-colors cursor-pointer h-full">
+            <Card className="hover:bg-secondary/80 transition-colors cursor-pointer h-full">
               <CardContent className="p-2 pl-4">
                 <div className="flex items-center gap-3">
                   <div className="shrink-0">

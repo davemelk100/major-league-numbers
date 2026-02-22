@@ -109,7 +109,7 @@ function SiteCard({
   return (
     <Link
       href={site.href}
-      className="flex flex-col items-center gap-3 p-6 rounded-lg border bg-card hover:bg-muted/50 transition-colors"
+      className="flex flex-col items-center gap-3 p-6 rounded-lg border bg-card hover:bg-muted/80 transition-colors"
     >
       <Image
         src={site.logo}

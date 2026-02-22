@@ -118,7 +118,7 @@ export function E6AlbumsContent() {
       <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {filteredReleases.map((release) => (
           <Link key={release.catalogNumber} href={`/e6/albums/${release.catalogNumber}`}>
-            <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+            <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
               <CardContent className="p-3">
                 <AlbumCover
                   artist={release.artist}

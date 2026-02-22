@@ -31,7 +31,7 @@ export function NFLTeamsContent({ standings }: NFLTeamsContentProps) {
           <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4">
             {division.entries.map((entry) => (
               <Link key={entry.team.id} href={`/nfl/teams/${entry.team.id}`}>
-                <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+                <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                   <CardContent className="p-4 flex items-center gap-3">
                     <Image
                       src={entry.team.logoUrl}

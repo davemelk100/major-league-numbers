@@ -105,7 +105,7 @@ export function NBADashboardContent({ leaders, standings }: NBADashboardContentP
                   <Link
                     key={team.abbrev}
                     href={`/nba/teams/${team.abbrev.toLowerCase()}`}
-                    className="flex items-center gap-3 p-2 rounded hover:bg-muted/50 transition-colors"
+                    className="flex items-center gap-3 p-2 rounded hover:bg-muted/80 transition-colors"
                   >
                     <span className="text-sm text-muted-foreground w-4">{idx + 1}</span>
                     <Image
@@ -134,7 +134,7 @@ export function NBADashboardContent({ leaders, standings }: NBADashboardContentP
                   <Link
                     key={team.abbrev}
                     href={`/nba/teams/${team.abbrev.toLowerCase()}`}
-                    className="flex items-center gap-3 p-2 rounded hover:bg-muted/50 transition-colors"
+                    className="flex items-center gap-3 p-2 rounded hover:bg-muted/80 transition-colors"
                   >
                     <span className="text-sm text-muted-foreground w-4">{idx + 1}</span>
                     <Image

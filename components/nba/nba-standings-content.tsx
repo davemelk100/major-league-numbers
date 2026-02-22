@@ -41,7 +41,7 @@ export function NBAStandingsContent({ standings }: NBAStandingsContentProps) {
               </thead>
               <tbody>
                 {conf.entries.map((entry, idx) => (
-                  <tr key={entry.team.id} className="border-b last:border-0 hover:bg-muted/30">
+                  <tr key={entry.team.id} className="border-b last:border-0 hover:bg-muted/50">
                     <td className="py-3 px-4 text-muted-foreground">{idx + 1}</td>
                     <td className="py-3 px-4">
                       <Link

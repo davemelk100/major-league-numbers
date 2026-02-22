@@ -112,7 +112,7 @@ export function E6MembersContent() {
           const staticUrl = getE6ArtistImageUrl(artist.id);
           return (
             <Link key={artist.id} href={`/e6/members/${artist.id}`}>
-              <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+              <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3 text-center">
                   <ArtistImage name={artist.name} staticUrl={staticUrl} site={site} />
                   <p className="text-sm font-medium">{artist.name}</p>

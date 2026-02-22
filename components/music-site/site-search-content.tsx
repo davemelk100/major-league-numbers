@@ -100,7 +100,7 @@ export function SiteSearchContent() {
                 key={member.id}
                 href={`${site.basePath}/members/${member.id}`}
               >
-                <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+                <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                   <CardContent className="p-3 text-center">
                     <MemberAvatar
                       name={member.name}

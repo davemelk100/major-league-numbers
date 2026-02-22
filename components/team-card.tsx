@@ -10,7 +10,7 @@ interface TeamCardProps {
 export function TeamCard({ team }: TeamCardProps) {
   return (
     <Link href={`/mlb/teams/${team.id}`}>
-      <Card className="hover:bg-secondary/50 transition-colors cursor-pointer h-full">
+      <Card className="hover:bg-secondary/80 transition-colors cursor-pointer h-full">
         <CardContent className="p-4 flex items-center gap-4">
           <div className="relative h-12 w-12 shrink-0">
             <Image

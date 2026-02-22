@@ -53,7 +53,7 @@ export function SeasonSelector({
     >
       <div
         className={cn(
-          "w-full py-3 cursor-pointer hover:bg-muted/5 transition-colors",
+          "w-full py-3 cursor-pointer hover:bg-muted/20 transition-colors",
           className,
         )}
       >

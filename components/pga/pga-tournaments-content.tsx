@@ -83,7 +83,7 @@ export function PGATournamentsContent({ scoreboardData }: PGATournamentsContentP
               const startDate = event.startDate ? new Date(event.startDate).toLocaleDateString() : "";
               const endDate = event.endDate ? new Date(event.endDate).toLocaleDateString() : "";
               return (
-                <Card key={idx} className="hover:bg-muted/50 transition-colors">
+                <Card key={idx} className="hover:bg-muted/80 transition-colors">
                   <CardContent className="p-4">
                     <p className="font-medium text-sm">{event.label || event.value || `Event ${idx + 1}`}</p>
                     {(startDate || endDate) && (

@@ -68,7 +68,7 @@ export function AlbumGrid<T extends AlbumGridItem>({
              className="relative"
            >
              <Link href={`${linkBasePath}/${album.id}`}>
-               <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+               <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                  <CardContent className={`p-3${purchaseUrl ? " pb-10" : ""}`}>
                    {getAlbumImage(album) ? (
                      <RemoteImage

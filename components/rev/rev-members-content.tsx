@@ -41,7 +41,7 @@ export function RevMembersContent() {
           const imageUrl = getRevArtistImageUrl(artist.id);
           return (
             <Link key={artist.id} href={`/rev/members/${artist.id}`}>
-              <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+              <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
                 <CardContent className="p-3 text-center">
                   {imageUrl ? (
                     <div className="w-full aspect-square bg-muted/30 rounded-lg mb-2 flex items-center justify-center overflow-hidden">

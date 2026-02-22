@@ -86,7 +86,7 @@ export function PGASearchContent() {
               <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                 {players.map((player) => (
                   <Link key={player.id} href={`/pga/players/${player.id}`}>
-                    <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+                    <Card className="hover:bg-muted/80 transition-colors cursor-pointer">
                       <CardContent className="p-4 flex items-center gap-3">
                         <PGAPlayerHeadshot src={player.headshot} alt={player.name} size={40} className="rounded-full flex-shrink-0" />
                         <div>

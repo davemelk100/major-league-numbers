@@ -17,7 +17,7 @@ export function USPBLTeamsContent({ teams }: USPBLTeamsContentProps) {
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
         {teams.map((team) => (
           <Link key={team.slug} href={`/uspbl/teams/${team.slug}`}>
-            <Card className="hover:bg-muted/50 transition-colors cursor-pointer h-full">
+            <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
               <CardContent className="p-6 flex items-center gap-4">
                 {team.logoUrl.startsWith("http") ? (
                   <Image

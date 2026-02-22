@@ -95,7 +95,7 @@ export function USPBLSearchContent() {
               <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
                 {teams.map((team) => (
                   <Link key={team.slug} href={`/uspbl/teams/${team.slug}`}>
-                    <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+                    <Card className="hover:bg-muted/80 transition-colors cursor-pointer">
                       <CardContent className="p-4 flex items-center gap-3">
                         {team.logoUrl?.startsWith("http") ? (
                           <Image
@@ -129,7 +129,7 @@ export function USPBLSearchContent() {
               <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                 {players.map((player) => (
                   <Link key={player.id} href={`/uspbl/players/${player.id}`}>
-                    <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+                    <Card className="hover:bg-muted/80 transition-colors cursor-pointer">
                       <CardContent className="p-4 flex items-center gap-3">
                         <div className="w-10 h-10 bg-muted rounded-full flex-shrink-0" />
                         <div>

@@ -96,7 +96,7 @@ export function NFLSearchContent() {
               <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                 {teams.map((team) => (
                   <Link key={team.id} href={`/nfl/teams/${team.id}`}>
-                    <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+                    <Card className="hover:bg-muted/80 transition-colors cursor-pointer">
                       <CardContent className="p-4 flex items-center gap-3">
                         <Image
                           src={team.logoUrl}
@@ -122,7 +122,7 @@ export function NFLSearchContent() {
               <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                 {players.map((player) => (
                   <Link key={player.id} href={`/nfl/players/${player.id}`}>
-                    <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+                    <Card className="hover:bg-muted/80 transition-colors cursor-pointer">
                       <CardContent className="p-4 flex items-center gap-3">
                         {player.headshot ? (
                           <Image

@@ -95,7 +95,7 @@ export function NHLSearchContent() {
               <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                 {teams.map((team) => (
                   <Link key={team.abbrev} href={`/nhl/teams/${team.abbrev}`}>
-                    <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+                    <Card className="hover:bg-muted/80 transition-colors cursor-pointer">
                       <CardContent className="p-4 flex items-center gap-3">
                         <Image
                           src={team.logo}
@@ -120,7 +120,7 @@ export function NHLSearchContent() {
               <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
                 {players.map((player) => (
                   <Link key={player.playerId} href={`/nhl/players/${player.playerId}`}>
-                    <Card className="hover:bg-muted/50 transition-colors cursor-pointer">
+                    <Card className="hover:bg-muted/80 transition-colors cursor-pointer">
                       <CardContent className="p-4 flex items-center gap-3">
                         <div className="w-10 h-10 bg-muted rounded-full flex-shrink-0" />
                         <div>

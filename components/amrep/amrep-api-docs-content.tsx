@@ -116,7 +116,7 @@ function EndpointCard({ endpoint }: { endpoint: Endpoint }) {
     <Card className="py-0 overflow-hidden">
       <button
         type="button"
-        className="w-full text-left px-6 py-4 flex items-center gap-3 hover:bg-muted/50 transition-colors cursor-pointer"
+        className="w-full text-left px-6 py-4 flex items-center gap-3 hover:bg-muted/80 transition-colors cursor-pointer"
         onClick={() => setExpanded(!expanded)}
       >
         <MethodBadge method={endpoint.method} />

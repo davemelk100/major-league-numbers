@@ -87,7 +87,7 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
         <Link
           key={release.catalogNumber}
           href={`${site.basePath}/albums/${release.catalogNumber}`}
-          className="block border-b border-border pb-2 last:border-0 hover:bg-muted/50 rounded px-2 py-1 transition-colors"
+          className="block border-b border-border pb-2 last:border-0 hover:bg-muted/80 rounded px-2 py-1 transition-colors"
         >
           <p className="font-semibold text-sm">{release.title}</p>
           <p className="text-xs text-muted-foreground">

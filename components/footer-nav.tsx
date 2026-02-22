@@ -133,7 +133,7 @@ export function FooterNav() {
                 "flex flex-col items-center justify-center gap-0.5 px-2 py-1.5 rounded-md transition-colors min-w-[48px]",
                 showActive
                   ? "text-primary bg-primary/10 ring-1 ring-primary/30 shadow-[0_0_0_1px_rgba(0,0,0,0.15),_inset_0_0_0_1px_rgba(0,0,0,0.08)]"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted/80"
               )}
             >
               {item.image ? (
