@@ -48,6 +48,16 @@ const MLBJerseyPanel = dynamicImport(
   },
 );
 
+const MLBTeamSpotlight = dynamicImport(
+  () =>
+    import("@/components/mlb/mlb-team-spotlight").then((mod) => ({
+      default: mod.MLBTeamSpotlight,
+    })),
+  {
+    loading: () => <Skeleton className="h-[80px] w-full" />,
+  },
+);
+
 interface LeagueLeader {
   value: string | number;
   person?: { id: number; fullName: string };
@@ -166,11 +176,12 @@ export function DashboardContent({ initialSeason }: { initialSeason: number }) {
         </Alert>
       )}
 
-      {/* Daily Trivia & Player of the Day & Jersey Numbers Row */}
+      {/* Daily Trivia + Jersey Numbers + Player of the Day + Team of the Day */}
       <div className="grid gap-6 lg:grid-cols-2 mb-8 mt-6">
         <TriviaPanel />
-        <PlayerSpotlight />
         <MLBJerseyPanel />
+        <PlayerSpotlight />
+        <MLBTeamSpotlight />
       </div>
 
       {/* Quick Stats */}

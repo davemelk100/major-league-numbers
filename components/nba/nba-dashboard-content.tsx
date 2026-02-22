@@ -7,6 +7,7 @@ import { getPlayerHeadshotUrl, getTeamLogoUrl } from "@/lib/nba-api";
 import { NBATriviaPanel } from "@/components/nba/nba-trivia-panel";
 import { NBAJerseyPanel } from "@/components/nba/nba-jersey-panel";
 import { NBAPlayerSpotlight } from "@/components/nba/nba-player-spotlight";
+import { NBATeamSpotlight } from "@/components/nba/nba-team-spotlight";
 
 interface LeaderItem {
   label: string;
@@ -40,11 +41,12 @@ export function NBADashboardContent({ leaders, standings }: NBADashboardContentP
 
   return (
     <div className="container py-2 space-y-8">
-      {/* Daily Trivia + Player of the Day + Jersey Numbers */}
+      {/* Daily Trivia + Jersey Numbers + Player of the Day + Team of the Day */}
       <div className="grid gap-6 lg:grid-cols-2">
         <NBATriviaPanel />
-        <NBAPlayerSpotlight />
         <NBAJerseyPanel />
+        <NBAPlayerSpotlight />
+        <NBATeamSpotlight />
       </div>
 
       {/* Leaders Section */}

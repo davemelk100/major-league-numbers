@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { NFLTriviaPanel } from "@/components/nfl/nfl-trivia-panel";
 import { NFLJerseyPanel } from "@/components/nfl/nfl-jersey-panel";
 import { NFLPlayerSpotlight } from "@/components/nfl/nfl-player-spotlight";
+import { NFLTeamSpotlight } from "@/components/nfl/nfl-team-spotlight";
 import type { NFLLeaderEntry } from "@/lib/nfl-api";
 
 interface LeaderItem {
@@ -32,11 +33,12 @@ interface NFLDashboardContentProps {
 export function NFLDashboardContent({ leaders, standings }: NFLDashboardContentProps) {
   return (
     <div className="container py-2">
-      {/* Daily Trivia + Player of the Day + Jersey Numbers */}
+      {/* Daily Trivia + Jersey Numbers + Player of the Day + Team of the Day */}
       <div className="grid gap-6 lg:grid-cols-2 mb-8">
         <NFLTriviaPanel />
-        <NFLPlayerSpotlight />
         <NFLJerseyPanel />
+        <NFLPlayerSpotlight />
+        <NFLTeamSpotlight />
       </div>
 
       {/* Leaders */}

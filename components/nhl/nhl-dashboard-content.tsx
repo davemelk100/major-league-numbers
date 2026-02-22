@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { NHLTriviaPanel } from "@/components/nhl/nhl-trivia-panel";
 import { NHLJerseyPanel } from "@/components/nhl/nhl-jersey-panel";
 import { NHLPlayerSpotlight } from "@/components/nhl/nhl-player-spotlight";
+import { NHLTeamSpotlight } from "@/components/nhl/nhl-team-spotlight";
 
 interface LeaderEntry {
   label: string;
@@ -40,11 +41,12 @@ interface NHLDashboardContentProps {
 export function NHLDashboardContent({ leaders, standings }: NHLDashboardContentProps) {
   return (
     <div className="container py-2">
-      {/* Daily Trivia + Player of the Day + Jersey Numbers */}
+      {/* Daily Trivia + Jersey Numbers + Player of the Day + Team of the Day */}
       <div className="grid gap-6 lg:grid-cols-2 mb-8">
         <NHLTriviaPanel />
-        <NHLPlayerSpotlight />
         <NHLJerseyPanel />
+        <NHLPlayerSpotlight />
+        <NHLTeamSpotlight />
       </div>
 
       {/* Leaders */}
