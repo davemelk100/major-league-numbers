@@ -30,77 +30,50 @@ const ALBUMS_DIR = path.join(process.cwd(), "public", "images", "sg", "albums");
 const OUTPUT_FILE = path.join(process.cwd(), "lib", "sg-local-images.ts");
 
 // Artist ID → photo gallery directory name on skingraftrecords.com
-const artistGalleryMap: Record<string, string> = {
-  "dazzling-killmen": "dazzling_killmen_pics",
-  "mount-shasta": "mount_shasta_pics",
-  "flying-luttenbachers": "flying_luttenbachers_pics",
-  "us-maple": "us_maple_pics",
-  "lake-of-dracula": "lake_of_dracula_pics",
-  "cheer-accident": "cheer_accident_pics",
-  "colossamite": "colossamite_pics",
-  "yona-kit": "yona_kit_pics",
-  "shorty": "shorty_pics",
-  "bobby-conn": "bobby_conn_pics",
-  "scissor-girls": "scissor_girls_pics",
-  "zeni-geva": "zeni_geva_pics",
-  "melt-banana": "melt_banana_pics",
-  "ruins": "ruins_pics",
-  "upsilon-acrux": "upsilon_acrux_pics",
-  "lair-of-the-minotaur": "lair_of_the_minotaur_pics",
-  "ahleuchatistas": "ahleuchatistas_pics",
-  "psychic-paramount": "psychic_paramount_pics",
-  "quintron": "quintron_pics",
-  "storm-and-stress": "storm_and_stress_pics",
+// Note: some dirs use slightly different names than expected
+const artistGalleryMap: Record<string, string[]> = {
+  "dazzling-killmen": ["dazzling_killmen_pics"],
+  "mount-shasta": ["mount_shasta_pics"],
+  "flying-luttenbachers": ["flying_luttenbacher_pics", "flying_luttenbachers_pics"],
+  "us-maple": ["us_maple_pics"],
+  "lake-of-dracula": ["lake_of_dracula_pics"],
+  "cheer-accident": ["cheer_accident_pics"],
+  "colossamite": ["colossamite_pics"],
+  "yona-kit": ["yona_kit%20pics", "yona_kit_pics"],
+  "shorty": ["shorty_pics"],
+  "bobby-conn": ["bobby_conn_pics"],
+  "scissor-girls": ["scissor_girls_pics"],
+  "zeni-geva": ["zeni_geva_pics"],
+  "melt-banana": ["melt_banana_pics"],
+  "ruins": ["ruins_pics"],
+  "upsilon-acrux": ["upsilon_acrux_pics"],
+  "lair-of-the-minotaur": ["lair_of_the_minotaur_pics"],
+  "ahleuchatistas": ["ahleuchatistas_pics"],
+  "psychic-paramount": ["psychic_paramount_pics"],
+  "quintron": ["quintron_pics"],
+  "storm-and-stress": ["storm_and_stress_pics"],
 };
 
-// SG discography: catalogNumber → { artist, title }
-const sgDiscography = [
-  { catalogNumber: 1, artist: "Dazzling Killmen", title: "Coffin Fit" },
-  { catalogNumber: 2, artist: "Mount Shasta", title: "Gravity On" },
-  { catalogNumber: 3, artist: "Dazzling Killmen", title: "Dig Out / Cornered" },
-  { catalogNumber: 4, artist: "Lake of Dracula", title: "Lake of Dracula" },
-  { catalogNumber: 5, artist: "The Flying Luttenbachers", title: "Constructive Destruction" },
-  { catalogNumber: 6, artist: "Shorty", title: "Thumb the Ride" },
-  { catalogNumber: 7, artist: "Dazzling Killmen", title: "Face of Collapse" },
-  { catalogNumber: 8, artist: "Yona-Kit", title: "Yona-Kit" },
-  { catalogNumber: 9, artist: "Mount Shasta", title: "Watch Out" },
-  { catalogNumber: 10, artist: "U.S. Maple", title: "Long Hair in Three Stages" },
-  { catalogNumber: 11, artist: "Scissor Girls", title: "We're Not Gonna Take It" },
-  { catalogNumber: 12, artist: "Colossamite", title: "Economy of Motion" },
-  { catalogNumber: 13, artist: "Cheer-Accident", title: "Not a Food" },
-  { catalogNumber: 14, artist: "The Flying Luttenbachers", title: "Gods of Chaos" },
-  { catalogNumber: 15, artist: "U.S. Maple", title: "Sang Phat Editor" },
-  { catalogNumber: 16, artist: "Mount Shasta", title: "Put the Creep On" },
-  { catalogNumber: 17, artist: "Lake of Dracula", title: "Plays Polka" },
-  { catalogNumber: 18, artist: "Scissor Girls", title: "Guilt Trip" },
-  { catalogNumber: 19, artist: "Shorty", title: "Thumb Rocker" },
-  { catalogNumber: 20, artist: "Bobby Conn", title: "Bobby Conn" },
-  { catalogNumber: 21, artist: "Storm & Stress", title: "Storm & Stress" },
-  { catalogNumber: 22, artist: "Colossamite", title: "All Lingo's Clamor" },
-  { catalogNumber: 23, artist: "Various Artists", title: "Ear-Bleeding Country" },
-  { catalogNumber: 24, artist: "Cheer-Accident", title: "Salad Days" },
-  { catalogNumber: 25, artist: "U.S. Maple", title: "Talker" },
-  { catalogNumber: 26, artist: "The Flying Luttenbachers", title: "Infection and Decline" },
-  { catalogNumber: 27, artist: "Bobby Conn", title: "The Golden Age" },
-  { catalogNumber: 28, artist: "Quintron", title: "These Hands of Mine" },
-  { catalogNumber: 29, artist: "Zeni Geva", title: "10000 Light Years" },
-  { catalogNumber: 30, artist: "The Flying Luttenbachers", title: "Retrospektiull" },
-  { catalogNumber: 31, artist: "Bobby Conn", title: "Rise Up!" },
-  { catalogNumber: 32, artist: "Ruins", title: "Burning Stone" },
-  { catalogNumber: 33, artist: "Mount Shasta", title: "Who's the Hottie?" },
-  { catalogNumber: 34, artist: "Melt-Banana", title: "Teeny Shiny" },
-  { catalogNumber: 35, artist: "U.S. Maple", title: "Purple on Time" },
-  { catalogNumber: 36, artist: "Upsilon Acrux", title: "Galapagos Momentum" },
-  { catalogNumber: 37, artist: "The Psychic Paramount", title: "Gamelan Into the Mink Supernatural" },
-  { catalogNumber: 38, artist: "Ahleuchatistas", title: "The Same and the Other" },
-  { catalogNumber: 39, artist: "Lair of the Minotaur", title: "Carnage" },
-  { catalogNumber: 40, artist: "Bobby Conn", title: "King for a Day" },
-  { catalogNumber: 41, artist: "Upsilon Acrux", title: "Sun Square Dialect" },
-  { catalogNumber: 42, artist: "Lair of the Minotaur", title: "The Ultimate Destroyer" },
-  { catalogNumber: 43, artist: "Ahleuchatistas", title: "What You Will" },
-  { catalogNumber: 44, artist: "Cheer-Accident", title: "Fear Draws Misfortune" },
-  { catalogNumber: 45, artist: "The Psychic Paramount", title: "II" },
-];
+// Discogs artist IDs for fallback artist photo downloads
+const discogsArtistIds: Record<string, number> = {
+  "flying-luttenbachers": 193124,
+  "yona-kit": 135320,
+  "shorty": 322782,
+  "bobby-conn": 180293,
+  "scissor-girls": 407962,
+  "zeni-geva": 251431,
+  "upsilon-acrux": 361858,
+  "lair-of-the-minotaur": 323024,
+  "ahleuchatistas": 697431,
+  "psychic-paramount": 435618,
+  "storm-and-stress": 193149,
+};
+
+// Import discography from the canonical data source
+import { sgDiscography as sgDiscographyData } from "../lib/sg-discography-data";
+
+// Re-export for use in this script
+const sgDiscography = sgDiscographyData;
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -176,10 +149,10 @@ function getExtFromUrl(url: string): string {
 // ─── Part A: Band photos from skingraftrecords.com ───
 
 async function downloadBandPhotos(): Promise<Record<string, string>> {
-  console.log("\n=== Part A: Band photos from skingraftrecords.com ===\n");
+  console.log("\n=== Part A: Band photos from skingraftrecords.com + Discogs ===\n");
   const results: Record<string, string> = {};
 
-  for (const [artistId, galleryDir] of Object.entries(artistGalleryMap)) {
+  for (const [artistId, galleryDirs] of Object.entries(artistGalleryMap)) {
     const outPath = path.join(ARTISTS_DIR, `${artistId}.jpg`);
     if (fs.existsSync(outPath)) {
       console.log(`  [skip] ${artistId} — already exists`);
@@ -187,34 +160,64 @@ async function downloadBandPhotos(): Promise<Record<string, string>> {
       continue;
     }
 
-    const galleryUrl = `https://skingraftrecords.com/graphics/photogalleries/${galleryDir}/`;
-    try {
-      const html = await fetchText(galleryUrl);
-      // Look for JPG files in the directory listing (not GIF thumbnails)
-      const jpgMatches = html.match(/href="([^"]+\.jpe?g)"/gi) || [];
-      const jpgFiles = jpgMatches
-        .map((m) => m.replace(/^href="/i, "").replace(/"$/, ""))
-        .filter((f) => !f.toLowerCase().includes("thumb") && !f.toLowerCase().endsWith(".gif"));
+    let found = false;
 
-      if (jpgFiles.length === 0) {
-        console.log(`  [miss] ${artistId} — no JPGs found in gallery`);
-        continue;
+    // 1. Try skingraftrecords.com photo galleries (multiple dir name variants)
+    for (const galleryDir of galleryDirs) {
+      if (found) break;
+      const galleryUrl = `https://skingraftrecords.com/graphics/photogalleries/${galleryDir}/`;
+      try {
+        const html = await fetchText(galleryUrl);
+        // Look for image files (JPG or GIF, but prefer JPG, skip thumbnails/minis)
+        const imgMatches = html.match(/href="([^"]+\.(jpe?g|gif))"/gi) || [];
+        const imgFiles = imgMatches
+          .map((m) => m.replace(/^href="/i, "").replace(/"$/, ""))
+          .filter((f) => !f.toLowerCase().includes("mini") && !f.toLowerCase().includes("thumb"));
+
+        // Prefer JPG files over GIF
+        const jpgFiles = imgFiles.filter((f) => /\.jpe?g$/i.test(f));
+        const imageFile = jpgFiles[0] || imgFiles[0];
+
+        if (imageFile) {
+          const imageUrl = imageFile.startsWith("http")
+            ? imageFile
+            : `${galleryUrl}${imageFile}`;
+
+          const buf = await fetchUrl(imageUrl);
+          fs.writeFileSync(outPath, buf);
+          results[artistId] = `/images/sg/artists/${artistId}.jpg`;
+          console.log(`  [ok]   ${artistId} — ${imageFile} [sg-gallery] (${(buf.length / 1024).toFixed(0)} KB)`);
+          found = true;
+        }
+      } catch {
+        // This gallery dir didn't work, try next
       }
-
-      const imageFile = jpgFiles[0];
-      const imageUrl = imageFile.startsWith("http")
-        ? imageFile
-        : `${galleryUrl}${imageFile}`;
-
-      const buf = await fetchUrl(imageUrl);
-      fs.writeFileSync(outPath, buf);
-      results[artistId] = `/images/sg/artists/${artistId}.jpg`;
-      console.log(`  [ok]   ${artistId} — ${imageFile} (${(buf.length / 1024).toFixed(0)} KB)`);
-    } catch (err: any) {
-      console.log(`  [fail] ${artistId} — ${err.message}`);
+      await sleep(500);
     }
 
-    await sleep(500);
+    // 2. Fall back to Discogs artist API
+    if (!found && discogsArtistIds[artistId]) {
+      try {
+        console.log(`  [discogs] ${artistId} — trying Discogs artist API...`);
+        const artistData = await fetchDiscogs(`/artists/${discogsArtistIds[artistId]}`);
+        await sleep(RATE_LIMIT_MS);
+
+        const imageUrl = artistData?.images?.[0]?.uri || artistData?.images?.[0]?.uri150;
+        if (imageUrl) {
+          const buf = await fetchUrl(imageUrl.replace(/^http:/, "https:"));
+          fs.writeFileSync(outPath, buf);
+          results[artistId] = `/images/sg/artists/${artistId}.jpg`;
+          console.log(`  [ok]   ${artistId} — [discogs] (${(buf.length / 1024).toFixed(0)} KB)`);
+          found = true;
+        }
+      } catch (err: any) {
+        console.log(`  [fail] ${artistId} — Discogs: ${err.message}`);
+      }
+    }
+
+    if (!found) {
+      console.log(`  [miss] ${artistId} — no image found`);
+    }
   }
 
   return results;
@@ -425,20 +428,49 @@ async function downloadReleaseCoverArt(): Promise<Record<number, string>> {
 
   for (const release of sgDiscography) {
     const catLabel = `GR${String(release.catalogNumber).padStart(3, "0")}`;
-    const ext = "jpg";
-    const filename = `release-${release.catalogNumber}.${ext}`;
-    const outPath = path.join(ALBUMS_DIR, filename);
-
-    if (fs.existsSync(outPath)) {
+    // Check for existing file with any extension
+    const existingFile = ["jpg", "gif", "png"].map(e => `release-${release.catalogNumber}.${e}`).find(f => fs.existsSync(path.join(ALBUMS_DIR, f)));
+    if (existingFile) {
       console.log(`  [skip] ${catLabel} — already exists`);
-      results[release.catalogNumber] = `/images/sg/albums/${filename}`;
+      results[release.catalogNumber] = `/images/sg/albums/${existingFile}`;
       continue;
     }
 
     let imageUrl: string | null = null;
     let source: string | null = null;
 
-    // 1. Try Discogs label lookup first (no extra requests — already fetched)
+    // 0. Try skingraftrecords.com cover art directly (no API needed)
+    const catNum = release.catalogNumber;
+    const sgCoverVariants = [
+      `GR${String(catNum).padStart(2, "0")}big.jpg`,
+      `GR${String(catNum).padStart(2, "0")}big.gif`,
+      `GR${String(catNum).padStart(2, "0")}big2.gif`,
+      `GR${String(catNum).padStart(2, "0")}big2.jpg`,
+      `gr${String(catNum).padStart(2, "0")}big.jpg`,
+      `gr${String(catNum).padStart(2, "0")}big.gif`,
+    ];
+    for (const variant of sgCoverVariants) {
+      if (imageUrl) break;
+      try {
+        const url = `https://skingraftrecords.com/graphics/biglppics/${variant}`;
+        const buf = await fetchUrl(url);
+        if (buf.length > 500) { // sanity check — not an error page
+          const variantExt = getExtFromUrl(variant);
+          const variantFilename = `release-${catNum}.${variantExt}`;
+          const variantPath = path.join(ALBUMS_DIR, variantFilename);
+          fs.writeFileSync(variantPath, buf);
+          results[catNum] = `/images/sg/albums/${variantFilename}`;
+          imageUrl = url;
+          source = "sg-site";
+          console.log(`  [ok]   ${catLabel} — ${variant} [sg-site] (${(buf.length / 1024).toFixed(0)} KB)`);
+        }
+      } catch {
+        // This variant doesn't exist, try next
+      }
+    }
+    if (imageUrl) continue;
+
+    // 1. Try Discogs label lookup (no extra requests — already fetched)
     const key = normalizeKey(release.artist, release.title);
     const discogsRelease = lookup.get(key);
 

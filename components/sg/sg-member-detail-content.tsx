@@ -23,7 +23,11 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
     if (!artist) return [];
     const artistNameLower = artist.name.toLowerCase();
     return sgDiscography.filter(
-      (r) => r.artist.toLowerCase() === artistNameLower,
+      (r) => {
+        const releaseArtist = r.artist.toLowerCase();
+        // Exact match or appears in split release (e.g. "AIDS Wolf / Athletic Automaton")
+        return releaseArtist === artistNameLower || releaseArtist.includes(artistNameLower);
+      },
     );
   }, [artist]);
 
@@ -46,6 +50,10 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
     );
   }
 
+  const genreChips = artist.genre
+    ? artist.genre.split(/\s*[\/,]\s*/).map((g) => g.trim()).filter(Boolean)
+    : [];
+
   const leftContent = (
     <MemberDetailLeft
       image={
@@ -66,18 +74,26 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
         )
       }
       name={artist.name}
-      profile={[
-        artist.genre ? `Genre: ${artist.genre}` : null,
-        artist.yearsActive ? `Active: ${artist.yearsActive}` : null,
-      ]
-        .filter(Boolean)
-        .join("\n")}
+      profile={artist.yearsActive ? `Active: ${artist.yearsActive}` : null}
       links={
         artist.wikipediaUrl
           ? [{ href: artist.wikipediaUrl, label: "Wikipedia" }]
           : []
       }
-    />
+    >
+      {genreChips.length > 0 && (
+        <div className="flex flex-wrap gap-1.5 mb-4">
+          {genreChips.map((genre) => (
+            <span
+              key={genre}
+              className="inline-block px-2 py-0.5 text-xs font-medium rounded-full bg-muted text-muted-foreground"
+            >
+              {genre}
+            </span>
+          ))}
+        </div>
+      )}
+    </MemberDetailLeft>
   );
 
   const rightContent = (
