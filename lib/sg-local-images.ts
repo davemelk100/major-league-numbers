@@ -68,7 +68,6 @@ export const sgLocalArtistImages: Record<string, string> = {
   "storm-and-stress": "/images/sg/artists/storm-and-stress.jpg",
   "strangulated-beatoffs": "/images/sg/artists/strangulated-beatoffs.jpg",
   "terms": "/images/sg/artists/terms.jpg",
-  "the-browns": "/images/sg/artists/the-browns.jpg",
   "tijuana-hercules": "/images/sg/artists/tijuana-hercules.jpg",
   "tortured-machine": "/images/sg/artists/tortured-machine.jpg",
   "ufo-or-die": "/images/sg/artists/ufo-or-die.jpg",
