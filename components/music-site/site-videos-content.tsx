@@ -295,14 +295,16 @@ const e6Videos: Video[] = [
   },
 ];
 
+const SITE_VIDEOS: Record<string, typeof videos> = {
+  gbv: videos,
+  amrep: amrepVideos,
+  e6: e6Videos,
+  rev: revVideos,
+  sg: sgVideos,
+};
+
 function getVideosForSite(siteId: string) {
-  switch (siteId) {
-    case "amrep": return amrepVideos;
-    case "e6": return e6Videos;
-    case "rev": return revVideos;
-    case "sg": return sgVideos;
-    default: return videos;
-  }
+  return SITE_VIDEOS[siteId] ?? [];
 }
 
 export function SiteVideosContent() {
