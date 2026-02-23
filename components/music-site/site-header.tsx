@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -37,7 +37,7 @@ export function SiteHeader() {
           href={site.basePath}
           className="flex items-center gap-3 min-w-0"
         >
-          <Image
+          <img
             src={site.logoSrc}
             alt={site.shortName}
             width={140}
@@ -47,7 +47,6 @@ export function SiteHeader() {
                 "h-12 w-auto sm:h-16 lg:h-[173px] lg:w-[173px]",
               pathname === askPath && "hidden sm:block",
             )}
-            priority
             fetchPriority="high"
           />
           <h1
@@ -111,7 +110,7 @@ export function SiteHeader() {
                 onClick={() => setChatPending(true)}
                 className="flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] text-black bg-white border-t border-t-[#f6f6f6] border-l border-l-[#eeeeee] border-r border-r-[#c6c6c6] border-b-2 border-b-[#b5b5b5] shadow-[0_2px_4px_rgba(0,0,0,0.1),_inset_0_1px_0_rgba(255,255,255,0.4)]"
               >
-                <Image
+                <img
                   src={site.chatIconSrc}
                   alt={`${site.shortName} chat`}
                   width={32}
@@ -132,7 +131,7 @@ export function SiteHeader() {
             onClick={() => setChatPending(true)}
             className="flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] text-black bg-white border-t border-t-[#f6f6f6] border-l border-l-[#eeeeee] border-r border-r-[#c6c6c6] border-b-2 border-b-[#b5b5b5] shadow-[0_2px_4px_rgba(0,0,0,0.1),_inset_0_1px_0_rgba(255,255,255,0.4)]"
           >
-            <Image
+            <img
               src={site.chatIconSrc}
               alt={`${site.shortName} chat`}
               width={24}

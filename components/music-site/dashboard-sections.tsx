@@ -2,7 +2,7 @@
 
 import { Children, type ComponentProps, type ComponentType, type ReactNode } from "react";
 import Link from "next/link";
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import { Card, CardContent } from "@/components/ui/card";
 import type { MusicSiteConfig } from "@/lib/music-site";
 import { MemberAvatar } from "@/components/music-site/member-avatar";
@@ -197,7 +197,7 @@ export function DashboardDiscographyGrid<T extends DashboardAlbum>({
           loading="eager"
         />
       ) : (
-        <Image
+        <img
           src={site.placeholderIconSrc}
           alt={`${site.shortName} logo`}
           width={placeholderSize}

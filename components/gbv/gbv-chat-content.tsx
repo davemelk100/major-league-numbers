@@ -16,7 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import ReactMarkdown from "react-markdown";
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import {
@@ -450,7 +450,7 @@ export function GbvChatContent() {
         <div className="flex-1 overflow-y-auto">
           {/* Centered content */}
           <div className="flex flex-col items-center justify-start px-4 pt-4">
-            <Image
+            <img
               src={site.chatIconSrc}
               alt={site.chatLabel}
               width={128}
@@ -518,7 +518,7 @@ export function GbvChatContent() {
             >
               {message.role === "assistant" && (
                 <div className="flex-shrink-0 w-8 h-8 rounded-none bg-primary/10 flex items-center justify-center">
-                  <Image
+                  <img
                     src={site.chatIconSrc}
                     alt={site.chatLabel}
                     width={20}
@@ -569,7 +569,7 @@ export function GbvChatContent() {
           {isLoading && messages[messages.length - 1]?.role === "user" && (
             <div className="flex gap-3 justify-start">
               <div className="flex-shrink-0 w-8 h-8 flex items-center justify-center">
-                <Image
+                <img
                   src={site.chatIconSrc}
                   alt={site.chatLabel}
                   width={20}
@@ -578,7 +578,7 @@ export function GbvChatContent() {
                 />
               </div>
               <div className="rounded-lg px-4 py-2">
-                <Image
+                <img
                   src={site.chatIconSrc}
                   alt={site.chatLabel}
                   width={20}
