@@ -31,11 +31,6 @@ import {
   getDailyTouchGoRecordsTriviaQuestions,
   getTouchGoRecordsTodayStorageKey,
 } from "@/lib/touch-go-records-trivia-data";
-import {
-  getDailyDischordTriviaQuestions,
-  getDischordTodayStorageKey,
-} from "@/lib/dischord-trivia-data";
-
 // ── Records imports ─────────────────────────────────────────────────
 import { getDailyGbvRecord } from "@/lib/gbv-records-data";
 import { getDailyAmrepRecord } from "@/lib/amrep-records-data";
@@ -43,15 +38,11 @@ import { getDailyRevRecord } from "@/lib/rev-records-data";
 import { getDailyE6Record } from "@/lib/e6-records-data";
 import { getDailySgRecord } from "@/lib/sg-records-data";
 import { getDailyTouchGoRecordsRecord } from "@/lib/touch-go-records-records-data";
-import { getDailyDischordRecord } from "@/lib/dischord-records-data";
-
 // ── Album image imports ─────────────────────────────────────────────
 import { getLocalAlbumImage as getGbvAlbumImage } from "@/lib/gbv-release-images";
 import { getAmrepAlbumImage } from "@/lib/amrep-release-images";
 import { getLocalAlbumImage as getE6AlbumImage } from "@/lib/e6-release-images";
 import { getLocalAlbumImage as getTouchGoAlbumImage } from "@/lib/touch-go-records-release-images";
-import { getLocalAlbumImage as getDischordAlbumImage } from "@/lib/dischord-release-images";
-
 // ── Common types ────────────────────────────────────────────────────
 export interface TriviaQuestion {
   id: number;
@@ -104,10 +95,6 @@ const TRIVIA_REGISTRY: Record<string, TriviaEntry> = {
     getDaily: getDailyTouchGoRecordsTriviaQuestions,
     getStorageKey: getTouchGoRecordsTodayStorageKey,
   },
-  dischord: {
-    getDaily: getDailyDischordTriviaQuestions,
-    getStorageKey: getDischordTodayStorageKey,
-  },
   // ── new-site-trivia ──
 };
 
@@ -139,10 +126,6 @@ const RECORDS_REGISTRY: Record<string, RecordsEntry> = {
   "touch-go-records": {
     getDaily: getDailyTouchGoRecordsRecord as (date?: Date) => RecordOfDay,
     getAlbumImage: getTouchGoAlbumImage,
-  },
-  dischord: {
-    getDaily: getDailyDischordRecord as (date?: Date) => RecordOfDay,
-    getAlbumImage: getDischordAlbumImage,
   },
   // ── new-site-records ──
 };

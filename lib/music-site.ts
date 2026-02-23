@@ -507,58 +507,6 @@ export const TOUCH_GO_RECORDS_SITE: MusicSiteConfig = {
 };
 
 
-export const DISCHORD_SITE: MusicSiteConfig = {
-  id: "dischord",
-  name: "Dischord Records",
-  shortName: "Dischord",
-  basePath: "/dischord",
-  chatLabel: "Ask Dischord",
-  headerTitle: "Dischord Records",
-  headerTextClass: "text-black",
-  logoSrc: "/images/dischord/logo.png",
-  chatIconSrc: "/images/dischord/logo.png",
-  placeholderIconSrc: "/images/dischord/logo.png",
-  shellClass: "dischord-shell",
-  logoClassName: "h-auto w-[15%]",
-  description: "Dischord Records is an independent record label founded in 1980 by Ian MacKaye and Jeff Nelson in Washington, D.C. The label has been a cornerstone of the D.C. hardcore and post-hardcore scenes, releasing music by Minor Threat, Fugazi, Bad Brains, Rites of Spring, and many more. Dischord is known for its DIY ethos, fair pricing, and commitment to artistic integrity.",
-  navLabels: {
-    discography: "Releases",
-    members: "Artists",
-    sideProjects: "Side Projects",
-  },
-  membersSlug: "artists",
-  albumsSlug: "releases",
-  footerDisclaimer: "All Content, Rights, Copyrights, etc. are the property of Dischord Records and associated artists. This is simply a fan site.",
-  sources: [
-    { label: "Official Website", url: "https://www.dischord.com/" },
-    { label: "Discogs", url: "https://www.discogs.com/label/244-Dischord-Records" },
-    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Dischord_Records" },
-    { label: "MusicBrainz", url: "https://musicbrainz.org/" },
-    { label: "Cover Art Archive", url: "https://coverartarchive.org/" },
-  ],
-  imageSources: [
-    { label: "Discogs", url: "https://www.discogs.com/" },
-    { label: "Cover Art Archive", url: "https://coverartarchive.org/" },
-  ],
-  images: {
-    fallbackIcon: "/images/dischord/logo.png",
-    fit: "contain",
-    lookupStrategy: "discogs",
-    invalidCacheValues: ["/images/dischord/logo.png"],
-  },
-  searchPlaceholder: "Search Dischord...",
-  seo: {
-    title: "Dischord Records",
-    titleTemplate: "%s | Dischord Records",
-    description: "Explore Dischord Records: artist roster, releases, D.C. hardcore history, and milestones.",
-    keywords: ["Dischord Records", "D.C. hardcore", "post-hardcore", "punk", "Ian MacKaye", "Fugazi", "Minor Threat", "independent label", "DIY"],
-    siteName: "Major League Numbers",
-    ogImage: "https://majorleaguenumbers.com/images/dischord/logo.png",
-    ogImageAlt: "Dischord Records",
-    twitterImage: "https://majorleaguenumbers.com/images/dischord/logo.png",
-  },
-};
-
 export const MUSIC_SITES = [
   GBV_SITE,
   AMREP_SITE,
@@ -566,7 +514,6 @@ export const MUSIC_SITES = [
   E6_SITE,
   SKINGRAFT_SITE,
   TOUCH_GO_RECORDS_SITE,
-  DISCHORD_SITE,
 ] as const;
 
 export type MusicSiteId = (typeof MUSIC_SITES)[number]["id"];
