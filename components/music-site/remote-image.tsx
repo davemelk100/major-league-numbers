@@ -104,15 +104,12 @@ export function RemoteImage({
     });
   }, [cacheKey, invalidCacheSet, normalized, preferProxy]);
 
+  const placeholderUrl = `https://placehold.co/${width || 400}x${height || 400}/1a1a2e/eaeaea?text=${encodeURIComponent(alt.replace(/ photo$/, "").replace(/ cover$/, ""))}`;
+
   const handleError = () => {
     if (!normalized) {
-      if (fallbackSrc) {
-        setCurrentSrc(fallbackSrc);
-        setSourceState("fallback");
-      } else {
-        setCurrentSrc(null);
-        onAllFailed?.();
-      }
+      setCurrentSrc(placeholderUrl);
+      setSourceState("fallback");
       return;
     }
 
@@ -129,13 +126,8 @@ export function RemoteImage({
     }
 
     if (sourceState === "proxy" || sourceState === "localFallback") {
-      if (fallbackSrc) {
-        setCurrentSrc(fallbackSrc);
-        setSourceState("fallback");
-      } else {
-        setCurrentSrc(null);
-        onAllFailed?.();
-      }
+      setCurrentSrc(placeholderUrl);
+      setSourceState("fallback");
       return;
     }
 

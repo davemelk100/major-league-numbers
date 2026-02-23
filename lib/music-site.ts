@@ -456,12 +456,63 @@ export const SKINGRAFT_SITE: MusicSiteConfig = {
   },
 };
 
+
+export const TOUCH_GO_RECORDS_SITE: MusicSiteConfig = {
+  id: "touch-go-records",
+  name: "Touch & Go Records",
+  shortName: "Touch & Go",
+  basePath: "/touch-go-records",
+  chatLabel: "ChatTGR",
+  headerTitle: "Touch & Go Records",
+  headerTextClass: "text-black",
+  logoSrc: "/images/touch-go-records/logo.jpg",
+  chatIconSrc: "/images/touch-go-records/logo.jpg",
+  placeholderIconSrc: "/images/touch-go-records/logo.jpg",
+  shellClass: "touch-go-shell",
+  logoClassName: "h-auto w-[15%]",
+  description: "Touch & Go Records is a renowned independent record label founded in 1981, instrumental in shaping the hardcore and indie music scenes. With a diverse roster of artists and a commitment to quality, the label continues to influence music culture.",
+  navLabels: {
+    discography: "Releases",
+    members: "Artists",
+    sideProjects: "Essential Releases",
+  },
+  membersSlug: "artists",
+  albumsSlug: "releases",
+  footerDisclaimer: "All Content, Rights, Copyrights, etc. are the property of Touch & Go Records and associated artists. This is simply a fan site.",
+  sources: [
+    { label: "Official Website", url: "https://touchandgorecords.com/" },
+    { label: "Discogs", url: "https://www.discogs.com/label/819-Touch-And-Go" },
+    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Touch_and_Go_Records" },
+  ],
+  imageSources: [
+    { label: "Official Photo Archive", url: "https://touchandgorecords.com/photos/index.php" },
+  ],
+  images: {
+    fallbackIcon: "/images/touch-go-records/logo.jpg",
+    fit: "contain",
+    lookupStrategy: "discogs",
+    invalidCacheValues: ["/images/touch-go-records/logo.jpg"],
+  },
+  searchPlaceholder: "Search Touch & Go...",
+  seo: {
+    title: "Touch & Go Records",
+    titleTemplate: "%s | Touch & Go Records",
+    description: "Discover Touch & Go Records: artist roster, releases, history, and milestones.",
+    keywords: ["Touch & Go Records", "independent label", "hardcore", "post-hardcore", "indie music"],
+    siteName: "Major League Numbers",
+    ogImage: "https://majorleaguenumbers.com/touch-go-records-logo.png",
+    ogImageAlt: "Touch & Go Records",
+    twitterImage: "https://majorleaguenumbers.com/touch-go-records-logo.png",
+  },
+};
+
 export const MUSIC_SITES = [
   GBV_SITE,
   AMREP_SITE,
   REVELATION_SITE,
   E6_SITE,
   SKINGRAFT_SITE,
+  TOUCH_GO_RECORDS_SITE,
 ] as const;
 
 export type MusicSiteId = (typeof MUSIC_SITES)[number]["id"];

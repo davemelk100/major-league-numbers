@@ -5,7 +5,6 @@
  import { ShoppingCart } from "lucide-react";
  import { Card, CardContent } from "@/components/ui/card";
  import type { MusicSiteConfig } from "@/lib/music-site";
- import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 export type AlbumGridItem = {
    id: number;
@@ -85,7 +84,15 @@ export function AlbumGrid<T extends AlbumGridItem>({
                        localFallbackSrc={getLocalFallbackImage?.(album)}
                      />
                    ) : (
-                     <SitePlaceholderIcon site={site} />
+                     <img
+                       src={`https://placehold.co/200x200/1a1a2e/eaeaea?text=${encodeURIComponent(album.title)}`}
+                       alt={album.title}
+                       width={200}
+                       height={200}
+                       className={imageClassName}
+                       loading={index < eagerCount ? "eager" : "lazy"}
+                       {...(index === 0 ? { fetchPriority: "high" as const } : {})}
+                     />
                    )}
                    <h3 className="font-semibold text-base truncate">{album.title}</h3>
                    <div className="flex items-center justify-between text-xs text-muted-foreground">

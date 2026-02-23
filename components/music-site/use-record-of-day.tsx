@@ -7,6 +7,7 @@ import { getDailyAmrepRecord, type AmrepRecordOfDay } from "@/lib/amrep-records-
 import { getDailyRevRecord, type RevRecordOfDay } from "@/lib/rev-records-data";
 import { getDailyE6Record, type E6RecordOfDay } from "@/lib/e6-records-data";
 import { getDailySgRecord, type SgRecordOfDay } from "@/lib/sg-records-data";
+import { getDailyTouchGoRecordsRecord, type TouchGoRecordsRecordOfDay } from "@/lib/touch-go-records-records-data";
 import { getLocalAlbumImage } from "@/lib/gbv-release-images";
 import { getAmrepAlbumImage } from "@/lib/amrep-release-images";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
@@ -18,7 +19,8 @@ export function useRecordOfDay() {
   const isRev = site.id === "rev";
   const isE6 = site.id === "e6";
   const isSg = site.id === "sg";
-  const [record, setRecord] = useState<GbvRecordOfDay | AmrepRecordOfDay | RevRecordOfDay | E6RecordOfDay | SgRecordOfDay | null>(null);
+  const isTouchGo = site.id === "touch-go-records";
+  const [record, setRecord] = useState<GbvRecordOfDay | AmrepRecordOfDay | RevRecordOfDay | E6RecordOfDay | SgRecordOfDay | TouchGoRecordsRecordOfDay | null>(null);
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
   const [albumId, setAlbumId] = useState<number | null>(null);
 
@@ -172,6 +174,15 @@ export function useRecordOfDay() {
       return;
     }
 
+    if (isTouchGo) {
+      const tgDaily = getDailyTouchGoRecordsRecord();
+      setRecord(tgDaily);
+      if ("id" in tgDaily) {
+        setAlbumId(tgDaily.id);
+      }
+      return;
+    }
+
     // GBV - use static data immediately, then enhance with API data
     const gbvDaily = getDailyGbvRecord();
     setRecord(gbvDaily);
@@ -235,7 +246,7 @@ export function useRecordOfDay() {
     }
 
     enhanceWithApiData();
-  }, [isAmrep, isRev, isE6, isSg]);
+  }, [isAmrep, isRev, isE6, isSg, isTouchGo]);
 
   const albumHref = albumId ? `${site.basePath}/${site.albumsSlug}/${albumId}` : null;
   const displayTitle =

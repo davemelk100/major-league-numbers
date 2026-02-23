@@ -157,28 +157,16 @@ import type { MusicSiteConfig } from "@/lib/music-site";
    ]);
 
    if (!resolvedImageUrl || hasError) {
-    if (renderPlaceholder) {
-      return <>{renderPlaceholder()}</>;
-    }
+    const placeholderUrl = `https://placehold.co/400x400/1a1a2e/eaeaea?text=${encodeURIComponent(name)}`;
     return (
-      <div className={cn("w-full aspect-square rounded-lg mb-2 mx-auto flex items-center justify-center", placeholderWrapperClassName)}>
-         {placeholderVariant === "img" ? (
-           <img
-             src={effectiveFallbackIcon}
-             alt="Artist placeholder"
-             className={placeholderClassName}
-           />
-         ) : (
-           <Image
-             src={effectiveFallbackIcon}
-             alt="Artist placeholder"
-             width={placeholderSize}
-             height={placeholderSize}
-             className={placeholderClassName}
-           />
-         )}
-       </div>
-     );
+      <div className="w-full aspect-square mb-2 mx-auto relative rounded-lg overflow-hidden">
+        <img
+          src={placeholderUrl}
+          alt={`${name} placeholder`}
+          className="rounded-lg object-cover w-full h-full"
+        />
+      </div>
+    );
    }
 
    return (

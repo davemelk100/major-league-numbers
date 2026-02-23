@@ -32,10 +32,8 @@
    const pathname = usePathname();
   const [pendingHref, setPendingHref] = useState<string | null>(null);
    const site = getMusicSiteFromPathname(pathname);
-   const isAmrep = site.id === "amrep";
-   const isRev = site.id === "rev";
-   const isE6 = site.id === "e6";
    const isSg = site.id === "sg";
+   const isLightShell = site.id !== "gbv";
   useEffect(() => {
     setPendingHref(null);
   }, [pathname]);
@@ -73,7 +71,8 @@
                 }
               }}
                className={cn(
-                 "group flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-all duration-200 w-full text-white",
+                 "group flex flex-col items-center justify-center gap-0.5 px-2 py-2 rounded-md transition-all duration-200 w-full",
+                 isLightShell ? "text-black" : "text-white",
                 showActive
                    ? "!text-black bg-white -translate-y-0.5 shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
                    : "hover:!text-black hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(0,0,0,0.18)]"
@@ -89,7 +88,7 @@
                      isChat ? "h-10 w-10" : "h-5 w-5",
                      "object-contain transition-transform duration-200 group-hover:scale-110",
                      isPending && "animate-spin [animation-duration:2s]",
-                     !isAmrep && !isRev && !isE6 && !isSg && !showActive ? "brightness-0 invert group-hover:brightness-100 group-hover:invert-0" : ""
+                     !isLightShell && !showActive ? "brightness-0 invert group-hover:brightness-100 group-hover:invert-0" : ""
                    )}
                    priority={isChat}
                    loading={isChat ? "eager" : "lazy"}
@@ -99,7 +98,7 @@
                    <Icon
                      className={cn(
                        "h-5 w-5 transition-transform duration-200 group-hover:scale-110",
-                       showActive ? "text-black" : "text-white group-hover:text-black",
+                       showActive ? "text-black" : isLightShell ? "text-black group-hover:text-black" : "text-white group-hover:text-black",
                        isPending && "animate-spin [animation-duration:2s]"
                      )}
                    />
@@ -120,10 +119,8 @@
    const pathname = usePathname();
   const [pendingHref, setPendingHref] = useState<string | null>(null);
    const site = getMusicSiteFromPathname(pathname);
-   const isAmrep = site.id === "amrep";
-   const isRev = site.id === "rev";
-   const isE6 = site.id === "e6";
    const isSg = site.id === "sg";
+   const isLightShell = site.id !== "gbv";
   useEffect(() => {
     setPendingHref(null);
   }, [pathname]);
@@ -181,7 +178,7 @@
                      "object-contain",
                      isChat ? "gbv-nav-icon" : "",
                      isPending && "animate-spin [animation-duration:2s]",
-                     !isAmrep && !isRev && !isE6 && !isSg ? "brightness-0 invert" : ""
+                     !isLightShell ? "brightness-0 invert" : ""
                    )}
                  />
                ) : (

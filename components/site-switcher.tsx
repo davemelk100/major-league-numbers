@@ -46,13 +46,14 @@ const musicSites = [
   { name: "Revelation Records", href: "/rev", logo: "/rev-logo.png" },
   { name: "Elephant 6", href: "/e6", logo: "/e6-logo.png" },
   { name: "Skin Graft", href: "/sg", logo: "/sg-logo.png" },
+  { name: "Touch & Go", href: "/touch-go-records", logo: "/images/touch-go-records/logo.jpg" },
 ];
 
 export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "music" }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const isMusic = variant === "music";
-  const isLightMusic = isMusic && (pathname.startsWith("/rev") || pathname.startsWith("/e6"));
+  const isLightMusic = isMusic && !pathname.startsWith("/gbv");
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

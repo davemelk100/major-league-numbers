@@ -67,7 +67,7 @@ export default function Loading() {
 export function generateArtistsPage(siteId: string, siteName: string): string {
   const pascal = toPascalCase(siteId);
   return `import type { Metadata } from "next";
-import { GbvMembersContent } from "@/components/${siteId}/${siteId}-members-content";
+import { ${pascal}MembersContent } from "@/components/${siteId}/${siteId}-members-content";
 
 export const metadata: Metadata = {
   title: "Artists",
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
 };
 
 export default function ${pascal}MembersPage() {
-  return <GbvMembersContent />;
+  return <${pascal}MembersContent />;
 }
 `;
 }
@@ -83,7 +83,7 @@ export default function ${pascal}MembersPage() {
 export function generateArtistDetailPage(siteId: string, siteName: string): string {
   const pascal = toPascalCase(siteId);
   return `import type { Metadata } from "next";
-import { GbvMemberDetailContent } from "@/components/${siteId}/${siteId}-member-detail-content";
+import { ${pascal}MemberDetailContent } from "@/components/${siteId}/${siteId}-member-detail-content";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -101,7 +101,7 @@ export async function generateMetadata({
 
 export default async function ${pascal}MemberDetailPage({ params }: PageProps) {
   const { id } = await params;
-  return <GbvMemberDetailContent memberId={id} />;
+  return <${pascal}MemberDetailContent memberId={id} />;
 }
 `;
 }
@@ -109,7 +109,7 @@ export default async function ${pascal}MemberDetailPage({ params }: PageProps) {
 export function generateReleasesPage(siteId: string, siteName: string): string {
   const pascal = toPascalCase(siteId);
   return `import type { Metadata } from "next";
-import { GbvAlbumsContent } from "@/components/${siteId}/${siteId}-albums-content";
+import { ${pascal}AlbumsContent } from "@/components/${siteId}/${siteId}-albums-content";
 
 export const metadata: Metadata = {
   title: "Releases",
@@ -117,7 +117,7 @@ export const metadata: Metadata = {
 };
 
 export default function ${pascal}AlbumsPage() {
-  return <GbvAlbumsContent />;
+  return <${pascal}AlbumsContent />;
 }
 `;
 }
@@ -125,7 +125,7 @@ export default function ${pascal}AlbumsPage() {
 export function generateReleaseDetailPage(siteId: string, siteName: string): string {
   const pascal = toPascalCase(siteId);
   return `import type { Metadata } from "next";
-import { GbvAlbumDetailContent } from "@/components/${siteId}/${siteId}-album-detail-content";
+import { ${pascal}AlbumDetailContent } from "@/components/${siteId}/${siteId}-album-detail-content";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -143,7 +143,7 @@ export async function generateMetadata({
 
 export default async function ${pascal}AlbumDetailPage({ params }: PageProps) {
   const { id } = await params;
-  return <GbvAlbumDetailContent albumId={id} />;
+  return <${pascal}AlbumDetailContent albumId={id} />;
 }
 `;
 }
@@ -151,7 +151,7 @@ export default async function ${pascal}AlbumDetailPage({ params }: PageProps) {
 export function generateAskPage(siteId: string, siteName: string, chatLabel: string): string {
   const pascal = toPascalCase(siteId);
   return `import type { Metadata } from "next";
-import { GbvChatContent } from "@/components/${siteId}/${siteId}-chat-content";
+import { GbvChatContent } from "@/components/amrep/amrep-chat-content";
 
 export const metadata: Metadata = {
   title: "${chatLabel}",
@@ -247,7 +247,7 @@ export default function ${pascal}SideProjectsPage() {
 export function generateSongsPage(siteId: string, siteName: string): string {
   const pascal = toPascalCase(siteId);
   return `import type { Metadata } from "next";
-import { GbvSongsContent } from "@/components/${siteId}/${siteId}-songs-content";
+import { GbvSongsContent } from "@/components/amrep/amrep-songs-content";
 
 export const metadata: Metadata = {
   title: "Songs",
@@ -776,6 +776,363 @@ export function ${pascal}DashboardContent() {
         </Card>
       )}
     </div>
+  );
+}
+`;
+}
+
+export function generateMembersContentComponent(siteId: string): string {
+  const pascal = toPascalCase(siteId);
+  const bareId = siteId.replace(/-/g, "");
+  const constName = siteId.toUpperCase().replace(/-/g, "_");
+  return `"use client";
+
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { ${bareId}Artists } from "@/lib/${siteId}-artists-data";
+import { ${constName}_ARTIST_IMAGES } from "@/lib/${siteId}-artist-images";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname } from "@/lib/music-site";
+import { MemberAvatar } from "@/components/music-site/member-avatar";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
+
+export function ${pascal}MembersContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
+  const [search, setSearch] = useState("");
+
+  const filteredArtists = ${bareId}Artists.filter((artist) =>
+    search === "" || artist.name.toLowerCase().includes(search.toLowerCase())
+  );
+
+  return (
+    <div className="container py-6">
+      <h1 className="font-league mb-6">{site.navLabels.members}</h1>
+
+      <div className="mb-6">
+        <Input
+          placeholder="Search artists..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="max-w-xs"
+        />
+      </div>
+
+      <p className="text-sm text-muted-foreground mb-4">
+        Showing {filteredArtists.length} of {${bareId}Artists.length} artists
+      </p>
+
+      <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        {filteredArtists.map((artist) => {
+          const localImage = ${constName}_ARTIST_IMAGES[artist.id] ?? null;
+          return (
+            <Link key={artist.id} href={\`\${site.basePath}/\${site.membersSlug}/\${artist.id}\`}>
+              <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
+                <CardContent className="p-3 text-center">
+                  <MemberAvatar
+                    name={artist.name}
+                    localImageUrl={localImage}
+                    site={site}
+                    skipRemoteLookup={false}
+                    renderPlaceholder={() => <SitePlaceholderIcon site={site} />}
+                  />
+                  <p className="text-sm font-medium">{artist.name}</p>
+                </CardContent>
+              </Card>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+`;
+}
+
+export function generateMemberDetailContentComponent(siteId: string): string {
+  const pascal = toPascalCase(siteId);
+  const bareId = siteId.replace(/-/g, "");
+  const constName = siteId.toUpperCase().replace(/-/g, "_");
+  return `"use client";
+
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname, ${constName}_SITE } from "@/lib/music-site";
+import { get${pascal}ArtistById } from "@/lib/${siteId}-artists-data";
+import { ${bareId}Releases } from "@/lib/${siteId}-releases-data";
+import { ${constName}_ARTIST_IMAGES } from "@/lib/${siteId}-artist-images";
+import { useMemberImage } from "@/components/music-site/use-member-image";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { MemberDetailLayout } from "@/components/music-site/member-detail-layout";
+import { MemberDetailLeft } from "@/components/music-site/member-detail-left";
+import { MemberDetailRight } from "@/components/music-site/member-detail-right";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
+
+export function ${pascal}MemberDetailContent({ memberId }: { memberId: string }) {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
+  const artist = get${pascal}ArtistById(Number(memberId));
+  const artistName = artist?.name?.toLowerCase() ?? "";
+
+  const releases = artist
+    ? ${bareId}Releases.filter(
+        (r) => r.artist.toLowerCase() === artist.name.toLowerCase()
+      )
+    : [];
+
+  const localImage = ${constName}_ARTIST_IMAGES[Number(memberId)] ?? null;
+
+  const { resolvedImageUrl } = useMemberImage({
+    siteId: site.id,
+    site,
+    memberName: artist?.name,
+    memberId,
+    localImageUrl: localImage,
+    skipRemoteLookup: false,
+  });
+
+  if (!artist) {
+    return (
+      <MemberDetailLayout
+        site={site}
+        backHref={\`\${site.basePath}/\${site.membersSlug}\`}
+        backLabel={site.navLabels.members}
+        leftContent={<SitePlaceholderIcon site={site} />}
+        rightTitle="Releases"
+        rightContent={
+          <p className="text-sm text-muted-foreground">Artist not found.</p>
+        }
+      />
+    );
+  }
+
+  const leftContent = (
+    <MemberDetailLeft
+      image={
+        resolvedImageUrl ? (
+          <SiteRemoteImage
+            site={${constName}_SITE}
+            src={resolvedImageUrl}
+            alt={artist.name}
+            width={300}
+            height={300}
+            className="w-full aspect-square object-contain"
+            fallbackSrc={site.placeholderIconSrc}
+            cacheKey={\`\${site.id}-member-image:\${artistName}\`}
+            preferProxy
+          />
+        ) : (
+          <SitePlaceholderIcon site={site} />
+        )
+      }
+      name={artist.name}
+      profile={artist.description}
+    />
+  );
+
+  const rightContent = (
+    <MemberDetailRight
+      items={releases}
+      emptyLabel="No releases found in catalog."
+      emptyClassName="text-sm"
+      containerClassName="space-y-2"
+      renderItem={(release) => (
+        <Link
+          key={release.id}
+          href={\`\${site.basePath}/\${site.albumsSlug}/\${release.id}\`}
+          className="flex items-center justify-between border-b border-border pb-2 last:border-0 hover:bg-muted/80 -mx-2 px-2 py-1 rounded transition-colors"
+        >
+          <div>
+            <p className="font-semibold text-sm">{release.title}</p>
+            {release.catalogNo && (
+              <p className="text-xs text-muted-foreground">{release.catalogNo}</p>
+            )}
+          </div>
+          {release.year && <Badge variant="outline">{release.year}</Badge>}
+        </Link>
+      )}
+    />
+  );
+
+  return (
+    <MemberDetailLayout
+      site={site}
+      backHref={\`\${site.basePath}/\${site.membersSlug}\`}
+      backLabel={site.navLabels.members}
+      leftContent={leftContent}
+      rightTitle={\`Releases (\${releases.length})\`}
+      rightContent={rightContent}
+    />
+  );
+}
+`;
+}
+
+export function generateAlbumsContentComponent(siteId: string): string {
+  const pascal = toPascalCase(siteId);
+  const bareId = siteId.replace(/-/g, "");
+  return `"use client";
+
+import { useState, useMemo } from "react";
+import { ${bareId}Releases } from "@/lib/${siteId}-releases-data";
+import { getLocalAlbumImage } from "@/lib/${siteId}-release-images";
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname } from "@/lib/music-site";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { AlbumGrid, type AlbumGridItem } from "@/components/music-site/album-grid";
+
+type ${pascal}AlbumGridItem = AlbumGridItem & {
+  artist: string;
+};
+
+export function ${pascal}AlbumsContent() {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
+  const [search, setSearch] = useState("");
+
+  const albums: ${pascal}AlbumGridItem[] = useMemo(
+    () =>
+      ${bareId}Releases.map((r) => ({
+        id: r.id,
+        title: r.artist ? \`\${r.artist} — \${r.title}\` : r.title,
+        year: r.year ?? 0,
+        artist: r.artist,
+      })),
+    []
+  );
+
+  const filteredAlbums = useMemo(
+    () =>
+      albums.filter(
+        (a) =>
+          search === "" ||
+          a.title.toLowerCase().includes(search.toLowerCase())
+      ),
+    [albums, search]
+  );
+
+  const getAlbumImage = (album: ${pascal}AlbumGridItem): string | null => {
+    return getLocalAlbumImage(album.id);
+  };
+
+  return (
+    <div className="container py-6">
+      <h1 className="font-league mb-6">{site.navLabels.discography}</h1>
+
+      <p className="text-sm text-muted-foreground mb-4">
+        Showing {filteredAlbums.length} of {albums.length} releases
+      </p>
+
+      <AlbumGrid
+        albums={filteredAlbums}
+        site={site}
+        getAlbumImage={getAlbumImage}
+        getReleaseTypeLabel={() => "Album"}
+        RemoteImage={SiteRemoteImage}
+        linkBasePath={\`\${site.basePath}/\${site.albumsSlug}\`}
+        cacheKeyPrefix="${siteId}-album-thumb"
+        imageFit="contain"
+        preferProxy={false}
+      />
+    </div>
+  );
+}
+`;
+}
+
+export function generateAlbumDetailContentComponent(siteId: string): string {
+  const pascal = toPascalCase(siteId);
+  const constName = siteId.toUpperCase().replace(/-/g, "_");
+  return `"use client";
+
+import { usePathname } from "next/navigation";
+import { getMusicSiteFromPathname, ${constName}_SITE } from "@/lib/music-site";
+import { get${pascal}ReleaseById } from "@/lib/${siteId}-releases-data";
+import { getLocalAlbumImage } from "@/lib/${siteId}-release-images";
+import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
+import { AlbumDetailLayout } from "@/components/music-site/album-detail-layout";
+import { AlbumDetailLeft } from "@/components/music-site/album-detail-left";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
+
+export function ${pascal}AlbumDetailContent({ albumId }: { albumId: string }) {
+  const pathname = usePathname();
+  const site = getMusicSiteFromPathname(pathname);
+  const release = get${pascal}ReleaseById(Number(albumId));
+  const localImage = release ? getLocalAlbumImage(release.id) : null;
+
+  if (!release) {
+    return (
+      <AlbumDetailLayout
+        site={site}
+        backHref={\`\${site.basePath}/\${site.albumsSlug}\`}
+        backLabel={site.navLabels.discography}
+        leftContent={
+          <div className="w-full aspect-square bg-muted rounded-lg mb-4 flex items-center justify-center">
+            <p className="text-muted-foreground text-sm">Release not found</p>
+          </div>
+        }
+        rightTitle="Details"
+        rightContent={
+          <p className="text-sm text-muted-foreground">
+            No release found for ID {albumId}.
+          </p>
+        }
+      />
+    );
+  }
+
+  const leftContent = (
+    <AlbumDetailLeft
+      image={
+        localImage ? (
+          <SiteRemoteImage
+            site={${constName}_SITE}
+            src={localImage}
+            alt={\`\${release.artist} - \${release.title}\`}
+            width={300}
+            height={300}
+            className="w-full aspect-square rounded-lg object-contain"
+            cacheKey={\`${siteId}-album-thumb:\${release.id}\`}
+            preferProxy={false}
+          />
+        ) : (
+          <SitePlaceholderIcon site={site} className="mb-4" />
+        )
+      }
+      title={\`\${release.artist} — \${release.title}\`}
+      badges={[
+        ...(release.year ? [{ label: String(release.year), variant: "outline" as const }] : []),
+        ...(release.format ? [{ label: release.format, variant: "outline" as const }] : []),
+      ]}
+      meta={[
+        { label: "Artist", value: release.artist },
+        ...(release.catalogNo ? [{ label: "Catalog", value: release.catalogNo }] : []),
+      ]}
+    />
+  );
+
+  const rightContent = (
+    <div className="text-sm text-muted-foreground">
+      {release.highlight ? (
+        <p>{release.highlight}</p>
+      ) : (
+        <p>No additional details available.</p>
+      )}
+    </div>
+  );
+
+  return (
+    <AlbumDetailLayout
+      site={site}
+      backHref={\`\${site.basePath}/\${site.albumsSlug}\`}
+      backLabel={site.navLabels.discography}
+      leftContent={leftContent}
+      rightTitle="Details"
+      rightContent={rightContent}
+    />
   );
 }
 `;

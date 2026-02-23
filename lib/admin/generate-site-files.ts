@@ -78,11 +78,27 @@ export async function generateSiteFiles(
   const systemPrompt = `You are an expert on ${siteName}. Answer questions about artists, releases, history, and milestones. Be concise and grounded in facts. If unsure, say so. Never generate media content.`;
   await write(`app/api/${siteId}/ask/route.ts`, templates.generateAskRoute(siteId, siteName, systemPrompt));
 
-  // ── Dashboard component ─────────────────────────────────────────────
+  // ── Site content components ─────────────────────────────────────────
   const constName = siteId.toUpperCase().replace(/-/g, "_");
   await write(
     `components/${siteId}/${siteId}-dashboard-content.tsx`,
     templates.generateDashboardComponent(siteId, siteName, constName),
+  );
+  await write(
+    `components/${siteId}/${siteId}-members-content.tsx`,
+    templates.generateMembersContentComponent(siteId),
+  );
+  await write(
+    `components/${siteId}/${siteId}-member-detail-content.tsx`,
+    templates.generateMemberDetailContentComponent(siteId),
+  );
+  await write(
+    `components/${siteId}/${siteId}-albums-content.tsx`,
+    templates.generateAlbumsContentComponent(siteId),
+  );
+  await write(
+    `components/${siteId}/${siteId}-album-detail-content.tsx`,
+    templates.generateAlbumDetailContentComponent(siteId),
   );
 
   // ── Update music-site.ts ────────────────────────────────────────────

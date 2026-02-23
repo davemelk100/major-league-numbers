@@ -156,3 +156,7 @@
     -webkit-backdrop-filter: blur(20px) saturate(170%);
   }
 }
+
+  .touch-go-records-shell {
+    background-color: #f8f8f8;
+  }
