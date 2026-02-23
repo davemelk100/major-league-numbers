@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { generatedSiteDataSchema } from "@/lib/admin/schemas";
 import { generateSiteFiles } from "@/lib/admin/generate-site-files";
 
+export const maxDuration = 300;
+
 const ADMIN_PASSCODE = "6231839";
 
 function validatePasscode(request: Request): boolean {

@@ -2,6 +2,7 @@ import fs from "fs/promises";
 import path from "path";
 import type { GeneratedSiteData } from "./schemas";
 import * as templates from "./file-templates";
+import { downloadSiteImages } from "./download-site-images";
 
 interface WriteResult {
   path: string;
@@ -158,6 +159,41 @@ export async function generateSiteFiles(
       path: "app/globals.css",
       success: false,
       error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+
+  // ── Download images and overwrite mapping files ─────────────────────
+  try {
+    const { artistImages, releaseImages } = await downloadSiteImages(
+      siteId,
+      artists,
+      releases,
+      config.discogsLabelId,
+    );
+
+    // Overwrite the initially-empty image mapping files with populated data
+    if (Object.keys(artistImages).length > 0) {
+      await write(
+        `lib/${siteId}-artist-images.ts`,
+        templates.generateArtistImagesFile(siteId, artistImages),
+      );
+    }
+    if (Object.keys(releaseImages).length > 0) {
+      await write(
+        `lib/${siteId}-release-images.ts`,
+        templates.generateReleaseImagesFile(siteId, releaseImages),
+      );
+    }
+
+    results.push({
+      path: `public/images/${siteId}/`,
+      success: true,
+    });
+  } catch (error) {
+    results.push({
+      path: `public/images/${siteId}/`,
+      success: false,
+      error: error instanceof Error ? error.message : "Image download failed",
     });
   }
 

@@ -689,13 +689,37 @@ export function getDaily${pascal}Record(date = new Date()): ${pascal}RecordOfDay
 `;
 }
 
-export function generateArtistImagesFile(siteId: string): string {
-  return `export const ${siteId.toUpperCase().replace(/-/g, "_")}_ARTIST_IMAGES: Record<number, string> = {};
+export function generateArtistImagesFile(siteId: string, images?: Record<string, string>): string {
+  const constName = siteId.toUpperCase().replace(/-/g, "_");
+  if (images && Object.keys(images).length > 0) {
+    const entries = Object.entries(images)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([id, url]) => `  "${id}": "${url}",`)
+      .join("\n");
+    return `export const ${constName}_ARTIST_IMAGES: Record<string, string> = {
+${entries}
+};
+`;
+  }
+  return `export const ${constName}_ARTIST_IMAGES: Record<number, string> = {};
 `;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function generateReleaseImagesFile(_siteId: string): string {
+export function generateReleaseImagesFile(siteId: string, images?: Record<number, string>): string {
+  if (images && Object.keys(images).length > 0) {
+    const entries = Object.entries(images)
+      .sort(([a], [b]) => Number(a) - Number(b))
+      .map(([id, url]) => `  ${id}: "${url}",`)
+      .join("\n");
+    return `export const localAlbumImages: Record<number, string> = {
+${entries}
+};
+
+export function getLocalAlbumImage(catalogNumber: number): string | null {
+  return localAlbumImages[catalogNumber] || null;
+}
+`;
+  }
   return `export const localAlbumImages: Record<number, string> = {};
 
 export function getLocalAlbumImage(catalogNumber: number): string | null {
