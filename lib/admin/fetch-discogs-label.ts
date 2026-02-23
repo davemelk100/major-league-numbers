@@ -101,19 +101,21 @@ export async function fetchDiscogsLabelData(
     artistId += 1;
   }
 
-  // Map releases, deduplicating by Discogs release ID
-  const seenReleaseIds = new Set<number>();
+  // Map releases, deduplicating by catalog number + artist (keeps first pressing only)
+  const seenCatalogArtist = new Set<string>();
   const releases: GeneratedRelease[] = [];
   for (const rel of allReleases) {
-    if (seenReleaseIds.has(rel.id)) continue;
-    seenReleaseIds.add(rel.id);
+    const artist = rel.artist
+      ? rel.artist.replace(/\s*\(\d+\)$/, "").trim()
+      : "Various";
+    const catKey = `${(rel.catno || "").trim()}::${artist}`;
+    if (seenCatalogArtist.has(catKey)) continue;
+    seenCatalogArtist.add(catKey);
     releases.push({
       id: rel.id,
       catalogNo: rel.catno || undefined,
       title: rel.title || "Untitled",
-      artist: rel.artist
-        ? rel.artist.replace(/\s*\(\d+\)$/, "").trim()
-        : "Various",
+      artist,
       year: rel.year ?? null,
       format: rel.format || null,
     });
