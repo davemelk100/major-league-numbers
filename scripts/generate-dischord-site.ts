@@ -10,6 +10,7 @@
  */
 
 import { generateSiteFiles } from "../lib/admin/generate-site-files";
+import { fetchDiscogsLabelData } from "../lib/admin/fetch-discogs-label";
 import type { GeneratedSiteData } from "../lib/admin/schemas";
 
 const SITE_ID = "dischord";
@@ -294,6 +295,26 @@ async function main() {
   console.log("  Dischord Records — Full Site Generation");
   console.log("═".repeat(60));
   console.log();
+
+  // When a Discogs token is available, fetch the full label discography
+  const discogsToken = process.env.DISCOGS_USER_TOKEN;
+  if (discogsToken && data.config.discogsLabelId) {
+    console.log("DISCOGS_USER_TOKEN found — fetching full discography...\n");
+    try {
+      const { artists, releases } = await fetchDiscogsLabelData(
+        data.config.discogsLabelId,
+        discogsToken,
+      );
+      data.artists = artists;
+      data.releases = releases;
+      console.log(`\nFetched ${artists.length} artists, ${releases.length} releases from Discogs.\n`);
+    } catch (err) {
+      console.warn("Discogs fetch failed, using hardcoded fallback data:", err);
+    }
+  } else {
+    console.log("No DISCOGS_USER_TOKEN — using hardcoded fallback data.\n");
+  }
+
   console.log(`Site ID: ${SITE_ID}`);
   console.log(`Artists: ${data.artists.length}`);
   console.log(`Releases: ${data.releases.length}`);

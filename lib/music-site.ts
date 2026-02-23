@@ -515,9 +515,9 @@ export const DISCHORD_SITE: MusicSiteConfig = {
   chatLabel: "Ask Dischord",
   headerTitle: "Dischord Records",
   headerTextClass: "text-black",
-  logoSrc: "/dischord-logo.png",
-  chatIconSrc: "/dischord-logo.png",
-  placeholderIconSrc: "/dischord-logo.png",
+  logoSrc: "/images/dischord/logo.png",
+  chatIconSrc: "/images/dischord/logo.png",
+  placeholderIconSrc: "/images/dischord/logo.png",
   shellClass: "dischord-shell",
   logoClassName: "h-auto w-[15%]",
   description: "Dischord Records is an independent record label founded in 1980 by Ian MacKaye and Jeff Nelson in Washington, D.C. The label has been a cornerstone of the D.C. hardcore and post-hardcore scenes, releasing music by Minor Threat, Fugazi, Bad Brains, Rites of Spring, and many more. Dischord is known for its DIY ethos, fair pricing, and commitment to artistic integrity.",
@@ -541,10 +541,10 @@ export const DISCHORD_SITE: MusicSiteConfig = {
     { label: "Cover Art Archive", url: "https://coverartarchive.org/" },
   ],
   images: {
-    fallbackIcon: "/dischord-logo.png",
+    fallbackIcon: "/images/dischord/logo.png",
     fit: "contain",
     lookupStrategy: "discogs",
-    invalidCacheValues: ["/dischord-logo.png"],
+    invalidCacheValues: ["/images/dischord/logo.png"],
   },
   searchPlaceholder: "Search Dischord...",
   seo: {
@@ -553,9 +553,9 @@ export const DISCHORD_SITE: MusicSiteConfig = {
     description: "Explore Dischord Records: artist roster, releases, D.C. hardcore history, and milestones.",
     keywords: ["Dischord Records", "D.C. hardcore", "post-hardcore", "punk", "Ian MacKaye", "Fugazi", "Minor Threat", "independent label", "DIY"],
     siteName: "Major League Numbers",
-    ogImage: "https://majorleaguenumbers.com/dischord-logo.png",
+    ogImage: "https://majorleaguenumbers.com/images/dischord/logo.png",
     ogImageAlt: "Dischord Records",
-    twitterImage: "https://majorleaguenumbers.com/dischord-logo.png",
+    twitterImage: "https://majorleaguenumbers.com/images/dischord/logo.png",
   },
 };
 

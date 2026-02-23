@@ -37,13 +37,15 @@ export function ArtistOfDayCard({
   RemoteImage,
   imageFit = "contain",
 }: ArtistOfDayCardProps) {
-  // Only pick from artists that have images
+  if (artists.length === 0) return null;
+
+  // Prefer artists with images; fall back to all artists for text-only display
   const artistsWithImages = artists.filter((a) => a.imageUrl);
-  if (artistsWithImages.length === 0) return null;
+  const pool = artistsWithImages.length > 0 ? artistsWithImages : artists;
 
   const daysSinceEpoch = Math.floor(Date.now() / (1000 * 60 * 60 * 24));
-  const index = daysSinceEpoch % artistsWithImages.length;
-  const artist = artistsWithImages[index];
+  const index = daysSinceEpoch % pool.length;
+  const artist = pool[index];
   const coverUrl = artist.imageUrl || null;
   const albumHref = `${site.basePath}/${site.membersSlug}/${artist.id}`;
   const displayTitle = artist.name;

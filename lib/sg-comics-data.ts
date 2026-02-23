@@ -18,7 +18,7 @@ export const sgComics: SgComic[] = [
     creator: "Mark Fischer",
     year: 2011,
     description: "Holiday-themed superhero story.",
-    sourceUrl: "https://skingraftrecords.com/comix/megomaniacal.pdf",
+    sourceUrl: "https://skingraftrecords.com/megomaniacal.pdf",
   },
   {
     id: "hot-satan-serious-brown",
@@ -26,7 +26,7 @@ export const sgComics: SgComic[] = [
     creator: "Mark Fischer",
     year: 2008,
     description: "Excerpt, 4 pages plus covers.",
-    sourceUrl: "https://skingraftrecords.com/comix/SIDES_11_14preview.pdf",
+    sourceUrl: "https://skingraftrecords.com/graphics/comics/SIDES_11_14preview.pdf",
     pages: 4,
   },
   {
@@ -35,7 +35,7 @@ export const sgComics: SgComic[] = [
     creator: "Rob Syers & Mark Fischer",
     year: 2005,
     description: "Chicago Reader serialized series debut.",
-    sourceUrl: "https://skingraftrecords.com/comix/Ghead_ep01mini.pdf",
+    sourceUrl: "https://skingraftrecords.com/graphics/comics/Ghead_ep01mini.pdf",
   },
   {
     id: "unsolved-histories",
@@ -43,7 +43,7 @@ export const sgComics: SgComic[] = [
     creator: "Rob Syers & Mark Fischer",
     year: 2005,
     description: "Excerpt from GR#75.",
-    sourceUrl: "https://skingraftrecords.com/comix/hofruins_1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/hofruins_1.html",
   },
   {
     id: "gumballhead-jar",
@@ -51,7 +51,7 @@ export const sgComics: SgComic[] = [
     creator: "Rob Syers",
     year: 2004,
     description: "Single page from Roctober #39.",
-    sourceUrl: "https://skingraftrecords.com/comix/gumballhead_jar.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/gumballhead_jar.html",
     pages: 1,
   },
   {
@@ -60,7 +60,7 @@ export const sgComics: SgComic[] = [
     creator: "Jeff Bentle",
     year: 2003,
     description: "Two strips for Giant-Size SKiN GRAFT.",
-    sourceUrl: "https://skingraftrecords.com/comix/swami.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/swami.html",
     pages: 2,
   },
   {
@@ -69,7 +69,7 @@ export const sgComics: SgComic[] = [
     creator: "Rob Syers",
     year: 2003,
     description: "Preview from GR#67.",
-    sourceUrl: "https://skingraftrecords.com/comix/CA_GH.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/CA_GH.html",
   },
   {
     id: "karate-chimp-lodge",
@@ -77,7 +77,7 @@ export const sgComics: SgComic[] = [
     creator: "Mark Fischer",
     year: 1998,
     description: "Three pages from GR#26.",
-    sourceUrl: "https://skingraftrecords.com/comix/Lodge1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/Lodge1.html",
     pages: 3,
   },
   {
@@ -86,7 +86,7 @@ export const sgComics: SgComic[] = [
     creator: "Rob Syers",
     year: 1993,
     description: "Three pages from GR#05.",
-    sourceUrl: "https://skingraftrecords.com/comix/brush_1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/brush_1.html",
     pages: 3,
   },
   {
@@ -95,7 +95,7 @@ export const sgComics: SgComic[] = [
     creator: "Mark Fischer",
     year: 2000,
     description: "Promotional comic for Soak the Saddle.",
-    sourceUrl: "https://skingraftrecords.com/comix/aorcallcomic.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/aorcallcomic.html",
   },
   {
     id: "kooter-cooking",
@@ -103,7 +103,7 @@ export const sgComics: SgComic[] = [
     creator: "Mark Shippy",
     year: 1993,
     description: "Two pages from GR#07.",
-    sourceUrl: "https://skingraftrecords.com/comix/kooterkookin1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/kooterkookin1.html",
     pages: 2,
   },
   {
@@ -112,7 +112,7 @@ export const sgComics: SgComic[] = [
     creator: "Mark Fischer",
     year: 1993,
     description: "Three pages from GR#04.",
-    sourceUrl: "https://skingraftrecords.com/comix/fruitcomic1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/fruitcomic1.html",
     pages: 3,
   },
   {
@@ -121,7 +121,7 @@ export const sgComics: SgComic[] = [
     creator: "Rob Syers",
     year: 2000,
     description: "Four pages from Roctober #24.",
-    sourceUrl: "https://skingraftrecords.com/comix/gumball9life_1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/gumball9life_1.html",
     pages: 4,
   },
   {
@@ -130,7 +130,7 @@ export const sgComics: SgComic[] = [
     creator: "Mark Fischer",
     year: 1991,
     description: "Twelve pages from SKiN GRAFT #1 vol. 2.",
-    sourceUrl: "https://skingraftrecords.com/comix/floydwrestle1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/floydwrestle1.html",
     pages: 12,
   },
   {
@@ -139,7 +139,7 @@ export const sgComics: SgComic[] = [
     creator: "Jeff Bentle",
     year: 1991,
     description: "Four pages from SKiN GRAFT #1 vol. 2.",
-    sourceUrl: "https://skingraftrecords.com/comix/seriousandcm_1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/seriousandcm_1.html",
     pages: 4,
   },
   {
@@ -148,7 +148,7 @@ export const sgComics: SgComic[] = [
     creator: "Mark Shippy",
     year: 1994,
     description: "One page from Newsletter.",
-    sourceUrl: "https://skingraftrecords.com/comix/shortyeurolog_1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/shortyeurolog_1.html",
     pages: 1,
   },
   {
@@ -157,7 +157,7 @@ export const sgComics: SgComic[] = [
     creator: "Various Artists",
     year: 1988,
     description: "Eight pages.",
-    sourceUrl: "https://skingraftrecords.com/comix/killyourgf_1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/killyourgf_1.html",
     pages: 8,
   },
   {
@@ -166,7 +166,7 @@ export const sgComics: SgComic[] = [
     creator: "Mark Fischer",
     year: 1992,
     description: "Four pages from GR#03.",
-    sourceUrl: "https://skingraftrecords.com/comix/medicineme1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/medicineme1.html",
     pages: 4,
   },
   {
@@ -175,7 +175,7 @@ export const sgComics: SgComic[] = [
     creator: "Rob Syers",
     year: 1991,
     description: "Two pages from Kamikaze magazine.",
-    sourceUrl: "https://skingraftrecords.com/comix/seriousshoe1.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/seriousshoe1.html",
     pages: 2,
   },
   {
@@ -184,7 +184,7 @@ export const sgComics: SgComic[] = [
     creator: "Rob Syers & Mark Fischer",
     year: 1989,
     description: "One page from SKiN GRAFT #4.",
-    sourceUrl: "https://skingraftrecords.com/comix/inducedchuck.html",
+    sourceUrl: "https://skingraftrecords.com/comicpghtmlpages/inducedchuck.html",
     pages: 1,
   },
 ];

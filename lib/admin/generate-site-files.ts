@@ -162,6 +162,90 @@ export async function generateSiteFiles(
     });
   }
 
+  // ── Register in site-daily-registry.ts ─────────────────────────────
+  if (siteType === "music") {
+    try {
+      const registryPath = path.join(root, "lib/site-daily-registry.ts");
+      let registryContent = await fs.readFile(registryPath, "utf-8");
+
+      // Build camelCase function-name prefix from siteId
+      const camel = siteId.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
+      const pascal = camel.charAt(0).toUpperCase() + camel.slice(1);
+
+      // Trivia import + entry
+      const triviaImport =
+        `import {\n` +
+        `  getDaily${pascal}TriviaQuestions,\n` +
+        `  get${pascal}TodayStorageKey,\n` +
+        `} from "@/lib/${siteId}-trivia-data";\n`;
+      const triviaEntry =
+        `  "${siteId}": {\n` +
+        `    getDaily: getDaily${pascal}TriviaQuestions,\n` +
+        `    getStorageKey: get${pascal}TodayStorageKey,\n` +
+        `  },\n`;
+
+      // Records import + entry
+      const recordsImport =
+        `import { getDaily${pascal}Record } from "@/lib/${siteId}-records-data";\n`;
+      const albumImageImport =
+        `import { getLocalAlbumImage as get${pascal}AlbumImage } from "@/lib/${siteId}-release-images";\n`;
+      const recordsEntry =
+        `  "${siteId}": {\n` +
+        `    getDaily: getDaily${pascal}Record as (date?: Date) => RecordOfDay,\n` +
+        `    getAlbumImage: get${pascal}AlbumImage,\n` +
+        `  },\n`;
+
+      // Insert trivia import before the trivia marker comment
+      if (!registryContent.includes(`${siteId}-trivia-data`)) {
+        registryContent = registryContent.replace(
+          `// ── Records imports`,
+          `${triviaImport}\n// ── Records imports`,
+        );
+      }
+
+      // Insert records import before the album image imports
+      if (!registryContent.includes(`${siteId}-records-data`)) {
+        registryContent = registryContent.replace(
+          `// ── Album image imports`,
+          `${recordsImport}\n// ── Album image imports`,
+        );
+      }
+
+      // Insert album image import before the common types
+      if (!registryContent.includes(`${siteId}-release-images`)) {
+        registryContent = registryContent.replace(
+          `// ── Common types`,
+          `${albumImageImport}\n// ── Common types`,
+        );
+      }
+
+      // Insert trivia registry entry before the marker
+      if (!registryContent.includes(`"${siteId}": {\n    getDaily: getDaily${pascal}TriviaQuestions`)) {
+        registryContent = registryContent.replace(
+          `  // ── new-site-trivia ──`,
+          `${triviaEntry}  // ── new-site-trivia ──`,
+        );
+      }
+
+      // Insert records registry entry before the marker
+      if (!registryContent.includes(`"${siteId}": {\n    getDaily: getDaily${pascal}Record`)) {
+        registryContent = registryContent.replace(
+          `  // ── new-site-records ──`,
+          `${recordsEntry}  // ── new-site-records ──`,
+        );
+      }
+
+      await fs.writeFile(registryPath, registryContent, "utf-8");
+      results.push({ path: registryPath, success: true });
+    } catch (error) {
+      results.push({
+        path: "lib/site-daily-registry.ts",
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
+
   // ── Download images and overwrite mapping files ─────────────────────
   try {
     const { artistImages, releaseImages } = await downloadSiteImages(

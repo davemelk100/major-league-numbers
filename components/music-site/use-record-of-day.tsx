@@ -2,166 +2,120 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { pickDailyGbvRecord, getDailyGbvRecord, getDailyGbvSingle, type GbvRecordOfDay } from "@/lib/gbv-records-data";
-import { getDailyAmrepRecord, type AmrepRecordOfDay } from "@/lib/amrep-records-data";
-import { getDailyRevRecord, type RevRecordOfDay } from "@/lib/rev-records-data";
-import { getDailyE6Record, type E6RecordOfDay } from "@/lib/e6-records-data";
-import { getDailySgRecord, type SgRecordOfDay } from "@/lib/sg-records-data";
-import { getDailyTouchGoRecordsRecord, type TouchGoRecordsRecordOfDay } from "@/lib/touch-go-records-records-data";
+import { pickDailyGbvRecord, getDailyGbvSingle, type GbvRecordOfDay } from "@/lib/gbv-records-data";
 import { getLocalAlbumImage } from "@/lib/gbv-release-images";
-import { getAmrepAlbumImage } from "@/lib/amrep-release-images";
-import { getLocalAlbumImage as getTouchGoAlbumImage } from "@/lib/touch-go-records-release-images";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
+import {
+  getSiteDailyRecord,
+  getSiteAlbumImage,
+  type RecordOfDay,
+} from "@/lib/site-daily-registry";
 
 export function useRecordOfDay() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
-  const isAmrep = site.id === "amrep";
-  const isRev = site.id === "rev";
-  const isE6 = site.id === "e6";
-  const isSg = site.id === "sg";
-  const isTouchGo = site.id === "touch-go-records";
-  const [record, setRecord] = useState<GbvRecordOfDay | AmrepRecordOfDay | RevRecordOfDay | E6RecordOfDay | SgRecordOfDay | TouchGoRecordsRecordOfDay | null>(null);
+  const [record, setRecord] = useState<RecordOfDay | null>(null);
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
   const [albumId, setAlbumId] = useState<number | null>(null);
 
   useEffect(() => {
-    if (isSg) {
-      const sgDaily = getDailySgRecord();
-      setRecord(sgDaily);
-      if ("catalogNumber" in sgDaily) {
-        setAlbumId(sgDaily.catalogNumber);
-      }
-      if (sgDaily.coverUrl) {
-        setCoverUrl(sgDaily.coverUrl);
-      }
-      return;
-    }
-
-    if (isRev) {
-      const revDaily = getDailyRevRecord();
-      setRecord(revDaily);
-      if ("catalogNumber" in revDaily) {
-        setAlbumId(revDaily.catalogNumber);
-      }
-
-      if (revDaily.coverUrl) {
-        setCoverUrl(revDaily.coverUrl);
-        return;
-      }
-
-      async function fetchRevCover() {
-        try {
-          const params = new URLSearchParams({
-            type: "resolve",
-            artist: revDaily.artist,
-            title: revDaily.title,
-          });
-          const res = await fetch(`/api/rev/discogs?${params}`);
-          if (!res.ok) return;
-          const data = await res.json();
-          if (data.release?.coverImage) {
-            setCoverUrl(data.release.coverImage);
-          }
-        } catch {
-          // ignore cover lookup errors
-        }
-      }
-      fetchRevCover();
-      return;
-    }
-
-    if (isAmrep) {
-      // AmRep records - use releases data directly
-      const amrepDaily = getDailyAmrepRecord();
-      setRecord(amrepDaily);
-
-      // Use the id directly from the record
-      if ("id" in amrepDaily) {
-        setAlbumId(amrepDaily.id);
-        const localImage = getAmrepAlbumImage(amrepDaily.id);
+    // GBV has special API-enhancement logic — keep it separate
+    if (site.id === "gbv") {
+      const gbvDaily = getSiteDailyRecord("gbv")!;
+      setRecord(gbvDaily);
+      if (gbvDaily.id) {
+        setAlbumId(gbvDaily.id);
+        const localImage = getLocalAlbumImage(gbvDaily.id);
         if (localImage) {
           setCoverUrl(localImage);
-          return;
         }
       }
 
-      if (amrepDaily.coverUrl) {
-        setCoverUrl(amrepDaily.coverUrl);
-        return;
-      }
+      const albumsCacheKey = "gbv-albums-cache";
 
-      // Try to fetch cover from Discogs
-      const cacheKey = `amrep-record-cover:${amrepDaily.title}:${amrepDaily.year}`;
-      try {
-        const cached = localStorage.getItem(cacheKey);
-        if (cached) {
-          const parsed = JSON.parse(cached) as { url?: string };
-          if (parsed?.url) {
-            setCoverUrl(parsed.url);
-          }
-        }
-      } catch {
-        // ignore cache errors
-      }
+      async function enhanceWithApiData() {
+        let albums: Array<{ id?: number; title?: string; year?: number; thumb?: string }> = [];
 
-      async function fetchAmrepCover() {
         try {
-          const perPage = 100;
-          const maxPages = 3;
+          const cached = localStorage.getItem(albumsCacheKey);
+          if (cached) {
+            const parsed = JSON.parse(cached) as { albums?: typeof albums };
+            if (parsed?.albums?.length) {
+              albums = parsed.albums;
+            }
+          }
+        } catch {
+          // ignore cache errors
+        }
 
-          for (let page = 1; page <= maxPages; page += 1) {
-            const res = await fetch(
-              `/api/amrep/discogs?type=releases&per_page=${perPage}&page=${page}`,
-            );
-            if (!res.ok) return;
-            const data = await res.json();
-            const releases = Array.isArray(data?.releases) ? data.releases : [];
-            const titleMatch = (release: { title?: string }) =>
-              (release.title || "").toLowerCase() === amrepDaily.title.toLowerCase();
-            const exact = releases.find(
-              (release: { title?: string; year?: number }) =>
-                titleMatch(release) && release.year === amrepDaily.year,
-            );
-            const fallback = releases.find(titleMatch);
-            const resolved = exact || fallback;
-            if (resolved?.thumb) {
-              setCoverUrl(resolved.thumb);
+        if (albums.length === 0) {
+          try {
+            const res = await fetch("/api/gbv/discogs?type=albums");
+            if (res.ok) {
+              const data = await res.json();
+              albums = Array.isArray(data.albums) ? data.albums : [];
               try {
-                localStorage.setItem(
-                  cacheKey,
-                  JSON.stringify({ url: resolved.thumb }),
-                );
+                localStorage.setItem(albumsCacheKey, JSON.stringify({ albums }));
               } catch {
                 // ignore cache errors
               }
-              break;
             }
+          } catch {
+            // ignore fetch errors
           }
-        } catch {
-          // ignore cover lookup errors
+        }
+
+        // Enhance with API data if available (may have thumb URLs)
+        const daily = pickDailyGbvRecord(albums);
+        if (daily) {
+          setRecord(daily);
+          if (daily.id) {
+            setAlbumId(daily.id);
+          }
+          const localImage = getLocalAlbumImage(daily.id);
+          const normalizeImageUrl = (url: string | null | undefined) =>
+            url ? url.replace(/^http:/, "https:") : null;
+          const resolvedUrl = localImage || normalizeImageUrl(daily.thumb);
+          if (resolvedUrl) {
+            setCoverUrl(resolvedUrl);
+          }
         }
       }
 
-      fetchAmrepCover();
+      enhanceWithApiData();
       return;
     }
 
-    if (isE6) {
-      const e6Daily = getDailyE6Record();
-      setRecord(e6Daily);
-      if ("catalogNumber" in e6Daily) {
-        setAlbumId(e6Daily.catalogNumber);
-      }
+    // All other sites: use the registry
+    const daily = getSiteDailyRecord(site.id);
+    if (!daily) return;
+    setRecord(daily);
 
-      async function fetchE6Cover() {
+    const recordId = daily.id ?? ("catalogNumber" in daily ? (daily as any).catalogNumber : undefined);
+    if (recordId != null) {
+      setAlbumId(recordId);
+      const localImage = getSiteAlbumImage(site.id, recordId);
+      if (localImage) {
+        setCoverUrl(localImage);
+      } else if (daily.coverUrl) {
+        setCoverUrl(daily.coverUrl);
+      }
+    } else if (daily.coverUrl) {
+      setCoverUrl(daily.coverUrl);
+    }
+
+    // For sites with a Discogs API route, try fetching cover art if we don't have one yet
+    if (!daily.coverUrl && !getSiteAlbumImage(site.id, recordId ?? 0) && daily.artist && daily.title) {
+      const artistName = daily.artist;
+      const releaseTitle = daily.title;
+      async function fetchCoverFromDiscogs() {
         try {
           const params = new URLSearchParams({
             type: "resolve",
-            artist: e6Daily.artist,
-            title: e6Daily.title,
+            artist: artistName,
+            title: releaseTitle,
           });
-          const res = await fetch(`/api/e6/discogs?${params}`);
+          const res = await fetch(`/api/${site.id}/discogs?${params}`);
           if (!res.ok) return;
           const data = await res.json();
           if (data.release?.coverImage) {
@@ -171,89 +125,9 @@ export function useRecordOfDay() {
           // ignore cover lookup errors
         }
       }
-      fetchE6Cover();
-      return;
+      fetchCoverFromDiscogs();
     }
-
-    if (isTouchGo) {
-      const tgDaily = getDailyTouchGoRecordsRecord();
-      setRecord(tgDaily);
-      if ("id" in tgDaily) {
-        setAlbumId(tgDaily.id);
-        const localImage = getTouchGoAlbumImage(tgDaily.id);
-        if (localImage) {
-          setCoverUrl(localImage);
-        } else if (tgDaily.coverUrl) {
-          setCoverUrl(tgDaily.coverUrl);
-        }
-      }
-      return;
-    }
-
-    // GBV - use static data immediately, then enhance with API data
-    const gbvDaily = getDailyGbvRecord();
-    setRecord(gbvDaily);
-    if (gbvDaily.id) {
-      setAlbumId(gbvDaily.id);
-      const localImage = getLocalAlbumImage(gbvDaily.id);
-      if (localImage) {
-        setCoverUrl(localImage);
-      }
-    }
-
-    const albumsCacheKey = "gbv-albums-cache";
-
-    async function enhanceWithApiData() {
-      let albums: Array<{ id?: number; title?: string; year?: number; thumb?: string }> = [];
-
-      try {
-        const cached = localStorage.getItem(albumsCacheKey);
-        if (cached) {
-          const parsed = JSON.parse(cached) as { albums?: typeof albums };
-          if (parsed?.albums?.length) {
-            albums = parsed.albums;
-          }
-        }
-      } catch {
-        // ignore cache errors
-      }
-
-      if (albums.length === 0) {
-        try {
-          const res = await fetch("/api/gbv/discogs?type=albums");
-          if (res.ok) {
-            const data = await res.json();
-            albums = Array.isArray(data.albums) ? data.albums : [];
-            try {
-              localStorage.setItem(albumsCacheKey, JSON.stringify({ albums }));
-            } catch {
-              // ignore cache errors
-            }
-          }
-        } catch {
-          // ignore fetch errors
-        }
-      }
-
-      // Enhance with API data if available (may have thumb URLs)
-      const daily = pickDailyGbvRecord(albums);
-      if (daily) {
-        setRecord(daily);
-        if (daily.id) {
-          setAlbumId(daily.id);
-        }
-        const localImage = getLocalAlbumImage(daily.id);
-        const normalizeImageUrl = (url: string | null | undefined) =>
-          url ? url.replace(/^http:/, "https:") : null;
-        const resolvedUrl = localImage || normalizeImageUrl(daily.thumb);
-        if (resolvedUrl) {
-          setCoverUrl(resolvedUrl);
-        }
-      }
-    }
-
-    enhanceWithApiData();
-  }, [isAmrep, isRev, isE6, isSg, isTouchGo]);
+  }, [site.id]);
 
   const albumHref = albumId ? `${site.basePath}/${site.albumsSlug}/${albumId}` : null;
   const displayTitle =
@@ -263,7 +137,6 @@ export function useRecordOfDay() {
 
   return {
     site,
-    isAmrep,
     record,
     coverUrl,
     albumHref,
