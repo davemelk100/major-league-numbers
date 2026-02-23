@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -99,6 +99,18 @@ const musicSites = [
     logo: "/sg-logo.png",
     description: "Discography & catalog",
   },
+  {
+    name: "Touch & Go Records",
+    href: "/touch-go-records",
+    logo: "/images/touch-go-records/logo.jpg",
+    description: "Discography & catalog",
+  },
+  {
+    name: "Slap-A-Ham Records",
+    href: "/slap-a-ham-records",
+    logo: "/images/slap-a-ham-records/logo.jpg",
+    description: "Discography & catalog",
+  },
 ];
 
 function SiteCard({
@@ -111,7 +123,7 @@ function SiteCard({
       href={site.href}
       className="flex flex-col items-center gap-3 p-6 rounded-lg border bg-card hover:bg-muted/80 transition-colors"
     >
-      <Image
+      <img
         src={site.logo}
         alt={site.name}
         width={80}

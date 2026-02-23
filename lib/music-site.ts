@@ -500,9 +500,9 @@ export const TOUCH_GO_RECORDS_SITE: MusicSiteConfig = {
     description: "Discover Touch & Go Records: artist roster, releases, history, and milestones.",
     keywords: ["Touch & Go Records", "independent label", "hardcore", "post-hardcore", "indie music"],
     siteName: "Major League Numbers",
-    ogImage: "https://majorleaguenumbers.com/touch-go-records-logo.png",
+    ogImage: "https://majorleaguenumbers.com/images/touch-go-records/logo.jpg",
     ogImageAlt: "Touch & Go Records",
-    twitterImage: "https://majorleaguenumbers.com/touch-go-records-logo.png",
+    twitterImage: "https://majorleaguenumbers.com/images/touch-go-records/logo.jpg",
   },
 };
 
@@ -550,9 +550,9 @@ export const SLAP_A_HAM_RECORDS_SITE: MusicSiteConfig = {
     description: "Explore Slap-A-Ham Records: artist roster, releases, label history, and milestones.",
     keywords: ["Slap-A-Ham Records", "hardcore punk", "powerviolence", "grindcore"],
     siteName: "Major League Numbers",
-    ogImage: "https://majorleaguenumbers.com/slap-a-ham-records-logo.png",
+    ogImage: "https://majorleaguenumbers.com/images/slap-a-ham-records/logo.jpg",
     ogImageAlt: "Slap-A-Ham Records",
-    twitterImage: "https://majorleaguenumbers.com/slap-a-ham-records-logo.png",
+    twitterImage: "https://majorleaguenumbers.com/images/slap-a-ham-records/logo.jpg",
   },
 };
 
@@ -600,9 +600,9 @@ export const SLAP_A_HAM_NUMBERS_SITE: MusicSiteConfig = {
     description: "Explore Slap-A-Ham Records: artist roster, releases, label history, and milestones.",
     keywords: ["Slap-A-Ham Records", "hardcore punk", "powerviolence", "grindcore"],
     siteName: "Major League Numbers",
-    ogImage: "https://majorleaguenumbers.com/slap-a-ham-numbers-logo.png",
+    ogImage: "https://majorleaguenumbers.com/images/slap-a-ham-numbers/logo.jpg",
     ogImageAlt: "Slap-A-Ham Records",
-    twitterImage: "https://majorleaguenumbers.com/slap-a-ham-numbers-logo.png",
+    twitterImage: "https://majorleaguenumbers.com/images/slap-a-ham-numbers/logo.jpg",
   },
 };
 

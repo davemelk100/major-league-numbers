@@ -181,6 +181,40 @@ export async function generateSiteFiles(
     }
   }
 
+  // ── Update home page (app/page.tsx) ──────────────────────────────
+  if (siteType === "music") {
+    try {
+      const homePath = path.join(root, "app/page.tsx");
+      let homeContent = await fs.readFile(homePath, "utf-8");
+
+      if (!homeContent.includes(`"/${siteId}"`)) {
+        const logoPath = logoPaths[0] || `/images/${siteId}/logo.png`;
+        const newEntry = `  {\n    name: ${JSON.stringify(siteName)},\n    href: "/${siteId}",\n    logo: ${JSON.stringify(logoPath)},\n    description: "Discography & catalog",\n  },`;
+
+        // Insert before the closing ]; of musicSites array
+        const musicSitesStart = homeContent.indexOf("const musicSites");
+        if (musicSitesStart !== -1) {
+          const musicSitesEnd = homeContent.indexOf("];", musicSitesStart);
+          if (musicSitesEnd !== -1) {
+            homeContent =
+              homeContent.slice(0, musicSitesEnd) +
+              newEntry + "\n" +
+              homeContent.slice(musicSitesEnd);
+          }
+        }
+
+        await fs.writeFile(homePath, homeContent, "utf-8");
+      }
+      results.push({ path: homePath, success: true });
+    } catch (error) {
+      results.push({
+        path: "app/page.tsx",
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
+
   // ── Append shell CSS (skip if already present) ─────────────────────
   try {
     const cssPath = path.join(root, "app/globals.css");
@@ -277,6 +311,150 @@ export async function generateSiteFiles(
     } catch (error) {
       results.push({
         path: "lib/site-daily-registry.ts",
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
+
+  // ── Register in site-data-registry.ts ─────────────────────────────
+  if (siteType === "music") {
+    try {
+      const dataRegPath = path.join(root, "lib/site-data-registry.ts");
+      let dataReg = await fs.readFile(dataRegPath, "utf-8");
+
+      // Build naming variants
+      const bareId = siteId.replace(/-/g, "");
+      const pascal = siteId
+        .split("-")
+        .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+        .join("");
+
+      // Artist imports
+      if (!dataReg.includes(`${siteId}-artists-data`)) {
+        const artistImport =
+          `import { ${bareId}Artists } from "@/lib/${siteId}-artists-data";\n` +
+          `import { ${constName}_ARTIST_IMAGES } from "@/lib/${siteId}-artist-images";\n`;
+        dataReg = dataReg.replace(
+          `// ── new-site-artists ──`,
+          `${artistImport}// ── new-site-artists ──`,
+        );
+      }
+
+      // Release imports
+      if (!dataReg.includes(`${siteId}-releases-data`)) {
+        const releaseImport = `import { ${bareId}Releases } from "@/lib/${siteId}-releases-data";\n`;
+        dataReg = dataReg.replace(
+          `// ── new-site-releases ──`,
+          `${releaseImport}// ── new-site-releases ──`,
+        );
+      }
+
+      // Timeline imports
+      if (!dataReg.includes(`${siteId}-timeline-data`)) {
+        const timelineImport = `import { ${bareId}Timeline } from "@/lib/${siteId}-timeline-data";\n`;
+        dataReg = dataReg.replace(
+          `// ── new-site-timeline ──`,
+          `${timelineImport}// ── new-site-timeline ──`,
+        );
+      }
+
+      // Album image imports
+      if (!dataReg.includes(`${siteId}-release-images`)) {
+        const albumImgImport = `import { getLocalAlbumImage as get${pascal}AlbumImage } from "@/lib/${siteId}-release-images";\n`;
+        dataReg = dataReg.replace(
+          `// ── new-site-albumimages ──`,
+          `${albumImgImport}// ── new-site-albumimages ──`,
+        );
+      }
+
+      // Artists registry entry
+      if (!dataReg.includes(`"${siteId}": () => mapArtists(`)) {
+        const artistEntry = `  "${siteId}": () => mapArtists(${bareId}Artists, ${constName}_ARTIST_IMAGES),\n`;
+        dataReg = dataReg.replace(
+          `  // ── new-site-artists-entry ──`,
+          `${artistEntry}  // ── new-site-artists-entry ──`,
+        );
+      }
+
+      // Releases registry entry
+      if (!dataReg.includes(`"${siteId}": () =>\n    ${bareId}Releases`)) {
+        const releaseEntry =
+          `  "${siteId}": () =>\n` +
+          `    ${bareId}Releases.map((r) => ({\n` +
+          `      id: r.id,\n` +
+          `      title: r.artist ? \`\${r.artist} — \${r.title}\` : r.title,\n` +
+          `      artist: r.artist,\n` +
+          `      year: r.year,\n` +
+          `      format: r.format,\n` +
+          `      catalogNo: r.catalogNo,\n` +
+          `    })),\n`;
+        dataReg = dataReg.replace(
+          `  // ── new-site-releases-entry ──`,
+          `${releaseEntry}  // ── new-site-releases-entry ──`,
+        );
+      }
+
+      // Timeline registry entry
+      if (!dataReg.includes(`"${siteId}": () => mapTimeline(`)) {
+        const timelineEntry = `  "${siteId}": () => mapTimeline(${bareId}Timeline),\n`;
+        dataReg = dataReg.replace(
+          `  // ── new-site-timeline-entry ──`,
+          `${timelineEntry}  // ── new-site-timeline-entry ──`,
+        );
+      }
+
+      // Album image registry entry
+      if (!dataReg.includes(`"${siteId}": get${pascal}AlbumImage`)) {
+        const albumImgEntry = `  "${siteId}": get${pascal}AlbumImage,\n`;
+        dataReg = dataReg.replace(
+          `  // ── new-site-albumimages-entry ──`,
+          `${albumImgEntry}  // ── new-site-albumimages-entry ──`,
+        );
+      }
+
+      await fs.writeFile(dataRegPath, dataReg, "utf-8");
+      results.push({ path: dataRegPath, success: true });
+    } catch (error) {
+      results.push({
+        path: "lib/site-data-registry.ts",
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
+
+  // ── Register in site-registry.ts (slug mappings for tests) ────────
+  if (siteType === "music") {
+    try {
+      const slugRegPath = path.join(root, "lib/schemas/site-registry.ts");
+      let slugReg = await fs.readFile(slugRegPath, "utf-8");
+
+      if (!slugReg.includes(`"${siteId}"`)) {
+        // Add to MEMBERS_ROUTE_SLUGS
+        const membersEnd = slugReg.indexOf("};", slugReg.indexOf("MEMBERS_ROUTE_SLUGS"));
+        if (membersEnd !== -1) {
+          slugReg =
+            slugReg.slice(0, membersEnd) +
+            `  "${siteId}": "artists",\n` +
+            slugReg.slice(membersEnd);
+        }
+
+        // Add to ALBUMS_ROUTE_SLUGS
+        const albumsEnd = slugReg.indexOf("};", slugReg.indexOf("ALBUMS_ROUTE_SLUGS"));
+        if (albumsEnd !== -1) {
+          slugReg =
+            slugReg.slice(0, albumsEnd) +
+            `  "${siteId}": "releases",\n` +
+            slugReg.slice(albumsEnd);
+        }
+
+        await fs.writeFile(slugRegPath, slugReg, "utf-8");
+      }
+      results.push({ path: slugRegPath, success: true });
+    } catch (error) {
+      results.push({
+        path: "lib/schemas/site-registry.ts",
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
       });

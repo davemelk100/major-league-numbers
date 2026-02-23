@@ -1511,9 +1511,9 @@ ${imageSourcesStr}
     description: ${JSON.stringify(config.seo.description)},
     keywords: [${keywordsStr}],
     siteName: "Major League Numbers",
-    ogImage: "https://majorleaguenumbers.com/${siteId}-logo.png",
+    ogImage: "https://majorleaguenumbers.com${logoSrc}",
     ogImageAlt: ${JSON.stringify(config.seo.title)},
-    twitterImage: "https://majorleaguenumbers.com/${siteId}-logo.png",
+    twitterImage: "https://majorleaguenumbers.com${logoSrc}",
   },
 };`;
 }
