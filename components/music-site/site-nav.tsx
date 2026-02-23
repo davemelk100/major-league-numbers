@@ -1,7 +1,6 @@
  "use client";
 
  import Link from "next/link";
- import Image from "next/image";
  import { usePathname } from "next/navigation";
  import { useEffect, useState } from "react";
  import {
@@ -79,7 +78,7 @@
                )}
              >
                  {item.image ? (
-                 <Image
+                 <img
                    src={item.image}
                    alt={item.name}
                    width={isChat ? 40 : 20}
@@ -90,7 +89,6 @@
                      isPending && "animate-spin [animation-duration:2s]",
                      !isLightShell && !showActive ? "brightness-0 invert group-hover:brightness-100 group-hover:invert-0" : ""
                    )}
-                   priority={isChat}
                    loading={isChat ? "eager" : "lazy"}
                  />
                ) : (
@@ -168,7 +166,7 @@
                )}
              >
                {item.image ? (
-                 <Image
+                 <img
                    src={item.image}
                    alt={item.name}
                    width={isChat ? 24 : 20}

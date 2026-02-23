@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home } from "lucide-react";
@@ -109,7 +108,7 @@ export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "m
                         : "hover:bg-muted text-popover-foreground"
                     )}
                   >
-                    <Image
+                    <img
                       src={site.logo}
                       alt={site.name}
                       width={20}
@@ -139,7 +138,7 @@ export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "m
                         : "hover:bg-muted text-popover-foreground"
                     )}
                   >
-                    <Image
+                    <img
                       src={site.logo}
                       alt={site.name}
                       width={20}
