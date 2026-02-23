@@ -74,9 +74,16 @@ export async function generateSiteFiles(
   await write(`${appDir}/spin/page.tsx`, templates.generateSpinPage(siteId, siteName));
   await write(`${appDir}/videos/page.tsx`, templates.generateVideosPage(siteId, siteName));
 
-  // ── API route ───────────────────────────────────────────────────────
+  // ── API routes ──────────────────────────────────────────────────────
   const systemPrompt = `You are an expert on ${siteName}. Answer questions about artists, releases, history, and milestones. Be concise and grounded in facts. If unsure, say so. Never generate media content.`;
   await write(`app/api/${siteId}/ask/route.ts`, templates.generateAskRoute(siteId, siteName, systemPrompt));
+
+  if (config.discogsLabelId) {
+    await write(
+      `app/api/${siteId}/discogs/route.ts`,
+      templates.generateDiscogsRoute(siteId, config.discogsLabelId),
+    );
+  }
 
   // ── Site content components ─────────────────────────────────────────
   const constName = siteId.toUpperCase().replace(/-/g, "_");

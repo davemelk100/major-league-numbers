@@ -25,6 +25,7 @@ Site configuration matching this TypeScript interface:
   footerDisclaimer?: string;
   sources: Array<{ label: string; url: string }>;  // data sources
   imageSources: Array<{ label: string; url: string }>;  // image sources
+  discogsLabelId?: number;  // Discogs label ID (e.g. 819 for Touch and Go, 5126 for AmRep). Look this up if you know it.
   searchPlaceholder: string;  // e.g. "Search Dischord..."
   seo: { title: string; description: string; keywords: string[]; }
 }

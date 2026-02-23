@@ -24,6 +24,7 @@ export const musicSiteConfigSchema = z.object({
   footerDisclaimer: z.string().optional(),
   sources: z.array(sourceSchema).default([]),
   imageSources: z.array(sourceSchema).default([]),
+  discogsLabelId: z.number().optional(),
   searchPlaceholder: z.string(),
   seo: z.object({
     title: z.string(),
