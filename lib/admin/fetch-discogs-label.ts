@@ -101,17 +101,23 @@ export async function fetchDiscogsLabelData(
     artistId += 1;
   }
 
-  // Map releases
-  const releases: GeneratedRelease[] = allReleases.map((rel) => ({
-    id: rel.id,
-    catalogNo: rel.catno || undefined,
-    title: rel.title || "Untitled",
-    artist: rel.artist
-      ? rel.artist.replace(/\s*\(\d+\)$/, "").trim()
-      : "Various",
-    year: rel.year ?? null,
-    format: rel.format || null,
-  }));
+  // Map releases, deduplicating by Discogs release ID
+  const seenReleaseIds = new Set<number>();
+  const releases: GeneratedRelease[] = [];
+  for (const rel of allReleases) {
+    if (seenReleaseIds.has(rel.id)) continue;
+    seenReleaseIds.add(rel.id);
+    releases.push({
+      id: rel.id,
+      catalogNo: rel.catno || undefined,
+      title: rel.title || "Untitled",
+      artist: rel.artist
+        ? rel.artist.replace(/\s*\(\d+\)$/, "").trim()
+        : "Various",
+      year: rel.year ?? null,
+      format: rel.format || null,
+    });
+  }
 
   console.log(
     `Extracted ${artists.length} unique artists and ${releases.length} releases.`,
