@@ -24,11 +24,41 @@ async function writeFile(filePath: string, content: string): Promise<WriteResult
   }
 }
 
+function parseVideoLinks(links: string[]): Array<{ id: string; title: string }> {
+  const results: Array<{ id: string; title: string }> = [];
+  for (const line of links) {
+    let title = "";
+    let url = line;
+
+    // Support "Title - URL" format
+    const dashMatch = line.match(/^(.+?)\s*[-–—]\s*(https?:\/\/.+)$/);
+    if (dashMatch) {
+      title = dashMatch[1].trim();
+      url = dashMatch[2].trim();
+    }
+
+    // Extract YouTube video ID
+    let videoId: string | null = null;
+    const watchMatch = url.match(/(?:youtube\.com\/watch\?.*v=|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/);
+    if (watchMatch) {
+      videoId = watchMatch[1];
+    } else if (/^[a-zA-Z0-9_-]{11}$/.test(url.trim())) {
+      videoId = url.trim();
+    }
+
+    if (videoId) {
+      results.push({ id: videoId, title: title || `Video ${results.length + 1}` });
+    }
+  }
+  return results;
+}
+
 export async function generateSiteFiles(
   siteId: string,
   siteType: "music" | "sports",
   data: GeneratedSiteData,
   logoPaths: string[],
+  videoLinks: string[] = [],
 ): Promise<WriteResult[]> {
   const root = process.cwd();
   const results: WriteResult[] = [];
@@ -455,6 +485,53 @@ export async function generateSiteFiles(
     } catch (error) {
       results.push({
         path: "lib/schemas/site-registry.ts",
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
+
+  // ── Register videos in site-videos-content.tsx ─────────────────────
+  if (siteType === "music" && videoLinks.length > 0) {
+    try {
+      const videosPath = path.join(root, "components/music-site/site-videos-content.tsx");
+      let videosContent = await fs.readFile(videosPath, "utf-8");
+
+      if (!videosContent.includes(`"${siteId}":`)) {
+        const parsedVideos = parseVideoLinks(videoLinks);
+
+        if (parsedVideos.length > 0) {
+          const camel = siteId.replace(/-([a-z])/g, (_: string, c: string) => c.toUpperCase());
+
+          // Build the video array
+          const videoEntries = parsedVideos
+            .map((v) => `  {\n    id: ${JSON.stringify(v.id)},\n    title: ${JSON.stringify(v.title)},\n  },`)
+            .join("\n");
+          const videoArray = `const ${camel}Videos: Video[] = [\n${videoEntries}\n];\n`;
+
+          // Insert the array before SITE_VIDEOS
+          videosContent = videosContent.replace(
+            `const SITE_VIDEOS:`,
+            `${videoArray}\n` + `const SITE_VIDEOS:`,
+          );
+
+          // Add entry to SITE_VIDEOS record
+          videosContent = videosContent.replace(
+            `};
+
+function getVideosForSite`,
+            `  "${siteId}": ${camel}Videos,\n};
+
+function getVideosForSite`,
+          );
+
+          await fs.writeFile(videosPath, videosContent, "utf-8");
+        }
+      }
+      results.push({ path: videosPath, success: true });
+    } catch (error) {
+      results.push({
+        path: "components/music-site/site-videos-content.tsx",
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
       });

@@ -19,6 +19,7 @@ export function AdminWizard() {
   const [step, setStep] = useState<Step>("passcode");
   const [generatedData, setGeneratedData] = useState<GeneratedSiteData | null>(null);
   const [logoPaths, setLogoPaths] = useState<string[]>([]);
+  const [videoLinks, setVideoLinks] = useState<string[]>([]);
   const [writeResults, setWriteResults] = useState<WriteResults | null>(null);
   const [siteType, setSiteType] = useState<"music" | "sports">("music");
 
@@ -32,10 +33,11 @@ export function AdminWizard() {
     setStep("input");
   }
 
-  function handleGenerated(data: unknown, paths: string[]) {
+  function handleGenerated(data: unknown, paths: string[], videos: string[]) {
     const d = data as GeneratedSiteData;
     setGeneratedData(d);
     setLogoPaths(paths);
+    setVideoLinks(videos);
     setStep("preview");
   }
 
@@ -54,6 +56,7 @@ export function AdminWizard() {
           siteType,
           data,
           logoPaths,
+          videoLinks,
         }),
         signal: controller.signal,
       });

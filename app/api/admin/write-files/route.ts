@@ -17,7 +17,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { siteId, siteType, data, logoPaths } = body;
+    const { siteId, siteType, data, logoPaths, videoLinks } = body;
 
     if (!siteId || !siteType || !data) {
       return NextResponse.json(
@@ -39,6 +39,7 @@ export async function POST(request: Request) {
       siteType,
       validation.data,
       logoPaths || [],
+      videoLinks || [],
     );
 
     const successes = results.filter((r) => r.success);

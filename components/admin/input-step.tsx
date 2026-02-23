@@ -34,7 +34,7 @@ function useUrlValidation(url: string): UrlStatus {
 }
 
 interface InputStepProps {
-  onGenerated: (data: unknown, logoPaths: string[]) => void;
+  onGenerated: (data: unknown, logoPaths: string[], videoLinks: string[]) => void;
 }
 
 function toSlug(name: string): string {
@@ -56,6 +56,7 @@ export function InputStep({ onGenerated }: InputStepProps) {
   const [logoUrl2, setLogoUrl2] = useState("");
   const [logoFile1, setLogoFile1] = useState<File | null>(null);
   const [logoFile2, setLogoFile2] = useState<File | null>(null);
+  const [videoLinksText, setVideoLinksText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const logoUrl1Status = useUrlValidation(logoUrl1);
@@ -158,7 +159,11 @@ export function InputStep({ onGenerated }: InputStepProps) {
       }
 
       const data = await generateRes.json();
-      onGenerated(data, logoPaths);
+      const videoLinks = videoLinksText
+        .split("\n")
+        .map((l) => l.trim())
+        .filter((l) => l.length > 0);
+      onGenerated(data, logoPaths, videoLinks);
     } catch (err) {
       console.error("[Admin] Generation error:", err);
       setError(err instanceof Error ? err.message : "Something went wrong");
@@ -392,6 +397,23 @@ export function InputStep({ onGenerated }: InputStepProps) {
               </p>
             )}
           </div>
+
+          {/* Video Links */}
+          {siteType === "music" && (
+            <div className="space-y-2">
+              <Label htmlFor="videoLinks">Video Links (optional)</Label>
+              <Textarea
+                id="videoLinks"
+                placeholder={"One YouTube link per line, optionally with a title:\nI Am A Scientist - https://youtube.com/watch?v=jUjLDvrLDhg\nhttps://youtu.be/abc123"}
+                value={videoLinksText}
+                onChange={(e) => setVideoLinksText(e.target.value)}
+                rows={4}
+              />
+              <p className="text-xs text-muted-foreground">
+                Accepts youtube.com/watch?v=, youtu.be/, or just video IDs
+              </p>
+            </div>
+          )}
 
           {error && <pre className="text-sm text-destructive whitespace-pre-wrap bg-destructive/10 rounded-md p-3">{error}</pre>}
 
