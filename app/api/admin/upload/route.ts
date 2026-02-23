@@ -49,7 +49,9 @@ export async function POST(request: Request) {
       if (!url) continue;
 
       try {
-        const response = await fetch(url);
+        const response = await fetch(url, {
+          headers: { "User-Agent": "MajorLeagueNumbers/1.0" },
+        });
         if (!response.ok) continue;
 
         const contentType = response.headers.get("content-type") || "";

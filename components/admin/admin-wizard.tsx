@@ -41,6 +41,8 @@ export function AdminWizard() {
 
   async function handleConfirm(data: GeneratedSiteData) {
     try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5 * 60 * 1000);
       const res = await fetch("/api/admin/write-files", {
         method: "POST",
         headers: {
@@ -53,7 +55,9 @@ export function AdminWizard() {
           data,
           logoPaths,
         }),
+        signal: controller.signal,
       });
+      clearTimeout(timeout);
 
       if (!res.ok) {
         const err = await res.json();

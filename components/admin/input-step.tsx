@@ -1,12 +1,37 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, Upload, X } from "lucide-react";
+import { Loader2, Upload, X, CheckCircle2, AlertCircle, Paperclip } from "lucide-react";
+
+type UrlStatus = "idle" | "checking" | "valid" | "invalid";
+
+function useUrlValidation(url: string): UrlStatus {
+  const [status, setStatus] = useState<UrlStatus>("idle");
+  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    clearTimeout(timerRef.current);
+    if (!url || !url.match(/^https?:\/\/.+\..+/)) {
+      setStatus(url ? "invalid" : "idle");
+      return;
+    }
+    setStatus("checking");
+    timerRef.current = setTimeout(() => {
+      const img = new Image();
+      img.onload = () => setStatus("valid");
+      img.onerror = () => setStatus("invalid");
+      img.src = url;
+    }, 500);
+    return () => clearTimeout(timerRef.current);
+  }, [url]);
+
+  return status;
+}
 
 interface InputStepProps {
   onGenerated: (data: unknown, logoPaths: string[]) => void;
@@ -21,6 +46,7 @@ function toSlug(name: string): string {
 
 export function InputStep({ onGenerated }: InputStepProps) {
   const [siteType, setSiteType] = useState<"music" | "sports">("music");
+  const [musicSubtype, setMusicSubtype] = useState<"label" | "artist">("label");
   const [siteName, setSiteName] = useState("");
   const [siteId, setSiteId] = useState("");
   const [siteIdEdited, setSiteIdEdited] = useState(false);
@@ -32,6 +58,8 @@ export function InputStep({ onGenerated }: InputStepProps) {
   const [logoFile2, setLogoFile2] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const logoUrl1Status = useUrlValidation(logoUrl1);
+  const logoUrl2Status = useUrlValidation(logoUrl2);
 
   const handleNameChange = useCallback(
     (value: string) => {
@@ -110,6 +138,7 @@ export function InputStep({ onGenerated }: InputStepProps) {
         },
         body: JSON.stringify({
           siteType,
+          musicSubtype: siteType === "music" ? musicSubtype : undefined,
           siteId,
           siteName,
           content,
@@ -120,12 +149,18 @@ export function InputStep({ onGenerated }: InputStepProps) {
 
       if (!generateRes.ok) {
         const err = await generateRes.json();
+        const issues = err.issues as Array<{ path: (string | number)[]; message: string }> | undefined;
+        if (issues?.length) {
+          const detail = issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("\n");
+          throw new Error(`${err.error}\n${detail}`);
+        }
         throw new Error(err.error || "Generation failed");
       }
 
       const data = await generateRes.json();
       onGenerated(data, logoPaths);
     } catch (err) {
+      console.error("[Admin] Generation error:", err);
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
       setIsLoading(false);
@@ -165,6 +200,35 @@ export function InputStep({ onGenerated }: InputStepProps) {
               </label>
             </div>
           </div>
+
+          {/* Music Subtype (Label vs Artist) */}
+          {siteType === "music" && (
+            <div className="space-y-2">
+              <Label>Music Site Type</Label>
+              <div className="flex gap-4">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="musicSubtype"
+                    value="label"
+                    checked={musicSubtype === "label"}
+                    onChange={() => setMusicSubtype("label")}
+                  />
+                  Label
+                </label>
+                <label className="flex items-center gap-2">
+                  <input
+                    type="radio"
+                    name="musicSubtype"
+                    value="artist"
+                    checked={musicSubtype === "artist"}
+                    onChange={() => setMusicSubtype("artist")}
+                  />
+                  Artist / Band
+                </label>
+              </div>
+            </div>
+          )}
 
           {/* Site Name */}
           <div className="space-y-2">
@@ -249,17 +313,24 @@ export function InputStep({ onGenerated }: InputStepProps) {
           {/* Logo Inputs */}
           <div className="space-y-4">
             <Label>Logo (primary)</Label>
-            <div className="flex gap-2">
-              <Input
-                placeholder="Logo URL"
-                value={logoUrl1}
-                onChange={(e) => setLogoUrl1(e.target.value)}
-                className="flex-1"
-              />
-              <Button
+            <div className="flex gap-2 items-center">
+              <div className="relative flex-1">
+                <Input
+                  placeholder="Logo URL"
+                  value={logoUrl1}
+                  onChange={(e) => setLogoUrl1(e.target.value)}
+                  className="pr-8"
+                />
+                <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                  {logoUrl1Status === "checking" && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
+                  {logoUrl1Status === "valid" && <CheckCircle2 className="h-4 w-4 text-green-500" />}
+                  {logoUrl1Status === "invalid" && <AlertCircle className="h-4 w-4 text-red-500" />}
+                </div>
+              </div>
+              <button
                 type="button"
-                variant="outline"
-                size="sm"
+                title="Upload file"
+                className="text-muted-foreground hover:text-foreground transition-colors"
                 onClick={() => {
                   const input = document.createElement("input");
                   input.type = "file";
@@ -271,25 +342,35 @@ export function InputStep({ onGenerated }: InputStepProps) {
                   input.click();
                 }}
               >
-                Upload
-              </Button>
+                <Paperclip className="h-4 w-4" />
+              </button>
             </div>
             {logoFile1 && (
-              <p className="text-xs text-muted-foreground">{logoFile1.name}</p>
+              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                <CheckCircle2 className="h-3 w-3 text-green-500" />
+                {logoFile1.name}
+              </p>
             )}
 
             <Label>Logo (alt)</Label>
-            <div className="flex gap-2">
-              <Input
-                placeholder="Alt logo URL (optional)"
-                value={logoUrl2}
-                onChange={(e) => setLogoUrl2(e.target.value)}
-                className="flex-1"
-              />
-              <Button
+            <div className="flex gap-2 items-center">
+              <div className="relative flex-1">
+                <Input
+                  placeholder="Alt logo URL (optional)"
+                  value={logoUrl2}
+                  onChange={(e) => setLogoUrl2(e.target.value)}
+                  className="pr-8"
+                />
+                <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                  {logoUrl2Status === "checking" && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />}
+                  {logoUrl2Status === "valid" && <CheckCircle2 className="h-4 w-4 text-green-500" />}
+                  {logoUrl2Status === "invalid" && <AlertCircle className="h-4 w-4 text-red-500" />}
+                </div>
+              </div>
+              <button
                 type="button"
-                variant="outline"
-                size="sm"
+                title="Upload file"
+                className="text-muted-foreground hover:text-foreground transition-colors"
                 onClick={() => {
                   const input = document.createElement("input");
                   input.type = "file";
@@ -301,15 +382,18 @@ export function InputStep({ onGenerated }: InputStepProps) {
                   input.click();
                 }}
               >
-                Upload
-              </Button>
+                <Paperclip className="h-4 w-4" />
+              </button>
             </div>
             {logoFile2 && (
-              <p className="text-xs text-muted-foreground">{logoFile2.name}</p>
+              <p className="text-xs text-muted-foreground flex items-center gap-1">
+                <CheckCircle2 className="h-3 w-3 text-green-500" />
+                {logoFile2.name}
+              </p>
             )}
           </div>
 
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <pre className="text-sm text-destructive whitespace-pre-wrap bg-destructive/10 rounded-md p-3">{error}</pre>}
 
           <Button type="submit" className="w-full" disabled={isLoading}>
             {isLoading ? (

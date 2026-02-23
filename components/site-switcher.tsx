@@ -47,6 +47,7 @@ const musicSites = [
   { name: "Elephant 6", href: "/e6", logo: "/e6-logo.png" },
   { name: "Skin Graft", href: "/sg", logo: "/sg-logo.png" },
   { name: "Touch & Go", href: "/touch-go-records", logo: "/images/touch-go-records/logo.jpg" },
+  { name: "Slap-A-Ham Records", href: "/slap-a-ham-records", logo: "/images/slap-a-ham-records/logo.jpg" },
 ];
 
 export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "music" }) {

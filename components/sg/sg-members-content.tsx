@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { getSgMainRoster, getSgGuestStars, getSgArtistImageUrl } from "@/lib/sg-artists-data";
 import { SgRemoteImage } from "@/components/sg/sg-remote-image";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 function ArtistGrid({ artists, site }: { artists: { id: string; name: string; imageUrl: string | null }[]; site: any }) {
   return (
@@ -25,7 +26,7 @@ function ArtistGrid({ artists, site }: { artists: { id: string; name: string; im
                 />
               ) : (
                 <div className="w-full aspect-square rounded-lg bg-muted flex items-center justify-center mb-2 p-2">
-                  <span className="text-xs text-muted-foreground text-center font-medium leading-tight">{member.name}</span>
+                  <SitePlaceholderIcon className="h-12 w-12" />
                 </div>
               )}
               <h3 className="font-semibold text-sm">{member.name}</h3>

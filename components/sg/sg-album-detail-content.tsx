@@ -9,6 +9,7 @@ import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { AlbumDetailLayout } from "@/components/music-site/album-detail-layout";
 import { AlbumDetailLeft } from "@/components/music-site/album-detail-left";
 import { AlbumDetailTracklist } from "@/components/music-site/album-detail-tracklist";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 type Track = { position: string; title: string; duration: string };
 
@@ -66,7 +67,7 @@ export function SgAlbumDetailContent({ albumId }: { albumId: string }) {
         backLabel={site.navLabels.discography}
         leftContent={
           <div className="w-full aspect-square rounded-lg bg-muted flex items-center justify-center mb-4 p-4">
-            <span className="text-sm text-muted-foreground font-medium">Release not found</span>
+            <SitePlaceholderIcon className="h-16 w-16" />
           </div>
         }
         rightTitle="Tracklist"
@@ -93,7 +94,7 @@ export function SgAlbumDetailContent({ albumId }: { albumId: string }) {
           />
         ) : (
           <div className="w-full aspect-square rounded-lg bg-muted flex items-center justify-center mb-4 p-4">
-            <span className="text-sm text-muted-foreground font-medium text-center leading-tight">{displayTitle}</span>
+            <SitePlaceholderIcon className="h-16 w-16" />
           </div>
         )
       }

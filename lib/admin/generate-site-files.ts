@@ -115,24 +115,28 @@ export async function generateSiteFiles(
       const musicSitePath = path.join(root, "lib/music-site.ts");
       let musicSiteContent = await fs.readFile(musicSitePath, "utf-8");
 
-      // Add config block before MUSIC_SITES array
-      const configBlock = templates.generateSiteConfigBlock(siteId, config, logoPaths);
-      const sitesArrayMatch = musicSiteContent.match(/export const MUSIC_SITES = \[/);
-      if (sitesArrayMatch && sitesArrayMatch.index !== undefined) {
-        musicSiteContent =
-          musicSiteContent.slice(0, sitesArrayMatch.index) +
-          configBlock +
-          "\n\n" +
-          musicSiteContent.slice(sitesArrayMatch.index);
+      // Add config block before MUSIC_SITES array (skip if already present)
+      if (!musicSiteContent.includes(`${constName}_SITE: MusicSiteConfig`)) {
+        const configBlock = templates.generateSiteConfigBlock(siteId, config, logoPaths);
+        const sitesArrayMatch = musicSiteContent.match(/export const MUSIC_SITES = \[/);
+        if (sitesArrayMatch && sitesArrayMatch.index !== undefined) {
+          musicSiteContent =
+            musicSiteContent.slice(0, sitesArrayMatch.index) +
+            configBlock +
+            "\n\n" +
+            musicSiteContent.slice(sitesArrayMatch.index);
+        }
       }
 
-      // Add to MUSIC_SITES array
-      const arrayEndMatch = musicSiteContent.match(/] as const;/);
-      if (arrayEndMatch && arrayEndMatch.index !== undefined) {
-        musicSiteContent =
-          musicSiteContent.slice(0, arrayEndMatch.index) +
-          `  ${constName}_SITE,\n` +
-          musicSiteContent.slice(arrayEndMatch.index);
+      // Add to MUSIC_SITES array (skip if already present)
+      if (!musicSiteContent.match(new RegExp(`\\b${constName}_SITE,`))) {
+        const arrayEndMatch = musicSiteContent.match(/] as const;/);
+        if (arrayEndMatch && arrayEndMatch.index !== undefined) {
+          musicSiteContent =
+            musicSiteContent.slice(0, arrayEndMatch.index) +
+            `  ${constName}_SITE,\n` +
+            musicSiteContent.slice(arrayEndMatch.index);
+        }
       }
 
       await fs.writeFile(musicSitePath, musicSiteContent, "utf-8");
@@ -146,13 +150,46 @@ export async function generateSiteFiles(
     }
   }
 
-  // ── Append shell CSS ────────────────────────────────────────────────
+  // ── Update site-switcher.tsx ───────────────────────────────────────
+  if (siteType === "music") {
+    try {
+      const switcherPath = path.join(root, "components/site-switcher.tsx");
+      let switcherContent = await fs.readFile(switcherPath, "utf-8");
+
+      if (!switcherContent.includes(`"/${siteId}"`)) {
+        const logoPath = logoPaths[0] || `/images/${siteId}/logo.png`;
+        const newEntry = `  { name: ${JSON.stringify(siteName)}, href: "/${siteId}", logo: ${JSON.stringify(logoPath)} },`;
+
+        // Insert before the closing ]; of musicSites array
+        const musicSitesEnd = switcherContent.indexOf("];", switcherContent.indexOf("const musicSites"));
+        if (musicSitesEnd !== -1) {
+          switcherContent =
+            switcherContent.slice(0, musicSitesEnd) +
+            newEntry + "\n" +
+            switcherContent.slice(musicSitesEnd);
+        }
+
+        await fs.writeFile(switcherPath, switcherContent, "utf-8");
+      }
+      results.push({ path: switcherPath, success: true });
+    } catch (error) {
+      results.push({
+        path: "components/site-switcher.tsx",
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      });
+    }
+  }
+
+  // ── Append shell CSS (skip if already present) ─────────────────────
   try {
     const cssPath = path.join(root, "app/globals.css");
     let cssContent = await fs.readFile(cssPath, "utf-8");
-    const shellCss = templates.generateShellCss(siteId);
-    cssContent += "\n" + shellCss + "\n";
-    await fs.writeFile(cssPath, cssContent, "utf-8");
+    if (!cssContent.includes(`.${siteId}-shell`)) {
+      const shellCss = templates.generateShellCss(siteId);
+      cssContent += "\n" + shellCss + "\n";
+      await fs.writeFile(cssPath, cssContent, "utf-8");
+    }
     results.push({ path: cssPath, success: true });
   } catch (error) {
     results.push({

@@ -19,7 +19,7 @@ Site configuration matching this TypeScript interface:
   headerTextClass: string; // "text-black" or "text-white"
   shellClass: string;   // CSS class, e.g. "dischord-shell"
   description: string;  // 2-3 sentence description of the label/band
-  navLabels: { discography: string; members: string; sideProjects: string; }
+  navLabels: { discography: string; members: string; sideProjects: string; }  // sideProjects: use "Related Labels" for labels, "Side Projects" for artists/bands
   membersSlug: "artists" | "members";
   albumsSlug: "releases" | "albums";
   footerDisclaimer?: string;

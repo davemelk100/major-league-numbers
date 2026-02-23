@@ -5,17 +5,16 @@
  import { Search, Disc3, Users } from "lucide-react";
  import { Input } from "@/components/ui/input";
  import { getMusicSiteFromPathname } from "@/lib/music-site";
- import { amrepArtists } from "@/lib/amrep-artists-data";
- import { amrepReleases } from "@/lib/amrep-releases-data";
+ import { getSiteArtists, getSiteReleases } from "@/lib/site-data-registry";
 
  interface Album {
-   id: number;
+   id: number | string;
    title: string;
   year?: number | null;
  }
 
  interface Member {
-   id: number;
+   id: number | string;
    name: string;
    active?: boolean;
  }
@@ -44,6 +43,7 @@
    const pathname = usePathname();
    const site = getMusicSiteFromPathname(pathname);
    const isAmrep = site.id === "amrep";
+   const isGbv = site.id === "gbv";
    const [query, setQuery] = useState("");
    const effectivePlaceholder = placeholder || site.searchPlaceholder;
    const [isOpen, setIsOpen] = useState(false);
@@ -65,80 +65,62 @@
      }
 
      const fetchData = async () => {
-       if (isAmrep) {
-         try {
-           const res = await fetch("/api/amrep/discogs?type=releases&per_page=100");
-           if (res.ok) {
-             const data = await res.json();
-             const releases = Array.isArray(data?.releases) ? data.releases : [];
-             const mappedAlbums = releases.map((release: any) => ({
-               id: release.id,
-              title: release.artist ? `${release.artist} — ${release.title}` : release.title,
-               year: release.year,
-             }));
-             const mappedMembers = amrepArtists.map((artist) => ({
-               id: artist.id,
-               name: artist.name,
-               active: false,
-             }));
-             setAlbums(mappedAlbums);
-             setMembers(mappedMembers);
-             cachedData.set(site.id, { albums: mappedAlbums, members: mappedMembers });
-             return;
-           }
-         } catch (err) {
-           console.error(err);
-         }
+       // Use local registry data for all sites
+       const localReleases = getSiteReleases(site.id);
+       const localArtists = getSiteArtists(site.id);
 
-         const mappedAlbums = amrepReleases.map((release) => ({
+       if (localReleases.length > 0 || localArtists.length > 0) {
+         const mappedAlbums = localReleases.map((release) => ({
            id: release.id,
-          title: release.artist ? `${release.artist} — ${release.title}` : release.title,
-           year: release.year,
+           title: release.title,
+           year: release.year ?? undefined,
          }));
-         const mappedMembers = amrepArtists.map((artist) => ({
+         const mappedMembers = localArtists.map((artist) => ({
            id: artist.id,
            name: artist.name,
-           active: false,
+           active: artist.active ?? true,
          }));
          setAlbums(mappedAlbums);
          setMembers(mappedMembers);
          cachedData.set(site.id, { albums: mappedAlbums, members: mappedMembers });
+
+         // For GBV, also try live API to get richer data
+         if (isGbv) {
+           try {
+             const [albumsRes, membersRes] = await Promise.all([
+               fetch("/api/gbv/discogs?type=albums"),
+               fetch("/api/gbv/discogs?type=artist"),
+             ]);
+             const liveAlbums: Album[] = albumsRes.ok
+               ? ((await albumsRes.json())?.albums || []).map((album: any) => ({
+                   id: album.id,
+                   title: album.title,
+                   year: album.year,
+                 }))
+               : [];
+             const liveMembers: Member[] = membersRes.ok
+               ? ((await membersRes.json())?.members || []).map((member: any) => ({
+                   id: member.id,
+                   name: member.name,
+                   active: member.active,
+                 }))
+               : [];
+             if (liveAlbums.length > 0) setAlbums(liveAlbums);
+             if (liveMembers.length > 0) setMembers(liveMembers);
+             cachedData.set(site.id, {
+               albums: liveAlbums.length > 0 ? liveAlbums : mappedAlbums,
+               members: liveMembers.length > 0 ? liveMembers : mappedMembers,
+             });
+           } catch { /* live data unavailable, local data still shown */ }
+         }
          return;
        }
 
-       setIsLoading(true);
-       try {
-         const [albumsRes, membersRes] = await Promise.all([
-           fetch("/api/gbv/discogs?type=albums"),
-           fetch("/api/gbv/discogs?type=artist"),
-         ]);
-
-         const mappedAlbums: Album[] = albumsRes.ok
-           ? ((await albumsRes.json())?.albums || []).map((album: any) => ({
-               id: album.id,
-               title: album.title,
-               year: album.year,
-             }))
-           : [];
-
-         const mappedMembers: Member[] = membersRes.ok
-           ? ((await membersRes.json())?.members || []).map((member: any) => ({
-               id: member.id,
-               name: member.name,
-               active: member.active,
-             }))
-           : [];
-
-         setAlbums(mappedAlbums);
-         setMembers(mappedMembers);
-         cachedData.set(site.id, { albums: mappedAlbums, members: mappedMembers });
-       } finally {
-         setIsLoading(false);
-       }
+       setIsLoading(false);
      };
 
      fetchData();
-   }, [isAmrep, site.id]);
+   }, [isGbv, site.id]);
 
    useEffect(() => {
      const handleClickOutside = (e: MouseEvent) => {

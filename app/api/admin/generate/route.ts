@@ -4,6 +4,7 @@ import { gateway } from "@ai-sdk/gateway";
 import { openai } from "@ai-sdk/openai";
 import { generatedSiteDataSchema } from "@/lib/admin/schemas";
 import { getMusicSystemPrompt, getSportsSystemPrompt } from "@/lib/admin/prompts";
+import { fetchDiscogsLabelData } from "@/lib/admin/fetch-discogs-label";
 
 const ADMIN_PASSCODE = "6231839";
 
@@ -20,7 +21,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { siteType, siteId, siteName, content, extractedText, logoPaths } = body;
+    const { siteType, musicSubtype, siteId, siteName, content, extractedText, logoPaths } = body;
 
     if (!siteType || !siteId || !siteName) {
       return NextResponse.json(
@@ -34,6 +35,7 @@ export async function POST(request: Request) {
 
     const userContent = [
       `Site Type: ${siteType}`,
+      musicSubtype ? `Music Subtype: ${musicSubtype} (use "${musicSubtype === "label" ? "Related Labels" : "Side Projects"}" for navLabels.sideProjects)` : "",
       `Site ID: ${siteId}`,
       `Site Name: ${siteName}`,
       "",
@@ -76,6 +78,21 @@ export async function POST(request: Request) {
       );
     }
 
+    // Fix common AI mistakes before validation
+    const VALID_CATEGORIES = new Set(["history", "artists", "releases", "facts"]);
+    if (parsed && typeof parsed === "object" && "trivia" in parsed && Array.isArray((parsed as any).trivia)) {
+      for (const q of (parsed as any).trivia) {
+        if (q && typeof q.category === "string" && !VALID_CATEGORIES.has(q.category)) {
+          q.category = "facts";
+        }
+        // Ensure exactly 4 options
+        if (q && Array.isArray(q.options)) {
+          while (q.options.length < 4) q.options.push("None of the above");
+          if (q.options.length > 4) q.options = q.options.slice(0, 4);
+        }
+      }
+    }
+
     const validation = generatedSiteDataSchema.safeParse(parsed);
     if (!validation.success) {
       return NextResponse.json(
@@ -88,7 +105,49 @@ export async function POST(request: Request) {
       );
     }
 
-    return NextResponse.json(validation.data);
+    let finalData = validation.data;
+
+    // Override navLabels.sideProjects based on musicSubtype
+    if (musicSubtype) {
+      finalData.config.navLabels.sideProjects =
+        musicSubtype === "label" ? "Related Labels" : "Side Projects";
+    }
+
+    // If discogsLabelId is present and we have a token, fetch exhaustive discography
+    const discogsToken = process.env.DISCOGS_USER_TOKEN || process.env.DISCOGS_TOKEN;
+    if (finalData.config.discogsLabelId && discogsToken) {
+      try {
+        console.log(`[ADMIN] Fetching Discogs label ${finalData.config.discogsLabelId}...`);
+        const discogsData = await fetchDiscogsLabelData(
+          finalData.config.discogsLabelId,
+          discogsToken,
+        );
+        // Replace AI-generated artists/releases with exhaustive Discogs data
+        // Keep AI-generated trivia, timeline, knowledge, recordFacts
+        finalData = {
+          ...finalData,
+          artists: discogsData.artists,
+          releases: discogsData.releases,
+        };
+        console.log(
+          `[ADMIN] Merged Discogs data: ${discogsData.artists.length} artists, ${discogsData.releases.length} releases`,
+        );
+      } catch (discogsError) {
+        console.warn(
+          "[ADMIN] Discogs fetch failed, using AI-generated data:",
+          discogsError instanceof Error ? discogsError.message : discogsError,
+        );
+      }
+    }
+
+    // Log token usage
+    if (result.usage) {
+      console.log(
+        `[ADMIN] Token usage — prompt: ${result.usage.promptTokens}, completion: ${result.usage.completionTokens}, total: ${result.usage.totalTokens}`,
+      );
+    }
+
+    return NextResponse.json(finalData);
   } catch (error) {
     console.error("[ADMIN] Generate error:", error);
     return NextResponse.json(

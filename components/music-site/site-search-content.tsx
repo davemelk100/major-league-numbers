@@ -6,7 +6,6 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 import { getProxiedImageUrl, getReleaseType } from "@/lib/gbv-utils";
-import { getLocalAlbumImage } from "@/lib/gbv-release-images";
 import {
   useSiteSearchData,
   type SiteSearchAlbum,
@@ -15,7 +14,7 @@ import {
 import { MemberAvatar } from "@/components/music-site/member-avatar";
 import { AlbumGrid } from "@/components/music-site/album-grid";
 import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
-import { GBV_SITE } from "@/lib/music-site";
+import { getSiteAlbumImageFn } from "@/lib/site-data-registry";
 
 export function SiteSearchContent() {
   const searchParams = useSearchParams();
@@ -38,8 +37,12 @@ export function SiteSearchContent() {
 
   const getAlbumImage = (album: SiteSearchAlbum): string | null => {
     const raw = album.coverUrl || album.thumb || null;
-    if (isAmrep) return raw ? getProxiedImageUrl(raw) : null;
-    return getLocalAlbumImage(album.id) || getProxiedImageUrl(raw);
+    const fn = getSiteAlbumImageFn(site.id);
+    if (fn) {
+      const local = fn(album.id);
+      if (local) return local;
+    }
+    return raw ? getProxiedImageUrl(raw) : null;
   };
 
   const RemoteImage = SiteRemoteImage;

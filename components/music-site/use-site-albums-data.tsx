@@ -3,11 +3,10 @@
  import { useEffect, useState } from "react";
  import { usePathname } from "next/navigation";
  import { getMusicSiteFromPathname } from "@/lib/music-site";
- import { amrepReleases } from "@/lib/amrep-releases-data";
- import { gbvAlbums } from "@/lib/gbv-discography-data";
+ import { getSiteReleases } from "@/lib/site-data-registry";
 
  export interface SiteAlbum {
-   id: number;
+   id: number | string;
    title: string;
   year?: number | null;
    thumb: string;
@@ -19,6 +18,7 @@
  export function useSiteAlbumsData() {
    const pathname = usePathname();
    const site = getMusicSiteFromPathname(pathname);
+   const isGbv = site.id === "gbv";
    const isAmrep = site.id === "amrep";
    const [albums, setAlbums] = useState<SiteAlbum[]>([]);
    const [isLoading, setIsLoading] = useState(true);
@@ -38,15 +38,17 @@
      let isActive = true;
 
      const fetchData = async () => {
-       if (isAmrep) {
-         // Use local discography data
+       // Use local registry data for all sites that have it
+       const localReleases = getSiteReleases(site.id);
+       if (localReleases.length > 0) {
          if (isActive) {
-           const mapped = amrepReleases.map((release) => ({
+           const mapped = localReleases.map((release) => ({
              id: release.id,
-             title: release.artist ? `${release.artist} — ${release.title}` : release.title,
+             title: release.title,
              year: release.year ?? 0,
              thumb: "",
-             format: release.format,
+             format: release.format ?? undefined,
+             releaseType: release.releaseType,
            }));
            setAlbums(dedupeReleases(mapped));
            setIsLoading(false);
@@ -54,70 +56,15 @@
          return;
        }
 
-       // Use static data immediately so the page is never empty
-       const staticAlbums: SiteAlbum[] = gbvAlbums.map((a) => ({
-         id: a.id,
-         title: a.title,
-         year: a.year,
-         thumb: "",
-         releaseType: a.releaseType,
-       }));
-
-       const cacheKey = "gbv-albums-cache";
-       let hasCachedOrStatic = false;
-       try {
-         const cached = localStorage.getItem(cacheKey);
-         if (cached) {
-           const parsed = JSON.parse(cached) as {
-             timestamp: number;
-             albums: SiteAlbum[];
-           };
-           if (parsed?.albums?.length && isActive) {
-             setAlbums(parsed.albums);
-             setIsLoading(false);
-             hasCachedOrStatic = true;
-           }
-         }
-       } catch {
-         // ignore cache errors
-       }
-
-       if (!hasCachedOrStatic && isActive) {
-         setAlbums(staticAlbums);
-         setIsLoading(false);
-         hasCachedOrStatic = true;
-       }
-
-       try {
-         const res = await fetch("/api/gbv/discogs?type=albums");
-         if (!res.ok) throw new Error("Failed to fetch");
-         const data = await res.json();
-         const nextAlbums = data.albums || [];
-         if (nextAlbums.length > 0 && isActive) {
-           setAlbums(nextAlbums);
-           try {
-             localStorage.setItem(
-               cacheKey,
-               JSON.stringify({ timestamp: Date.now(), albums: nextAlbums }),
-             );
-           } catch {
-             // ignore cache errors
-           }
-         }
-       } catch (err) {
-         console.error(err);
-       } finally {
-         if (isActive) {
-           setIsLoading(false);
-         }
-       }
+       // Fallback for sites without local data: try Discogs API
+       if (isActive) setIsLoading(false);
      };
 
      fetchData();
      return () => {
        isActive = false;
      };
-   }, [isAmrep]);
+   }, [site.id]);
 
    return { site, isAmrep, albums, isLoading };
  }

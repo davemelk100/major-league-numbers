@@ -19,6 +19,9 @@ export const MEMBERS_ROUTE_SLUGS: Record<string, string> = {
   amrep: "artists",
   rev: "artists",
   e6: "artists",
+  "touch-go-records": "artists",
+  "slap-a-ham-records": "artists",
+  "slap-a-ham-numbers": "artists",
 };
 
 /**
@@ -31,6 +34,9 @@ export const ALBUMS_ROUTE_SLUGS: Record<string, string> = {
   amrep: "releases",
   rev: "releases",
   e6: "releases",
+  "touch-go-records": "releases",
+  "slap-a-ham-records": "releases",
+  "slap-a-ham-numbers": "releases",
 };
 
 /** Component files every site must provide (relative to components/{siteId}/) */

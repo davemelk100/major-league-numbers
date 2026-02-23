@@ -10,6 +10,7 @@ import { MemberDetailLayout } from "@/components/music-site/member-detail-layout
 import { MemberDetailLeft } from "@/components/music-site/member-detail-left";
 import { MemberDetailRight } from "@/components/music-site/member-detail-right";
 import Link from "next/link";
+import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
 export function SgMemberDetailContent({ memberId }: { memberId: string }) {
   const pathname = usePathname();
@@ -39,7 +40,7 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
         backLabel={site.navLabels.members}
         leftContent={
           <div className="w-full aspect-square rounded-lg bg-muted flex items-center justify-center p-4">
-            <span className="text-sm text-muted-foreground font-medium">Artist not found</span>
+            <SitePlaceholderIcon className="h-16 w-16" />
           </div>
         }
         rightTitle="Releases"
@@ -69,7 +70,7 @@ export function SgMemberDetailContent({ memberId }: { memberId: string }) {
           />
         ) : (
           <div className="w-full aspect-square rounded-lg bg-muted flex items-center justify-center p-4">
-            <span className="text-sm text-muted-foreground font-medium text-center leading-tight">{artist.name}</span>
+            <SitePlaceholderIcon className="h-16 w-16" />
           </div>
         )
       }

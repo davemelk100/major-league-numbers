@@ -3,11 +3,10 @@
  import { useEffect, useState } from "react";
  import { usePathname } from "next/navigation";
  import { getMusicSiteFromPathname } from "@/lib/music-site";
- import { amrepArtists } from "@/lib/amrep-artists-data";
- import { amrepReleases } from "@/lib/amrep-releases-data";
+ import { getSiteArtists, getSiteReleases } from "@/lib/site-data-registry";
 
  export interface SiteSearchAlbum {
-   id: number;
+   id: number | string;
    title: string;
   year?: number | null;
    thumb: string;
@@ -17,7 +16,7 @@
  }
 
  export interface SiteSearchMember {
-   id: number;
+   id: number | string;
    name: string;
    active: boolean;
    imageUrl?: string | null;
@@ -43,55 +42,28 @@
          return;
        }
 
-       if (isAmrep) {
-         try {
-           const res = await fetch("/api/amrep/discogs?type=releases&per_page=100");
-           if (res.ok) {
-             const data = await res.json();
-             const releases = Array.isArray(data?.releases) ? data.releases : [];
-             if (isActive) {
-               setAlbums(
-                 releases.map((release: any) => ({
-                   id: release.id,
-                  title: release.artist ? `${release.artist} — ${release.title}` : release.title,
-                   year: release.year,
-                   thumb: release.thumb || "",
-                   format: release.format,
-                 }))
-               );
-             }
-           } else if (isActive) {
-             setAlbums(
-               amrepReleases.map((release) => ({
-                 id: release.id,
-                title: release.artist ? `${release.artist} — ${release.title}` : release.title,
-                 year: release.year,
-                 thumb: "",
-                 format: release.format,
-               }))
-             );
-           }
-         } catch (err) {
-           if (isActive) {
-             setAlbums(
-               amrepReleases.map((release) => ({
-                 id: release.id,
-                title: release.artist ? `${release.artist} — ${release.title}` : release.title,
-                 year: release.year,
-                 thumb: "",
-                 format: release.format,
-               }))
-             );
-           }
-         }
+       // Use local registry data
+       const localReleases = getSiteReleases(site.id);
+       const localArtists = getSiteArtists(site.id);
 
+       if (localReleases.length > 0 || localArtists.length > 0) {
          if (isActive) {
+           setAlbums(
+             localReleases.map((release) => ({
+               id: release.id,
+               title: release.title,
+               year: release.year,
+               thumb: "",
+               format: release.format ?? undefined,
+               releaseType: release.releaseType,
+             }))
+           );
            setMembers(
-             amrepArtists.map((artist) => ({
+             localArtists.map((artist) => ({
                id: artist.id,
                name: artist.name,
-               active: false,
-               imageUrl: null,
+               active: artist.active ?? true,
+               imageUrl: artist.imageUrl,
              }))
            );
            setIsLoading(false);
@@ -99,44 +71,15 @@
          return;
        }
 
-       setIsLoading(true);
-       try {
-         const [albumsRes, membersRes] = await Promise.all([
-           fetch("/api/gbv/discogs?type=albums"),
-           fetch("/api/gbv/discogs?type=artist&include_member_images=true&member_image_limit=60"),
-         ]);
-
-         if (albumsRes.ok && isActive) {
-           const data = await albumsRes.json();
-           setAlbums(data.albums || []);
-         }
-
-         if (membersRes.ok && isActive) {
-           const data = await membersRes.json();
-           let nextMembers = data.members || [];
-           if (nextMembers.length <= 1) {
-             const fallbackRes = await fetch("/api/gbv/discogs?type=artist");
-             if (fallbackRes.ok) {
-               const fallbackData = await fallbackRes.json();
-               if (Array.isArray(fallbackData?.members)) {
-                 nextMembers = fallbackData.members;
-               }
-             }
-           }
-           setMembers(nextMembers);
-         }
-       } finally {
-         if (isActive) {
-           setIsLoading(false);
-         }
-       }
+       // Fallback for sites without local data
+       if (isActive) setIsLoading(false);
      };
 
      fetchData();
      return () => {
        isActive = false;
      };
-   }, [isAmrep, query]);
+   }, [site.id, query]);
 
    return {
      site,

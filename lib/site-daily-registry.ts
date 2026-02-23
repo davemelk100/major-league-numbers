@@ -31,6 +31,16 @@ import {
   getDailyTouchGoRecordsTriviaQuestions,
   getTouchGoRecordsTodayStorageKey,
 } from "@/lib/touch-go-records-trivia-data";
+import {
+  getDailySlapAHamRecordsTriviaQuestions,
+  getSlapAHamRecordsTodayStorageKey,
+} from "@/lib/slap-a-ham-records-trivia-data";
+
+import {
+  getDailySlapAHamNumbersTriviaQuestions,
+  getSlapAHamNumbersTodayStorageKey,
+} from "@/lib/slap-a-ham-numbers-trivia-data";
+
 // ── Records imports ─────────────────────────────────────────────────
 import { getDailyGbvRecord } from "@/lib/gbv-records-data";
 import { getDailyAmrepRecord } from "@/lib/amrep-records-data";
@@ -38,11 +48,19 @@ import { getDailyRevRecord } from "@/lib/rev-records-data";
 import { getDailyE6Record } from "@/lib/e6-records-data";
 import { getDailySgRecord } from "@/lib/sg-records-data";
 import { getDailyTouchGoRecordsRecord } from "@/lib/touch-go-records-records-data";
+import { getDailySlapAHamRecordsRecord } from "@/lib/slap-a-ham-records-records-data";
+
+import { getDailySlapAHamNumbersRecord } from "@/lib/slap-a-ham-numbers-records-data";
+
 // ── Album image imports ─────────────────────────────────────────────
 import { getLocalAlbumImage as getGbvAlbumImage } from "@/lib/gbv-release-images";
 import { getAmrepAlbumImage } from "@/lib/amrep-release-images";
 import { getLocalAlbumImage as getE6AlbumImage } from "@/lib/e6-release-images";
 import { getLocalAlbumImage as getTouchGoAlbumImage } from "@/lib/touch-go-records-release-images";
+import { getLocalAlbumImage as getSlapAHamRecordsAlbumImage } from "@/lib/slap-a-ham-records-release-images";
+
+import { getLocalAlbumImage as getSlapAHamNumbersAlbumImage } from "@/lib/slap-a-ham-numbers-release-images";
+
 // ── Common types ────────────────────────────────────────────────────
 export interface TriviaQuestion {
   id: number;
@@ -95,6 +113,14 @@ const TRIVIA_REGISTRY: Record<string, TriviaEntry> = {
     getDaily: getDailyTouchGoRecordsTriviaQuestions,
     getStorageKey: getTouchGoRecordsTodayStorageKey,
   },
+  "slap-a-ham-records": {
+    getDaily: getDailySlapAHamRecordsTriviaQuestions,
+    getStorageKey: getSlapAHamRecordsTodayStorageKey,
+  },
+  "slap-a-ham-numbers": {
+    getDaily: getDailySlapAHamNumbersTriviaQuestions,
+    getStorageKey: getSlapAHamNumbersTodayStorageKey,
+  },
   // ── new-site-trivia ──
 };
 
@@ -126,6 +152,14 @@ const RECORDS_REGISTRY: Record<string, RecordsEntry> = {
   "touch-go-records": {
     getDaily: getDailyTouchGoRecordsRecord as (date?: Date) => RecordOfDay,
     getAlbumImage: getTouchGoAlbumImage,
+  },
+  "slap-a-ham-records": {
+    getDaily: getDailySlapAHamRecordsRecord as (date?: Date) => RecordOfDay,
+    getAlbumImage: getSlapAHamRecordsAlbumImage,
+  },
+  "slap-a-ham-numbers": {
+    getDaily: getDailySlapAHamNumbersRecord as (date?: Date) => RecordOfDay,
+    getAlbumImage: getSlapAHamNumbersAlbumImage,
   },
   // ── new-site-records ──
 };

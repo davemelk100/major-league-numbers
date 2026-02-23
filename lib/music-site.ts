@@ -474,7 +474,7 @@ export const TOUCH_GO_RECORDS_SITE: MusicSiteConfig = {
   navLabels: {
     discography: "Releases",
     members: "Artists",
-    sideProjects: "Essential Releases",
+    sideProjects: "Related Labels",
   },
   membersSlug: "artists",
   albumsSlug: "releases",
@@ -507,6 +507,105 @@ export const TOUCH_GO_RECORDS_SITE: MusicSiteConfig = {
 };
 
 
+
+export const SLAP_A_HAM_RECORDS_SITE: MusicSiteConfig = {
+  id: "slap-a-ham-records",
+  name: "Slap-A-Ham Numbers",
+  shortName: "Slap-A-Ham",
+  basePath: "/slap-a-ham-records",
+  chatLabel: "ChatHam",
+  headerTitle: "Slap-A-Ham Numbers",
+  headerTextClass: "text-black",
+  logoSrc: "/images/slap-a-ham-records/logo.jpg",
+  chatIconSrc: "/images/slap-a-ham-records/logo.jpg",
+  placeholderIconSrc: "/images/slap-a-ham-records/logo.jpg",
+  shellClass: "slap-a-ham-shell",
+  logoClassName: "h-auto w-[15%]",
+  description: "Slap-A-Ham Records was an independent record label founded in 1989 in San Francisco, known for its hardcore punk, powerviolence, and grindcore releases. It ceased operations in 2002 due to financial struggles.",
+  navLabels: {
+    discography: "Releases",
+    members: "Artists",
+    sideProjects: "Related Labels",
+  },
+  membersSlug: "artists",
+  albumsSlug: "releases",
+  footerDisclaimer: "All Content, Rights, Copyrights, etc. are the property of Chris Dodge and Slap-A-Ham Records. This is simply a fan site.",
+  sources: [
+    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Slap-a-Ham_Records" },
+    { label: "MusicBrainz", url: "https://musicbrainz.org/label/43fea7a2-8d22-4767-aa3a-589806823e4d" },
+  ],
+  imageSources: [
+    { label: "Wikipedia", url: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/SlapAHamRecords.jpg/250px-SlapAHamRecords.jpg" },
+  ],
+  images: {
+    fallbackIcon: "/images/slap-a-ham-records/logo.jpg",
+    fit: "contain",
+    lookupStrategy: "discogs",
+    invalidCacheValues: ["/images/slap-a-ham-records/logo.jpg"],
+  },
+  searchPlaceholder: "Search Slap-A-Ham...",
+  seo: {
+    title: "Slap-A-Ham Records",
+    titleTemplate: "%s | Slap-A-Ham Records",
+    description: "Explore Slap-A-Ham Records: artist roster, releases, label history, and milestones.",
+    keywords: ["Slap-A-Ham Records", "hardcore punk", "powerviolence", "grindcore"],
+    siteName: "Major League Numbers",
+    ogImage: "https://majorleaguenumbers.com/slap-a-ham-records-logo.png",
+    ogImageAlt: "Slap-A-Ham Records",
+    twitterImage: "https://majorleaguenumbers.com/slap-a-ham-records-logo.png",
+  },
+};
+
+
+export const SLAP_A_HAM_NUMBERS_SITE: MusicSiteConfig = {
+  id: "slap-a-ham-numbers",
+  name: "Slap-A-Ham Numbers",
+  shortName: "Slap-A-Ham",
+  basePath: "/slap-a-ham-numbers",
+  chatLabel: "ChatSlapAHam",
+  headerTitle: "Slap-A-Ham Numbers",
+  headerTextClass: "text-black",
+  logoSrc: "/images/slap-a-ham-numbers/logo.jpg",
+  chatIconSrc: "/images/slap-a-ham-numbers/logo.jpg",
+  placeholderIconSrc: "/images/slap-a-ham-numbers/logo.jpg",
+  shellClass: "slap-a-ham-shell",
+  logoClassName: "h-auto w-[15%]",
+  description: "Slap-A-Ham Records was an influential independent record label based in San Francisco known for its hard-hitting releases in hardcore punk and grindcore. Founded in 1989 by Chris Dodge, the label became a cornerstone of the underground music scene before officially shutting down in 2002 due to financial difficulties.",
+  navLabels: {
+    discography: "Releases",
+    members: "Artists",
+    sideProjects: "Related Labels",
+  },
+  membersSlug: "artists",
+  albumsSlug: "releases",
+  footerDisclaimer: "All Content, Rights, Copyrights, etc. are the property of Chris Dodge and Slap-A-Ham Records. This is simply a fan site.",
+  sources: [
+    { label: "Discogs", url: "https://www.discogs.com/label/34315-Slap-A-Ham-Records" },
+    { label: "MusicBrainz", url: "https://musicbrainz.org/label/43fea7a2-8d22-4767-aa3a-589806823e4d" },
+    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Slap-a-Ham_Records" },
+  ],
+  imageSources: [
+    { label: "Wikipedia", url: "https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/SlapAHamRecords.jpg/250px-SlapAHamRecords.jpg" },
+  ],
+  images: {
+    fallbackIcon: "/images/slap-a-ham-numbers/logo.jpg",
+    fit: "contain",
+    lookupStrategy: "discogs",
+    invalidCacheValues: ["/images/slap-a-ham-numbers/logo.jpg"],
+  },
+  searchPlaceholder: "Search Slap-A-Ham...",
+  seo: {
+    title: "Slap-A-Ham Records",
+    titleTemplate: "%s | Slap-A-Ham Records",
+    description: "Explore Slap-A-Ham Records: artist roster, releases, label history, and milestones.",
+    keywords: ["Slap-A-Ham Records", "hardcore punk", "powerviolence", "grindcore"],
+    siteName: "Major League Numbers",
+    ogImage: "https://majorleaguenumbers.com/slap-a-ham-numbers-logo.png",
+    ogImageAlt: "Slap-A-Ham Records",
+    twitterImage: "https://majorleaguenumbers.com/slap-a-ham-numbers-logo.png",
+  },
+};
+
 export const MUSIC_SITES = [
   GBV_SITE,
   AMREP_SITE,
@@ -514,6 +613,8 @@ export const MUSIC_SITES = [
   E6_SITE,
   SKINGRAFT_SITE,
   TOUCH_GO_RECORDS_SITE,
+  SLAP_A_HAM_RECORDS_SITE,
+  SLAP_A_HAM_NUMBERS_SITE,
 ] as const;
 
 export type MusicSiteId = (typeof MUSIC_SITES)[number]["id"];

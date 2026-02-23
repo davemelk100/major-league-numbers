@@ -1,48 +1,29 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { pollardSideProjects } from "@/lib/gbv-side-projects";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
-import { amrepImprints } from "@/lib/amrep-imprints-data";
-import { revSubLabels } from "@/lib/rev-sublabels-data";
-import { sgSubLabels } from "@/lib/sg-sublabels-data";
+import { getSiteSideProjects } from "@/lib/site-data-registry";
 
 export function SiteSideProjectsContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
-  const isAmrep = site.id === "amrep";
-  const isRev = site.id === "rev";
-  const isSg = site.id === "sg";
+  const data = getSiteSideProjects(site.id);
+  const title = site.navLabels.sideProjects;
 
-  const getTitle = () => {
-    if (isSg) return "Imprints & Related Labels";
-    if (isAmrep) return "AmRep Imprints & Collections";
-    if (isRev) return "Sub-Labels & Related Imprints";
-    return "Robert Pollard Side Projects";
-  };
-
-  const getDescription = () => {
-    if (isSg) return "Skin Graft Records imprints and related independent labels.";
-    if (isAmrep) return "Highlights from AmRep's shop categories and related imprints.";
-    if (isRev) return "Revelation Records sub-labels, distribution partners, and related imprints.";
-    return "Discography highlights from Robert Pollard's key side projects.";
-  };
-
-  const getData = () => {
-    if (isSg) return sgSubLabels;
-    if (isAmrep) return amrepImprints;
-    if (isRev) return revSubLabels;
-    return pollardSideProjects;
-  };
-
-  const data = getData();
+  if (data.length === 0) {
+    return (
+      <div className="container py-6">
+        <h1 className="font-league mb-4">{title}</h1>
+        <p className="text-muted-foreground">No data available yet.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container py-6">
       <div className="mb-6">
-        <h1 className="font-league">{getTitle()}</h1>
-        <p className="text-sm text-muted-foreground">{getDescription()}</p>
+        <h1 className="font-league">{title}</h1>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -88,7 +69,7 @@ export function SiteSideProjectsContent() {
                   rel="noreferrer"
                   className="text-sm underline underline-offset-4"
                 >
-                  {isAmrep || isRev || isSg ? "Visit site" : "View discography"}
+                  View more
                 </a>
               ) : null}
             </CardContent>

@@ -118,32 +118,31 @@ interface SavedChat {
   updatedAt: number;
 }
 
-const CHAT_KEYS = {
-  gbv: {
-    chats: "gbv-saved-chats",
-    session: "gbv-chat-session",
-    idPrefix: "gbv",
-  },
-  amrep: {
-    chats: "amrep-saved-chats",
-    session: "amrep-chat-session",
-    idPrefix: "amrep",
-  },
-  rev: {
-    chats: "rev-saved-chats",
-    session: "rev-chat-session",
-    idPrefix: "rev",
-  },
-  e6: {
-    chats: "e6-saved-chats",
-    session: "e6-chat-session",
-    idPrefix: "e6",
-  },
-  sg: {
-    chats: "sg-saved-chats",
-    session: "sg-chat-session",
-    idPrefix: "sg",
-  },
+function getChatKeys(siteId: string) {
+  return {
+    chats: `${siteId}-saved-chats`,
+    session: `${siteId}-chat-session`,
+    idPrefix: siteId,
+  };
+}
+
+function defaultChatPrompts(siteName: string): string[] {
+  return [
+    `Ask about a ${siteName} artist or release.`,
+    `Want a quick ${siteName} label history?`,
+    `Looking for something from the ${siteName} catalog?`,
+    `Let's dig into the ${siteName} roster.`,
+    `Need a primer on ${siteName}?`,
+    `Which ${siteName} era are you exploring?`,
+  ];
+}
+
+const SITE_PROMPTS: Record<string, string[]> = {
+  gbv: chatPrompts,
+  amrep: amrepChatPrompts,
+  rev: revChatPrompts,
+  e6: e6ChatPrompts,
+  sg: sgChatPrompts,
 };
 
 function getSavedChats(storageKey: string): SavedChat[] {
@@ -238,8 +237,8 @@ function generateChatTitle(messages: UIMessage[]): string {
 export function GbvChatContent() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
-  const keys = CHAT_KEYS[site.id as keyof typeof CHAT_KEYS];
-  const sitePrompts = site.id === "sg" ? sgChatPrompts : site.id === "amrep" ? amrepChatPrompts : site.id === "rev" ? revChatPrompts : site.id === "e6" ? e6ChatPrompts : chatPrompts;
+  const keys = getChatKeys(site.id);
+  const sitePrompts = SITE_PROMPTS[site.id] ?? defaultChatPrompts(site.name);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [input, setInput] = useState("");
@@ -254,9 +253,9 @@ export function GbvChatContent() {
   const transport = useMemo(
     () =>
       new DefaultChatTransport({
-        api: site.id === "sg" ? "/api/sg/ask" : site.id === "amrep" ? "/api/amrep/ask" : site.id === "rev" ? "/api/rev/ask" : site.id === "e6" ? "/api/e6/ask" : "/api/gbv/ask",
+        api: `/api/${site.id}/ask`,
       }),
-    [],
+    [site.id],
   );
 
   const { messages, sendMessage, status, error, setMessages } = useChat({
