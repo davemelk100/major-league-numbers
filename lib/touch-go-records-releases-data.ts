@@ -196,7 +196,6 @@ export const touchgorecordsReleases: TouchGoRecordsRelease[] = [
 
   // Dazzling Killmen
   { id: 81, title: "Introduce the Mesmers", artist: "Dazzling Killmen", catalogNo: "TG70", year: 1993, format: "LP", highlight: "St. Louis noise rock at its most dissonant and punishing." },
-  { id: 82, title: "Face of Collapse", artist: "Dazzling Killmen", catalogNo: "TG92", year: 1994, format: "LP" },
 
   // Coctails
   { id: 83, title: "Peel", artist: "Coctails", catalogNo: "TG54", year: 1991, format: "LP", highlight: "Chicago lounge-pop. A playful outlier in the Touch and Go catalog." },

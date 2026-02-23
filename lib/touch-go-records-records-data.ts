@@ -1,4 +1,5 @@
 import { touchgorecordsReleases, type TouchGoRecordsRelease } from "./touch-go-records-releases-data";
+import { getLocalAlbumImage } from "./touch-go-records-release-images";
 
 export interface TouchGoRecordsRecordOfDay {
   id: number;
@@ -48,7 +49,7 @@ function toRecordOfDay(release: TouchGoRecordsRelease): TouchGoRecordsRecordOfDa
     artist: release.artist,
     year: release.year ?? 0,
     highlight: getTouchGoRecordsFact(release.title) || `${catalogLabel}, released in ${release.year ?? "unknown year"}.`,
-    coverUrl: undefined,
+    coverUrl: getLocalAlbumImage(release.id) ?? undefined,
   };
 }
 

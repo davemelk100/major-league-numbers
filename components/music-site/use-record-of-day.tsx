@@ -10,6 +10,7 @@ import { getDailySgRecord, type SgRecordOfDay } from "@/lib/sg-records-data";
 import { getDailyTouchGoRecordsRecord, type TouchGoRecordsRecordOfDay } from "@/lib/touch-go-records-records-data";
 import { getLocalAlbumImage } from "@/lib/gbv-release-images";
 import { getAmrepAlbumImage } from "@/lib/amrep-release-images";
+import { getLocalAlbumImage as getTouchGoAlbumImage } from "@/lib/touch-go-records-release-images";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 
 export function useRecordOfDay() {
@@ -179,6 +180,12 @@ export function useRecordOfDay() {
       setRecord(tgDaily);
       if ("id" in tgDaily) {
         setAlbumId(tgDaily.id);
+        const localImage = getTouchGoAlbumImage(tgDaily.id);
+        if (localImage) {
+          setCoverUrl(localImage);
+        } else if (tgDaily.coverUrl) {
+          setCoverUrl(tgDaily.coverUrl);
+        }
       }
       return;
     }
