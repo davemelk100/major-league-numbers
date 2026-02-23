@@ -21,7 +21,7 @@ const MB_USER_AGENT = "MajorLeagueNumbers/1.0 (https://majorleaguenumbers.com)";
 const MB_RATE_LIMIT_MS = 1100;
 
 export interface DownloadSiteImagesResult {
-  artistImages: Record<string, string>;
+  artistImages: Record<number, string>;
   releaseImages: Record<number, string>;
 }
 
@@ -155,9 +155,9 @@ async function downloadArtistPhotos(
   siteId: string,
   artists: GeneratedArtist[],
   discogsToken: string,
-): Promise<Record<string, string>> {
+): Promise<Record<number, string>> {
   console.log("\n=== Downloading artist photos from Discogs ===\n");
-  const results: Record<string, string> = {};
+  const results: Record<number, string> = {};
 
   if (!discogsToken) {
     console.log("  WARNING: No DISCOGS_USER_TOKEN set. Skipping artist image downloads.");
@@ -172,7 +172,7 @@ async function downloadArtistPhotos(
     const outPath = path.join(artistsDir, `${slug}.jpg`);
     if (fs.existsSync(outPath)) {
       console.log(`  [skip] ${artist.name} — already exists`);
-      results[slug] = `/images/${siteId}/artists/${slug}.jpg`;
+      results[artist.id] = `/images/${siteId}/artists/${slug}.jpg`;
       continue;
     }
 
@@ -197,7 +197,7 @@ async function downloadArtistPhotos(
             const buf = await fetchUrl(match.cover_image.replace(/^http:/, "https:"));
             if (buf.length > 1000) {
               fs.writeFileSync(outPath, buf);
-              results[slug] = `/images/${siteId}/artists/${slug}.jpg`;
+              results[artist.id] = `/images/${siteId}/artists/${slug}.jpg`;
               console.log(`  [ok]   ${artist.name} — [discogs-search] (${(buf.length / 1024).toFixed(0)} KB)`);
               found = true;
             }
@@ -216,7 +216,7 @@ async function downloadArtistPhotos(
               const buf = await fetchUrl(imageUrl.replace(/^http:/, "https:"));
               if (buf.length > 1000) {
                 fs.writeFileSync(outPath, buf);
-                results[slug] = `/images/${siteId}/artists/${slug}.jpg`;
+                results[artist.id] = `/images/${siteId}/artists/${slug}.jpg`;
                 console.log(`  [ok]   ${artist.name} — [discogs-artist] (${(buf.length / 1024).toFixed(0)} KB)`);
                 found = true;
               }

@@ -689,14 +689,14 @@ export function getDaily${pascal}Record(date = new Date()): ${pascal}RecordOfDay
 `;
 }
 
-export function generateArtistImagesFile(siteId: string, images?: Record<string, string>): string {
+export function generateArtistImagesFile(siteId: string, images?: Record<number, string>): string {
   const constName = siteId.toUpperCase().replace(/-/g, "_");
   if (images && Object.keys(images).length > 0) {
     const entries = Object.entries(images)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([id, url]) => `  "${id}": "${url}",`)
+      .sort(([a], [b]) => Number(a) - Number(b))
+      .map(([id, url]) => `  ${id}: "${url}",`)
       .join("\n");
-    return `export const ${constName}_ARTIST_IMAGES: Record<string, string> = {
+    return `export const ${constName}_ARTIST_IMAGES: Record<number, string> = {
 ${entries}
 };
 `;
