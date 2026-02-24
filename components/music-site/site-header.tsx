@@ -61,6 +61,24 @@ export function SiteHeader() {
         </Link>
 
         <div className="ml-auto flex items-center gap-3">
+          <div className="hidden xl:flex items-center gap-4">
+            {pathname !== askPath && (
+              <Link
+                href={askPath}
+                onClick={() => setChatPending(true)}
+                className="flex items-center justify-center gap-3 px-2 py-2 text-sm font-medium transition-all hover:opacity-80"
+              >
+                <span className={cn("text-md", site.id === "gbv" ? "text-white" : "text-black")}>{site.chatLabel}</span>
+                <img
+                  src={site.chatIconSrc}
+                  alt={`${site.shortName} chat`}
+                  width={56}
+                  height={56}
+                  className={cn("h-14 w-14 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon", chatPending && "animate-spin [animation-duration:2s]")}
+                />
+              </Link>
+            )}
+          </div>
           {isMounted ? (
             <Popover>
               <PopoverTrigger asChild>
@@ -103,24 +121,6 @@ export function SiteHeader() {
               />
             </Button>
           )}
-          <div className="hidden xl:flex items-center gap-4">
-            {pathname !== askPath && (
-              <Link
-                href={askPath}
-                onClick={() => setChatPending(true)}
-                className="flex items-center justify-center gap-3 px-6 h-16 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] text-black bg-white border-t border-t-[#f6f6f6] border-l border-l-[#eeeeee] border-r border-r-[#c6c6c6] border-b-2 border-b-[#b5b5b5] shadow-[0_2px_4px_rgba(0,0,0,0.1),_inset_0_1px_0_rgba(255,255,255,0.4)]"
-              >
-                <img
-                  src={site.chatIconSrc}
-                  alt={`${site.shortName} chat`}
-                  width={44}
-                  height={44}
-                  className={cn("h-11 w-11 gbv-nav-icon object-contain", chatPending && "animate-spin [animation-duration:2s]")}
-                />
-                <span className="text-md text-black">{site.chatLabel}</span>
-              </Link>
-            )}
-          </div>
         </div>
       </div>
 
@@ -129,16 +129,16 @@ export function SiteHeader() {
           <Link
             href={askPath}
             onClick={() => setChatPending(true)}
-            className="flex items-center justify-center gap-3 px-6 h-16 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] text-black bg-white border-t border-t-[#f6f6f6] border-l border-l-[#eeeeee] border-r border-r-[#c6c6c6] border-b-2 border-b-[#b5b5b5] shadow-[0_2px_4px_rgba(0,0,0,0.1),_inset_0_1px_0_rgba(255,255,255,0.4)]"
+            className="flex items-center justify-center gap-3 px-2 py-2 text-sm font-medium transition-all hover:opacity-80"
           >
+            <span className={cn("text-sm", site.id === "gbv" ? "text-white" : "text-black")}>{site.chatLabel}</span>
             <img
               src={site.chatIconSrc}
               alt={`${site.shortName} chat`}
-              width={44}
-              height={44}
-              className={cn("h-11 w-11 gbv-nav-icon object-contain", chatPending && "animate-spin [animation-duration:2s]")}
+              width={56}
+              height={56}
+              className={cn("h-14 w-14 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon", chatPending && "animate-spin [animation-duration:2s]")}
             />
-            <span className="text-sm text-black">{site.chatLabel}</span>
           </Link>
         </div>
       )}
