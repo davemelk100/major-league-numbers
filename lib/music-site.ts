@@ -607,57 +607,6 @@ export const SLAP_A_HAM_NUMBERS_SITE: MusicSiteConfig = {
 };
 
 
-export const JAWBOX_SITE: MusicSiteConfig = {
-  id: "jawbox",
-  name: "Jawbox",
-  shortName: "Jawbox",
-  basePath: "/jawbox",
-  chatLabel: "ChatJawbox",
-  headerTitle: "Jawbox",
-  headerTextClass: "text-black",
-  logoSrc: "/images/jawbox/logo.png",
-  chatIconSrc: "/images/jawbox/logo.png",
-  placeholderIconSrc: "/images/jawbox/logo.png",
-  shellClass: "jawbox-shell",
-  logoClassName: "h-auto w-[15%]",
-  description: "Jawbox was an American post-hardcore band formed in Washington, D.C. in 1989, known for their inventive sound and impactful albums.",
-  navLabels: {
-    discography: "Releases",
-    members: "Members",
-    sideProjects: "Side Projects",
-  },
-  membersSlug: "artists",
-  albumsSlug: "releases",
-  footerDisclaimer: "All Content, Rights, Copyrights, etc. are the property of the respective owners. This is simply a fan site.",
-  sources: [
-    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Jawbox" },
-    { label: "Last.fm", url: "https://www.last.fm/music/Jawbox" },
-    { label: "Dischord Records", url: "https://dischord.com/band/jawbox" },
-    { label: "MusicBrainz", url: "https://musicbrainz.org/artist/016fba14-1fc6-4986-86c2-2113ec9b28de" },
-  ],
-  imageSources: [
-    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Jawbox" },
-    { label: "Instagram", url: "https://www.instagram.com/jawboxofficial/" },
-  ],
-  images: {
-    fallbackIcon: "/images/jawbox/logo.png",
-    fit: "contain",
-    lookupStrategy: "discogs",
-    invalidCacheValues: ["/images/jawbox/logo.png"],
-  },
-  searchPlaceholder: "Search Jawbox...",
-  seo: {
-    title: "Jawbox - Official Site",
-    titleTemplate: "%s | Jawbox - Official Site",
-    description: "Explore the music, history, and impact of Jawbox, the iconic post-hardcore band.",
-    keywords: ["Jawbox", "post-hardcore", "Washington D.C."],
-    siteName: "Major League Numbers",
-    ogImage: "https://majorleaguenumbers.com/images/jawbox/logo.png",
-    ogImageAlt: "Jawbox - Official Site",
-    twitterImage: "https://majorleaguenumbers.com/images/jawbox/logo.png",
-  },
-};
-
 export const MUSIC_SITES = [
   GBV_SITE,
   AMREP_SITE,
@@ -667,7 +616,6 @@ export const MUSIC_SITES = [
   TOUCH_GO_RECORDS_SITE,
   SLAP_A_HAM_RECORDS_SITE,
   SLAP_A_HAM_NUMBERS_SITE,
-  JAWBOX_SITE,
 ] as const;
 
 export type MusicSiteId = (typeof MUSIC_SITES)[number]["id"];
