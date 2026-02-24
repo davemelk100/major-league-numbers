@@ -118,7 +118,13 @@ function NBATriviaContent() {
     }
   };
 
-  if (!currentQuestion) return null;
+  if (!currentQuestion) {
+    return (
+      <div className="w-full h-full bg-muted/30 rounded-lg border p-4 min-h-[380px] animate-pulse">
+        <h2 className="mr-4 text-primary">Daily Trivia</h2>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-full bg-muted/30 rounded-lg border p-4 space-y-4">
