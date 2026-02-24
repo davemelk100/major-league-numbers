@@ -5,6 +5,7 @@ import { PasscodeStep } from "./passcode-step";
 import { InputStep } from "./input-step";
 import { PreviewStep } from "./preview-step";
 import { ConfirmStep } from "./confirm-step";
+import { GeneratingOverlay } from "./generating-overlay";
 import type { GeneratedSiteData } from "@/lib/admin/schemas";
 
 type Step = "passcode" | "input" | "preview" | "confirm";
@@ -25,6 +26,7 @@ export function AdminWizard() {
   const [videoLinks, setVideoLinks] = useState<string[]>([]);
   const [writeResults, setWriteResults] = useState<WriteResults | null>(null);
   const [siteType, setSiteType] = useState<"music" | "sports">("music");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   useEffect(() => {
     if (sessionStorage.getItem("admin_auth") === "true") {
@@ -45,6 +47,7 @@ export function AdminWizard() {
   }
 
   async function handleConfirm(data: GeneratedSiteData) {
+    setIsGenerating(true);
     try {
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 5 * 60 * 1000);
@@ -72,8 +75,10 @@ export function AdminWizard() {
 
       const result = await res.json();
       setWriteResults(result);
+      setIsGenerating(false);
       setStep("confirm");
     } catch (error) {
+      setIsGenerating(false);
       alert(error instanceof Error ? error.message : "Write failed");
     }
   }
@@ -153,6 +158,10 @@ export function AdminWizard() {
           />
         )}
       </div>
+
+      {generatedData && (
+        <GeneratingOverlay data={generatedData} visible={isGenerating} />
+      )}
     </div>
   );
 }
