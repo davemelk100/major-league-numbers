@@ -39,7 +39,7 @@ function NBATeamSpotlightContent() {
 
   if (!team) {
     return (
-      <div className="w-full h-full bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
+      <div className="w-full h-full min-h-[330px] bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
         <div className="flex items-center gap-2">
           <h2 className="mr-4 text-primary">Team of the Day</h2>
         </div>
@@ -51,7 +51,7 @@ function NBATeamSpotlightContent() {
   }
 
   return (
-    <div className="w-full h-full bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
+    <div className="w-full h-full min-h-[330px] bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
       <div className="flex items-center gap-2">
         <h2 className="mr-4 text-primary">Team of the Day</h2>
       </div>
@@ -86,7 +86,7 @@ function NBATeamSpotlightContent() {
 
 export function NBATeamSpotlight() {
   return (
-    <Suspense fallback={<div className="w-full bg-muted/30 rounded-lg border p-4 h-[200px] animate-pulse" />}>
+    <Suspense fallback={<div className="w-full bg-muted/30 rounded-lg border p-4 min-h-[330px] animate-pulse" />}>
       <NBATeamSpotlightContent />
     </Suspense>
   );

@@ -9,17 +9,17 @@ import { NBATriviaPanel } from "@/components/nba/nba-trivia-panel";
 
 const NBAJerseyPanel = dynamic(
   () => import("@/components/nba/nba-jersey-panel").then((m) => m.NBAJerseyPanel),
-  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 h-[300px] animate-pulse" /> }
+  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 min-h-[380px] animate-pulse" /> }
 );
 
 const NBAPlayerSpotlight = dynamic(
   () => import("@/components/nba/nba-player-spotlight").then((m) => m.NBAPlayerSpotlight),
-  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 h-[200px] animate-pulse" /> }
+  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 min-h-[350px] animate-pulse" /> }
 );
 
 const NBATeamSpotlight = dynamic(
   () => import("@/components/nba/nba-team-spotlight").then((m) => m.NBATeamSpotlight),
-  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 h-[200px] animate-pulse" /> }
+  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 min-h-[330px] animate-pulse" /> }
 );
 
 interface LeaderItem {

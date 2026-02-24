@@ -220,7 +220,7 @@ function NBAJerseyContent() {
 
 export function NBAJerseyPanel() {
   return (
-    <Suspense fallback={<div className="w-full bg-muted/30 rounded-lg border p-4 h-[300px] animate-pulse" />}>
+    <Suspense fallback={<div className="w-full bg-muted/30 rounded-lg border p-4 min-h-[380px] animate-pulse" />}>
       <NBAJerseyContent />
     </Suspense>
   );
