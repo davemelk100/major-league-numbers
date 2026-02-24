@@ -10,6 +10,24 @@ import { Loader2, Upload, X, CheckCircle2, AlertCircle, Paperclip } from "lucide
 
 type UrlStatus = "idle" | "checking" | "valid" | "invalid";
 
+const LABEL_LOGO_WIDTH = 100;
+const LABEL_LOGO_HEIGHT = 35;
+
+function validateLogoDimensions(file: File): Promise<{ valid: boolean; width: number; height: number }> {
+  return new Promise((resolve) => {
+    const img = new window.Image();
+    img.onload = () => {
+      URL.revokeObjectURL(img.src);
+      resolve({ valid: img.naturalWidth === LABEL_LOGO_WIDTH && img.naturalHeight === LABEL_LOGO_HEIGHT, width: img.naturalWidth, height: img.naturalHeight });
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(img.src);
+      resolve({ valid: false, width: 0, height: 0 });
+    };
+    img.src = URL.createObjectURL(file);
+  });
+}
+
 function useUrlValidation(url: string): UrlStatus {
   const [status, setStatus] = useState<UrlStatus>("idle");
   const timerRef = useRef<ReturnType<typeof setTimeout>>();
@@ -56,6 +74,8 @@ export function InputStep({ onGenerated }: InputStepProps) {
   const [logoUrl2, setLogoUrl2] = useState("");
   const [logoFile1, setLogoFile1] = useState<File | null>(null);
   const [logoFile2, setLogoFile2] = useState<File | null>(null);
+  const [logoError1, setLogoError1] = useState("");
+  const [logoError2, setLogoError2] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const logoUrl1Status = useUrlValidation(logoUrl1);
@@ -93,6 +113,25 @@ export function InputStep({ onGenerated }: InputStepProps) {
 
     setIsLoading(true);
     setError("");
+
+    // Validate logo URL dimensions for label sites
+    if (siteType === "music" && musicSubtype === "label") {
+      for (const url of [logoUrl1, logoUrl2]) {
+        if (!url) continue;
+        const { valid, width, height } = await new Promise<{ valid: boolean; width: number; height: number }>((resolve) => {
+          const img = new window.Image();
+          img.onload = () => resolve({ valid: img.naturalWidth === LABEL_LOGO_WIDTH && img.naturalHeight === LABEL_LOGO_HEIGHT, width: img.naturalWidth, height: img.naturalHeight });
+          img.onerror = () => resolve({ valid: true, width: 0, height: 0 }); // skip check if can't load
+          img.crossOrigin = "anonymous";
+          img.src = url;
+        });
+        if (!valid) {
+          setError(`Logo URL must be ${LABEL_LOGO_WIDTH}×${LABEL_LOGO_HEIGHT}px (got ${width}×${height})`);
+          setIsLoading(false);
+          return;
+        }
+      }
+    }
 
     try {
       const passcode = "6231839";
@@ -343,9 +382,20 @@ export function InputStep({ onGenerated }: InputStepProps) {
                   const input = document.createElement("input");
                   input.type = "file";
                   input.accept = "image/*";
-                  input.onchange = (e) => {
+                  input.onchange = async (e) => {
                     const target = e.target as HTMLInputElement;
-                    if (target.files?.[0]) setLogoFile1(target.files[0]);
+                    const file = target.files?.[0];
+                    if (!file) return;
+                    if (musicSubtype === "label") {
+                      const { valid, width, height } = await validateLogoDimensions(file);
+                      if (!valid) {
+                        setLogoError1(`Logo must be ${LABEL_LOGO_WIDTH}×${LABEL_LOGO_HEIGHT}px (got ${width}×${height})`);
+                        setLogoFile1(null);
+                        return;
+                      }
+                    }
+                    setLogoError1("");
+                    setLogoFile1(file);
                   };
                   input.click();
                 }}
@@ -358,6 +408,15 @@ export function InputStep({ onGenerated }: InputStepProps) {
                 <CheckCircle2 className="h-3 w-3 text-green-500" />
                 {logoFile1.name}
               </p>
+            )}
+            {logoError1 && (
+              <p className="text-xs text-destructive flex items-center gap-1">
+                <AlertCircle className="h-3 w-3" />
+                {logoError1}
+              </p>
+            )}
+            {musicSubtype === "label" && (
+              <p className="text-xs text-muted-foreground">Required: {LABEL_LOGO_WIDTH}×{LABEL_LOGO_HEIGHT}px</p>
             )}
 
             <Label>Logo (alt)</Label>
@@ -383,9 +442,20 @@ export function InputStep({ onGenerated }: InputStepProps) {
                   const input = document.createElement("input");
                   input.type = "file";
                   input.accept = "image/*";
-                  input.onchange = (e) => {
+                  input.onchange = async (e) => {
                     const target = e.target as HTMLInputElement;
-                    if (target.files?.[0]) setLogoFile2(target.files[0]);
+                    const file = target.files?.[0];
+                    if (!file) return;
+                    if (musicSubtype === "label") {
+                      const { valid, width, height } = await validateLogoDimensions(file);
+                      if (!valid) {
+                        setLogoError2(`Logo must be ${LABEL_LOGO_WIDTH}×${LABEL_LOGO_HEIGHT}px (got ${width}×${height})`);
+                        setLogoFile2(null);
+                        return;
+                      }
+                    }
+                    setLogoError2("");
+                    setLogoFile2(file);
                   };
                   input.click();
                 }}
@@ -397,6 +467,12 @@ export function InputStep({ onGenerated }: InputStepProps) {
               <p className="text-xs text-muted-foreground flex items-center gap-1">
                 <CheckCircle2 className="h-3 w-3 text-green-500" />
                 {logoFile2.name}
+              </p>
+            )}
+            {logoError2 && (
+              <p className="text-xs text-destructive flex items-center gap-1">
+                <AlertCircle className="h-3 w-3" />
+                {logoError2}
               </p>
             )}
           </div>

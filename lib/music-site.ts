@@ -626,7 +626,7 @@ export const JAWBOX_SITE: MusicSiteConfig = {
     members: "Members",
     sideProjects: "Side Projects",
   },
-  membersSlug: "members",
+  membersSlug: "artists",
   albumsSlug: "releases",
   footerDisclaimer: "All Content, Rights, Copyrights, etc. are the property of the respective owners. This is simply a fan site.",
   sources: [
