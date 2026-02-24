@@ -50,15 +50,17 @@ export function SiteHeader() {
             )}
             fetchPriority="high"
           />
-          <h1
-            className={cn(
-              "font-league uppercase tracking-wide",
-              site.headerTextClass,
-            )}
-          >
-            {site.headerTitle.split(" ")[0]}
-            <span className="hidden sm:inline"> {site.headerTitle.split(" ").slice(1).join(" ")}</span>
-          </h1>
+          {!site.hideHeaderTitle && (
+            <h1
+              className={cn(
+                "font-league uppercase tracking-wide",
+                site.headerTextClass,
+              )}
+            >
+              {site.headerTitle.split(" ")[0]}
+              <span className="hidden sm:inline"> {site.headerTitle.split(" ").slice(1).join(" ")}</span>
+            </h1>
+          )}
         </Link>
 
         <div className="ml-auto flex items-center gap-3">
@@ -66,7 +68,7 @@ export function SiteHeader() {
             {pathname !== askPath && (
               <button
                 onClick={() => setChatOpen(true)}
-                className="flex items-center justify-center gap-3 px-3 py-2 text-sm font-medium transition-all hover:opacity-80 border border-gray-400 rounded-lg"
+                className="flex items-center justify-center gap-3 px-3 py-2 text-sm font-medium transition-all hover:opacity-80 rounded-lg"
               >
                 <span className={cn("text-md", site.id === "gbv" ? "text-white" : "text-black")}>{site.chatLabel}</span>
                 <img
@@ -74,7 +76,7 @@ export function SiteHeader() {
                   alt={`${site.shortName} chat`}
                   width={96}
                   height={96}
-                  className={cn("h-24 w-24 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon")}
+                  className={cn("h-16 w-16 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon")}
                 />
               </button>
             )}
@@ -128,7 +130,7 @@ export function SiteHeader() {
         <div className="container mt-6 xl:hidden">
           <button
             onClick={() => setChatOpen(true)}
-            className="flex w-full items-center justify-center gap-3 px-3 py-2 text-sm font-medium transition-all hover:opacity-80 border border-gray-400 rounded-lg"
+            className="flex w-full items-center justify-center gap-3 px-3 py-2 text-sm font-medium transition-all hover:opacity-80 rounded-lg"
           >
             <span className={cn("text-sm", site.id === "gbv" ? "text-white" : "text-black")}>{site.chatLabel}</span>
             <img
@@ -136,7 +138,7 @@ export function SiteHeader() {
               alt={`${site.shortName} chat`}
               width={96}
               height={96}
-              className={cn("h-24 w-24 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon")}
+              className={cn("h-16 w-16 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon")}
             />
           </button>
         </div>

@@ -41,6 +41,11 @@ import {
   getSlapAHamNumbersTodayStorageKey,
 } from "@/lib/slap-a-ham-numbers-trivia-data";
 
+import {
+  getDailyJawboxTriviaQuestions,
+  getJawboxTodayStorageKey,
+} from "@/lib/jawbox-trivia-data";
+
 // ── Records imports ─────────────────────────────────────────────────
 import { getDailyGbvRecord } from "@/lib/gbv-records-data";
 import { getDailyAmrepRecord } from "@/lib/amrep-records-data";
@@ -52,6 +57,8 @@ import { getDailySlapAHamRecordsRecord } from "@/lib/slap-a-ham-records-records-
 
 import { getDailySlapAHamNumbersRecord } from "@/lib/slap-a-ham-numbers-records-data";
 
+import { getDailyJawboxRecord } from "@/lib/jawbox-records-data";
+
 // ── Album image imports ─────────────────────────────────────────────
 import { getLocalAlbumImage as getGbvAlbumImage } from "@/lib/gbv-release-images";
 import { getAmrepAlbumImage } from "@/lib/amrep-release-images";
@@ -60,6 +67,8 @@ import { getLocalAlbumImage as getTouchGoAlbumImage } from "@/lib/touch-go-recor
 import { getLocalAlbumImage as getSlapAHamRecordsAlbumImage } from "@/lib/slap-a-ham-records-release-images";
 
 import { getLocalAlbumImage as getSlapAHamNumbersAlbumImage } from "@/lib/slap-a-ham-numbers-release-images";
+
+import { getLocalAlbumImage as getJawboxAlbumImage } from "@/lib/jawbox-release-images";
 
 // ── Common types ────────────────────────────────────────────────────
 export interface TriviaQuestion {
@@ -121,6 +130,10 @@ const TRIVIA_REGISTRY: Record<string, TriviaEntry> = {
     getDaily: getDailySlapAHamNumbersTriviaQuestions,
     getStorageKey: getSlapAHamNumbersTodayStorageKey,
   },
+  "jawbox": {
+    getDaily: getDailyJawboxTriviaQuestions,
+    getStorageKey: getJawboxTodayStorageKey,
+  },
   // ── new-site-trivia ──
 };
 
@@ -160,6 +173,10 @@ const RECORDS_REGISTRY: Record<string, RecordsEntry> = {
   "slap-a-ham-numbers": {
     getDaily: getDailySlapAHamNumbersRecord as (date?: Date) => RecordOfDay,
     getAlbumImage: getSlapAHamNumbersAlbumImage,
+  },
+  "jawbox": {
+    getDaily: getDailyJawboxRecord as (date?: Date) => RecordOfDay,
+    getAlbumImage: getJawboxAlbumImage,
   },
   // ── new-site-records ──
 };

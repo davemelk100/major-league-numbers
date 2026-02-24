@@ -80,6 +80,11 @@ export async function POST(request: Request) {
     }
 
     // Fix common AI mistakes before validation
+    if (parsed && typeof parsed === "object" && "releases" in parsed && Array.isArray((parsed as any).releases)) {
+      for (const rel of (parsed as any).releases) {
+        if (rel && rel.catalogNo === null) delete rel.catalogNo;
+      }
+    }
     const VALID_CATEGORIES = new Set(["history", "artists", "releases", "facts"]);
     if (parsed && typeof parsed === "object" && "trivia" in parsed && Array.isArray((parsed as any).trivia)) {
       for (const q of (parsed as any).trivia) {

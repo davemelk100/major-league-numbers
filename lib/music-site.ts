@@ -13,6 +13,7 @@ export interface MusicSiteConfig {
   placeholderIconSrc: string;
   shellClass: string;
   logoClassName?: string;
+  hideHeaderTitle?: boolean;
   description?: string;
   navLabels: {
     discography: string;
@@ -248,7 +249,8 @@ export const E6_SITE: MusicSiteConfig = {
   chatIconSrc: "/e6-logo.png",
   placeholderIconSrc: "/e6-logo.png",
   shellClass: "e6-shell",
-  logoClassName: "h-auto w-[15%]",
+  logoClassName: "h-auto w-[35%]",
+  hideHeaderTitle: true,
   description:
     "The Elephant 6 Recording Company is a collective of musicians formed in the early 1990s, centered in Athens, Georgia. Built around a shared love of lo-fi recording, psychedelic pop, and collaborative creativity, E6 produced some of the most acclaimed indie music of the era through artists like Neutral Milk Hotel, The Apples in Stereo, The Olivia Tremor Control, and of Montreal.",
   navLabels: {
@@ -393,7 +395,8 @@ export const SKINGRAFT_SITE: MusicSiteConfig = {
   chatIconSrc: "/sg-logo.png",
   placeholderIconSrc: "/sg-logo.png",
   shellClass: "skingraft-shell",
-  logoClassName: "h-auto w-[15%]",
+  logoClassName: "h-12 w-auto sm:h-16 lg:h-28",
+  hideHeaderTitle: true,
   description:
     "Skin Graft Records is an independent record label founded by Mark Fischer in 1991 in Chicago. Known for releasing experimental, noise rock, and avant-garde music, Skin Graft has championed some of the most daring and uncompromising artists in underground music, including The Flying Luttenbachers, U.S. Maple, Dazzling Killmen, Mount Shasta, and Cheer-Accident.",
   navLabels: {
@@ -465,11 +468,12 @@ export const TOUCH_GO_RECORDS_SITE: MusicSiteConfig = {
   chatLabel: "ChatTGR",
   headerTitle: "Touch & Go Records",
   headerTextClass: "text-black",
-  logoSrc: "/images/touch-go-records/logo.jpg",
-  chatIconSrc: "/images/touch-go-records/logo.jpg",
-  placeholderIconSrc: "/images/touch-go-records/logo.jpg",
+  logoSrc: "/images/touch-go-records/logo.svg",
+  chatIconSrc: "/images/touch-go-records/logo.svg",
+  placeholderIconSrc: "/images/touch-go-records/logo.svg",
   shellClass: "touch-go-shell",
-  logoClassName: "h-auto w-[15%]",
+  logoClassName: "h-auto w-[85%]",
+  hideHeaderTitle: true,
   description: "Touch & Go Records is a renowned independent record label founded in 1981, instrumental in shaping the hardcore and indie music scenes. With a diverse roster of artists and a commitment to quality, the label continues to influence music culture.",
   navLabels: {
     discography: "Releases",
@@ -488,10 +492,10 @@ export const TOUCH_GO_RECORDS_SITE: MusicSiteConfig = {
     { label: "Official Photo Archive", url: "https://touchandgorecords.com/photos/index.php" },
   ],
   images: {
-    fallbackIcon: "/images/touch-go-records/logo.jpg",
+    fallbackIcon: "/images/touch-go-records/logo.svg",
     fit: "contain",
     lookupStrategy: "discogs",
-    invalidCacheValues: ["/images/touch-go-records/logo.jpg"],
+    invalidCacheValues: ["/images/touch-go-records/logo.svg"],
   },
   searchPlaceholder: "Search Touch & Go...",
   seo: {
@@ -500,9 +504,9 @@ export const TOUCH_GO_RECORDS_SITE: MusicSiteConfig = {
     description: "Discover Touch & Go Records: artist roster, releases, history, and milestones.",
     keywords: ["Touch & Go Records", "independent label", "hardcore", "post-hardcore", "indie music"],
     siteName: "Major League Numbers",
-    ogImage: "https://majorleaguenumbers.com/images/touch-go-records/logo.jpg",
+    ogImage: "https://majorleaguenumbers.com/images/touch-go-records/logo.svg",
     ogImageAlt: "Touch & Go Records",
-    twitterImage: "https://majorleaguenumbers.com/images/touch-go-records/logo.jpg",
+    twitterImage: "https://majorleaguenumbers.com/images/touch-go-records/logo.svg",
   },
 };
 
@@ -520,7 +524,8 @@ export const SLAP_A_HAM_RECORDS_SITE: MusicSiteConfig = {
   chatIconSrc: "/images/slap-a-ham-records/logo.jpg",
   placeholderIconSrc: "/images/slap-a-ham-records/logo.jpg",
   shellClass: "slap-a-ham-shell",
-  logoClassName: "h-auto w-[15%]",
+  logoClassName: "h-auto w-[70%]",
+  hideHeaderTitle: true,
   description: "Slap-A-Ham Records was an independent record label founded in 1989 in San Francisco, known for its hardcore punk, powerviolence, and grindcore releases. It ceased operations in 2002 due to financial struggles.",
   navLabels: {
     discography: "Releases",
@@ -607,6 +612,61 @@ export const SLAP_A_HAM_NUMBERS_SITE: MusicSiteConfig = {
 };
 
 
+
+export const JAWBOX_SITE: MusicSiteConfig = {
+  id: "jawbox",
+  name: "Jawbox",
+  shortName: "Jawbox",
+  basePath: "/jawbox",
+  chatLabel: "ChatJawbox",
+  headerTitle: "Jawbox",
+  headerTextClass: "text-black",
+  logoSrc: "/images/jawbox/logo.png",
+  chatIconSrc: "/images/jawbox/logo.png",
+  placeholderIconSrc: "/images/jawbox/logo.png",
+  shellClass: "jawbox-shell",
+  logoClassName: "h-auto w-[70%]",
+  hideHeaderTitle: true,
+  description: "Jawbox was an American post-hardcore band from Washington, D.C., formed in 1989, known for their intricate sound and insightful lyrics. They gained prominence in the '90s with albums released on Dischord Records and Atlantic.",
+  navLabels: {
+    discography: "Releases",
+    members: "Members",
+    sideProjects: "Side Projects",
+  },
+  membersSlug: "artists",
+  albumsSlug: "releases",
+  footerDisclaimer: "All Content, Rights, Copyrights, etc. are the property of the respective owners. This is simply a fan site.",
+  sources: [
+    { label: "Wikipedia", url: "https://en.wikipedia.org/wiki/Jawbox" },
+    { label: "Dischord Records", url: "https://dischord.com/band/jawbox" },
+    { label: "MusicBrainz", url: "https://musicbrainz.org/artist/016fba14-1fc6-4986-86c2-2113ec9b28de" },
+    { label: "Last.fm", url: "https://www.last.fm/music/Jawbox" },
+    { label: "Spotify", url: "https://open.spotify.com/artist/0Fj0cWPHOpexJCZRdSHioP" },
+    { label: "Bandcamp", url: "https://jawbox.bandcamp.com/" },
+  ],
+  imageSources: [
+    { label: "Discogs", url: "https://www.discogs.com/" },
+    { label: "YouTube", url: "https://www.youtube.com/" },
+  ],
+  images: {
+    fallbackIcon: "/images/jawbox/logo.png",
+    fit: "contain",
+    lookupStrategy: "discogs",
+    invalidCacheValues: ["/images/jawbox/logo.png"],
+  },
+  searchPlaceholder: "Search Jawbox...",
+  seo: {
+    title: "Jawbox - Discography and History",
+    titleTemplate: "%s | Jawbox - Discography and History",
+    description: "Explore Jawbox's releases, band history, and member details of the influential post-hardcore band from DC.",
+    keywords: ["Jawbox", "post-hardcore", "DC music scene"],
+    siteName: "Major League Numbers",
+    ogImage: "https://majorleaguenumbers.com/images/jawbox/logo.png",
+    ogImageAlt: "Jawbox - Discography and History",
+    twitterImage: "https://majorleaguenumbers.com/images/jawbox/logo.png",
+  },
+};
+
 export const MUSIC_SITES = [
   GBV_SITE,
   AMREP_SITE,
@@ -616,6 +676,7 @@ export const MUSIC_SITES = [
   TOUCH_GO_RECORDS_SITE,
   SLAP_A_HAM_RECORDS_SITE,
   SLAP_A_HAM_NUMBERS_SITE,
+  JAWBOX_SITE,
 ] as const;
 
 export type MusicSiteId = (typeof MUSIC_SITES)[number]["id"];

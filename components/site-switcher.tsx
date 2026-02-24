@@ -45,8 +45,9 @@ const musicSites = [
   { name: "Revelation Records", href: "/rev", logo: "/rev-logo.png" },
   { name: "Elephant 6", href: "/e6", logo: "/e6-logo.png" },
   { name: "Skin Graft", href: "/sg", logo: "/sg-logo.png" },
-  { name: "Touch & Go", href: "/touch-go-records", logo: "/images/touch-go-records/logo.jpg" },
+  { name: "Touch & Go", href: "/touch-go-records", logo: "/images/touch-go-records/logo.svg" },
   { name: "Slap-A-Ham Records", href: "/slap-a-ham-records", logo: "/images/slap-a-ham-records/logo.jpg" },
+  { name: "Jawbox", href: "/jawbox", logo: "/images/jawbox/logo.png" },
 ];
 
 export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "music" }) {

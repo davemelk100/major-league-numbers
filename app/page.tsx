@@ -102,13 +102,19 @@ const musicSites = [
   {
     name: "Touch & Go Records",
     href: "/touch-go-records",
-    logo: "/images/touch-go-records/logo.jpg",
+    logo: "/images/touch-go-records/logo.svg",
     description: "Discography & catalog",
   },
   {
     name: "Slap-A-Ham Records",
     href: "/slap-a-ham-records",
     logo: "/images/slap-a-ham-records/logo.jpg",
+    description: "Discography & catalog",
+  },
+  {
+    name: "Jawbox",
+    href: "/jawbox",
+    logo: "/images/jawbox/logo.png",
     description: "Discography & catalog",
   },
 ];

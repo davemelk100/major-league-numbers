@@ -295,12 +295,68 @@ const e6Videos: Video[] = [
   },
 ];
 
+const jawboxVideos: Video[] = [
+  {
+    id: "xFvz1JQAPgQ",
+    title: "Video 1",
+  },
+  {
+    id: "1ivnf4p3EFI",
+    title: "Video 2",
+  },
+  {
+    id: "wXuIQa9uzpg",
+    title: "Video 3",
+  },
+  {
+    id: "qXi_TtLSg-Y",
+    title: "Video 4",
+  },
+  {
+    id: "olJUri6nQxM",
+    title: "Video 5",
+  },
+  {
+    id: "TZG6L555Zb0",
+    title: "Video 6",
+  },
+  {
+    id: "XxxnStEamug",
+    title: "Video 7",
+  },
+  {
+    id: "8lIRYXFbXsg",
+    title: "Video 8",
+  },
+  {
+    id: "FF6L-onR_AU",
+    title: "Video 9",
+  },
+  {
+    id: "4_JEvbJrLZc",
+    title: "Video 10",
+  },
+  {
+    id: "HEb5xdGjbuU",
+    title: "Video 11",
+  },
+  {
+    id: "Elf-CdR5Rq4",
+    title: "Video 12",
+  },
+  {
+    id: "_tv3QwrOqSk",
+    title: "Video 13",
+  },
+];
+
 const SITE_VIDEOS: Record<string, typeof videos> = {
   gbv: videos,
   amrep: amrepVideos,
   e6: e6Videos,
   rev: revVideos,
   sg: sgVideos,
+  "jawbox": jawboxVideos,
 };
 
 function getVideosForSite(siteId: string) {

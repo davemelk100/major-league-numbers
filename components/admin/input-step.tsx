@@ -10,15 +10,14 @@ import { Loader2, Upload, X, CheckCircle2, AlertCircle, Paperclip } from "lucide
 
 type UrlStatus = "idle" | "checking" | "valid" | "invalid";
 
-const LABEL_LOGO_WIDTH = 100;
-const LABEL_LOGO_HEIGHT = 35;
+const LOGO_HEIGHT = 280;
 
 function validateLogoDimensions(file: File): Promise<{ valid: boolean; width: number; height: number }> {
   return new Promise((resolve) => {
     const img = new window.Image();
     img.onload = () => {
       URL.revokeObjectURL(img.src);
-      resolve({ valid: img.naturalWidth === LABEL_LOGO_WIDTH && img.naturalHeight === LABEL_LOGO_HEIGHT, width: img.naturalWidth, height: img.naturalHeight });
+      resolve({ valid: img.naturalHeight === LOGO_HEIGHT, width: img.naturalWidth, height: img.naturalHeight });
     };
     img.onerror = () => {
       URL.revokeObjectURL(img.src);
@@ -115,22 +114,20 @@ export function InputStep({ onGenerated }: InputStepProps) {
     setIsLoading(true);
     setError("");
 
-    // Validate logo URL dimensions for label sites
-    if (siteType === "music" && musicSubtype === "label") {
-      for (const url of [logoUrl1, logoUrl2]) {
-        if (!url) continue;
-        const { valid, width, height } = await new Promise<{ valid: boolean; width: number; height: number }>((resolve) => {
-          const img = new window.Image();
-          img.onload = () => resolve({ valid: img.naturalWidth === LABEL_LOGO_WIDTH && img.naturalHeight === LABEL_LOGO_HEIGHT, width: img.naturalWidth, height: img.naturalHeight });
-          img.onerror = () => resolve({ valid: true, width: 0, height: 0 }); // skip check if can't load
-          img.crossOrigin = "anonymous";
-          img.src = url;
-        });
-        if (!valid) {
-          setError(`Logo URL must be ${LABEL_LOGO_WIDTH}×${LABEL_LOGO_HEIGHT}px (got ${width}×${height})`);
-          setIsLoading(false);
-          return;
-        }
+    // Validate logo URL dimensions
+    for (const url of [logoUrl1, logoUrl2]) {
+      if (!url) continue;
+      const { valid, height } = await new Promise<{ valid: boolean; width: number; height: number }>((resolve) => {
+        const img = new window.Image();
+        img.onload = () => resolve({ valid: img.naturalHeight === LOGO_HEIGHT, width: img.naturalWidth, height: img.naturalHeight });
+        img.onerror = () => resolve({ valid: true, width: 0, height: 0 }); // skip check if can't load
+        img.crossOrigin = "anonymous";
+        img.src = url;
+      });
+      if (!valid) {
+        setError(`Logo height must be ${LOGO_HEIGHT}px (got ${height}px)`);
+        setIsLoading(false);
+        return;
       }
     }
 
@@ -415,10 +412,10 @@ export function InputStep({ onGenerated }: InputStepProps) {
                     const target = e.target as HTMLInputElement;
                     const file = target.files?.[0];
                     if (!file) return;
-                    if (musicSubtype === "label") {
-                      const { valid, width, height } = await validateLogoDimensions(file);
+                    {
+                      const { valid, height } = await validateLogoDimensions(file);
                       if (!valid) {
-                        setLogoError1(`Logo must be ${LABEL_LOGO_WIDTH}×${LABEL_LOGO_HEIGHT}px (got ${width}×${height})`);
+                        setLogoError1(`Logo height must be ${LOGO_HEIGHT}px (got ${height}px)`);
                         setLogoFile1(null);
                         return;
                       }
@@ -444,9 +441,7 @@ export function InputStep({ onGenerated }: InputStepProps) {
                 {logoError1}
               </p>
             )}
-            {musicSubtype === "label" && (
-              <p className="text-xs text-muted-foreground">Required: {LABEL_LOGO_WIDTH}×{LABEL_LOGO_HEIGHT}px</p>
-            )}
+            <p className="text-xs text-muted-foreground">Required height: {LOGO_HEIGHT}px (width auto)</p>
 
             <Label>Logo (alt)</Label>
             <div className="flex gap-2 items-center">
@@ -475,10 +470,10 @@ export function InputStep({ onGenerated }: InputStepProps) {
                     const target = e.target as HTMLInputElement;
                     const file = target.files?.[0];
                     if (!file) return;
-                    if (musicSubtype === "label") {
-                      const { valid, width, height } = await validateLogoDimensions(file);
+                    {
+                      const { valid, height } = await validateLogoDimensions(file);
                       if (!valid) {
-                        setLogoError2(`Logo must be ${LABEL_LOGO_WIDTH}×${LABEL_LOGO_HEIGHT}px (got ${width}×${height})`);
+                        setLogoError2(`Logo height must be ${LOGO_HEIGHT}px (got ${height}px)`);
                         setLogoFile2(null);
                         return;
                       }
