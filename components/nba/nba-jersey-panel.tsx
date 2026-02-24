@@ -25,43 +25,39 @@ interface AnsweredQuestion {
 }
 
 function NBAJerseyContent() {
-  const [quizDate, setQuizDate] = useState<Date | null>(null);
-  const [dailyQuestions, setDailyQuestions] = useState<JerseyQuestion[]>([]);
+  const [quizDate] = useState(() => new Date());
+  const [dailyQuestions] = useState(() => getDailyJerseyQuestions(quizDate));
+  const [yesterdayQuestions] = useState(() => {
+    const yesterday = new Date(quizDate);
+    yesterday.setDate(yesterday.getDate() - 1);
+    return getDailyJerseyQuestions(yesterday);
+  });
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answeredQuestions, setAnsweredQuestions] = useState<AnsweredQuestion[]>([]);
   const [isComplete, setIsComplete] = useState(false);
   const [showYesterday, setShowYesterday] = useState(false);
-  const [yesterdayQuestions, setYesterdayQuestions] = useState<JerseyQuestion[]>([]);
 
   useEffect(() => {
-    const now = new Date();
-    setQuizDate(now);
+    try {
+      const storageKey = getJerseyTodayStorageKey(quizDate);
+      const stored = localStorage.getItem(storageKey);
+      if (stored) {
+        const parsed = JSON.parse(stored) as AnsweredQuestion[];
+        setAnsweredQuestions(parsed);
 
-    const questions = getDailyJerseyQuestions(now);
-    setDailyQuestions(questions);
-
-    const yesterday = new Date(now);
-    yesterday.setDate(yesterday.getDate() - 1);
-    setYesterdayQuestions(getDailyJerseyQuestions(yesterday));
-
-    const storageKey = getJerseyTodayStorageKey(now);
-    const stored = localStorage.getItem(storageKey);
-    if (stored) {
-      const parsed = JSON.parse(stored) as AnsweredQuestion[];
-      setAnsweredQuestions(parsed);
-
-      if (parsed.length >= 5) {
-        setIsComplete(true);
-      } else {
-        const firstUnanswered = questions.findIndex(
-          (q) => !parsed.some((a) => a.questionId === q.id)
-        );
-        if (firstUnanswered !== -1) {
-          setCurrentIndex(firstUnanswered);
+        if (parsed.length >= 5) {
+          setIsComplete(true);
+        } else {
+          const firstUnanswered = dailyQuestions.findIndex(
+            (q) => !parsed.some((a) => a.questionId === q.id)
+          );
+          if (firstUnanswered !== -1) {
+            setCurrentIndex(firstUnanswered);
+          }
         }
       }
-    }
-  }, []);
+    } catch { /* ignore localStorage errors */ }
+  }, [quizDate, dailyQuestions]);
 
   const currentQuestion = showYesterday
     ? yesterdayQuestions[currentIndex]
@@ -88,7 +84,7 @@ function NBAJerseyContent() {
       setIsComplete(true);
     }
 
-    const storageKey = getJerseyTodayStorageKey(quizDate!);
+    const storageKey = getJerseyTodayStorageKey(quizDate);
     localStorage.setItem(storageKey, JSON.stringify(updated));
   };
 
@@ -118,13 +114,7 @@ function NBAJerseyContent() {
     }
   };
 
-  if (!currentQuestion) {
-    return (
-      <div className="w-full h-full bg-muted/30 rounded-lg border p-4 min-h-[380px] animate-pulse">
-        <h2 className="mr-4 text-primary">Jersey Numbers</h2>
-      </div>
-    );
-  }
+  if (!currentQuestion) return null;
 
   return (
     <div className="w-full h-full bg-muted/30 rounded-lg border p-4 space-y-4">

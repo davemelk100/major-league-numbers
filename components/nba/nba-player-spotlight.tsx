@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { Loader2 } from "lucide-react";
-import { getDailyNBAPlayer, type NBASpotlightPlayer } from "@/lib/nba-player-spotlight-data";
+import { getDailyNBAPlayer } from "@/lib/nba-player-spotlight-data";
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 
@@ -15,43 +14,17 @@ function getTodayKey(): string {
 }
 
 function NBAPlayerSpotlightContent() {
-  const [player, setPlayer] = useState<NBASpotlightPlayer | null>(null);
+  const [player] = useState(() => getDailyNBAPlayer());
 
   useEffect(() => {
-    const todayKey = getTodayKey();
     try {
-      const cached = localStorage.getItem(STORAGE_KEY);
-      if (cached) {
-        const { date, player: cachedPlayer, v } = JSON.parse(cached);
-        if (date === todayKey && v === CACHE_VERSION && cachedPlayer) {
-          setPlayer(cachedPlayer);
-          return;
-        }
-      }
+      const todayKey = getTodayKey();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: todayKey, player, v: CACHE_VERSION }));
     } catch { /* ignore */ }
-
-    const daily = getDailyNBAPlayer();
-    setPlayer(daily);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: todayKey, player: daily, v: CACHE_VERSION }));
-    } catch { /* ignore */ }
-  }, []);
-
-  if (!player) {
-    return (
-      <div className="w-full h-full min-h-[350px] bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
-        <div className="flex items-center gap-2">
-          <h2 className="mr-4 text-primary">Player of the Day</h2>
-        </div>
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
-      </div>
-    );
-  }
+  }, [player]);
 
   return (
-    <div className="w-full h-full min-h-[350px] bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
+    <div className="w-full h-full bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
       <div className="flex items-center gap-2">
         <h2 className="mr-4 text-primary">Player of the Day</h2>
       </div>
@@ -86,6 +59,7 @@ function NBAPlayerSpotlightContent() {
 export function NBAPlayerSpotlight() {
   return (
     <Suspense fallback={<div className="w-full bg-muted/30 rounded-lg border p-4 min-h-[350px] animate-pulse" />}>
+
       <NBAPlayerSpotlightContent />
     </Suspense>
   );

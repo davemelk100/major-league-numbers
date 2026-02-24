@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { Loader2 } from "lucide-react";
-import { getDailyTeam, type TeamSpotlight } from "@/lib/nba-team-spotlight-data";
+import { getDailyTeam } from "@/lib/nba-team-spotlight-data";
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 
@@ -15,43 +14,17 @@ function getTodayKey(): string {
 }
 
 function NBATeamSpotlightContent() {
-  const [team, setTeam] = useState<TeamSpotlight | null>(null);
+  const [team] = useState(() => getDailyTeam());
 
   useEffect(() => {
-    const todayKey = getTodayKey();
     try {
-      const cached = localStorage.getItem(STORAGE_KEY);
-      if (cached) {
-        const { date, team: cachedTeam, v } = JSON.parse(cached);
-        if (date === todayKey && v === CACHE_VERSION && cachedTeam) {
-          setTeam(cachedTeam);
-          return;
-        }
-      }
+      const todayKey = getTodayKey();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: todayKey, team, v: CACHE_VERSION }));
     } catch { /* ignore */ }
-
-    const daily = getDailyTeam();
-    setTeam(daily);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: todayKey, team: daily, v: CACHE_VERSION }));
-    } catch { /* ignore */ }
-  }, []);
-
-  if (!team) {
-    return (
-      <div className="w-full h-full min-h-[330px] bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
-        <div className="flex items-center gap-2">
-          <h2 className="mr-4 text-primary">Team of the Day</h2>
-        </div>
-        <div className="flex items-center justify-center py-12">
-          <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        </div>
-      </div>
-    );
-  }
+  }, [team]);
 
   return (
-    <div className="w-full h-full min-h-[330px] bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
+    <div className="w-full h-full bg-muted/30 rounded-lg border p-3 sm:p-4 space-y-2 sm:space-y-4">
       <div className="flex items-center gap-2">
         <h2 className="mr-4 text-primary">Team of the Day</h2>
       </div>
