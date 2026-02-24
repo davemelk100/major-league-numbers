@@ -12,7 +12,6 @@
    Star,
    Video,
    BookOpen,
-   Loader2,
    type LucideIcon,
  } from "lucide-react";
  import { cn } from "@/lib/utils";
@@ -37,7 +36,6 @@
     setPendingHref(null);
   }, [pathname]);
    const navigation: NavItem[] = [
-     { name: site.chatLabel, href: `${site.basePath}/ask`, image: site.chatIconSrc },
      { name: "Home", href: site.basePath, icon: Home },
      { name: site.navLabels.discography, href: `${site.basePath}/${site.albumsSlug}`, icon: Disc3 },
      { name: site.navLabels.members, href: `${site.basePath}/${site.membersSlug}`, icon: Users },
@@ -57,7 +55,6 @@
           const isActive = pathname === item.href;
           const isPending = pendingHref === item.href && pendingHref !== pathname;
           const showActive = isActive || isPending;
-           const isChat = item.href === `${site.basePath}/ask`;
            return (
              <Link
                key={item.name}
@@ -81,15 +78,15 @@
                  <img
                    src={item.image}
                    alt={item.name}
-                   width={isChat ? 40 : 20}
-                   height={isChat ? 40 : 20}
+                   width={20}
+                   height={20}
                    className={cn(
-                     isChat ? "h-10 w-10" : "h-5 w-5",
+                     "h-5 w-5",
                      "object-contain transition-transform duration-200 group-hover:scale-110",
                      isPending && "animate-spin [animation-duration:2s]",
                      !isLightShell && !showActive ? "brightness-0 invert group-hover:brightness-100 group-hover:invert-0" : ""
                    )}
-                   loading={isChat ? "eager" : "lazy"}
+                   loading="lazy"
                  />
                ) : (
                  Icon && (
@@ -123,7 +120,6 @@
     setPendingHref(null);
   }, [pathname]);
    const navigation: NavItem[] = [
-     { name: site.chatLabel, href: `${site.basePath}/ask`, image: site.chatIconSrc },
      { name: "Home", href: site.basePath, icon: Home },
      { name: site.navLabels.discography, href: `${site.basePath}/${site.albumsSlug}`, icon: Disc3 },
      { name: site.navLabels.members, href: `${site.basePath}/${site.membersSlug}`, icon: Users },
@@ -146,7 +142,6 @@
           const isActive = pathname === item.href;
           const isPending = pendingHref === item.href && pendingHref !== pathname;
           const showActive = isActive || isPending;
-           const isChat = item.href === `${site.basePath}/ask`;
            return (
              <Link
                key={item.name}
@@ -169,12 +164,11 @@
                  <img
                    src={item.image}
                    alt={item.name}
-                   width={isChat ? 24 : 20}
-                   height={isChat ? 24 : 20}
+                   width={20}
+                   height={20}
                    className={cn(
-                     isChat ? "h-6 w-6" : "h-5 w-5",
+                     "h-5 w-5",
                      "object-contain",
-                     isChat ? "gbv-nav-icon" : "",
                      isPending && "animate-spin [animation-duration:2s]",
                      !isLightShell ? "brightness-0 invert" : ""
                    )}
