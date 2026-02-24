@@ -13,6 +13,9 @@ interface WriteResults {
   results: Array<{ path: string; success: boolean; error?: string }>;
   siteUrl: string;
   summary: { total: number; success: number; failed: number };
+  mode?: "local" | "github";
+  commitSha?: string;
+  commitUrl?: string;
 }
 
 export function AdminWizard() {
@@ -144,6 +147,9 @@ export function AdminWizard() {
             results={writeResults.results}
             siteUrl={writeResults.siteUrl}
             summary={writeResults.summary}
+            mode={writeResults.mode}
+            commitSha={writeResults.commitSha}
+            commitUrl={writeResults.commitUrl}
           />
         )}
       </div>

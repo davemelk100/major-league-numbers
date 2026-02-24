@@ -15,15 +15,43 @@ interface ConfirmStepProps {
   results: FileResult[];
   siteUrl: string;
   summary: { total: number; success: number; failed: number };
+  mode?: "local" | "github";
+  commitSha?: string;
+  commitUrl?: string;
 }
 
-export function ConfirmStep({ results, siteUrl, summary }: ConfirmStepProps) {
+export function ConfirmStep({ results, siteUrl, summary, mode, commitSha, commitUrl }: ConfirmStepProps) {
   return (
     <div className="max-w-2xl mx-auto space-y-4">
+      {mode === "github" && commitSha && (
+        <Card className="border-blue-500/50 bg-blue-500/5">
+          <CardContent className="pt-6">
+            <p className="text-sm font-medium mb-2">
+              Committed to GitHub — Vercel will deploy in ~2 minutes.
+            </p>
+            <p className="text-xs text-muted-foreground font-mono">
+              Commit:{" "}
+              {commitUrl ? (
+                <a
+                  href={commitUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-foreground"
+                >
+                  {commitSha.slice(0, 7)}
+                </a>
+              ) : (
+                commitSha.slice(0, 7)
+              )}
+            </p>
+          </CardContent>
+        </Card>
+      )}
+
       <Card>
         <CardHeader>
           <CardTitle>
-            Files Written ({summary.success}/{summary.total})
+            {mode === "github" ? "Files Committed" : "Files Written"} ({summary.success}/{summary.total})
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -51,9 +79,15 @@ export function ConfirmStep({ results, siteUrl, summary }: ConfirmStepProps) {
       </Card>
 
       <div className="flex gap-3 justify-center">
-        <Link href={siteUrl}>
-          <Button>Visit New Site</Button>
-        </Link>
+        {mode === "github" ? (
+          <Button variant="outline" disabled>
+            Site will be live after deploy
+          </Button>
+        ) : (
+          <Link href={siteUrl}>
+            <Button>Visit New Site</Button>
+          </Link>
+        )}
         <Button
           variant="outline"
           onClick={() => window.location.reload()}
