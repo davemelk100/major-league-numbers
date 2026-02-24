@@ -5,6 +5,7 @@ import { openai } from "@ai-sdk/openai";
 import { generatedSiteDataSchema } from "@/lib/admin/schemas";
 import { getMusicSystemPrompt, getSportsSystemPrompt } from "@/lib/admin/prompts";
 import { fetchDiscogsLabelData } from "@/lib/admin/fetch-discogs-label";
+import { fetchDiscogsArtistData } from "@/lib/admin/fetch-discogs-artist";
 
 const ADMIN_PASSCODE = "6231839";
 
@@ -21,7 +22,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const { siteType, musicSubtype, siteId, siteName, content, extractedText, logoPaths } = body;
+    const { siteType, musicSubtype, siteId, siteName, content, extractedText, logoPaths, discogsLabelId, discogsArtistId } = body;
 
     if (!siteType || !siteId || !siteName) {
       return NextResponse.json(
@@ -128,11 +129,14 @@ export async function POST(request: Request) {
 
     // If discogsLabelId is present and we have a token, fetch exhaustive discography
     const discogsToken = process.env.DISCOGS_USER_TOKEN || process.env.DISCOGS_TOKEN;
-    if (finalData.config.discogsLabelId && discogsToken) {
+    const resolvedDiscogsLabelId =
+      discogsLabelId ? Number(discogsLabelId) : finalData.config.discogsLabelId;
+    if (resolvedDiscogsLabelId && discogsToken) {
       try {
-        console.log(`[ADMIN] Fetching Discogs label ${finalData.config.discogsLabelId}...`);
+        console.log(`[ADMIN] Fetching Discogs label ${resolvedDiscogsLabelId}...`);
+        finalData.config.discogsLabelId = resolvedDiscogsLabelId;
         const discogsData = await fetchDiscogsLabelData(
-          finalData.config.discogsLabelId,
+          resolvedDiscogsLabelId,
           discogsToken,
         );
         // Replace AI-generated artists/releases with exhaustive Discogs data
@@ -147,7 +151,35 @@ export async function POST(request: Request) {
         );
       } catch (discogsError) {
         console.warn(
-          "[ADMIN] Discogs fetch failed, using AI-generated data:",
+          "[ADMIN] Discogs label fetch failed, using AI-generated data:",
+          discogsError instanceof Error ? discogsError.message : discogsError,
+        );
+      }
+    }
+
+    // If discogsArtistId is present, fetch artist members + discography
+    const resolvedDiscogsArtistId =
+      discogsArtistId ? Number(discogsArtistId) : finalData.config.discogsArtistId;
+    if (resolvedDiscogsArtistId && discogsToken) {
+      try {
+        console.log(`[ADMIN] Fetching Discogs artist ${resolvedDiscogsArtistId}...`);
+        const discogsData = await fetchDiscogsArtistData(
+          resolvedDiscogsArtistId,
+          discogsToken,
+        );
+        finalData = {
+          ...finalData,
+          artists: discogsData.artists,
+          releases: discogsData.releases,
+        };
+        // Store the artist ID in config
+        finalData.config.discogsArtistId = resolvedDiscogsArtistId;
+        console.log(
+          `[ADMIN] Merged Discogs artist data: ${discogsData.artists.length} members, ${discogsData.releases.length} releases`,
+        );
+      } catch (discogsError) {
+        console.warn(
+          "[ADMIN] Discogs artist fetch failed, using AI-generated data:",
           discogsError instanceof Error ? discogsError.message : discogsError,
         );
       }

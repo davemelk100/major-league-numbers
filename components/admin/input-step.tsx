@@ -68,6 +68,7 @@ export function InputStep({ onGenerated }: InputStepProps) {
   const [siteName, setSiteName] = useState("");
   const [siteId, setSiteId] = useState("");
   const [siteIdEdited, setSiteIdEdited] = useState(false);
+  const [discogsId, setDiscogsId] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [logoUrl1, setLogoUrl1] = useState("");
@@ -183,6 +184,12 @@ export function InputStep({ onGenerated }: InputStepProps) {
           content,
           extractedText,
           logoPaths,
+          ...(discogsId && siteType === "music" && musicSubtype === "label"
+            ? { discogsLabelId: Number(discogsId) }
+            : {}),
+          ...(discogsId && siteType === "music" && musicSubtype === "artist"
+            ? { discogsArtistId: Number(discogsId) }
+            : {}),
         }),
       });
 
@@ -301,6 +308,28 @@ export function InputStep({ onGenerated }: InputStepProps) {
               }}
             />
           </div>
+
+          {/* Discogs ID */}
+          {siteType === "music" && (
+            <div className="space-y-2">
+              <Label htmlFor="discogsId">Discogs ID (optional)</Label>
+              <Input
+                id="discogsId"
+                placeholder={
+                  musicSubtype === "label"
+                    ? "Discogs label ID (e.g. 819)"
+                    : "Discogs artist/band ID (e.g. 252314 for Jawbox)"
+                }
+                value={discogsId}
+                onChange={(e) => setDiscogsId(e.target.value)}
+              />
+              <p className="text-xs text-muted-foreground">
+                {musicSubtype === "label"
+                  ? "Fetches complete label discography from Discogs"
+                  : "Fetches real band members and discography from Discogs"}
+              </p>
+            </div>
+          )}
 
           {/* Content */}
           <div className="space-y-2">

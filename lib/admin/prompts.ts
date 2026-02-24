@@ -26,6 +26,7 @@ Site configuration matching this TypeScript interface:
   sources: Array<{ label: string; url: string }>;  // data sources
   imageSources: Array<{ label: string; url: string }>;  // image sources
   discogsLabelId?: number;  // Discogs label ID (e.g. 819 for Touch and Go, 5126 for AmRep). Look this up if you know it.
+  discogsArtistId?: number;  // Discogs artist/band ID (e.g. 252314 for Jawbox). Look this up if you know it.
   searchPlaceholder: string;  // e.g. "Search Dischord..."
   seo: { title: string; description: string; keywords: string[]; }
 }
@@ -136,7 +137,10 @@ Record<string, string>
 2. All data must be factually accurate based on the provided content
 3. Do not invent facts — if unsure, omit rather than guess
 4. Artists and releases should be sorted alphabetically by name/title
-5. Trivia questions must have exactly 4 options with one correct answer`;
+5. Trivia questions must have exactly 4 options with one correct answer
+6. For members/artists and releases: ONLY use info explicitly provided in the user content. Never invent band members, album titles, years, or catalog numbers. If not listed, leave arrays empty — they will be populated from Discogs.
+7. Focus generation on trivia, timeline, knowledge, and recordFacts — these benefit from AI synthesis.
+8. Reference authoritative sources like Dischord Records (dischord.com), label websites, and official band pages when generating knowledge docs.`;
 }
 
 export function getSportsSystemPrompt(): string {
