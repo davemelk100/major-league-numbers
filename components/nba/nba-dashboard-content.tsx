@@ -4,12 +4,8 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 /* eslint-disable @next/next/no-img-element */
 import { Card, CardContent } from "@/components/ui/card";
-import { getPlayerHeadshotUrl, getTeamLogoUrl } from "@/lib/nba-api";
-
-const NBATriviaPanel = dynamic(
-  () => import("@/components/nba/nba-trivia-panel").then((m) => m.NBATriviaPanel),
-  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 h-[300px] animate-pulse" /> }
-);
+import { getPlayerHeadshotUrl, getTeamLogoUrl, resizeEspnImage } from "@/lib/nba-api";
+import { NBATriviaPanel } from "@/components/nba/nba-trivia-panel";
 
 const NBAJerseyPanel = dynamic(
   () => import("@/components/nba/nba-jersey-panel").then((m) => m.NBAJerseyPanel),
@@ -82,7 +78,7 @@ export function NBADashboardContent({ leaders, standings }: NBADashboardContentP
                 {item.leader ? (
                   <Link href={`/nba/players/${item.leader.id}`} className="flex items-center gap-3 group">
                     <img
-                      src={item.leader.headshot || getPlayerHeadshotUrl(item.leader.id)}
+                      src={resizeEspnImage(item.leader.headshot || getPlayerHeadshotUrl(item.leader.id), 96)}
                       alt={item.leader.name}
                       width={48}
                       height={48}
@@ -125,10 +121,11 @@ export function NBADashboardContent({ leaders, standings }: NBADashboardContentP
                   >
                     <span className="text-sm text-muted-foreground w-4">{idx + 1}</span>
                     <img
-                      src={team.logo || getTeamLogoUrl(team.abbrev)}
+                      src={resizeEspnImage(team.logo || getTeamLogoUrl(team.abbrev), 48)}
                       alt={team.team}
                       width={24}
                       height={24}
+                      loading="lazy"
                     />
                     <span className="text-sm font-medium flex-1 truncate">{team.team}</span>
                     <span className="text-sm text-muted-foreground">
@@ -153,10 +150,11 @@ export function NBADashboardContent({ leaders, standings }: NBADashboardContentP
                   >
                     <span className="text-sm text-muted-foreground w-4">{idx + 1}</span>
                     <img
-                      src={team.logo || getTeamLogoUrl(team.abbrev)}
+                      src={resizeEspnImage(team.logo || getTeamLogoUrl(team.abbrev), 48)}
                       alt={team.team}
                       width={24}
                       height={24}
+                      loading="lazy"
                     />
                     <span className="text-sm font-medium flex-1 truncate">{team.team}</span>
                     <span className="text-sm text-muted-foreground">

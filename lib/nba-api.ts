@@ -406,12 +406,23 @@ export async function searchNBA(query: string): Promise<{ players: any[]; teams:
 
 // ── Helpers ─────────────────────────────────────────────────
 
-export function getPlayerHeadshotUrl(id: string | number): string {
-  return `https://a.espncdn.com/i/headshots/nba/players/full/${id}.png`;
+export function getPlayerHeadshotUrl(id: string | number, size?: number): string {
+  const base = `https://a.espncdn.com/i/headshots/nba/players/full/${id}.png`;
+  if (!size) return base;
+  return `https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/${id}.png&w=${size}&h=${size}`;
 }
 
-export function getTeamLogoUrl(abbrev: string): string {
-  return `https://a.espncdn.com/i/teamlogos/nba/500/${abbrev.toLowerCase()}.png`;
+export function getTeamLogoUrl(abbrev: string, size?: number): string {
+  const base = `https://a.espncdn.com/i/teamlogos/nba/500/${abbrev.toLowerCase()}.png`;
+  if (!size) return base;
+  return `https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/${abbrev.toLowerCase()}.png&w=${size}&h=${size}`;
+}
+
+/** Resize any ESPN image URL via the ESPN combiner service */
+export function resizeEspnImage(url: string, size: number): string {
+  if (!url.includes("espncdn.com/i/")) return url;
+  const path = url.replace(/^https?:\/\/a\.espncdn\.com/, "");
+  return `https://a.espncdn.com/combiner/i?img=${path}&w=${size}&h=${size}`;
 }
 
 // NBA conferences and divisions
