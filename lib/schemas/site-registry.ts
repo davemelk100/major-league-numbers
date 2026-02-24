@@ -22,7 +22,6 @@ export const MEMBERS_ROUTE_SLUGS: Record<string, string> = {
   "touch-go-records": "artists",
   "slap-a-ham-records": "artists",
   "slap-a-ham-numbers": "artists",
-  "test-github-commit": "artists",
 };
 
 /**
@@ -38,7 +37,6 @@ export const ALBUMS_ROUTE_SLUGS: Record<string, string> = {
   "touch-go-records": "releases",
   "slap-a-ham-records": "releases",
   "slap-a-ham-numbers": "releases",
-  "test-github-commit": "releases",
 };
 
 /** Component files every site must provide (relative to components/{siteId}/) */

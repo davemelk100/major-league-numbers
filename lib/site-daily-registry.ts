@@ -41,11 +41,6 @@ import {
   getSlapAHamNumbersTodayStorageKey,
 } from "@/lib/slap-a-ham-numbers-trivia-data";
 
-import {
-  getDailyTestGithubCommitTriviaQuestions,
-  getTestGithubCommitTodayStorageKey,
-} from "@/lib/test-github-commit-trivia-data";
-
 // ── Records imports ─────────────────────────────────────────────────
 import { getDailyGbvRecord } from "@/lib/gbv-records-data";
 import { getDailyAmrepRecord } from "@/lib/amrep-records-data";
@@ -57,8 +52,6 @@ import { getDailySlapAHamRecordsRecord } from "@/lib/slap-a-ham-records-records-
 
 import { getDailySlapAHamNumbersRecord } from "@/lib/slap-a-ham-numbers-records-data";
 
-import { getDailyTestGithubCommitRecord } from "@/lib/test-github-commit-records-data";
-
 // ── Album image imports ─────────────────────────────────────────────
 import { getLocalAlbumImage as getGbvAlbumImage } from "@/lib/gbv-release-images";
 import { getAmrepAlbumImage } from "@/lib/amrep-release-images";
@@ -67,8 +60,6 @@ import { getLocalAlbumImage as getTouchGoAlbumImage } from "@/lib/touch-go-recor
 import { getLocalAlbumImage as getSlapAHamRecordsAlbumImage } from "@/lib/slap-a-ham-records-release-images";
 
 import { getLocalAlbumImage as getSlapAHamNumbersAlbumImage } from "@/lib/slap-a-ham-numbers-release-images";
-
-import { getLocalAlbumImage as getTestGithubCommitAlbumImage } from "@/lib/test-github-commit-release-images";
 
 // ── Common types ────────────────────────────────────────────────────
 export interface TriviaQuestion {
@@ -130,10 +121,6 @@ const TRIVIA_REGISTRY: Record<string, TriviaEntry> = {
     getDaily: getDailySlapAHamNumbersTriviaQuestions,
     getStorageKey: getSlapAHamNumbersTodayStorageKey,
   },
-  "test-github-commit": {
-    getDaily: getDailyTestGithubCommitTriviaQuestions,
-    getStorageKey: getTestGithubCommitTodayStorageKey,
-  },
   // ── new-site-trivia ──
 };
 
@@ -173,10 +160,6 @@ const RECORDS_REGISTRY: Record<string, RecordsEntry> = {
   "slap-a-ham-numbers": {
     getDaily: getDailySlapAHamNumbersRecord as (date?: Date) => RecordOfDay,
     getAlbumImage: getSlapAHamNumbersAlbumImage,
-  },
-  "test-github-commit": {
-    getDaily: getDailyTestGithubCommitRecord as (date?: Date) => RecordOfDay,
-    getAlbumImage: getTestGithubCommitAlbumImage,
   },
   // ── new-site-records ──
 };

@@ -111,12 +111,6 @@ const musicSites = [
     logo: "/images/slap-a-ham-records/logo.jpg",
     description: "Discography & catalog",
   },
-  {
-    name: "Test GitHub Commit",
-    href: "/test-github-commit",
-    logo: "/images/test-github-commit/logo.png",
-    description: "Discography & catalog",
-  },
 ];
 
 function SiteCard({

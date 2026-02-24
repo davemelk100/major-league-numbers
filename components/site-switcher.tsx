@@ -47,7 +47,6 @@ const musicSites = [
   { name: "Skin Graft", href: "/sg", logo: "/sg-logo.png" },
   { name: "Touch & Go", href: "/touch-go-records", logo: "/images/touch-go-records/logo.jpg" },
   { name: "Slap-A-Ham Records", href: "/slap-a-ham-records", logo: "/images/slap-a-ham-records/logo.jpg" },
-  { name: "Test GitHub Commit", href: "/test-github-commit", logo: "/images/test-github-commit/logo.png" },
 ];
 
 export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "music" }) {

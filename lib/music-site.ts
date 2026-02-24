@@ -607,54 +607,6 @@ export const SLAP_A_HAM_NUMBERS_SITE: MusicSiteConfig = {
 };
 
 
-
-export const TEST_GITHUB_COMMIT_SITE: MusicSiteConfig = {
-  id: "test-github-commit",
-  name: "Test GitHub Commit",
-  shortName: "TGC",
-  basePath: "/test-github-commit",
-  chatLabel: "Ask TGC",
-  headerTitle: "Test GitHub Commit",
-  headerTextClass: "text-black",
-  logoSrc: "/images/test-github-commit/logo.png",
-  chatIconSrc: "/images/test-github-commit/logo.png",
-  placeholderIconSrc: "/images/test-github-commit/logo.png",
-  shellClass: "bg-zinc-900",
-  logoClassName: "h-auto w-[15%]",
-  description: "A test site for verifying GitHub commit mode",
-  navLabels: {
-    discography: "Releases",
-    members: "Artists",
-    sideProjects: "Side Projects",
-  },
-  membersSlug: "artists",
-  albumsSlug: "releases",
-  footerDisclaimer: "All Content, Rights, Copyrights, etc. are the property of the respective owners. This is simply a fan site.",
-  sources: [
-
-  ],
-  imageSources: [
-
-  ],
-  images: {
-    fallbackIcon: "/images/test-github-commit/logo.png",
-    fit: "contain",
-    lookupStrategy: "discogs",
-    invalidCacheValues: ["/images/test-github-commit/logo.png"],
-  },
-  searchPlaceholder: "Search test...",
-  seo: {
-    title: "Test GitHub Commit",
-    titleTemplate: "%s | Test GitHub Commit",
-    description: "Test site",
-    keywords: [],
-    siteName: "Major League Numbers",
-    ogImage: "https://majorleaguenumbers.com/images/test-github-commit/logo.png",
-    ogImageAlt: "Test GitHub Commit",
-    twitterImage: "https://majorleaguenumbers.com/images/test-github-commit/logo.png",
-  },
-};
-
 export const MUSIC_SITES = [
   GBV_SITE,
   AMREP_SITE,
@@ -664,7 +616,6 @@ export const MUSIC_SITES = [
   TOUCH_GO_RECORDS_SITE,
   SLAP_A_HAM_RECORDS_SITE,
   SLAP_A_HAM_NUMBERS_SITE,
-  TEST_GITHUB_COMMIT_SITE,
 ] as const;
 
 export type MusicSiteId = (typeof MUSIC_SITES)[number]["id"];

@@ -19,8 +19,6 @@ import { slapahamrecordsArtists } from "@/lib/slap-a-ham-records-artists-data";
 import { SLAP_A_HAM_RECORDS_ARTIST_IMAGES } from "@/lib/slap-a-ham-records-artist-images";
 import { slapahamnumbersArtists } from "@/lib/slap-a-ham-numbers-artists-data";
 import { SLAP_A_HAM_NUMBERS_ARTIST_IMAGES } from "@/lib/slap-a-ham-numbers-artist-images";
-import { testgithubcommitArtists } from "@/lib/test-github-commit-artists-data";
-import { TEST_GITHUB_COMMIT_ARTIST_IMAGES } from "@/lib/test-github-commit-artist-images";
 // ── new-site-artists ──
 
 // ── Release imports ─────────────────────────────────────────────────
@@ -29,7 +27,6 @@ import { amrepReleases } from "@/lib/amrep-releases-data";
 import { touchgorecordsReleases } from "@/lib/touch-go-records-releases-data";
 import { slapahamrecordsReleases } from "@/lib/slap-a-ham-records-releases-data";
 import { slapahamnumbersReleases } from "@/lib/slap-a-ham-numbers-releases-data";
-import { testgithubcommitReleases } from "@/lib/test-github-commit-releases-data";
 // ── new-site-releases ──
 
 // ── Timeline imports ────────────────────────────────────────────────
@@ -40,7 +37,6 @@ import { e6Timeline } from "@/lib/e6-timeline-data";
 import { touchgorecordsTimeline } from "@/lib/touch-go-records-timeline-data";
 import { slapahamrecordsTimeline } from "@/lib/slap-a-ham-records-timeline-data";
 import { slapahamnumbersTimeline } from "@/lib/slap-a-ham-numbers-timeline-data";
-import { testgithubcommitTimeline } from "@/lib/test-github-commit-timeline-data";
 // ── new-site-timeline ──
 
 // ── Side-projects / related-labels imports ──────────────────────────
@@ -58,7 +54,6 @@ import { getLocalAlbumImage as getE6AlbumImage } from "@/lib/e6-release-images";
 import { getLocalAlbumImage as getTouchGoAlbumImage } from "@/lib/touch-go-records-release-images";
 import { getLocalAlbumImage as getSlapAHamRecordsAlbumImage } from "@/lib/slap-a-ham-records-release-images";
 import { getLocalAlbumImage as getSlapAHamNumbersAlbumImage } from "@/lib/slap-a-ham-numbers-release-images";
-import { getLocalAlbumImage as getTestGithubCommitAlbumImage } from "@/lib/test-github-commit-release-images";
 // ── new-site-albumimages ──
 
 // ── Common types ────────────────────────────────────────────────────
@@ -142,7 +137,6 @@ const ARTISTS_REGISTRY: Record<string, () => SiteArtist[]> = {
   "touch-go-records": () => mapArtists(touchgorecordsArtists, TOUCH_GO_RECORDS_ARTIST_IMAGES),
   "slap-a-ham-records": () => mapArtists(slapahamrecordsArtists, SLAP_A_HAM_RECORDS_ARTIST_IMAGES),
   "slap-a-ham-numbers": () => mapArtists(slapahamnumbersArtists, SLAP_A_HAM_NUMBERS_ARTIST_IMAGES),
-  "test-github-commit": () => mapArtists(testgithubcommitArtists, TEST_GITHUB_COMMIT_ARTIST_IMAGES),
   // ── new-site-artists-entry ──
 };
 
@@ -185,15 +179,6 @@ const RELEASES_REGISTRY: Record<string, () => SiteRelease[]> = {
     })),
   "slap-a-ham-numbers": () =>
     slapahamnumbersReleases.map((r) => ({
-      id: r.id,
-      title: r.artist ? `${r.artist} — ${r.title}` : r.title,
-      artist: r.artist,
-      year: r.year,
-      format: r.format,
-      catalogNo: r.catalogNo,
-    })),
-  "test-github-commit": () =>
-    testgithubcommitReleases.map((r) => ({
       id: r.id,
       title: r.artist ? `${r.artist} — ${r.title}` : r.title,
       artist: r.artist,
@@ -249,7 +234,6 @@ const TIMELINE_REGISTRY: Record<string, () => SiteTimelineEvent[]> = {
   "touch-go-records": () => mapTimeline(touchgorecordsTimeline),
   "slap-a-ham-records": () => mapTimeline(slapahamrecordsTimeline),
   "slap-a-ham-numbers": () => mapTimeline(slapahamnumbersTimeline),
-  "test-github-commit": () => mapTimeline(testgithubcommitTimeline),
   // ── new-site-timeline-entry ──
 };
 
@@ -273,7 +257,6 @@ const ALBUM_IMAGE_REGISTRY: Record<string, (id: number) => string | null> = {
   "touch-go-records": getTouchGoAlbumImage,
   "slap-a-ham-records": getSlapAHamRecordsAlbumImage,
   "slap-a-ham-numbers": getSlapAHamNumbersAlbumImage,
-  "test-github-commit": getTestGithubCommitAlbumImage,
   // ── new-site-albumimages-entry ──
 };
 
