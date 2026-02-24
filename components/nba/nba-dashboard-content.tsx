@@ -6,11 +6,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { getPlayerHeadshotUrl, getTeamLogoUrl, resizeEspnImage } from "@/lib/nba-api";
 import { NBATriviaPanel } from "@/components/nba/nba-trivia-panel";
-
-const NBAJerseyPanel = dynamic(
-  () => import("@/components/nba/nba-jersey-panel").then((m) => m.NBAJerseyPanel),
-  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 min-h-[380px] animate-pulse" /> }
-);
+import { NBAJerseyPanel } from "@/components/nba/nba-jersey-panel";
 
 const NBAPlayerSpotlight = dynamic(
   () => import("@/components/nba/nba-player-spotlight").then((m) => m.NBAPlayerSpotlight),
