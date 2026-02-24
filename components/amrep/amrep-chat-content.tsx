@@ -514,7 +514,7 @@ export function GbvChatContent() {
               width={128}
               height={128}
               className="h-32 w-auto mb-4 gbv-rune-white object-contain"
-              priority
+              fetchPriority="high"
               loading="eager"
             />
             <h1 className="mb-2">{site.chatLabel}</h1>
