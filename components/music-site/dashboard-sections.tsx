@@ -1,9 +1,10 @@
 "use client";
 
-import { Children, type ComponentProps, type ComponentType, type ReactNode } from "react";
+import { Children, useState, type ComponentProps, type ComponentType, type ReactNode } from "react";
 import Link from "next/link";
 /* eslint-disable @next/next/no-img-element */
 import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import type { MusicSiteConfig } from "@/lib/music-site";
 import { MemberAvatar } from "@/components/music-site/member-avatar";
 import { cn } from "@/lib/utils";
@@ -81,6 +82,7 @@ type DashboardDiscographyGridProps<T extends DashboardAlbum> = {
   placeholderWrapperClassName?: string;
   placeholderSize?: number;
   renderPlaceholder?: () => ReactNode;
+  pageSize?: number;
 };
 
 export function DashboardDescription({ text }: { text?: string }) {
@@ -185,7 +187,9 @@ export function DashboardDiscographyGrid<T extends DashboardAlbum>({
   placeholderWrapperClassName,
   placeholderSize = 24,
   renderPlaceholder: renderPlaceholderProp,
+  pageSize = 30,
 }: DashboardDiscographyGridProps<T>) {
+  const [visibleCount, setVisibleCount] = useState(pageSize);
   const imageClassName = `w-full aspect-square rounded-lg object-${imageFit} mb-2`;
 
   const renderPlaceholder = renderPlaceholderProp ?? (() => (
@@ -210,63 +214,78 @@ export function DashboardDiscographyGrid<T extends DashboardAlbum>({
     </div>
   ));
 
-  return (
-    <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-      {albums.map((album, index) => {
-        const albumImage = getAlbumImage(album);
-        const card = (
-          <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
-            <CardContent className="p-3">
-              {albumImage ? (
-                <RemoteImage
-                  src={albumImage}
-                  alt={album.title}
-                  width={200}
-                  height={200}
-                  className={imageClassName}
-                  loading={index < 5 ? "eager" : "lazy"}
-                  fetchPriority={index === 0 ? "high" : undefined}
-                  cacheKey={
-                    album.id ? `${cacheKeyPrefix}:${album.id}` : undefined
-                  }
-                  preferProxy
-                />
-              ) : (
-                renderPlaceholder()
-              )}
-              <h3 className="font-semibold text-base truncate">
-                {album.title}
-              </h3>
-              <div className="flex items-center justify-between text-xs text-muted-foreground">
-                <span>{album.year ?? "—"}</span>
-                <span className="border border-border rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide">
-                  {getReleaseTypeLabel(album)}
-                </span>
-              </div>
-            </CardContent>
-          </Card>
-        );
+  const visibleAlbums = albums.slice(0, visibleCount);
+  const hasMore = visibleCount < albums.length;
 
-        if (album.id) {
+  return (
+    <>
+      <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        {visibleAlbums.map((album, index) => {
+          const albumImage = getAlbumImage(album);
+          const card = (
+            <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
+              <CardContent className="p-3">
+                {albumImage ? (
+                  <RemoteImage
+                    src={albumImage}
+                    alt={album.title}
+                    width={200}
+                    height={200}
+                    className={imageClassName}
+                    loading={index < 5 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : undefined}
+                    cacheKey={
+                      album.id ? `${cacheKeyPrefix}:${album.id}` : undefined
+                    }
+                    preferProxy
+                  />
+                ) : (
+                  renderPlaceholder()
+                )}
+                <h3 className="font-semibold text-base truncate">
+                  {album.title}
+                </h3>
+                <div className="flex items-center justify-between text-xs text-muted-foreground">
+                  <span>{album.year ?? "—"}</span>
+                  <span className="border border-border rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide">
+                    {getReleaseTypeLabel(album)}
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          );
+
+          if (album.id) {
+            return (
+              <Link
+                key={`${album.id}-${index}`}
+                href={`${linkBasePath}/${album.id}`}
+              >
+                {card}
+              </Link>
+            );
+          }
+
           return (
-            <Link
-              key={`${album.id}-${index}`}
-              href={`${linkBasePath}/${album.id}`}
+            <div
+              key={`${album.title}-${album.year ?? "unknown"}-${index}`}
+              className="cursor-default"
             >
               {card}
-            </Link>
+            </div>
           );
-        }
-
-        return (
-          <div
-            key={`${album.title}-${album.year ?? "unknown"}-${index}`}
-            className="cursor-default"
+        })}
+      </div>
+      {hasMore && (
+        <div className="flex justify-center mt-6">
+          <Button
+            variant="outline"
+            onClick={() => setVisibleCount((c) => c + pageSize)}
           >
-            {card}
-          </div>
-        );
-      })}
-    </div>
+            Load more ({albums.length - visibleCount} remaining)
+          </Button>
+        </div>
+      )}
+    </>
   );
 }

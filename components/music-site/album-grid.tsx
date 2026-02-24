@@ -1,9 +1,10 @@
  "use client";
 
  import Link from "next/link";
- import type { ComponentType } from "react";
+ import { useState, type ComponentType } from "react";
  import { ShoppingCart } from "lucide-react";
  import { Card, CardContent } from "@/components/ui/card";
+ import { Button } from "@/components/ui/button";
  import type { MusicSiteConfig } from "@/lib/music-site";
 import { SitePlaceholderIcon } from "@/components/music-site/site-placeholder-icon";
 
@@ -39,6 +40,7 @@ export type AlbumGridItem = {
    linkBasePath: string;
    cacheKeyPrefix: string;
    eagerCount?: number;
+   pageSize?: number;
    imageFit?: "cover" | "contain";
    preferProxy?: boolean;
    getPurchaseUrl?: (album: T) => string | null;
@@ -54,67 +56,83 @@ export function AlbumGrid<T extends AlbumGridItem>({
    linkBasePath,
    cacheKeyPrefix,
    eagerCount = 6,
+   pageSize = 30,
    imageFit = "cover",
    preferProxy = true,
    getPurchaseUrl,
 }: AlbumGridProps<T>) {
+   const [visibleCount, setVisibleCount] = useState(pageSize);
    const imageClassName = `w-full aspect-square rounded-lg object-${imageFit} mb-2`;
+   const visibleAlbums = albums.slice(0, visibleCount);
+   const hasMore = visibleCount < albums.length;
 
    return (
-     <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
-       {albums.map((album, index) => {
-         const purchaseUrl = getPurchaseUrl?.(album);
-         return (
-           <div
-             key={`${album.id ?? "release"}-${album.year ?? "unknown"}-${index}`}
-             className="relative"
-           >
-             <Link href={`${linkBasePath}/${album.id}`}>
-               <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
-                 <CardContent className={`p-3${purchaseUrl ? " pb-10" : ""}`}>
-                   {getAlbumImage(album) ? (
-                     <RemoteImage
-                       site={site}
-                       src={getAlbumImage(album) as string}
-                       alt={album.title}
-                       width={200}
-                       height={200}
-                       className={imageClassName}
-                       loading={index < eagerCount ? "eager" : "lazy"}
-                       fetchPriority={index === 0 ? "high" : undefined}
-                       cacheKey={`${cacheKeyPrefix}:${album.id}`}
-                       preferProxy={preferProxy}
-                       localFallbackSrc={getLocalFallbackImage?.(album)}
-                     />
-                   ) : (
-                     <div className="w-full aspect-square rounded-lg bg-muted flex items-center justify-center mb-2">
-                       <SitePlaceholderIcon className="h-12 w-12" />
+     <>
+       <div className="grid gap-4 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+         {visibleAlbums.map((album, index) => {
+           const purchaseUrl = getPurchaseUrl?.(album);
+           return (
+             <div
+               key={`${album.id ?? "release"}-${album.year ?? "unknown"}-${index}`}
+               className="relative"
+             >
+               <Link href={`${linkBasePath}/${album.id}`}>
+                 <Card className="hover:bg-muted/80 transition-colors cursor-pointer h-full">
+                   <CardContent className={`p-3${purchaseUrl ? " pb-10" : ""}`}>
+                     {getAlbumImage(album) ? (
+                       <RemoteImage
+                         site={site}
+                         src={getAlbumImage(album) as string}
+                         alt={album.title}
+                         width={200}
+                         height={200}
+                         className={imageClassName}
+                         loading={index < eagerCount ? "eager" : "lazy"}
+                         fetchPriority={index === 0 ? "high" : undefined}
+                         cacheKey={`${cacheKeyPrefix}:${album.id}`}
+                         preferProxy={preferProxy}
+                         localFallbackSrc={getLocalFallbackImage?.(album)}
+                       />
+                     ) : (
+                       <div className="w-full aspect-square rounded-lg bg-muted flex items-center justify-center mb-2">
+                         <SitePlaceholderIcon className="h-12 w-12" />
+                       </div>
+                     )}
+                     <h3 className="font-semibold text-base truncate">{album.title}</h3>
+                     <div className="flex items-center justify-between text-xs text-muted-foreground">
+                       <span>{album.year}</span>
+                       <span className="border border-border rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide">
+                         {getReleaseTypeLabel(album)}
+                       </span>
                      </div>
-                   )}
-                   <h3 className="font-semibold text-base truncate">{album.title}</h3>
-                   <div className="flex items-center justify-between text-xs text-muted-foreground">
-                     <span>{album.year}</span>
-                     <span className="border border-border rounded px-1.5 py-0.5 text-[10px] uppercase tracking-wide">
-                       {getReleaseTypeLabel(album)}
-                     </span>
-                   </div>
-                 </CardContent>
-               </Card>
-             </Link>
-             {purchaseUrl && (
-               <a
-                 href={purchaseUrl}
-                 target="_blank"
-                 rel="noopener noreferrer"
-                 className="absolute bottom-0 left-0 right-0 flex items-center justify-center gap-1.5 text-xs text-primary hover:underline mx-3 mb-3 border border-primary/30 rounded px-2 py-1.5"
-               >
-                 <ShoppingCart className="h-3.5 w-3.5" />
-                 Buy on Rockathon
-               </a>
-             )}
-           </div>
-         );
-       })}
-     </div>
+                   </CardContent>
+                 </Card>
+               </Link>
+               {purchaseUrl && (
+                 <a
+                   href={purchaseUrl}
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   className="absolute bottom-0 left-0 right-0 flex items-center justify-center gap-1.5 text-xs text-primary hover:underline mx-3 mb-3 border border-primary/30 rounded px-2 py-1.5"
+                 >
+                   <ShoppingCart className="h-3.5 w-3.5" />
+                   Buy on Rockathon
+                 </a>
+               )}
+             </div>
+           );
+         })}
+       </div>
+       {hasMore && (
+         <div className="flex justify-center mt-6">
+           <Button
+             variant="outline"
+             onClick={() => setVisibleCount((c) => c + pageSize)}
+           >
+             Load more ({albums.length - visibleCount} remaining)
+           </Button>
+         </div>
+       )}
+     </>
    );
  }
