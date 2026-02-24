@@ -108,14 +108,14 @@ export function SiteHeader() {
               <Link
                 href={askPath}
                 onClick={() => setChatPending(true)}
-                className="flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] text-black bg-white border-t border-t-[#f6f6f6] border-l border-l-[#eeeeee] border-r border-r-[#c6c6c6] border-b-2 border-b-[#b5b5b5] shadow-[0_2px_4px_rgba(0,0,0,0.1),_inset_0_1px_0_rgba(255,255,255,0.4)]"
+                className="flex items-center justify-center gap-3 px-6 h-16 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] text-black bg-white border-t border-t-[#f6f6f6] border-l border-l-[#eeeeee] border-r border-r-[#c6c6c6] border-b-2 border-b-[#b5b5b5] shadow-[0_2px_4px_rgba(0,0,0,0.1),_inset_0_1px_0_rgba(255,255,255,0.4)]"
               >
                 <img
                   src={site.chatIconSrc}
                   alt={`${site.shortName} chat`}
-                  width={32}
-                  height={32}
-                  className={cn("h-8 w-8 gbv-nav-icon object-contain", chatPending && "animate-spin [animation-duration:2s]")}
+                  width={44}
+                  height={44}
+                  className={cn("h-11 w-11 gbv-nav-icon object-contain", chatPending && "animate-spin [animation-duration:2s]")}
                 />
                 <span className="text-md text-black">{site.chatLabel}</span>
               </Link>
@@ -129,14 +129,14 @@ export function SiteHeader() {
           <Link
             href={askPath}
             onClick={() => setChatPending(true)}
-            className="flex items-center justify-center gap-2 px-5 h-12 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] text-black bg-white border-t border-t-[#f6f6f6] border-l border-l-[#eeeeee] border-r border-r-[#c6c6c6] border-b-2 border-b-[#b5b5b5] shadow-[0_2px_4px_rgba(0,0,0,0.1),_inset_0_1px_0_rgba(255,255,255,0.4)]"
+            className="flex items-center justify-center gap-3 px-6 h-16 text-sm font-medium rounded-lg transition-all active:translate-y-[1px] text-black bg-white border-t border-t-[#f6f6f6] border-l border-l-[#eeeeee] border-r border-r-[#c6c6c6] border-b-2 border-b-[#b5b5b5] shadow-[0_2px_4px_rgba(0,0,0,0.1),_inset_0_1px_0_rgba(255,255,255,0.4)]"
           >
             <img
               src={site.chatIconSrc}
               alt={`${site.shortName} chat`}
-              width={24}
-              height={24}
-              className={cn("h-6 w-6 gbv-nav-icon object-contain", chatPending && "animate-spin [animation-duration:2s]")}
+              width={44}
+              height={44}
+              className={cn("h-11 w-11 gbv-nav-icon object-contain", chatPending && "animate-spin [animation-duration:2s]")}
             />
             <span className="text-sm text-black">{site.chatLabel}</span>
           </Link>
