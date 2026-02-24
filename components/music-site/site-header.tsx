@@ -14,20 +14,21 @@ import {
 import { Search } from "lucide-react";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { SiteSearch } from "@/components/music-site/site-search";
+import { SiteChatOverlay } from "@/components/music-site/site-chat-overlay";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const askPath = `${site.basePath}/ask`;
   const [isMounted, setIsMounted] = useState(false);
-  const [chatPending, setChatPending] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
   useEffect(() => {
-    setChatPending(false);
+    setChatOpen(false);
   }, [pathname]);
 
   return (
@@ -63,20 +64,19 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-3">
           <div className="hidden xl:flex items-center gap-4">
             {pathname !== askPath && (
-              <Link
-                href={askPath}
-                onClick={() => setChatPending(true)}
+              <button
+                onClick={() => setChatOpen(true)}
                 className="flex items-center justify-center gap-3 px-3 py-2 text-sm font-medium transition-all hover:opacity-80 border border-gray-400 rounded-lg"
               >
                 <span className={cn("text-md", site.id === "gbv" ? "text-white" : "text-black")}>{site.chatLabel}</span>
                 <img
                   src={site.chatIconSrc}
                   alt={`${site.shortName} chat`}
-                  width={56}
-                  height={56}
-                  className={cn("h-14 w-14 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon", chatPending && "animate-spin [animation-duration:2s]")}
+                  width={96}
+                  height={96}
+                  className={cn("h-24 w-24 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon")}
                 />
-              </Link>
+              </button>
             )}
           </div>
           {isMounted ? (
@@ -126,22 +126,23 @@ export function SiteHeader() {
 
       {pathname !== askPath && (
         <div className="container mt-6 xl:hidden">
-          <Link
-            href={askPath}
-            onClick={() => setChatPending(true)}
-            className="flex items-center justify-center gap-3 px-3 py-2 text-sm font-medium transition-all hover:opacity-80 border border-gray-400 rounded-lg"
+          <button
+            onClick={() => setChatOpen(true)}
+            className="flex w-full items-center justify-center gap-3 px-3 py-2 text-sm font-medium transition-all hover:opacity-80 border border-gray-400 rounded-lg"
           >
             <span className={cn("text-sm", site.id === "gbv" ? "text-white" : "text-black")}>{site.chatLabel}</span>
             <img
               src={site.chatIconSrc}
               alt={`${site.shortName} chat`}
-              width={56}
-              height={56}
-              className={cn("h-14 w-14 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon", chatPending && "animate-spin [animation-duration:2s]")}
+              width={96}
+              height={96}
+              className={cn("h-24 w-24 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon")}
             />
-          </Link>
+          </button>
         </div>
       )}
+
+      {chatOpen && <SiteChatOverlay onClose={() => setChatOpen(false)} />}
     </header>
   );
 }
