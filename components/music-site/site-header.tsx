@@ -66,7 +66,7 @@ export function SiteHeader() {
               <Link
                 href={askPath}
                 onClick={() => setChatPending(true)}
-                className="flex items-center justify-center gap-3 px-2 py-2 text-sm font-medium transition-all hover:opacity-80"
+                className="flex items-center justify-center gap-3 px-3 py-2 text-sm font-medium transition-all hover:opacity-80 border border-gray-400 rounded-lg"
               >
                 <span className={cn("text-md", site.id === "gbv" ? "text-white" : "text-black")}>{site.chatLabel}</span>
                 <img
@@ -129,7 +129,7 @@ export function SiteHeader() {
           <Link
             href={askPath}
             onClick={() => setChatPending(true)}
-            className="flex items-center justify-center gap-3 px-2 py-2 text-sm font-medium transition-all hover:opacity-80"
+            className="flex items-center justify-center gap-3 px-3 py-2 text-sm font-medium transition-all hover:opacity-80 border border-gray-400 rounded-lg"
           >
             <span className={cn("text-sm", site.id === "gbv" ? "text-white" : "text-black")}>{site.chatLabel}</span>
             <img
