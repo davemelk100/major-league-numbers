@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import { getDailyTeam, type TeamSpotlight } from "@/lib/nba-team-spotlight-data";
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 
 const STORAGE_KEY = "nbaDailyTeam";
@@ -70,14 +70,13 @@ function NBATeamSpotlightContent() {
           href={`/nba/teams/${team.abbreviation.toLowerCase()}`}
           className="group relative overflow-hidden rounded-xl flex justify-center"
         >
-          <Image
+          <img
             src={team.logoUrl}
             alt={team.name}
             width={200}
             height={200}
             className="rounded-xl transition-transform group-hover:scale-105 w-[150px] sm:w-[180px] lg:w-[200px] h-auto"
-            unoptimized
-            priority
+            fetchPriority="high"
           />
         </Link>
       </div>

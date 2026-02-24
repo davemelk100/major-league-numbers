@@ -6,6 +6,7 @@ import { SiteHeader } from "@/components/music-site/site-header";
 import { SiteFooter } from "@/components/music-site/site-footer";
 import { SiteLeftNav, SiteFooterNav } from "@/components/music-site/site-nav";
 import { getMusicSiteById, getSiteJsonLd, type MusicSiteId } from "@/lib/music-site";
+import { SiteImagePreload } from "@/components/music-site/site-image-preload";
 
 type SiteLayoutProps = {
   siteId: MusicSiteId;
@@ -26,6 +27,7 @@ export function SiteLayout({
       >
         Skip to content
       </a>
+      <SiteImagePreload site={site} />
       <JsonLd data={getSiteJsonLd(site)} />
       <SiteLeftNav />
       <div className="sm:ml-20 flex flex-col flex-1">

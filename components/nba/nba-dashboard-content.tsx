@@ -1,13 +1,30 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import { Card, CardContent } from "@/components/ui/card";
 import { getPlayerHeadshotUrl, getTeamLogoUrl } from "@/lib/nba-api";
-import { NBATriviaPanel } from "@/components/nba/nba-trivia-panel";
-import { NBAJerseyPanel } from "@/components/nba/nba-jersey-panel";
-import { NBAPlayerSpotlight } from "@/components/nba/nba-player-spotlight";
-import { NBATeamSpotlight } from "@/components/nba/nba-team-spotlight";
+
+const NBATriviaPanel = dynamic(
+  () => import("@/components/nba/nba-trivia-panel").then((m) => m.NBATriviaPanel),
+  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 h-[300px] animate-pulse" /> }
+);
+
+const NBAJerseyPanel = dynamic(
+  () => import("@/components/nba/nba-jersey-panel").then((m) => m.NBAJerseyPanel),
+  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 h-[300px] animate-pulse" /> }
+);
+
+const NBAPlayerSpotlight = dynamic(
+  () => import("@/components/nba/nba-player-spotlight").then((m) => m.NBAPlayerSpotlight),
+  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 h-[200px] animate-pulse" /> }
+);
+
+const NBATeamSpotlight = dynamic(
+  () => import("@/components/nba/nba-team-spotlight").then((m) => m.NBATeamSpotlight),
+  { loading: () => <div className="w-full bg-muted/30 rounded-lg border p-4 h-[200px] animate-pulse" /> }
+);
 
 interface LeaderItem {
   label: string;
@@ -64,13 +81,12 @@ export function NBADashboardContent({ leaders, standings }: NBADashboardContentP
                 <p className="text-xs text-muted-foreground mb-2">{item.label}</p>
                 {item.leader ? (
                   <Link href={`/nba/players/${item.leader.id}`} className="flex items-center gap-3 group">
-                    <Image
+                    <img
                       src={item.leader.headshot || getPlayerHeadshotUrl(item.leader.id)}
                       alt={item.leader.name}
                       width={48}
                       height={48}
                       className="rounded-full bg-muted"
-                      unoptimized
                     />
                     <div className="min-w-0">
                       <p className="font-medium text-sm truncate group-hover:underline">{item.leader.name}</p>
@@ -108,12 +124,11 @@ export function NBADashboardContent({ leaders, standings }: NBADashboardContentP
                     className="flex items-center gap-3 p-2 rounded hover:bg-muted/80 transition-colors"
                   >
                     <span className="text-sm text-muted-foreground w-4">{idx + 1}</span>
-                    <Image
+                    <img
                       src={team.logo || getTeamLogoUrl(team.abbrev)}
                       alt={team.team}
                       width={24}
                       height={24}
-                      unoptimized
                     />
                     <span className="text-sm font-medium flex-1 truncate">{team.team}</span>
                     <span className="text-sm text-muted-foreground">
@@ -137,12 +152,11 @@ export function NBADashboardContent({ leaders, standings }: NBADashboardContentP
                     className="flex items-center gap-3 p-2 rounded hover:bg-muted/80 transition-colors"
                   >
                     <span className="text-sm text-muted-foreground w-4">{idx + 1}</span>
-                    <Image
+                    <img
                       src={team.logo || getTeamLogoUrl(team.abbrev)}
                       alt={team.team}
                       width={24}
                       height={24}
-                      unoptimized
                     />
                     <span className="text-sm font-medium flex-1 truncate">{team.team}</span>
                     <span className="text-sm text-muted-foreground">

@@ -12,6 +12,7 @@ type RemoteImageProps = {
   alt: string;
   className?: string;
   loading?: "lazy" | "eager";
+  fetchPriority?: "high" | "low" | "auto";
   preferProxy?: boolean;
 };
 
@@ -61,6 +62,7 @@ export function RecordOfDayCard({
                     alt={`${record.title} cover`}
                     className={`rounded-md object-${imageFit} w-full h-full`}
                     loading="eager"
+                    fetchPriority="high"
                     preferProxy={false}
                   />
                 </Link>
@@ -129,6 +131,7 @@ export function SingleOfDayCard({
                     alt={`${record.title} cover`}
                     className={`rounded-md object-${imageFit} w-full h-full`}
                     loading="eager"
+                    fetchPriority="high"
                     preferProxy={false}
                   />
                 </Link>

@@ -15,6 +15,7 @@ type RemoteImageProps = {
   height: number;
   className?: string;
   loading?: "lazy" | "eager";
+  fetchPriority?: "high" | "low" | "auto";
   cacheKey?: string;
   preferProxy?: boolean;
 };
@@ -224,6 +225,7 @@ export function DashboardDiscographyGrid<T extends DashboardAlbum>({
                   height={200}
                   className={imageClassName}
                   loading={index < 5 ? "eager" : "lazy"}
+                  fetchPriority={index === 0 ? "high" : undefined}
                   cacheKey={
                     album.id ? `${cacheKeyPrefix}:${album.id}` : undefined
                   }

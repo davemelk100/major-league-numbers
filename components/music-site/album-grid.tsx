@@ -23,6 +23,7 @@ export type AlbumGridItem = {
    height: number;
    className?: string;
    loading?: "lazy" | "eager";
+   fetchPriority?: "high" | "low" | "auto";
    cacheKey?: string;
    preferProxy?: boolean;
    localFallbackSrc?: string | null;
@@ -80,6 +81,7 @@ export function AlbumGrid<T extends AlbumGridItem>({
                        height={200}
                        className={imageClassName}
                        loading={index < eagerCount ? "eager" : "lazy"}
+                       fetchPriority={index === 0 ? "high" : undefined}
                        cacheKey={`${cacheKeyPrefix}:${album.id}`}
                        preferProxy={preferProxy}
                        localFallbackSrc={getLocalFallbackImage?.(album)}

@@ -115,8 +115,10 @@ const musicSites = [
 
 function SiteCard({
   site,
+  priority,
 }: {
   site: { name: string; href: string; logo: string; description: string };
+  priority?: boolean;
 }) {
   return (
     <Link
@@ -129,6 +131,8 @@ function SiteCard({
         width={80}
         height={80}
         className="h-20 w-auto"
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : undefined}
       />
       <span className="text-lg font-semibold text-center">{site.name}</span>
       <span className="text-sm text-muted-foreground text-center">
@@ -151,8 +155,8 @@ export default function LandingPage() {
         <section>
           <h2 className="text-center mb-6">Sports</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {sportsSites.map((site) => (
-              <SiteCard key={site.href} site={site} />
+            {sportsSites.map((site, i) => (
+              <SiteCard key={site.href} site={site} priority={i < 4} />
             ))}
           </div>
         </section>
@@ -160,7 +164,7 @@ export default function LandingPage() {
           <h2 className="text-center mb-6">Music</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {musicSites.map((site) => (
-              <SiteCard key={site.href} site={site} />
+              <SiteCard key={site.href} site={site} priority={false} />
             ))}
           </div>
         </section>

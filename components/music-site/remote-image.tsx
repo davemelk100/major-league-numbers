@@ -15,6 +15,7 @@ export type RemoteImageProps = {
   width?: number;
   height?: number;
   loading?: "lazy" | "eager";
+  fetchPriority?: "high" | "low" | "auto";
   fallbackSrc?: string;
   fallbackClassName?: string;
   localFallbackSrc?: string | null;
@@ -32,6 +33,7 @@ export function RemoteImage({
   width,
   height,
   loading = "lazy",
+  fetchPriority,
   fallbackSrc = "/chat-gbv-box.svg",
   fallbackClassName,
   localFallbackSrc,
@@ -147,6 +149,7 @@ export function RemoteImage({
       width={width}
       height={height}
       loading={loading}
+      fetchPriority={fetchPriority}
       referrerPolicy="no-referrer"
       onError={handleError}
       onLoad={() => {

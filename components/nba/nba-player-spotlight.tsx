@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import { getDailyNBAPlayer, type NBASpotlightPlayer } from "@/lib/nba-player-spotlight-data";
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 
 const STORAGE_KEY = "nbaDailyPlayer";
@@ -69,14 +69,13 @@ function NBAPlayerSpotlightContent() {
           href={`/nba/players/${player.id}`}
           className="group relative overflow-hidden rounded-xl flex justify-center"
         >
-          <Image
+          <img
             src={player.imageUrl}
             alt={player.name}
             width={275}
             height={275}
             className="rounded-xl transition-transform group-hover:scale-105 w-[200px] sm:w-[250px] lg:w-[300px] h-auto"
-            unoptimized
-            priority
+            fetchPriority="high"
           />
         </Link>
       </div>
