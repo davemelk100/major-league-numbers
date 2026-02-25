@@ -14,25 +14,18 @@ import {
 import { Search } from "lucide-react";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
 import { SiteSearch } from "@/components/music-site/site-search";
-import { SiteChatOverlay } from "@/components/music-site/site-chat-overlay";
 
 export function SiteHeader() {
   const pathname = usePathname();
   const site = getMusicSiteFromPathname(pathname);
   const askPath = `${site.basePath}/ask`;
   const [isMounted, setIsMounted] = useState(false);
-  const [chatOpen, setChatOpen] = useState(false);
-
   useEffect(() => {
     setIsMounted(true);
   }, []);
 
-  useEffect(() => {
-    setChatOpen(false);
-  }, [pathname]);
-
   return (
-    <header className="z-50 w-full bg-transparent py-1 lg:pt-1 mb-4 lg:mb-1">
+    <header className="z-50 w-full bg-transparent pt-4 lg:pt-6 mb-4 lg:mb-1">
       <div className="container flex items-center gap-3 overflow-hidden">
         <Link
           href={site.basePath}
@@ -50,35 +43,21 @@ export function SiteHeader() {
             )}
             fetchPriority="high"
           />
-          {!site.hideHeaderTitle && (
-            <h1
-              className={cn(
-                "font-league uppercase tracking-wide",
-                site.headerTextClass,
-              )}
-            >
-              {site.headerTitle.split(" ")[0]}
-              <span className="hidden sm:inline"> {site.headerTitle.split(" ").slice(1).join(" ")}</span>
-            </h1>
-          )}
         </Link>
 
         <div className="ml-auto flex items-center gap-3">
           <div className="hidden xl:flex items-center gap-4">
             {pathname !== askPath && (
-              <button
-                onClick={() => setChatOpen(true)}
-                className="flex items-center justify-center gap-3 px-3 py-2 text-sm font-medium transition-all hover:opacity-80 rounded-lg"
+              <Link
+                href={askPath}
+                className={cn(
+                  "flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium transition-all hover:opacity-80 rounded-lg",
+                  site.id === "gbv" ? "bg-white/20 text-white" : "bg-black/10 text-black"
+                )}
               >
-                <span className={cn("text-md", site.id === "gbv" ? "text-white" : "text-black")}>{site.chatLabel}</span>
-                <img
-                  src={site.chatIconSrc}
-                  alt={`${site.shortName} chat`}
-                  width={96}
-                  height={96}
-                  className={cn("h-16 w-16 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon")}
-                />
-              </button>
+                <span>🤖</span>
+                <span className="text-md">{site.chatLabel}</span>
+              </Link>
             )}
           </div>
           {isMounted ? (
@@ -128,23 +107,19 @@ export function SiteHeader() {
 
       {pathname !== askPath && (
         <div className="container mt-6 xl:hidden">
-          <button
-            onClick={() => setChatOpen(true)}
-            className="flex w-full items-center justify-center gap-3 px-3 py-2 text-sm font-medium transition-all hover:opacity-80 rounded-lg"
+          <Link
+            href={askPath}
+            className={cn(
+              "flex w-full items-center justify-center gap-2 px-4 py-2 text-sm font-medium transition-all hover:opacity-80 rounded-lg",
+              site.id === "gbv" ? "bg-white/20 text-white" : "bg-black/10 text-black"
+            )}
           >
-            <span className={cn("text-sm", site.id === "gbv" ? "text-white" : "text-black")}>{site.chatLabel}</span>
-            <img
-              src={site.chatIconSrc}
-              alt={`${site.shortName} chat`}
-              width={96}
-              height={96}
-              className={cn("h-16 w-16 object-contain", site.id === "gbv" ? "gbv-rune-white" : "gbv-nav-icon")}
-            />
-          </button>
+            <span>🤖</span>
+            <span className="text-sm">{site.chatLabel}</span>
+          </Link>
         </div>
       )}
 
-      {chatOpen && <SiteChatOverlay onClose={() => setChatOpen(false)} />}
     </header>
   );
 }
