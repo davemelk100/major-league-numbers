@@ -6,7 +6,6 @@ import { ArtistOfDayCard } from "@/components/music-site/artist-of-day-card";
 import { SgRemoteImage } from "@/components/sg/sg-remote-image";
 import {
   DashboardDailyRow,
-  DashboardDescription,
 } from "@/components/music-site/dashboard-sections";
 import { usePathname } from "next/navigation";
 import { getMusicSiteFromPathname } from "@/lib/music-site";
@@ -25,9 +24,7 @@ export function SgDashboardContent() {
 
   return (
     <div className="container py-2">
-      <DashboardDescription text={site.description} />
-
-      <DashboardDailyRow columns={3}>
+      <DashboardDailyRow columns={3} description={site.description}>
         <TriviaPanel />
         <RecordOfDayCard
           site={site}

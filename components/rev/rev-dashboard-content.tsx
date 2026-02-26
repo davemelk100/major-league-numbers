@@ -8,7 +8,6 @@ import { ArtistOfDayCard } from "@/components/music-site/artist-of-day-card";
 import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
 import {
   DashboardDailyRow,
-  DashboardDescription,
 } from "@/components/music-site/dashboard-sections";
 import { revArtists, revArtistImages } from "@/lib/rev-artists-data";
 
@@ -24,9 +23,7 @@ export function RevDashboardContent() {
 
   return (
     <div className="container py-2">
-      <DashboardDescription text={site.description} />
-
-      <DashboardDailyRow columns={3}>
+      <DashboardDailyRow columns={3} description={site.description}>
         <TriviaPanel />
         <RecordOfDayCard
           site={site}

@@ -212,21 +212,7 @@ export default function ${pascal}SourcesPage() {
 `;
 }
 
-export function generateAwardsPage(siteId: string, siteName: string): string {
-  const pascal = toPascalCase(siteId);
-  return `import type { Metadata } from "next";
-import { SiteAwardsContent } from "@/components/music-site/site-awards-content";
 
-export const metadata: Metadata = {
-  title: "Milestones",
-  description: "Milestones and recognition for ${siteName}.",
-};
-
-export default function ${pascal}AwardsPage() {
-  return <SiteAwardsContent />;
-}
-`;
-}
 
 export function generateSideProjectsPage(siteId: string, siteName: string): string {
   const pascal = toPascalCase(siteId);
@@ -742,7 +728,6 @@ import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
 import { ${siteConstName}_SITE } from "@/lib/music-site";
 import {
   DashboardDailyRow,
-  DashboardDescription,
 } from "@/components/music-site/dashboard-sections";
 import { useDashboardData } from "@/components/music-site/use-dashboard-data";
 import { ${bareId}Artists } from "@/lib/${siteId}-artists-data";
@@ -776,9 +761,7 @@ export function ${pascal}DashboardContent() {
 
   return (
     <div className="container py-2">
-      <DashboardDescription text={site.description} />
-
-      <DashboardDailyRow columns={3}>
+      <DashboardDailyRow columns={3} description={site.description}>
         <TriviaPanel />
         <RecordOfDayCard
           site={site}

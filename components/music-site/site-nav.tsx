@@ -8,7 +8,7 @@
    Disc3,
    Users,
    Calendar,
-   Award,
+ 
    Star,
    Video,
    BookOpen,
@@ -42,7 +42,7 @@
      { name: "Videos", href: `${site.basePath}/videos`, icon: Video },
      { name: site.navLabels.sideProjects, href: `${site.basePath}/side-projects`, icon: Star, mobileHidden: true },
      { name: "Timeline", href: `${site.basePath}/timeline`, icon: Calendar, mobileHidden: true },
-     { name: "Awards", href: `${site.basePath}/awards`, icon: Award, mobileHidden: true },
+
      ...(isSg ? [{ name: "Comics", href: `${site.basePath}/comics`, icon: BookOpen, mobileHidden: true }] : []),
    ];
 
@@ -126,7 +126,7 @@
      { name: "Videos", href: `${site.basePath}/videos`, icon: Video },
      { name: site.navLabels.sideProjects, href: `${site.basePath}/side-projects`, icon: Star, mobileHidden: true },
      { name: "Timeline", href: `${site.basePath}/timeline`, icon: Calendar, mobileHidden: true },
-     { name: "Awards", href: `${site.basePath}/awards`, icon: Award, mobileHidden: true },
+
      ...(isSg ? [{ name: "Comics", href: `${site.basePath}/comics`, icon: BookOpen, mobileHidden: true }] : []),
    ];
 

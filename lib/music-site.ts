@@ -59,7 +59,7 @@ export const GBV_SITE: MusicSiteConfig = {
   placeholderIconSrc: "/chat-gbv-box.svg",
   shellClass: "gbv-shell",
   description:
-    "Guided by Voices is an American indie rock band from Dayton, Ohio, formed in 1983 by Robert Pollard. Known for their prolific output, lo-fi aesthetic, and short, melodic songs influenced by the British Invasion, GBV has released over 30 studio albums and become one of the most beloved and enduring bands in independent music.",
+    "Guided by Voices is an American indie rock band from Dayton, Ohio, formed in 1983 by Robert Pollard. Known for their prolific output, lo-fi aesthetic, and short, melodic songs influenced by the British Invasion, GBV has become one of the most beloved bands in independent music.\n\nPollard, a former fourth-grade teacher, initially self-released albums on cassette before Bee Thousand and Alien Lanes earned widespread critical acclaim in the mid-1990s.\n\nThose records, packed with hook-filled fragments and four-track fidelity, turned GBV into unlikely indie heroes and helped define the sound of '90s lo-fi rock.\n\nThe band's ever-rotating lineup, relentless touring schedule, and over 30 studio albums have cemented their reputation as one of indie rock's most vital and unpredictable acts.",
   navLabels: {
     discography: "Releases",
     members: "Members",
@@ -133,9 +133,9 @@ export const AMREP_SITE: MusicSiteConfig = {
   chatIconSrc: "/noise-bird.svg",
   placeholderIconSrc: "/noise-placeholder.svg",
   shellClass: "amrep-shell",
-  logoClassName: "h-auto w-[20%] lg:w-[25%]",
+  logoClassName: "h-auto w-[40%] lg:w-[45%]",
   description:
-    "Amphetamine Reptile Records is an independent record label founded by Tom Hazelmyer in 1986. Based in Minneapolis, AmRep became synonymous with the noise rock movement of the late '80s and '90s, releasing foundational records by artists like the Melvins, Helmet, Halo of Flies, Cows, and Hammerhead, and helping define the sound of underground heavy music.",
+    "Amphetamine Reptile Records is an independent record label founded by Tom Hazelmyer in 1986. Based in Minneapolis, AmRep became synonymous with the noise rock movement of the late '80s and '90s.\n\nThe label released foundational records by artists like the Melvins, Helmet, Halo of Flies, Cows, and Hammerhead, helping define the sound of underground heavy music.\n\nHazelmyer, also frontman of Halo of Flies, built AmRep around raw, abrasive sounds that bridged punk, metal, and art rock. The label's iconic artwork and limited-edition singles became instant collector staples.\n\nAmRep's influence continues to resonate decades later across noise rock, sludge, and experimental punk scenes worldwide.",
   navLabels: {
     discography: "Releases",
     members: "Artists",
@@ -249,10 +249,10 @@ export const E6_SITE: MusicSiteConfig = {
   chatIconSrc: "/e6-logo.png",
   placeholderIconSrc: "/e6-logo.png",
   shellClass: "e6-shell",
-  logoClassName: "h-auto w-[35%]",
+  logoClassName: "h-auto w-[40%]",
   hideHeaderTitle: true,
   description:
-    "The Elephant 6 Recording Company is a collective of musicians formed in the early 1990s, centered in Athens, Georgia. Built around a shared love of lo-fi recording, psychedelic pop, and collaborative creativity, E6 produced some of the most acclaimed indie music of the era through artists like Neutral Milk Hotel, The Apples in Stereo, The Olivia Tremor Control, and of Montreal.",
+    "The Elephant 6 Recording Company is a collective of musicians formed in the early 1990s, centered in Athens, Georgia. Built around a shared love of lo-fi recording, psychedelic pop, and collaborative creativity, E6 produced some of the most acclaimed indie music of the era.\n\nKey artists include Neutral Milk Hotel, The Apples in Stereo, The Olivia Tremor Control, and of Montreal, each bringing a distinct vision to the collective's sprawling catalog.\n\nMany members grew up together in Ruston, Louisiana, sharing four-track recorders and a deep love of '60s pop before migrating to Athens and Denver.\n\nThe collective's DIY ethos and densely layered recordings helped spark a broader revival of psychedelic and experimental pop throughout the late 1990s and 2000s.",
   navLabels: {
     discography: "Releases",
     members: "Artists",
@@ -322,9 +322,9 @@ export const REVELATION_SITE: MusicSiteConfig = {
   chatIconSrc: "/rev-icon.svg",
   placeholderIconSrc: "/rev-icon.svg",
   shellClass: "revelation-shell",
-  logoClassName: "h-auto w-[15%]",
+  logoClassName: "h-auto w-[22%]",
   description:
-    "Revelation Records is an independent record label founded by Jordan Cooper in 1987 in New Haven, Connecticut. A cornerstone of the American hardcore and punk scene, Revelation helped launch the careers of iconic bands like Youth of Today, Gorilla Biscuits, Bold, Chain of Strength, and Judge, and remains one of the most influential labels in hardcore music history.",
+    "Revelation Records is an independent record label founded by Jordan Cooper in 1987 in New Haven, Connecticut. A cornerstone of the American hardcore and punk scene, Revelation helped launch the careers of iconic bands like Youth of Today, Gorilla Biscuits, Bold, Chain of Strength, and Judge.\n\nThe label's early releases defined the sound of late-'80s New York straight edge, with seven-inches and EPs that became essential documents of the scene.\n\nAs hardcore evolved, Revelation expanded to embrace melodic hardcore, post-hardcore, and emo, signing acts like Texas Is the Reason, Into Another, and Samiam.\n\nThe label's catalog remains a definitive document of American punk's evolution over four decades and one of the most influential in hardcore music history.",
   navLabels: {
     discography: "Releases",
     members: "Bands",
@@ -398,7 +398,7 @@ export const SKINGRAFT_SITE: MusicSiteConfig = {
   logoClassName: "h-12 w-auto sm:h-16 lg:h-28",
   hideHeaderTitle: true,
   description:
-    "Skin Graft Records is an independent record label founded by Mark Fischer in 1991 in Chicago. Known for releasing experimental, noise rock, and avant-garde music, Skin Graft has championed some of the most daring and uncompromising artists in underground music, including The Flying Luttenbachers, U.S. Maple, Dazzling Killmen, Mount Shasta, and Cheer-Accident.",
+    "Skin Graft Records is an independent record label founded by Mark Fischer in 1991 in Chicago. Known for releasing experimental, noise rock, and avant-garde music, Skin Graft has championed some of the most daring artists in underground music.\n\nThe roster includes The Flying Luttenbachers, U.S. Maple, Dazzling Killmen, Mount Shasta, and Cheer-Accident, each pushing the boundaries of what rock music could be.\n\nFischer's distinctive hand-drawn artwork and bold graphic design gave the label a visual identity as striking as its sonic one, making each release a complete artistic statement.\n\nSkin Graft also built strong ties with Japan's noise and math-rock scenes, releasing records by Ruins, Zeni Geva, and other international acts that expanded its reach far beyond Chicago.",
   navLabels: {
     discography: "Releases",
     members: "Artists",
@@ -474,7 +474,7 @@ export const TOUCH_GO_RECORDS_SITE: MusicSiteConfig = {
   shellClass: "touch-go-shell",
   logoClassName: "h-auto w-[85%]",
   hideHeaderTitle: true,
-  description: "Touch & Go Records is a renowned independent record label founded in 1981, instrumental in shaping the hardcore and indie music scenes. With a diverse roster of artists and a commitment to quality, the label continues to influence music culture.",
+  description: "Touch & Go Records is a renowned independent record label founded by Corey Rusk in 1981, originally as a fanzine in Lansing, Michigan. Instrumental in shaping the hardcore and indie music scenes, the label became a pillar of American underground music.\n\nThe roster includes landmark records by Big Black, the Butthole Surfers, Slint, the Jesus Lizard, Shellac, and many more across punk, noise rock, and post-rock.\n\nKnown for its artist-friendly handshake deals and refusal to sign contracts, Touch & Go became a model for ethical independent label operations. Artists retained ownership of their masters and received a fair split.\n\nThe label's catalog spans decades of groundbreaking music, and its influence on underground culture remains immeasurable.",
   navLabels: {
     discography: "Releases",
     members: "Artists",
@@ -524,9 +524,9 @@ export const SLAP_A_HAM_RECORDS_SITE: MusicSiteConfig = {
   chatIconSrc: "/images/slap-a-ham-records/logo.jpg",
   placeholderIconSrc: "/images/slap-a-ham-records/logo.jpg",
   shellClass: "slap-a-ham-shell",
-  logoClassName: "h-auto w-[70%]",
+  logoClassName: "h-auto w-[60%]",
   hideHeaderTitle: true,
-  description: "Slap-A-Ham Records was an independent record label founded in 1989 in San Francisco, known for its hardcore punk, powerviolence, and grindcore releases. It ceased operations in 2002 due to financial struggles.",
+  description: "Slap-A-Ham Records was an independent record label founded by Chris Dodge in 1989 in San Francisco. A pioneering force in hardcore punk, powerviolence, and grindcore, the label became essential to the West Coast underground.\n\nThe roster included Spazz, Crossed Out, No Comment, Infest, and Man Is the Bastard — bands that defined the sound of powerviolence.\n\nDodge, also a member of Spazz and Lack of Interest, ran the label as a true DIY operation, pressing vinyl in tiny runs and booking bands through underground networks.\n\nSlap-A-Ham ceased operations in 2002 due to financial struggles, but its catalog remains a touchstone for extreme punk and the movement it helped define.",
   navLabels: {
     discography: "Releases",
     members: "Artists",
@@ -574,8 +574,8 @@ export const SLAP_A_HAM_NUMBERS_SITE: MusicSiteConfig = {
   chatIconSrc: "/images/slap-a-ham-numbers/logo.jpg",
   placeholderIconSrc: "/images/slap-a-ham-numbers/logo.jpg",
   shellClass: "slap-a-ham-shell",
-  logoClassName: "h-auto w-[15%]",
-  description: "Slap-A-Ham Records was an influential independent record label based in San Francisco known for its hard-hitting releases in hardcore punk and grindcore. Founded in 1989 by Chris Dodge, the label became a cornerstone of the underground music scene before officially shutting down in 2002 due to financial difficulties.",
+  logoClassName: "h-auto w-[13%]",
+  description: "Slap-A-Ham Records was an influential independent record label based in San Francisco, founded in 1989 by Chris Dodge. A cornerstone of the underground music scene, the label became synonymous with powerviolence and grindcore.\n\nThe catalog includes essential records by Spazz, Crossed Out, No Comment, Infest, and Capitalist Casualties — some of the most intense music ever committed to vinyl.\n\nDodge ran the operation with uncompromising DIY principles, keeping prices low and pressing runs small. The label's compilation series and split 7-inches helped connect a global network of extreme punk bands.\n\nSlap-A-Ham officially shut down in 2002 due to financial difficulties, but its legacy endures as a blueprint for independent punk labels.",
   navLabels: {
     discography: "Releases",
     members: "Artists",
@@ -627,7 +627,7 @@ export const JAWBOX_SITE: MusicSiteConfig = {
   shellClass: "jawbox-shell",
   logoClassName: "h-auto w-[70%]",
   hideHeaderTitle: true,
-  description: "Jawbox was an American post-hardcore band from Washington, D.C., formed in 1989, known for their intricate sound and insightful lyrics. They gained prominence in the '90s with albums released on Dischord Records and Atlantic.",
+  description: "Jawbox was an American post-hardcore band from Washington, D.C., formed in 1989 by J. Robbins, Kim Coletta, and Adam Wade. Known for their intricate guitar interplay, angular rhythms, and insightful lyrics, they gained prominence in the '90s.\n\nThe band released albums on both Dischord Records and Atlantic, navigating the indie-to-major transition with their artistic integrity intact.\n\nTheir records — including Grippe, Novelty, For Your Own Special Sweetheart, and the self-titled Jawbox — helped define the sound of '90s post-hardcore and earned them a devoted following.\n\nAfter disbanding in 1997, they reunited in 2009 for select performances. Robbins went on to produce dozens of influential records and front the band Burning Airlines.",
   navLabels: {
     discography: "Releases",
     members: "Members",

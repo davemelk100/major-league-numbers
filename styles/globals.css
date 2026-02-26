@@ -181,6 +181,51 @@
 }
 
 @layer utilities {
+  /* ── Force each music-site shell to own its CSS variables ──
+     This prevents system / browser dark-mode from overriding the
+     shell's intended palette via the .dark {} variable block.       */
+
+  .gbv-shell {
+    --background: oklch(0.15 0.04 250);
+    --foreground: oklch(1 0 0);
+    --card: oklch(0.15 0.04 250);
+    --card-foreground: oklch(1 0 0);
+    --popover: oklch(0.2 0.04 250);
+    --popover-foreground: oklch(1 0 0);
+    --muted: oklch(0.3 0.03 250);
+    --muted-foreground: oklch(0.85 0 0);
+    --border: rgba(255, 255, 255, 0.22);
+    --input: rgba(255, 255, 255, 0.22);
+  }
+
+  .amrep-shell,
+  .e6-shell,
+  .revelation-shell,
+  .skingraft-shell,
+  .touch-go-shell,
+  .slap-a-ham-shell,
+  .jawbox-shell {
+    --background: oklch(1 0 0);
+    --foreground: oklch(0.35 0.04 235);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.35 0.04 235);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.35 0.04 235);
+    --primary: oklch(0.5 0.09 130);
+    --primary-foreground: oklch(1 0 0);
+    --secondary: oklch(0.78 0 0);
+    --secondary-foreground: oklch(0.35 0.04 235);
+    --muted: oklch(0.78 0 0);
+    --muted-foreground: oklch(0.35 0.04 235);
+    --accent: oklch(0.5 0.09 130);
+    --accent-foreground: oklch(1 0 0);
+    --destructive: oklch(0.67 0.15 15);
+    --destructive-foreground: oklch(1 0 0);
+    --border: oklch(0.78 0 0);
+    --input: oklch(0.78 0 0);
+    --ring: oklch(0.5 0.09 130);
+  }
+
   .gbv-shell {
     background-color: #0b1224;
     background-image: radial-gradient(1200px 900px at 15% -10%, rgba(180, 160, 255, 0.5), transparent 60%),
@@ -778,6 +823,279 @@
     border-bottom: 1px solid currentColor;
     text-decoration: none;
   }
+
+  .touch-go-shell {
+    background-color: #f8f8f8;
+    background-image: radial-gradient(1200px 900px at 15% -10%, rgba(255, 255, 255, 0.75), transparent 60%),
+      radial-gradient(1000px 700px at 85% 5%, rgba(220, 220, 225, 0.4), transparent 55%),
+      linear-gradient(135deg, rgba(248, 248, 248, 0.95), rgba(235, 235, 238, 0.95));
+    background-attachment: fixed;
+    color: #1a1a1a;
+  }
+
+  .touch-go-shell [data-slot="card"] {
+    background:
+      radial-gradient(140% 120% at 15% 0%, rgba(255, 255, 255, 0.9), transparent 60%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 240, 242, 0.65));
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    color: #1a1a1a;
+  }
+
+  .touch-go-shell [data-slot="card"] * {
+    color: inherit;
+  }
+
+  .touch-go-shell .text-muted-foreground {
+    color: #6b6b6b;
+  }
+
+  .touch-go-shell .text-foreground {
+    color: #1a1a1a;
+  }
+
+  .touch-go-shell [data-slot="badge"] {
+    color: #1a1a1a;
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .touch-go-shell .text-primary,
+  .touch-go-shell .text-secondary-foreground,
+  .touch-go-shell .text-accent-foreground,
+  .touch-go-shell .text-destructive {
+    color: #1a1a1a;
+  }
+
+  .touch-go-shell .gbv-nav-icon {
+    filter: none;
+  }
+
+  .touch-go-shell nav a,
+  .touch-go-shell nav a span,
+  .touch-go-shell nav svg {
+    color: #1a1a1a;
+  }
+
+  .touch-go-shell .gbv-submit-button {
+    background-color: #1a1a1a;
+    color: #f8f8f8;
+  }
+
+  .touch-go-shell .gbv-submit-button:hover {
+    background-color: #2d2d2d;
+  }
+
+  .touch-go-shell .gbv-search-button {
+    background-color: transparent;
+    color: #1a1a1a;
+  }
+
+  .touch-go-shell .gbv-search-icon {
+    color: #1a1a1a;
+    width: 36px;
+    height: 36px;
+  }
+
+  .touch-go-shell input,
+  .touch-go-shell textarea,
+  .touch-go-shell select,
+  .touch-go-shell [data-slot="input"] {
+    color: #1a1a1a;
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .touch-go-shell input::placeholder,
+  .touch-go-shell textarea::placeholder,
+  .touch-go-shell [data-slot="input"]::placeholder {
+    color: #7a7a7a;
+  }
+
+  .slap-a-ham-shell {
+    background-color: #f8f8f8;
+    background-image: radial-gradient(1200px 900px at 15% -10%, rgba(255, 255, 255, 0.75), transparent 60%),
+      radial-gradient(1000px 700px at 85% 5%, rgba(220, 220, 225, 0.4), transparent 55%),
+      linear-gradient(135deg, rgba(248, 248, 248, 0.95), rgba(235, 235, 238, 0.95));
+    background-attachment: fixed;
+    color: #1a1a1a;
+  }
+
+  .slap-a-ham-shell [data-slot="card"] {
+    background:
+      radial-gradient(140% 120% at 15% 0%, rgba(255, 255, 255, 0.9), transparent 60%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 240, 242, 0.65));
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    color: #1a1a1a;
+  }
+
+  .slap-a-ham-shell [data-slot="card"] * {
+    color: inherit;
+  }
+
+  .slap-a-ham-shell .text-muted-foreground {
+    color: #6b6b6b;
+  }
+
+  .slap-a-ham-shell .text-foreground {
+    color: #1a1a1a;
+  }
+
+  .slap-a-ham-shell [data-slot="badge"] {
+    color: #1a1a1a;
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .slap-a-ham-shell .text-primary,
+  .slap-a-ham-shell .text-secondary-foreground,
+  .slap-a-ham-shell .text-accent-foreground,
+  .slap-a-ham-shell .text-destructive {
+    color: #1a1a1a;
+  }
+
+  .slap-a-ham-shell .gbv-nav-icon {
+    filter: none;
+  }
+
+  .slap-a-ham-shell nav a,
+  .slap-a-ham-shell nav a span,
+  .slap-a-ham-shell nav svg {
+    color: #1a1a1a;
+  }
+
+  .slap-a-ham-shell .gbv-submit-button {
+    background-color: #1a1a1a;
+    color: #f8f8f8;
+  }
+
+  .slap-a-ham-shell .gbv-submit-button:hover {
+    background-color: #2d2d2d;
+  }
+
+  .slap-a-ham-shell .gbv-search-button {
+    background-color: transparent;
+    color: #1a1a1a;
+  }
+
+  .slap-a-ham-shell .gbv-search-icon {
+    color: #1a1a1a;
+    width: 36px;
+    height: 36px;
+  }
+
+  .slap-a-ham-shell input,
+  .slap-a-ham-shell textarea,
+  .slap-a-ham-shell select,
+  .slap-a-ham-shell [data-slot="input"] {
+    color: #1a1a1a;
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .slap-a-ham-shell input::placeholder,
+  .slap-a-ham-shell textarea::placeholder,
+  .slap-a-ham-shell [data-slot="input"]::placeholder {
+    color: #7a7a7a;
+  }
+
+  .jawbox-shell {
+    background-color: #f8f8f8;
+    background-image: radial-gradient(1200px 900px at 15% -10%, rgba(255, 255, 255, 0.75), transparent 60%),
+      radial-gradient(1000px 700px at 85% 5%, rgba(220, 220, 225, 0.4), transparent 55%),
+      linear-gradient(135deg, rgba(248, 248, 248, 0.95), rgba(235, 235, 238, 0.95));
+    background-attachment: fixed;
+    color: #1a1a1a;
+  }
+
+  .jawbox-shell [data-slot="card"] {
+    background:
+      radial-gradient(140% 120% at 15% 0%, rgba(255, 255, 255, 0.9), transparent 60%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(240, 240, 242, 0.65));
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    color: #1a1a1a;
+  }
+
+  .jawbox-shell [data-slot="card"] * {
+    color: inherit;
+  }
+
+  .jawbox-shell .text-muted-foreground {
+    color: #6b6b6b;
+  }
+
+  .jawbox-shell .text-foreground {
+    color: #1a1a1a;
+  }
+
+  .jawbox-shell [data-slot="badge"] {
+    color: #1a1a1a;
+    background-color: rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .jawbox-shell .text-primary,
+  .jawbox-shell .text-secondary-foreground,
+  .jawbox-shell .text-accent-foreground,
+  .jawbox-shell .text-destructive {
+    color: #1a1a1a;
+  }
+
+  .jawbox-shell .gbv-nav-icon {
+    filter: none;
+  }
+
+  .jawbox-shell nav a,
+  .jawbox-shell nav a span,
+  .jawbox-shell nav svg {
+    color: #1a1a1a;
+  }
+
+  .jawbox-shell .gbv-submit-button {
+    background-color: #1a1a1a;
+    color: #f8f8f8;
+  }
+
+  .jawbox-shell .gbv-submit-button:hover {
+    background-color: #2d2d2d;
+  }
+
+  .jawbox-shell .gbv-search-button {
+    background-color: transparent;
+    color: #1a1a1a;
+  }
+
+  .jawbox-shell .gbv-search-icon {
+    color: #1a1a1a;
+    width: 36px;
+    height: 36px;
+  }
+
+  .jawbox-shell input,
+  .jawbox-shell textarea,
+  .jawbox-shell select,
+  .jawbox-shell [data-slot="input"] {
+    color: #1a1a1a;
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+
+  .jawbox-shell input::placeholder,
+  .jawbox-shell textarea::placeholder,
+  .jawbox-shell [data-slot="input"]::placeholder {
+    color: #7a7a7a;
+  }
 }
 
 nav[data-site="mlb"] {
@@ -901,6 +1219,29 @@ nav[data-site="uspbl"] {
     padding-left: 3rem;
     padding-right: 3rem;
   }
+}
+
+/* Skeuomorphic button — light / dark */
+.skeu-btn,
+.skeu-link {
+  background: linear-gradient(180deg, #d8e0e8 0%, #b8c4d0 100%);
+  border-top: 1px solid #e8eef4;
+  border-left: 1px solid #dce4ec;
+  border-right: 1px solid #a8b4c0;
+  border-bottom: 2px solid #98a4b0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.4);
+  color: #374151;
+}
+
+.dark .skeu-btn,
+.dark .skeu-link {
+  background: linear-gradient(180deg, #3a4250 0%, #2d3440 100%);
+  border-top: 1px solid #4a5568;
+  border-left: 1px solid #4a5568;
+  border-right: 1px solid #1a2030;
+  border-bottom: 2px solid #141a28;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.08);
+  color: #e2e8f0;
 }
 
 /* Vinyl record spin animation */

@@ -8,7 +8,6 @@ import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
 import { GBV_SITE } from "@/lib/music-site";
 import {
   DashboardDailyRow,
-  DashboardDescription,
 } from "@/components/music-site/dashboard-sections";
 import { useDashboardData } from "@/components/music-site/use-dashboard-data";
 
@@ -34,10 +33,8 @@ export function GbvDashboardContent() {
 
   return (
     <div className="container py-2">
-      <DashboardDescription text={site.description} />
-
       {/* Daily Trivia + Record of the Day + Single of the Day */}
-      <DashboardDailyRow columns={3}>
+      <DashboardDailyRow columns={3} description={site.description}>
         <TriviaPanel />
         <RecordOfDayCard
           site={site}

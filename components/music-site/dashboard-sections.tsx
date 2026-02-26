@@ -53,6 +53,7 @@ type MemberAvatarOptions = Pick<
 type DashboardDailyRowProps = {
   children: ReactNode;
   columns?: 2 | 3;
+  description?: string;
 };
 
 type DashboardSectionHeaderProps = {
@@ -85,12 +86,7 @@ type DashboardDiscographyGridProps<T extends DashboardAlbum> = {
   pageSize?: number;
 };
 
-export function DashboardDescription({ text }: { text?: string }) {
-  if (!text) return null;
-  return <p className="text-sm mb-6">{text}</p>;
-}
-
-export function DashboardDailyRow({ children, columns = 2 }: DashboardDailyRowProps) {
+export function DashboardDailyRow({ children, columns = 2, description }: DashboardDailyRowProps) {
   if (columns === 3) {
     const childArray = Children.toArray(children);
     const first = childArray[0];
@@ -98,7 +94,20 @@ export function DashboardDailyRow({ children, columns = 2 }: DashboardDailyRowPr
 
     return (
       <div className="mb-8 flex flex-col gap-4">
-        <div>{first}</div>
+        <div className="grid gap-4 md:grid-cols-2">
+          {description && (
+            <Card className="h-full">
+              <CardContent className="p-4 h-full flex items-center">
+                <div className="space-y-3">
+                  {description.split("\n\n").map((paragraph, i) => (
+                    <p key={i} className="text-sm leading-relaxed">{paragraph}</p>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+          {first}
+        </div>
         <div className="grid gap-4 md:grid-cols-2">
           {rest}
         </div>

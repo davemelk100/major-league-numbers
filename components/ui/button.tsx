@@ -32,16 +32,8 @@ const buttonVariants = cva(
   },
 )
 
-// Skeuomorphic button styles
-const skeuomorphicStyle: React.CSSProperties = {
-  background: 'linear-gradient(180deg, #d8e0e8 0%, #b8c4d0 100%)',
-  borderTop: '1px solid #e8eef4',
-  borderLeft: '1px solid #dce4ec',
-  borderRight: '1px solid #a8b4c0',
-  borderBottom: '2px solid #98a4b0',
-  boxShadow: '0 2px 4px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.4)',
-  color: '#374151',
-}
+// Skeuomorphic button styles — resolved at render time via CSS variable
+const skeuomorphicClassName = 'skeu-btn'
 
 const skeuomorphicVariants = ['default', 'destructive', 'outline', 'secondary']
 
@@ -62,8 +54,8 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      style={useSkeuomorphic ? { ...skeuomorphicStyle, ...style } : style}
+      className={cn(buttonVariants({ variant, size, className }), useSkeuomorphic && skeuomorphicClassName)}
+      style={style}
       {...props}
     />
   )

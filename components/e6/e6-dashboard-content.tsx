@@ -8,7 +8,6 @@ import { ArtistOfDayCard } from "@/components/music-site/artist-of-day-card";
 import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
 import {
   DashboardDailyRow,
-  DashboardDescription,
 } from "@/components/music-site/dashboard-sections";
 import { e6Artists } from "@/lib/e6-artists-data";
 import { localMemberImages } from "@/lib/e6-artist-images";
@@ -26,10 +25,8 @@ export function E6DashboardContent() {
 
   return (
     <div className="container py-2">
-      <DashboardDescription text={site.description} />
-
       {/* Daily Trivia + Record of the Day + Artist of the Day */}
-      <DashboardDailyRow columns={3}>
+      <DashboardDailyRow columns={3} description={site.description}>
         <TriviaPanel />
         <RecordOfDayCard
           site={site}

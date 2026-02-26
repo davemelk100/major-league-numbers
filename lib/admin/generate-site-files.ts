@@ -125,7 +125,7 @@ export async function generateSiteFileContents(
   add(`${appDir}/search/page.tsx`, templates.generateSearchPage(siteId, siteName));
   add(`${appDir}/timeline/page.tsx`, templates.generateTimelinePage(siteId, siteName));
   add(`${appDir}/sources/page.tsx`, templates.generateSourcesPage(siteId, siteName));
-  add(`${appDir}/awards/page.tsx`, templates.generateAwardsPage(siteId, siteName));
+
   add(`${appDir}/side-projects/page.tsx`, templates.generateSideProjectsPage(siteId, siteName));
   add(`${appDir}/songs/page.tsx`, templates.generateSongsPage(siteId, siteName));
   add(`${appDir}/spin/page.tsx`, templates.generateSpinPage(siteId, siteName));

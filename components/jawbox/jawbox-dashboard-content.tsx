@@ -9,7 +9,6 @@ import { SiteRemoteImage } from "@/components/music-site/site-remote-image";
 import { JAWBOX_SITE } from "@/lib/music-site";
 import {
   DashboardDailyRow,
-  DashboardDescription,
 } from "@/components/music-site/dashboard-sections";
 import { useDashboardData } from "@/components/music-site/use-dashboard-data";
 import { jawboxArtists } from "@/lib/jawbox-artists-data";
@@ -43,9 +42,7 @@ export function JawboxDashboardContent() {
 
   return (
     <div className="container py-2">
-      <DashboardDescription text={site.description} />
-
-      <DashboardDailyRow columns={3}>
+      <DashboardDailyRow columns={3} description={site.description}>
         <TriviaPanel />
         <RecordOfDayCard
           site={site}
