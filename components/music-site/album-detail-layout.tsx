@@ -39,7 +39,7 @@ export function AlbumDetailLayout({
 
         <div className="lg:col-span-2">
           <Card>
-            <CardHeader>
+            <CardHeader className="pt-6">
               <CardTitle>{rightTitle}</CardTitle>
             </CardHeader>
             <CardContent>{rightContent}</CardContent>

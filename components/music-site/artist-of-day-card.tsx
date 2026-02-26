@@ -63,7 +63,7 @@ export function ArtistOfDayCard({
               {displayTitle}
             </Link>
           </div>
-          <div className="relative h-[220px] sm:h-[260px] lg:h-[300px]">
+          <div className="relative h-[220px] sm:h-[260px] lg:h-[300px] overflow-hidden rounded-md">
             {coverUrl ? (
               <Link href={albumHref} className="absolute inset-0 flex items-center justify-center">
                 <RemoteImage

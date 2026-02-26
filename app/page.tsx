@@ -72,20 +72,20 @@ const musicSites = [
   {
     name: "Guided by Voices",
     href: "/gbv",
-    logo: "/gbv-mlb.svg",
+    logo: "/gbv-wide.svg",
     description: "Discography & encyclopedia",
   },
   {
     name: "Amphetamine Reptile",
     href: "/amrep",
     logo: "/amrep-logo-foreground.svg",
-    description: "Discography & catalog",
+    description: "",
   },
   {
     name: "Revelation Records",
     href: "/rev",
     logo: "/rev-logo.png",
-    description: "Discography & catalog",
+    description: "",
   },
   {
     name: "Elephant 6",
@@ -97,25 +97,25 @@ const musicSites = [
     name: "Skin Graft Records",
     href: "/sg",
     logo: "/sg-logo.png",
-    description: "Discography & catalog",
+    description: "",
   },
   {
     name: "Touch & Go Records",
     href: "/touch-go-records",
     logo: "/images/touch-go-records/logo.svg",
-    description: "Discography & catalog",
+    description: "",
   },
   {
     name: "Slap-A-Ham Records",
     href: "/slap-a-ham-records",
     logo: "/images/slap-a-ham-records/logo.jpg",
-    description: "Discography & catalog",
+    description: "",
   },
   {
     name: "Jawbox",
     href: "/jawbox",
     logo: "/images/jawbox/logo.png",
-    description: "Discography & catalog",
+    description: "",
   },
 ];
 
@@ -129,46 +129,49 @@ function SiteCard({
   return (
     <Link
       href={site.href}
-      className="flex flex-col items-center gap-3 p-6 rounded-lg border bg-card hover:bg-muted/80 transition-colors"
+      className="flex flex-col items-center p-4 rounded-lg border bg-card hover:bg-muted/80 transition-colors w-full"
     >
       <img
         src={site.logo}
         alt={site.name}
-        width={80}
-        height={80}
-        className="h-20 w-auto"
+        width={100}
+        height={100}
+        className="h-20 w-auto object-contain"
         loading={priority ? "eager" : "lazy"}
         fetchPriority={priority ? "high" : undefined}
       />
-      <span className="text-lg font-semibold text-center">{site.name}</span>
-      <span className="text-sm text-muted-foreground text-center">
-        {site.description}
-      </span>
+      <span className="text-xs font-medium text-muted-foreground text-center mt-2">{site.name}</span>
     </Link>
   );
 }
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen px-4 py-12">
+    <div className="flex flex-col items-start justify-center min-h-screen px-8 py-12 w-full">
       <h1
         className="text-5xl font-bold mb-10 uppercase tracking-widest"
         style={{ fontFamily: "var(--font-league-gothic), sans-serif" }}
       >
         Major League Numbers
       </h1>
-      <div className="max-w-4xl w-full space-y-10">
-        <section>
-          <h2 className="text-center mb-6">Sports</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="w-full flex flex-col lg:flex-row gap-8">
+        <section className="lg:w-1/2 rounded-xl bg-card p-5 shadow-lg">
+          <h2 className="text-left mb-1">Sports</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Stats, rosters, standings, and leaders across major professional leagues.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
             {sportsSites.map((site, i) => (
               <SiteCard key={site.href} site={site} priority={i < 4} />
             ))}
           </div>
         </section>
-        <section>
-          <h2 className="text-center mb-6">Music</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <section className="lg:w-1/2 rounded-xl bg-card p-5 shadow-lg">
+          <h2 className="text-left mb-1">Music</h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Discographies, profiles, and catalogs for record labels and bands.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
             {musicSites.map((site) => (
               <SiteCard key={site.href} site={site} priority={false} />
             ))}

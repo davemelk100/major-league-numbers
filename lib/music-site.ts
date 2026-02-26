@@ -53,7 +53,7 @@ export const GBV_SITE: MusicSiteConfig = {
   chatLabel: "Chat GBV",
   headerTitle: "Guided By Data",
   headerTextClass: "text-white",
-  logoSrc: "/gbv-rune.svg",
+  logoSrc: "/gbv-wide.svg",
   logoClassName: "h-10 w-auto sm:h-12 lg:h-14 brightness-0 invert",
   chatIconSrc: "/gbv-rune.svg",
   placeholderIconSrc: "/chat-gbv-box.svg",
