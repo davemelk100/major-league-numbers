@@ -100,7 +100,7 @@ export function AdminWizard() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container py-8 max-w-4xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">
+        <h1 className="text-2xl font-bold mb-6 text-center" style={{ fontFamily: "var(--font-lato), sans-serif" }}>
           Site Generator
         </h1>
 
