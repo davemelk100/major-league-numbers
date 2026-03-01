@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 import { getProxiedImageUrl, normalizeImageUrl } from "@/lib/image-utils";
 
-type SourceState = "direct" | "proxy" | "localFallback" | "fallback";
+type SourceState = "direct" | "proxy" | "directAfterProxy" | "localFallback" | "fallback";
 
 const EMPTY_ARRAY: string[] = [];
 
@@ -53,8 +53,8 @@ export function RemoteImage({
       ),
     [fallbackSrc, invalidCacheValues]
   );
-  const [currentSrc, setCurrentSrc] = useState<string | null>(normalized);
-  const [sourceState, setSourceState] = useState<SourceState>("direct");
+  const [currentSrc, setCurrentSrc] = useState<string | null>(normalized ?? fallbackSrc);
+  const [sourceState, setSourceState] = useState<SourceState>(normalized ? "direct" : "fallback");
   const [loaded, setLoaded] = useState(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const effectiveFit = sourceState === "fallback" ? "contain" : fit;
@@ -93,7 +93,13 @@ export function RemoteImage({
       }
     }
 
-    if (preferProxy && normalized && !normalized.startsWith("/")) {
+    if (!normalized) {
+      setCurrentSrc(fallbackSrc);
+      setSourceState("fallback");
+      return;
+    }
+
+    if (preferProxy && !normalized.startsWith("/")) {
       initialSrc = getProxiedImageUrl(normalized);
       setSourceState("proxy");
     } else {
@@ -104,13 +110,11 @@ export function RemoteImage({
       if (prev !== initialSrc) setLoaded(false);
       return initialSrc;
     });
-  }, [cacheKey, invalidCacheSet, normalized, preferProxy]);
-
-  const placeholderUrl = `https://placehold.co/${width || 400}x${height || 400}/1a1a2e/eaeaea?text=${encodeURIComponent(alt.replace(/ photo$/, "").replace(/ cover$/, ""))}`;
+  }, [cacheKey, fallbackSrc, invalidCacheSet, normalized, preferProxy]);
 
   const handleError = () => {
     if (!normalized) {
-      setCurrentSrc(placeholderUrl);
+      setCurrentSrc(fallbackSrc);
       setSourceState("fallback");
       return;
     }
@@ -121,14 +125,21 @@ export function RemoteImage({
       return;
     }
 
-    if (sourceState === "proxy" && localFallbackSrc) {
+    if (sourceState === "proxy" && preferProxy && normalized) {
+      // Proxy failed — try the direct URL before giving up
+      setCurrentSrc(normalized);
+      setSourceState("directAfterProxy");
+      return;
+    }
+
+    if ((sourceState === "proxy" || sourceState === "directAfterProxy") && localFallbackSrc) {
       setCurrentSrc(localFallbackSrc);
       setSourceState("localFallback");
       return;
     }
 
-    if (sourceState === "proxy" || sourceState === "localFallback") {
-      setCurrentSrc(placeholderUrl);
+    if (sourceState === "proxy" || sourceState === "directAfterProxy" || sourceState === "localFallback") {
+      setCurrentSrc(fallbackSrc);
       setSourceState("fallback");
       return;
     }

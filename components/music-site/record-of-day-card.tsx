@@ -53,40 +53,27 @@ export function RecordOfDayCard({
             )}
           </div>
           <div className="relative h-[220px] sm:h-[260px] lg:h-[300px]">
-            {coverUrl ? (
-              albumHref ? (
-                <Link href={albumHref} className="absolute inset-0">
-                  <RemoteImage
-                    site={site}
-                    src={coverUrl}
-                    alt={`${record.title} cover`}
-                    className={`rounded-md object-${imageFit} w-full h-full`}
-                    loading="eager"
-                    fetchPriority="high"
-                    preferProxy={false}
-                  />
-                </Link>
-              ) : (
+            {albumHref ? (
+              <Link href={albumHref} className="absolute inset-0">
                 <RemoteImage
                   site={site}
                   src={coverUrl}
                   alt={`${record.title} cover`}
                   className={`rounded-md object-${imageFit} w-full h-full`}
                   loading="eager"
+                  fetchPriority="high"
                   preferProxy={false}
                 />
-              )
-            ) : albumHref ? (
-              <Link
-                href={albumHref}
-                className="w-full h-full rounded-md bg-muted flex items-center justify-center"
-              >
-                <span className="text-sm text-muted-foreground font-medium text-center px-4">{displayTitle}</span>
               </Link>
             ) : (
-              <div className="w-full h-full rounded-md bg-muted flex items-center justify-center">
-                <span className="text-sm text-muted-foreground font-medium text-center px-4">{displayTitle}</span>
-              </div>
+              <RemoteImage
+                site={site}
+                src={coverUrl}
+                alt={`${record.title} cover`}
+                className={`rounded-md object-${imageFit} w-full h-full`}
+                loading="eager"
+                preferProxy={false}
+              />
             )}
           </div>
         </div>
@@ -122,40 +109,27 @@ export function SingleOfDayCard({
             )}
           </div>
           <div className="relative h-[220px] sm:h-[260px] lg:h-[300px]">
-            {coverUrl ? (
-              albumHref ? (
-                <Link href={albumHref} className="absolute inset-0">
-                  <RemoteImage
-                    site={site}
-                    src={coverUrl}
-                    alt={`${record.title} cover`}
-                    className={`rounded-md object-${imageFit} w-full h-full`}
-                    loading="eager"
-                    fetchPriority="high"
-                    preferProxy={false}
-                  />
-                </Link>
-              ) : (
+            {albumHref ? (
+              <Link href={albumHref} className="absolute inset-0">
                 <RemoteImage
                   site={site}
                   src={coverUrl}
                   alt={`${record.title} cover`}
                   className={`rounded-md object-${imageFit} w-full h-full`}
                   loading="eager"
+                  fetchPriority="high"
                   preferProxy={false}
                 />
-              )
-            ) : albumHref ? (
-              <Link
-                href={albumHref}
-                className="w-full h-full rounded-md bg-muted flex items-center justify-center"
-              >
-                <span className="text-sm text-muted-foreground font-medium text-center px-4">{displayTitle}</span>
               </Link>
             ) : (
-              <div className="w-full h-full rounded-md bg-muted flex items-center justify-center">
-                <span className="text-sm text-muted-foreground font-medium text-center px-4">{displayTitle}</span>
-              </div>
+              <RemoteImage
+                site={site}
+                src={coverUrl}
+                alt={`${record.title} cover`}
+                className={`rounded-md object-${imageFit} w-full h-full`}
+                loading="eager"
+                preferProxy={false}
+              />
             )}
           </div>
         </div>

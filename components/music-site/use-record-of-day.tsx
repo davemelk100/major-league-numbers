@@ -87,27 +87,42 @@ export function useRecordOfDay() {
     }
 
     // All other sites: use the registry
-    const daily = getSiteDailyRecord(site.id);
-    if (!daily) return;
-    setRecord(daily);
+    // Try successive date offsets until we find a record with a known image
+    const now = new Date();
+    let chosen: RecordOfDay | null = null;
+    let chosenImage: string | null = null;
+    let chosenId: number | undefined;
 
-    const recordId = daily.id ?? ("catalogNumber" in daily ? (daily as any).catalogNumber : undefined);
-    if (recordId != null) {
-      setAlbumId(recordId);
-      const localImage = getSiteAlbumImage(site.id, recordId);
-      if (localImage) {
-        setCoverUrl(localImage);
-      } else if (daily.coverUrl) {
-        setCoverUrl(daily.coverUrl);
+    for (let offset = 0; offset < 30; offset++) {
+      const tryDate = new Date(now);
+      tryDate.setDate(tryDate.getDate() - offset);
+      const candidate = getSiteDailyRecord(site.id, tryDate);
+      if (!candidate) continue;
+      const cId = candidate.id ?? ("catalogNumber" in candidate ? (candidate as any).catalogNumber : undefined);
+      const localImg = cId != null ? getSiteAlbumImage(site.id, cId) : null;
+      const img = localImg || candidate.coverUrl || null;
+      if (img) {
+        chosen = candidate;
+        chosenImage = img;
+        chosenId = cId;
+        break;
       }
-    } else if (daily.coverUrl) {
-      setCoverUrl(daily.coverUrl);
     }
 
-    // For sites with a Discogs API route, try fetching cover art if we don't have one yet
-    if (!daily.coverUrl && !getSiteAlbumImage(site.id, recordId ?? 0) && daily.artist && daily.title) {
-      const artistName = daily.artist;
-      const releaseTitle = daily.title;
+    if (!chosen) {
+      // Fallback: use today's record even without image
+      chosen = getSiteDailyRecord(site.id);
+    }
+    if (!chosen) return;
+
+    setRecord(chosen);
+    if (chosenId != null) setAlbumId(chosenId);
+    if (chosenImage) setCoverUrl(chosenImage);
+
+    // For sites with a Discogs API route, try fetching cover art if we still don't have one
+    if (!chosenImage && chosen.artist && chosen.title) {
+      const artistName = chosen.artist;
+      const releaseTitle = chosen.title;
       async function fetchCoverFromDiscogs() {
         try {
           const params = new URLSearchParams({

@@ -40,7 +40,7 @@ const sportsSites = [
 ];
 
 const musicSites = [
-  { name: "Guided by Voices", href: "/gbv", logo: "/gbv-mlb.svg" },
+  { name: "Guided by Voices", href: "/gbv", logo: "/gbv-wide.svg" },
   { name: "Amphetamine Reptile", href: "/amrep", logo: "/amrep-logo-foreground.svg" },
   { name: "Revelation Records", href: "/rev", logo: "/rev-logo.png" },
   { name: "Elephant 6", href: "/e6", logo: "/e6-logo.png" },
@@ -76,7 +76,7 @@ export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "m
       <PopoverContent
         side="right"
         align="start"
-        className="bg-popover text-popover-foreground w-56 p-3"
+        className="bg-popover text-popover-foreground w-auto p-3"
       >
         <div className="space-y-3">
           <Link
@@ -89,67 +89,69 @@ export function SiteSwitcher({ variant = "default" }: { variant?: "default" | "m
                 : "hover:bg-muted text-popover-foreground"
             )}
           >
-            <Home className="h-5 w-5" />
+            <Home className="h-7 w-7" />
             Home
           </Link>
-          <div>
-            <p className="text-xs font-semibold text-muted-foreground mb-1.5 px-1">Sports</p>
-            <div className="space-y-0.5">
-              {sportsSites.map((site) => {
-                const isActive = pathname.startsWith(site.href);
-                return (
-                  <Link
-                    key={site.href}
-                    href={site.href}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      "flex items-center gap-2.5 px-2 py-1.5 rounded-md text-sm transition-colors",
-                      isActive
-                        ? "bg-primary/10 text-primary font-medium"
-                        : "hover:bg-muted text-popover-foreground"
-                    )}
-                  >
-                    <img
-                      src={site.logo}
-                      alt={site.name}
-                      width={20}
-                      height={20}
-                      className="h-5 w-5 object-contain"
-                    />
-                    {site.name}
-                  </Link>
-                );
-              })}
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground mb-1.5 px-1">Sports</p>
+              <div className="space-y-0.5">
+                {sportsSites.map((site) => {
+                  const isActive = pathname.startsWith(site.href);
+                  return (
+                    <Link
+                      key={site.href}
+                      href={site.href}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "flex items-center gap-2.5 px-2 py-1.5 rounded-md text-sm transition-colors whitespace-nowrap",
+                        isActive
+                          ? "bg-primary/10 text-primary font-medium"
+                          : "hover:bg-muted text-popover-foreground"
+                      )}
+                    >
+                      <img
+                        src={site.logo}
+                        alt={site.name}
+                        width={36}
+                        height={36}
+                        className="h-9 w-9 object-contain"
+                      />
+                      {site.name}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-          <div>
-            <p className="text-xs font-semibold text-muted-foreground mb-1.5 px-1">Music</p>
-            <div className="space-y-0.5">
-              {musicSites.map((site) => {
-                const isActive = pathname.startsWith(site.href);
-                return (
-                  <Link
-                    key={site.href}
-                    href={site.href}
-                    onClick={() => setOpen(false)}
-                    className={cn(
-                      "flex items-center gap-2.5 px-2 py-1.5 rounded-md text-sm transition-colors",
-                      isActive
-                        ? "bg-primary/10 text-primary font-medium"
-                        : "hover:bg-muted text-popover-foreground"
-                    )}
-                  >
-                    <img
-                      src={site.logo}
-                      alt={site.name}
-                      width={20}
-                      height={20}
-                      className="h-5 w-5 object-contain"
-                    />
-                    {site.name}
-                  </Link>
-                );
-              })}
+            <div>
+              <p className="text-xs font-semibold text-muted-foreground mb-1.5 px-1">Music</p>
+              <div className="space-y-0.5">
+                {musicSites.map((site) => {
+                  const isActive = pathname.startsWith(site.href);
+                  return (
+                    <Link
+                      key={site.href}
+                      href={site.href}
+                      onClick={() => setOpen(false)}
+                      className={cn(
+                        "flex items-center gap-2.5 px-2 py-1.5 rounded-md text-sm transition-colors whitespace-nowrap",
+                        isActive
+                          ? "bg-primary/10 text-primary font-medium"
+                          : "hover:bg-muted text-popover-foreground"
+                      )}
+                    >
+                      <img
+                        src={site.logo}
+                        alt={site.name}
+                        width={36}
+                        height={36}
+                        className="h-9 w-9 object-contain"
+                      />
+                      {site.name}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
