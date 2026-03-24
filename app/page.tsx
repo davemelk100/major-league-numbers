@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
+import { LandingHero } from "@/components/landing-hero";
 
 export const metadata: Metadata = {
   openGraph: {
@@ -147,13 +148,8 @@ function SiteCard({
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col items-start justify-center min-h-screen px-8 py-12 w-full">
-      <h1
-        className="text-5xl font-bold mb-10 uppercase tracking-widest"
-        style={{ fontFamily: "var(--font-league-gothic), sans-serif" }}
-      >
-        Major League Numbers
-      </h1>
+    <div className="flex flex-col items-start justify-center min-h-screen px-8 pt-4 pb-12 w-full">
+      <LandingHero />
       <div className="w-full flex flex-col lg:flex-row gap-8">
         <section className="lg:w-1/2 rounded-xl bg-card p-5 shadow-lg">
           <h2 className="text-left mb-1">Sports</h2>
