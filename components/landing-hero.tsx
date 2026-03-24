@@ -71,10 +71,12 @@ function SiteDropdown({
 export function LandingHero() {
   return (
     <div className="mb-8 w-full">
-      <div className="flex items-center gap-6 mb-4">
+      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 mb-4">
         <h1 className="text-3xl md:text-5xl font-light uppercase tracking-wide">Major League Numbers</h1>
-        <SiteDropdown label="Sports" sites={sportsSites} />
-        <SiteDropdown label="Music" sites={musicSites} />
+        <div className="flex items-center gap-6">
+          <SiteDropdown label="Sports" sites={sportsSites} />
+          <SiteDropdown label="Music" sites={musicSites} />
+        </div>
       </div>
       <div className="flex flex-col lg:flex-row lg:gap-8">
         <div className="shrink-0">
