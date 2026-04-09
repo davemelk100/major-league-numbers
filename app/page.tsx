@@ -12,9 +12,7 @@ export const metadata: Metadata = {
     siteName: "Major League Numbers",
     images: [
       {
-        url: "/og-mln.png",
-        width: 1200,
-        height: 630,
+        url: "/mln-logo.svg",
         alt: "Major League Numbers",
       },
     ],
@@ -26,7 +24,7 @@ export const metadata: Metadata = {
     title: "Major League Numbers",
     description:
       "Sports stats and music encyclopedias — MLB, NHL, GBV, AmRep, and Revelation Records.",
-    images: ["/og-mln.png"],
+    images: ["/mln-logo.svg"],
   },
 };
 
