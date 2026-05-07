@@ -24,9 +24,13 @@ export async function POST(request: Request) {
     const logoPaths: string[] = [];
     let extractedText = "";
 
+    // Hide path construction from Turbopack's static file tracer so it
+    // doesn't bundle every file under public/images/ into this route.
+    const cwd = (0, eval)("process.cwd()") as string;
+
     // Process logo files
     const logoFiles = formData.getAll("logos") as File[];
-    const logoDir = path.join(process.cwd(), "public", "images", siteId);
+    const logoDir = path.join(cwd, "public", "images", siteId);
     await fs.mkdir(logoDir, { recursive: true });
 
     for (let i = 0; i < logoFiles.length; i++) {

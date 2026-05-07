@@ -139,7 +139,7 @@ export function LandingHero() {
           </p>
           <p>
             At its core, Major League Numbers transforms numbers into a shared
-            language across domains—connecting sports, music, and culture in a
+            language across domains, connecting sports, music, and culture in a
             way that&#39;s simple to navigate and enjoyable to explore.
           </p>
         </div>
