@@ -132,7 +132,7 @@ export function LandingHero() {
           </p>
           <p>
             The experience is designed to be lightweight and
-            curiosity-driven—letting users move seamlessly between data, uncover
+            curiosity-driven, letting users move seamlessly between data, uncover
             patterns, and even explore fun hypotheticals. With features like a
             daily quiz and clearly attributed data sources, the platform
             balances depth with accessibility.
