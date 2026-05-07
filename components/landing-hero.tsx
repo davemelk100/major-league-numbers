@@ -99,8 +99,8 @@ function SiteDropdown({
 export function LandingHero() {
   return (
     <div className="mb-8 w-full">
-      <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 mb-4">
-        <h1 className="text-3xl md:text-5xl font-light uppercase tracking-wide">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 md:gap-6 mb-4">
+        <h1 className="text-3xl md:text-5xl font-bold uppercase tracking-wide">
           Major League Numbers
         </h1>
         <div className="flex items-center gap-6">
@@ -108,13 +108,13 @@ export function LandingHero() {
           <SiteDropdown label="Music" sites={musicSites} />
         </div>
       </div>
-      <div className="flex flex-col lg:flex-row lg:gap-8">
+      <div className="flex flex-col lg:flex-col lg:gap-8">
         <div className="shrink-0">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/mln-logo.svg"
             alt="Major League Numbers"
-            className="max-w-md w-full object-contain rounded-xl my-1"
+            className="w-full object-contain rounded-xl my-1"
             loading="eager"
             fetchPriority="high"
           />
@@ -131,11 +131,11 @@ export function LandingHero() {
             more intuitive, and more engaging than traditional reference sites.
           </p>
           <p>
-            The experience is designed to be lightweight and
-            curiosity-driven, letting users move seamlessly between data, uncover
-            patterns, and even explore fun hypotheticals. With features like a
-            daily quiz and clearly attributed data sources, the platform
-            balances depth with accessibility.
+            The experience is designed to be lightweight and curiosity-driven,
+            letting users move seamlessly between data, uncover patterns, and
+            even explore fun hypotheticals. With features like a daily quiz and
+            clearly attributed data sources, the platform balances depth with
+            accessibility.
           </p>
           <p>
             At its core, Major League Numbers transforms numbers into a shared
