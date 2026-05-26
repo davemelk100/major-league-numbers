@@ -376,9 +376,10 @@ export async function getDailyPlayer(): Promise<SpotlightPlayer> {
     const randomSeason = minYear + Math.floor(Math.random() * yearRange);
 
     // Fetch all players from the randomly selected season
-    const response = await fetch(`/api/players?type=all&season=${randomSeason}`);
-    const data = await response.json();
-    const allPlayers = data.players || [];
+    const { fetchAllPlayersForSeason } = await import(
+      "@/app/mlb/players/actions"
+    );
+    const allPlayers = await fetchAllPlayersForSeason(randomSeason);
 
     if (allPlayers.length === 0) {
       // Fallback to curated list - accept placeholders for legends

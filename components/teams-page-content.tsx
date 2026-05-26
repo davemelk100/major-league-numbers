@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Loader2, AlertCircle } from "lucide-react";
 import type { Team } from "@/lib/mlb-api";
+import { fetchTeamsForSeason } from "@/app/mlb/teams/actions";
 
 interface TeamsPageContentProps {
   initialTeams: Team[];
@@ -34,20 +35,23 @@ export function TeamsPageContent({
       return;
     }
 
-    const fetchTeams = async () => {
+    let cancelled = false;
+    const loadTeams = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch(`/api/teams?season=${season}`);
-        const data = await response.json();
-        setTeams(data.teams);
+        const next = await fetchTeamsForSeason(season);
+        if (!cancelled) setTeams(next);
       } catch (error) {
         console.error("Error fetching teams:", error);
       } finally {
-        setIsLoading(false);
+        if (!cancelled) setIsLoading(false);
       }
     };
 
-    fetchTeams();
+    loadTeams();
+    return () => {
+      cancelled = true;
+    };
   }, [season, initialSeason, initialTeams]);
 
   // Group teams by division

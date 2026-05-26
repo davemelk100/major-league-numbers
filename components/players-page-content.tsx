@@ -15,6 +15,10 @@ import {
 import { Loader2, ChevronDown } from "lucide-react";
 import type { Player, Team } from "@/lib/mlb-api";
 import { getTeams } from "@/lib/mlb-api";
+import {
+  fetchAllPlayersForSeason,
+  fetchFeaturedPlayersForSeason,
+} from "@/app/mlb/players/actions";
 
 type LeagueFilter = "ALL" | "AL" | "NL";
 
@@ -84,9 +88,8 @@ export function PlayersPageContent({
       setPage(1);
 
       try {
-        const response = await fetch(`/api/players?season=${season}`);
-        const data = await response.json();
-        setFeaturedPlayers(data.featuredPlayers);
+        const next = await fetchFeaturedPlayersForSeason(season);
+        setFeaturedPlayers(next);
       } catch (error) {
         console.error("Error fetching players:", error);
       } finally {
@@ -114,10 +117,9 @@ export function PlayersPageContent({
 
     setIsFetchingAll(true);
     try {
-      const response = await fetch(`/api/players?season=${season}&type=all`);
-      const data = await response.json();
-      setAllPlayers(data.players);
-      const filtered = filterByLeague(data.players);
+      const players = await fetchAllPlayersForSeason(season);
+      setAllPlayers(players);
+      const filtered = filterByLeague(players);
       setDisplayedPlayers(filtered.slice(0, itemsPerPage));
       setShowAll(true);
       setPage(1);
